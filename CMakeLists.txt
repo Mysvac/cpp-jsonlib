@@ -44,34 +44,34 @@ PUBLIC
 
 # 第3步 生成Package配置文件
 configure_package_config_file(
-    cmake/jsonlib-config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/${lib_name}-config.cmake
+    cmake/cpp-jsonlib-config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/${package_name}-config.cmake
     INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIR}/${package_name}
     NO_SET_AND_CHECK_MACRO
 )
 
 # 第3步 生成package版本文件
 write_basic_package_version_file(
-    ${CMAKE_CURRENT_BINARY_DIR}/${lib_name}-config-version.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${package_name}-config-version.cmake
     VERSION ${jsonlib_VERSION}
     COMPATIBILITY SameMajorVersion
 )
 # 第5步 安装配置文件
 install(
 FILES 
-    ${CMAKE_CURRENT_BINARY_DIR}/${lib_name}-config.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/${lib_name}-config-version.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${package_name}-config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${package_name}-config-version.cmake
 DESTINATION
     ${CMAKE_INSTALL_DATADIR}/${package_name}
 )
 
 # 第2步 安装库文件和头文件，此处是库文件
-install(TARGETS ${lib_name} EXPORT ${lib_name}-targets)
+install(TARGETS ${lib_name} EXPORT ${package_name}-targets)
 # 第2步 安装库文件和头文件，此处是头文件
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 # 导出目标
-install(EXPORT ${lib_name}-targets
+install(EXPORT ${package_name}-targets
         NAMESPACE ${lib_name}::
         DESTINATION ${CMAKE_INSTALL_DATADIR}/${package_name}
 ) # 注意此处的 DESTINATION 是包名而非命名空间或库名
