@@ -3,6 +3,7 @@
 .idea/
 .vs/
 
-CMakePresets.json
+build/
+
 CMakeUserPresets.json
 vcpkg-configuration.json

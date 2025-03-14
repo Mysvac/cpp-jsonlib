@@ -1,10 +1,15 @@
-#include <utility>
+#pragma once
+
 #include <string>
 #include <sstream>
 #include <unordered_map>
 #include <vector>
 #include <variant>
 #include <exception>
+
+#if !defined(JSONLIB_EXPORT)
+    #define JSONLIB_EXPORT
+#endif
 
 namespace Json{
 
@@ -33,7 +38,7 @@ namespace Json{
      * @brief Json专用异常类。
      * @note 继承自std::runtime_error。
      */
-    class JsonException : public std::runtime_error {
+    class JSONLIB_EXPORT JsonException : public std::runtime_error {
     public:
         /**
          * @brief 默认构造函数。
@@ -51,7 +56,7 @@ namespace Json{
      * @brief Json专用异常类。
      * @note 继承自std::runtime_error。
      */
-    class JsonTypeException : public JsonException {
+    class JSONLIB_EXPORT JsonTypeException : public JsonException {
         public:
             /**
              * @brief 默认构造函数。
@@ -64,12 +69,12 @@ namespace Json{
             JsonTypeException(const std::string& message) : JsonException(message) {}
     };
 
-        /**
+    /**
      * @class JsonException
      * @brief Json专用异常类。
      * @note 继承自std::runtime_error。
      */
-    class JsonIndexException : public JsonException {
+    class JSONLIB_EXPORT JsonIndexException : public JsonException {
         public:
             /**
              * @brief 默认构造函数。
@@ -89,7 +94,7 @@ namespace Json{
      * @details 此类对象不能完全解析JSON数据，每次仅解析一层，实现数据分割。
      * @note 这是JsonObject的工具类，不可独立使用。
      */
-    class JsonReader{
+    class JSONLIB_EXPORT JsonReader{
     public:
         friend class JsonBasic;
         /**
@@ -176,7 +181,7 @@ namespace Json{
      * @details JSON反序列化后的，可操作对象。
      * @note 请直接使用此类。
      */
-    class JsonBasic{
+    class JSONLIB_EXPORT JsonBasic{
     public:
         using Map = std::unordered_map<std::string,JsonBasic>;
         using List = std::vector<JsonBasic>;
@@ -221,21 +226,6 @@ namespace Json{
          * @brief 字符串赋值
          */
         JsonBasic& operator=(const std::string& str);
-
-        // /**
-        //  * @brief 子类拷贝生成父类
-        //  */
-        // JsonBasic(const JsonObject& jsonObject) noexcept :type_(jsonObject.getType()), content_(jsonObject.getVariant()) {}
-
-        // /**
-        //  * @brief 子类拷贝生成父类
-        //  */
-        // JsonBasic(const JsonArray& jsonArray) noexcept :type_(jsonArray.getType()), content_(jsonArray.getVariant()) {}
-
-        // /**
-        //  * @brief 子类拷贝生成父类
-        //  */
-        // JsonBasic(const JsonValue& jsonValue) noexcept :type_(jsonValue.getType()), content_(jsonValue.getVariant()) {}
 
     protected:
         /**
@@ -377,7 +367,7 @@ namespace Json{
     };
 
 
-    class JsonObject : public JsonBasic{
+    class JSONLIB_EXPORT JsonObject : public JsonBasic{
     public:
         JsonObject(): JsonBasic("{}"){}
         JsonObject(const std::string& str);
@@ -386,7 +376,8 @@ namespace Json{
         void clear() noexcept override;
     };
 
-    class JsonArray : public JsonBasic{
+    
+    class JSONLIB_EXPORT JsonArray : public JsonBasic{
     public:
         JsonArray(): JsonBasic("[]"){}
         JsonArray(const std::string& str);
@@ -395,7 +386,7 @@ namespace Json{
         void clear() noexcept override;
     };
     
-    class JsonValue : public JsonBasic{
+    class JSONLIB_EXPORT JsonValue : public JsonBasic{
     public:
         JsonValue(): JsonBasic("null"){}
 
