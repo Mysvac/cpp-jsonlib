@@ -367,6 +367,22 @@ namespace Json{
     };
 
 
+    /**
+     * @brief 字符串转JsonBasic对象
+     * @details 反序列化，且在调用构造函数前，清除了空格，部分情况下速度提升显著。
+     * @note 推荐使用此函数生成对象，而非JsonObject构造函数。
+     */
+    JSONLIB_EXPORT
+    JsonBasic stojson(const std::string& str);
+
+    /**
+     * @brief 字符串转JsonBasic对象
+     * @note 直接调用的stojson(str)，二者等效
+     */
+    JSONLIB_EXPORT
+    JsonBasic parseJson(const std::string& str);
+
+
     class JSONLIB_EXPORT JsonObject : public JsonBasic{
     public:
         JsonObject(): JsonBasic("{}"){}

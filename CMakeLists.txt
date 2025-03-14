@@ -76,3 +76,11 @@ install(EXPORT ${package_name}-targets
         DESTINATION ${CMAKE_INSTALL_DATADIR}/${package_name}
 ) # 注意此处的 DESTINATION 是包名而非命名空间或库名
 
+
+enable_testing()
+
+add_executable(my_test test/test.cpp src/jsonlib.cpp)
+target_include_directories(my_test PRIVATE include)
+
+# 添加测试用例
+add_test(NAME MyTest COMMAND my_test)

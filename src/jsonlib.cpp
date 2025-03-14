@@ -1,5 +1,6 @@
 #include "jsonlib.h"
 
+
 namespace Json{
 
     // 判断字符串类型能否转数值
@@ -381,7 +382,7 @@ namespace Json{
     // JsonObject带参数构造函数
     JsonBasic::JsonBasic(const std::string& str){
         // 调用JsonReader初步解析数据
-        JsonReader reader = JsonReader{str};
+        JsonReader reader { str };
         // JSON数据类型同步
         type_ = reader.getType();
         switch(type_)
@@ -454,7 +455,7 @@ namespace Json{
 
     // JsonObject字符串赋值
     JsonBasic& JsonBasic::operator=(const std::string& str){
-        *this = JsonBasic { str };
+        *this = stojson(str);
         return *this;
     }
 
@@ -622,6 +623,37 @@ namespace Json{
     std::string JsonBasic::as_string() const {
         if(type_ == JsonType::OBJECT || type_ == JsonType::ARRAY) throw JsonTypeException { };
         return std::get<std::string>(content_);
+    }
+
+    JsonBasic stojson(const std::string& str){
+        std::string tmp;
+        size_t len = str.size();
+        tmp.reserve(len);
+        size_t idx=0;
+        // 去除空格，加快JsonBasic生成速度
+        while(idx < len){
+            while(idx<len && std::isspace(str[idx])) ++idx;
+            if(idx >= len) break;
+            if(str[idx] == '\"'){
+                tmp += str[idx++];
+                while(str.at(idx) != '\"'){
+                    if(str[idx] == '\\'){
+                        tmp += str[idx];
+                        tmp += str.at(idx+1);
+                        idx +=2 ;
+                    }
+                    else tmp += str[idx++];
+                }
+                tmp += str[idx++];
+            }
+            else{
+                tmp += str[idx++];
+            }
+        }
+        return JsonBasic { tmp };
+    }
+    JsonBasic parseJson(const std::string& str){
+        return stojson(str);
     }
 
     JsonObject::JsonObject(const std::string& str): JsonBasic(str) {

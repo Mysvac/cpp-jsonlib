@@ -1,51 +1,34 @@
-#include "jsonlib.h"
 #include <iostream>
-using namespace Json;
+#include "jsonlib.h"
 
 int main(){
-    JsonBasic json {R"_JSON_(
+    try{
+        Json::JsonBasic json1 { "[1, null, {}, true , {\"key\" : \"值\" }]" };
+
+        Json::JsonBasic json2 = Json::stojson(R"__JSON__(
         {
-            "numbers": [
-                23,
-                true,
-                5,
-                33,
-                false,
-                78
-            ],
-            "checked": true,
-            "id": 38934.1235,
-            "object": {
-                "t": "json校验器",
-                "w": "json检查",
-                "中文": {
-                    "test": null
-                }
-            },
-            "host": "json-online.com"
+            "method": ["C++", "原始字符串", "语法" , 114514],
+            "name": "cpp-\t-jsonlib",
+            "version": "0.1.0",
+            "description": "A simple JSON library using C++17.",
+            "homepage": "https://github.com/Mysvac/cpp-jsonlib"
         }
-    )_JSON_"};
+        )__JSON__"
+        );
+        // JsonBasic json2 = stojson
 
-    // JsonBasic json2 {R"_JSON_(
-    //     {
-    //     "123" : 1234
-    //     }
-    // )_JSON_"};
-    // json["test"] = "{}";
-    
-    json["test"] = "[ 12340 ]";
+        json1.erase(4);
+        json1.push_back( Json::stojson("666") );
+        json2["method"][0] = R"("Python")";
+        json2.erase("description");
+        json2["homepage"].clear();
 
-    // json = "{}";
-
-    std::cout << json.serialize() << std::endl << std::endl;
-
-    json.erase("test");
-
-    json["numbers"][0] = "21";
-
-    std::cout << json.serialize() << std::endl;
-
-    std::cout << std::boolalpha;
-    std::cout << json["numbers"][0].is_number() << std::endl;
-    std::cout << json["checked"].is_bool() << std::endl;
+        std::cout << json1.serialize() << std::endl;
+        std::cout << json2["name"].as_string() << std::endl;
+        std::cout << json2.serialize() << std::endl;
+        // std::cout << json2.serialize() << std::endl;
+    }
+    catch(const std::exception& e){
+        std::cerr << e.what() << std::endl;
+    }
 }

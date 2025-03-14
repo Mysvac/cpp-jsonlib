@@ -5,6 +5,5 @@
 
 build/
 
-CMakePresets.json
 CMakeUserPresets.json
 vcpkg-configuration.json
