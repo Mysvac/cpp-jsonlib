@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.24)
 
 set(jsonlib_VERSION 0.1.0)
 
-project(jsonlib 
+project(cpp-jsonlib 
     VERSION ${jsonlib_VERSION}
     DESCRIPTION "A simple JSON library using C++17."
     HOMEPAGE_URL "https://github.com/Mysvac/cpp-jsonlib"
@@ -41,7 +41,7 @@ PUBLIC
 
 # 第3步 生成Package配置文件
 configure_package_config_file(
-    cmake/jsonlibConfig.cmake.in
+    cmake/jsonlib-config.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/jsonlib-config.cmake
     INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIR}/jsonlib
     NO_SET_AND_CHECK_MACRO
@@ -70,5 +70,6 @@ install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 # 导出目标
 install(EXPORT jsonlib-targets
         NAMESPACE jsonlib::
-        DESTINATION ${CMAKE_INSTALL_DATADIR}/jsonlib)
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/cpp-jsonlib
+) # 注意此处的 DESTINATION 是包名而非命名空间或库名
 
