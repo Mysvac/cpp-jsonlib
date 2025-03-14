@@ -1,0 +1,8 @@
+@PACKAGE_INIT@
+
+find_path(jsonlib_INCLUDE_DIRS jsonlib.h)
+find_library(jsonlib_LIBRARIES jsonlib)
+
+set(jsonlib_VERSION @PACKAGE_VERSION@)
+
+include("${CMAKE_CURRENT_LIST_DIR}/jsonlibTargets.cmake")

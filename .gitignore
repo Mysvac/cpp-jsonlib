@@ -1,0 +1,8 @@
+
+.vscode/
+.idea/
+.vs/
+
+CMakePresets.json
+CMakeUserPresets.json
+vcpkg-configuration.json
