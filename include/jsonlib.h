@@ -143,32 +143,32 @@ namespace Json{
         JsonBasic& operator=(JsonBasic&& jsonBasic) noexcept;
 
         /**
-         * @brief bool类型构造
+         * @brief int类型构造
          */
-        JsonBasic(const bool tmp) noexcept;
-
+        JsonBasic(const int& tmp) noexcept;
         /**
          * @brief int64类型构造
          */
-        JsonBasic(const long long tmp) noexcept;
+        JsonBasic(const long long& tmp) noexcept;
 
         /**
          * @brief 浮点类型构造
          */
-        JsonBasic(const double tmp) noexcept;
+        JsonBasic(const double& tmp) noexcept;
 
         /**
-         * @brief bool类型赋值
+         * @brief long long类型赋值
          */
-        JsonBasic& operator=(const bool tmp) noexcept;
+        JsonBasic& operator=(const int& tmp) noexcept;
+
         /**
          * @brief long long类型赋值
          */
-        JsonBasic& operator=(const long long tmp) noexcept;
+        JsonBasic& operator=(const long long& tmp) noexcept;
         /**
          * @brief long long类型赋值
          */
-        JsonBasic& operator=(const double tmp) noexcept;
+        JsonBasic& operator=(const double& tmp) noexcept;
 
     private:
         JsonBasic::JsonBasic(const std::string& str, size_t& index, const size_t& tail);
@@ -242,49 +242,60 @@ namespace Json{
          */
         JsonBasic& operator[](const std::string& key);
 
-        // /**
-        //  * @brief 检查是否存在某个key
-        //  * @note 必须是OBJECT类型
-        //  */
-        // bool hasKey(const std::string& key) const;
+        /**
+         * @brief 检查是否存在某个key
+         * @exception JsonTypeException 非对象类型抛出异常
+         * @note 必须是OBJECT类型
+         */
+        bool hasKey(const std::string& key) const;
 
-        // /**
-        //  * @brief 末尾插入元素
-        //  * @note 必须是ARRAY类型
-        //  */
-        // void push_back(const JsonBasic& jsonBasic);
-        // /**
-        //  * @brief 末尾插入元素
-        //  * @note 必须是ARRAY类型
-        //  */
-        // void push_back(JsonBasic&& jsonBasic);
-        // /**
-        //  * @brief 在指定位置插入元素
-        //  * @note 必须是ARRAY类型
-        //  */
-        // void insert(const size_t& index, const JsonBasic& jsonBasic);
-        // /**
-        //  * @brief 在指定位置插入元素
-        //  * @note 必须是ARRAY类型
-        //  */
-        // void insert(const size_t& index, JsonBasic&& jsonBasic);
+        /**
+         * @brief 末尾插入元素
+         * @exception JsonTypeException 非数组类型抛出异常
+         * @note 必须是ARRAY类型
+         */
+        void push_back(const JsonBasic& jsonBasic);
 
-        // /**
-        //  * @brief 删除指定位置的元素
-        //  * @note 必须是ARRAY类型
-        //  */
-        // void erase(const size_t& index);
-        // /**
-        //  * @brief 删除key的元素
-        //  * @note 必须是OBJECT类型
-        //  */
-        // void erase(const std::string& key);
+        /**
+         * @brief 末尾插入元素
+         * @note 必须是ARRAY类型
+         */
+        void push_back(JsonBasic&& jsonBasic);
 
-        // /**
-        //  * @brief 获取当前层次子元素个数。
-        //  * @note 如果不是object和array类型，返回字符串长度。
-        //  */
-        // size_t size()const noexcept;
+        /**
+         * @brief 在指定位置插入元素
+         * @note 必须是ARRAY类型
+         */
+        void insert(const size_t& index, const JsonBasic& jsonBasic);
+
+        /**
+         * @brief 在指定位置移入元素
+         * @note 必须是ARRAY类型
+         */
+        void insert(const size_t& index, JsonBasic&& jsonBasic);
+
+        /**
+         * @brief 插入键值对
+         * @note 必须是Object类型
+         */
+        void insert(const std::string& key,const JsonBasic& jsonBasic);
+
+        /**
+         * @brief 移动插入键值对
+         * @note 必须是Object类型
+         */
+        void insert(const std::string& key,JsonBasic&& jsonBasic);
+
+        /**
+         * @brief 删除指定位置的元素
+         * @note 必须是ARRAY类型
+         */
+        void erase(const size_t& index);
+        /**
+         * @brief 删除key的元素
+         * @note 必须是OBJECT类型
+         */
+        void erase(const std::string& key);
 
         bool is_object() const noexcept { return type_ == JsonType::OBJECT; }
         bool is_array() const noexcept { return type_ == JsonType::ARRAY; }
@@ -296,11 +307,36 @@ namespace Json{
         bool is_null() const noexcept { return type_ == JsonType::ISNULL; }
         bool is_value() const noexcept { return type_ != JsonType::OBJECT && type_ != JsonType::ARRAY; }
 
-        // long as_int64() const;
-        // double as_double() const;
-        // bool as_bool() const;
-        // bool as_null() const noexcept;
-        // std::string as_string() const;
+        /**
+         * @brief 转换成long long类型
+         * @exception JsonTypeException
+         * @note 必须是NUMBER
+         */
+        long long as_int64() const;
+        /**
+         * @brief 转换成double类型
+         * @exception JsonTypeException
+         * @note 必须是NUMBER
+         */
+        double as_double() const;
+        /**
+         * @brief 转换成bool类型
+         * @exception JsonTypeException
+         * @note 必须是BOOL
+         */
+        bool as_bool() const;
+        /**
+         * @brief 转换成string类型
+         * @exception JsonTypeException
+         * @note 必须是STRING
+         */
+        std::string as_string() const;
+
+        /**
+         * @brief 转换成字符串
+         * @note STRING类型则转义输出，非STRING则序列化
+         */
+        std::string to_string() const noexcept;
         // JsonObject as_object() const;
         // JsonArray as_array() const;
         // JsonValue as_value() const;
