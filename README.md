@@ -1,66 +1,164 @@
-# 一个略显简陋的CPP-JSON库
+# 一个CPP-JSON库（开发中）
 
 ## 概要介绍
 
 ### 功能概述
-已完成类型`JsonBasic`，可以处理全部JSON数据类型。<br>
 提供如下功能：
-1. 序列化，JSON格式文本转JsonBasic对象。
-2. 反序列化，JsonBasic对象转JSON格式文本。
-3. 类型查询，当前对象数据类型（对象、列表、字符串、布尔、数值、null）。
-4. 获取内部值。
-5. 移动赋值，移动构造。
-6. 增、删、改、查。
-7. 异常处理（完善中）。
+- 序列化，JSON控制对象->JSON文本。
+- 反序列化，JSON文本 -> JSON控制对象。
+- 增、删、改、查。
+- 移动语义支持。
+- 异常处理支持（完善中）。
 
-### 粗略性能概述
-**N** : JSON格式文本长度。
+### 效率概述
+- **N** : JSON文本长度。
+- **m** : 子元素个数。
+- 下面提供最坏情况的时空复杂度：
+- **序列化**：时间复杂度O(N)，空间复杂度O(N)。
+- **反序列化**: 时间复杂度O(N)，空间复杂度O(N)。
+- **键值对-增删改查**: O(log m)。
+- **数组-增删**: 末尾操作O(1)，其余位置平均O(m)。
+- **数组-改查**: O(1)。
 
-**反序列化** : 时间复杂度O(N)，空间复杂度O(N)，稳定，常数项接近1。
-
-**序列化** : 常规数据时间复杂度O(N)~O(NlogN)，空间复杂度相同。特殊极端数据达到O(N*N)。<br>
-（什么是极端数据？\[\[\[\[\[\[\[\[\[\[\[\[ \]\]\]\]\]\]\]\]\]\]\]\]这种深度和长度一个数量级的就是。）
-
-**值获取** : 键值对默认哈希字典，平均O(1)。列表默认Vector，引索访问O(1);
-
-**值插入删除** : 列表尾部修改函数O(1)，指定位置修改O(n)。字典修改平均O(1)。
-
-**值修改** : 移动语义支持，减少复制开销，
 
 ### 简单示例
-使用`JsonBasic`数据类型。<br>
-或使用`stojson()`函数，会清除无效空格，部分情况速度更快。
+
+#### 导入库
+（暂未合并vcpkg官方仓库，提供源码，自行编译。）
+```cmake
+find_package(cpp-jsonlib CONFIG REQUIRED)
+get_target_property(LIB_TYPE jsonlib::jsonlib TYPE)
+```
+
+#### 1.使用JsonBasic类型
 ```cpp
-Json::JsonBasic json1 { "[1, null, {}, true , {\"key\" : \"值\" }]" };
-
-Json::JsonBasic json2 = Json::stojson(R"__JSON__(
+Json::JsonBasic json {};
+json = "{ \"key\": [ true, 12, \"val\" ] }";
+Json::JsonBasic json2 { R"__JSON__(
 {
-    "method": ["C++", "原始字符串", "语法" , 114514],
-    "name": "cpp-\t-jsonlib",
-    "version": "0.1.0",
-    "description": "A simple JSON library using C++17.",
-    "homepage": "https://github.com/Mysvac/cpp-jsonlib"
+    "语法": ["C++", "原始字符串", false ],
+    "key": "支持\t中文\t 与\"转义字符",
+    "na\"\\me": [ 114,514 , null ],
+    "map": [ {} , [ [ "嵌套" ] , {} ] ]
 }
-)__JSON__"
-);
+)__JSON__"};
+```
 
-json1.erase(4);
-json1.push_back( Json::stojson("666") );
-json2["method"][0] = R"("Python")";
-json2.erase("description");
-json2["homepage"].clear();
+### 2.反序列化与序列化
+```cpp
+Json::JsonBasic json {};
+json = "{ \"key\": [ true, 12, \"val\" ] }";
+Json::JsonBasic json2 { R"__JSON__(
+{
+    "语法": ["C++", "原始字符串", false ],
+    "key": "支持\t中文\t 与\"转义字符",
+    "na\"\\me": [ 114,514 , null ],
+    "map": [ {} , [ [ "嵌套" ] , {} ] ]
+}
+)__JSON__"};
 
-std::cout << json1.serialize() << std::endl;
-std::cout << json2["name"].as_string() << std::endl;
 std::cout << json2.serialize() << std::endl;
 ```
 
-结果：
-```txt
-[ 1, null, { }, true, 666 ]
-cpp-	-jsonlib
-{ "method": [ "Python", "原始字符串", "语法", 114514 ], "name": "cpp-\t-jsonlib", "version": "0.1.0", "homepage": { } }
+3. 增删改查
+```cpp
+Json::JsonBasic json { R"__JSON__(
+{
+    "语法": ["C++", "原始字符串", false ],
+    "key": "支持\t中文\\与\"转义字符",
+    "na\"\\me": [ 114,514 , null ],
+    "map": [ {} , [ [ "嵌套" ] , {} ] ]
+}
+)__JSON__"};
+
+json.erase("na\"\\me"); // 删除
+json["map"][1].clear(); // 清空
+json["语法"] = 114514; // 修改
+json["add"] = "[[[]]]"; //增加
+json["add"].push_back(Json::JsonBasic { 1 }); // 此处不完善，只能push对象
+// 支持移动语义
+
+std::cout << json.serialize() << std::endl;
+std::cout << json["key"].as_string() << std::endl; // 获取字符串并转义
+```
+输出：
+```
+{ "add": [ [ [ ] ], 1 ], "key": "支持\t中文\\\n与\"转义字符", "map": [ { }, [ ] ], "语法": 114514 }
+支持	中文\与"转义字符
 ```
 
+## 类型列表
+
+### JsonType 枚举
+表示当前JSON对象存放的数据类型：
+```cpp
+enum class JsonType{
+    /** 对象，内部存放键值对 */
+    OBJECT,
+    /** 列表，内部多个任意类型 */
+    ARRAY,
+    /** 字符串 */
+    STRING,
+    /** 数值 */
+    NUMBER,
+    /** true or false */
+    BOOLEN,
+    /** null */
+    ISNULL,
+};
+```
+
+### JsonBasic 类型
+**本库中所有JSON数据类型的基类。**<br>
+内部封装了大部分算法，可以直接使用。
+
+其他高级类型的直接内部元素访问，会退化成此类型。
+
+### JsonObject 类型
+**Json的对象类型。**<br>
+JsonBasic的子类，内部必然存放`JsonType::OBJECT`类型的数据。<br>
+（即内部必然是键值对。）
+
+提供额外的操作函数，并禁止其他类型的操作。
+
+制作中...
+
+### JsonArray 类型
+**Json的数组类型。**<br>
+JsonBasic的子类，内部必然存放`JsonType::ARRAY`类型的数据。<br>
+（即内部必然是数组。）
+
+提供额外的操作函数，并禁止其他类型的操作。
+
+制作中...
+
+### JsonValue 类型
+**Json的值类型。**<br>
+JsonBasic的子类，内部存放`JsonType::ARRAY`和`JsonType::OBJECT`以外的数据。
+
+
+提供额外的操作函数，并禁止其他类型的操作。
+
+提供更加简单的赋值，拼接，字符串化等操作。
+
+制作中...
+
+### JsonException 异常
+**本库中异常的基类。**<br>
+`std::runtime_error`的子类。
+
+### JsonStructureException 异常
+**表示JSON文本存在格式错误。**
+
+`JsonException`的子类。<br>
+通常在反序列化，生成对象时出现。
+
+### JsonTypeException 异常
+**表示JSON对象内部数据类型错误。**
+
+`JsonException`的子类。<br>
+
+通常在操作对象时出现，比如对`OBJECT`对象使用了`push_back()`函数。<br>
+（`push_back()`函数用在`ARRAY`末尾插入元素，不能用在`OBJECT`。）
 
 
