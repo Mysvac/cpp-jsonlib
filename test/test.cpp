@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <chrono>
-// #include "jsonlib.h"
+#include "jsonlib.h"
 
 
 // void read_json(const std::string& json_path, std::string& res) {
@@ -60,7 +60,11 @@ static bool is_number(const std::string& str) noexcept{
 
 int main(){
     try{
-
+        Json::JsonBasic json { R"({"123":"123","321":["321"]})"};
+        const auto& map = json.getMapConst();
+        for(const auto& it : map){
+            std::cout << it.first << ' ' << it.second.serialize() << std::endl;
+        }
     }
     catch(const std::exception& e){
         std::cerr << e.what() << std::endl;

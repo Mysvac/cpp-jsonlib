@@ -608,6 +608,17 @@ namespace Json{
         return serialize() == jsonBasic.serialize();
     }
 
+    // 获取内部容器
+    const JsonBasic::Map& JsonBasic::getMapConst() const{
+        if(type_ != JsonType::OBJECT) throw JsonTypeException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n"};
+        return std::get<Map>(content_);
+    }
+    // 获取内部容器
+    const JsonBasic::List& JsonBasic::getListConst() const{
+        if(type_ != JsonType::ARRAY) throw JsonTypeException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not array.\n"};
+        return std::get<List>(content_);
+    }
+
     // 检查是否包含某个key
     bool JsonBasic::hasKey(const std::string& key) const{
         if(type_ != JsonType::OBJECT) throw JsonTypeException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n" };

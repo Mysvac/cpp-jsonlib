@@ -196,6 +196,20 @@ namespace Json{
         JsonType type() const noexcept { return type_; }
 
         /**
+         * @brief 获取内部容器，键值对。
+         * @exception JsonTypeException
+         * @note 必须是OBJECT类型，否则抛出异常。
+         */
+        const Map& getMapConst() const;
+
+        /**
+         * @brief 获取内部容器，键列表。
+         * @exception JsonTypeException
+         * @note 必须是ARRAY类型，否则抛出异常。
+         */
+        const List& getListConst() const;
+
+        /**
          * @brief 序列化对象
          * @details 将对象序列号，生成JSON文本。
          * @note 注意，序列化包含转义符号，不推荐此函数查询string数据内容。
