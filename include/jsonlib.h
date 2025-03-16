@@ -242,6 +242,20 @@ namespace Json{
          */
         JsonBasic& operator[](const std::string& key);
 
+
+        /**
+         * @brief 比较运算
+         * @details 比较内容，Object内部顺序无影响，ARRAY内部顺序有影响
+         * @note 序列化后再比较，耗时较长，不应频繁使用
+         */
+        bool operator==(const std::string& key) const;
+        /**
+         * @brief 比较运算
+         * @details 比较内容，Object内部顺序无影响，ARRAY内部顺序有影响
+         * @note 序列化后再比较，耗时较长，不应频繁使用
+         */
+        bool operator==(const JsonBasic& jsonBasic) const noexcept;
+
         /**
          * @brief 检查是否存在某个key
          * @exception JsonTypeException 非对象类型抛出异常

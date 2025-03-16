@@ -1,0 +1,118 @@
+{
+    "version": 5,
+    "configurePresets": [
+      {
+        "name": "Ninja-config",
+        "displayName": "MSVC Ninja Multi-config",
+        "description": "Not Copy Qt DLL files",
+        "inherits": [
+          "x64-base-config",
+          "Qt-Default"
+        ],
+        "cacheVariables": {
+          "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
+          "CMAKE_CXX_COMPILER": "cl.exe",
+          "QT_QML_GENERATE_QMLLS_INI": "ON",
+          "COPY_QT_DLL": "OFF",
+          "CMAKE_PREFIX_PATH": "E:/Qt/6.8.2/msvc2022_64"
+        },
+        "environment": {
+          "VCINSTALLDIR": "E:/VisualStudio/VC"
+        }
+      },
+      {
+        "name": "Ninja-config-DLL",
+        "displayName": "MSVC Ninja Multi-config Dll",
+        "description": "Copy Qt DLL files after Building",
+        "inherits": [
+          "Ninja-config",
+          "Qt-Default"
+        ],
+        "cacheVariables": {
+          "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
+          "CMAKE_CXX_COMPILER": "cl.exe",
+          "QT_QML_GENERATE_QMLLS_INI": "ON",
+          "COPY_QT_DLL": "ON",
+          "CMAKE_PREFIX_PATH": "E:/Qt/6.8.2/msvc2022_64"
+        }
+      },
+      {
+        "hidden": true,
+        "name": "Qt-Default",
+        "inherits": "6.8.2_msvc2022_64",
+        "vendor": {
+          "qt-project.org/Default": {
+            "checksum": "dVaXqt7vT7P6yO+8E9fl9WciXD4="
+          }
+        }
+      },
+      {
+        "hidden": true,
+        "name": "6.8.2_msvc2022_64",
+        "inherits": "Qt",
+        "environment": {
+          "QTDIR": "E:/Qt/6.8.2/msvc2022_64"
+        },
+        "architecture": {
+          "strategy": "external",
+          "value": "x64"
+        },
+        "generator": "Ninja",
+        "vendor": {
+          "qt-project.org/Version": {
+            "checksum": "VatoQaQiletzW30x2TFs00p1nqM="
+          }
+        }
+      },
+      {
+        "hidden": true,
+        "name": "6.8.2_msvc2022_arm64",
+        "inherits": "Qt",
+        "environment": {
+          "QTDIR": "E:/Qt/6.8.2/msvc2022_arm64"
+        },
+        "architecture": {
+          "strategy": "external",
+          "value": "arm64"
+        },
+        "generator": "Ninja",
+        "vendor": {
+          "qt-project.org/Version": {
+            "checksum": "OSakvWknVfu7bpSLH7/ghaXTGRI="
+          }
+        }
+      }
+    ],
+    "buildPresets": [
+      {
+        "name": "build-debug",
+        "displayName": "Build Debug",
+        "configurePreset": "Ninja-config",
+        "configuration": "Debug"
+      },
+      {
+        "name": "build-release",
+        "displayName": "Build Release",
+        "configurePreset": "Ninja-config",
+        "configuration": "Release"
+      },
+      {
+        "name": "build-debug-dll",
+        "displayName": "Build Debug dll",
+        "configurePreset": "Ninja-config-DLL",
+        "configuration": "Debug"
+      },
+      {
+        "name": "build-release-dll",
+        "displayName": "Build Release dll",
+        "configurePreset": "Ninja-config-DLL",
+        "configuration": "Release"
+      }
+    ],
+    "vendor": {
+      "qt-project.org/Presets": {
+        "checksum": "RQ1iTTKlQO0cNrx+Mg7G6x2D/Bs="
+      }
+    }
+}
+  

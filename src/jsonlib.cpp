@@ -10,28 +10,34 @@
 
 namespace Json{
 
-    template<typename T, typename = std::enable_if_t<std::is_base_of_v<JsonBasic, T>>>
-    static bool is_number(const T& t) noexcept {
-        return t.getType() == JsonType::NUMBER;
-    }
+    // template<typename T, typename = std::enable_if_t<std::is_base_of_v<JsonBasic, T>>>
+    // static bool is_number(const T& t) noexcept {
+    //     return t.getType() == JsonType::NUMBER;
+    // }
 
+    // 禁止输入空字符串
     static bool is_number(const std::string& str) noexcept{
         size_t it=0;
         size_t len = str.size();
-        // if(len==0) return false;
-        if(str[0] == '-' || str[0] == '+'){
-            if(len==1) return false;
+        if(str[0] == '-'){
+            if(len == 1 && !std::isdigit(str[1])) return false;
             ++it;
-            if(str[it]=='.') return false;
         }
-        bool have_point = false;
-        for(;it<len;++it){
-            if(str[it] == '.'){
-                if(have_point) return false;
-                have_point = true;
-                continue;
+        bool have_not_point = true;
+        bool have_not_e = true;
+        while(it<len){
+            if(std::isdigit(str[it])) ++it;
+            else if(str[it] == '.' && have_not_point && have_not_e){
+                have_not_point = false;
+                ++it;
             }
-            else if(!std::isdigit(str[it])) return false;
+            else if( (str[it] == 'e' || str[it] == 'E') && have_not_e){
+                have_not_e = false;
+                ++it;
+                if(it >= len) return false;
+                if((it == '-' || it== '+') && it < len-1) ++it;
+            }
+            else return false;
         }
         return true;
     }
@@ -40,7 +46,7 @@ namespace Json{
     static std::string reverse_escape(const std::string& str) noexcept{
         std::string res;
         // 提前分配空间，减少扩容开销
-        if(str.size() > 15) res.reserve(str.size() + 2 + (str.size() >> 4));
+        if(str.size() > 13) res.reserve(str.size() + 3 + (str.size() >> 4));
         res += "\"";
         for(const char& it: str){
             switch(it){
@@ -78,9 +84,6 @@ namespace Json{
 
     // 转义字符串，两端位置固定
     static std::string escape(const std::string& str,const size_t& left,const size_t& right){
-        if(left < 0 || right >= str.size() || left > right) 
-            throw std::out_of_range { std::string { "left:" } + std::to_string(left) + " right:" + std::to_string(right) + " size:" + std::to_string(str.size()) };
-        
         std::string res;
         // 预分配空间
         if(right - left > 14) res.reserve(right - left + 1);
@@ -116,28 +119,23 @@ namespace Json{
                     break;
                 }
             }
-            else{
-                res += str[index];
-            }
+            else res += str[index];
             ++index;
         }
         return std::move(res);
     }
 
-    // 转义字符，最终位置不确定但小于等于right，且修改外部参数left
+    // 转义字符串，最终位置不确定但小于right，且修改外部参数left
     static std::string escape_next(const std::string& str, size_t& left, const size_t& right){
-        if(left < 0 || right >= str.size() || left > right) 
-            throw std::out_of_range { std::string { "left:" } + std::to_string(left) + " right:" + std::to_string(right) + " size:" + std::to_string(str.size()) };
-        
         // 跳过字符串起始的双引号
         ++left;
         std::string res;
 
-        while(left <= right && str[left] != '\"'){
+        while(left < right && str[left] != '\"'){
             if(str[left] == '\\'){
                 // 转义字符处理
                 ++left;
-                if(left > right) throw JsonStructureException { "String have not end char '\"'." };
+                if(left >= right) throw JsonStructureException { "String have not end char '\"'." };
                 switch (str[left])
                 {
                 case 'n':
@@ -163,9 +161,7 @@ namespace Json{
                     break;
                 }
             }
-            else{
-                res += str[left];
-            }
+            else res += str[left];
             ++left;
         }
         // left最终停在结束的双引号
@@ -191,14 +187,14 @@ namespace Json{
                     // 获取键
                     key = Json::escape_next(str, index, tail);
                     ++index;
-                    // 分隔符
-                    while(index < tail && std::isspace(str[index])) ++index;
+                    // 分隔符 子元素 不可能以 '\"' 结尾，无需检测越界
+                    while(std::isspace(str[index])) ++index;
                     if(str[index] == ':') ++index;
                     else throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
 
-                    // 获取值
+                    // 获取值 子元素 不可能以':'结尾，此处不检测
                     while(std::isspace(str[index])) ++index;
-                    map.insert(std::make_pair(key, JsonBasic { str, index, tail }));
+                    map.insert(std::make_pair(std::move(key), JsonBasic { str, index, tail }));
                     // index默认停在子元素的最后一个字符，所以需要先自增
                     ++index;
                     while(index < tail && std::isspace(str[index])) ++index;
@@ -206,8 +202,8 @@ namespace Json{
                     if(str[index] == ',') ++index;
                     else if(str[index] != '}') throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
                 }
-                // 大于，说明大括号未闭合
-                if(index > tail) throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
+                // 大于等于，说明内部括号未闭合
+                if(index >= tail) throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
             }
             break;
         case '[':
@@ -229,8 +225,8 @@ namespace Json{
                     if(str[index] == ',') ++index;
                     else if(str[index] != ']') throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
                 }
-                // 大于，说明方括号未闭合
-                if(index > tail) throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
+                // 大于等于，说明内部括号未闭合
+                if(index >= tail) throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
             }
             break;
         case '\"':
@@ -253,24 +249,47 @@ namespace Json{
         case 'n':
             if(tail - index <= 4 || str.compare(index, 4, "null")) throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
             type_ = JsonType::ISNULL;
-            content_ = std::string { "null" };
+            // 默认 std::string { "null" }
             index += 3;
             break;
         default:
-            if(!std::isdigit(str[index]) && str[index]!='-' && str[index]!='+') throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
+            if(!std::isdigit(str[index]) && str[index]!='-') throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
+            if(!std::isdigit(str[index+1]) && str[index]=='-') throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
             {
                 type_ = JsonType::NUMBER;
-                bool have_point = false;
+                bool have_not_point = true;
                 std::string tmp;
                 tmp += str[index];
-                // 正负号开头，且紧跟小数点
-                if(index >= tail && (str[index]!='-' || str[index]!='+')) throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
-                if(str[index+1]=='.' && (str[index]=='-' || str[index]=='+')) throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
 
-                while(std::isdigit(str[index + 1]) || (!have_point && str[index + 1] == '.')){
+                while(index < tail)
+                {
                     ++index;
-                    tmp += str[index];
-                    if(str[index] == '.') have_point = true;
+                    while(std::isdigit(str[index])){
+                        tmp += str[index];
+                        ++index;
+                    }
+                    if(str[index] == '.'){
+                        tmp += str[index];
+                        ++index;
+                        while(std::isdigit(str[index])){
+                            tmp += str[index];
+                            ++index;
+                        }
+                    }
+                    if(str[index] == 'e' || str[index] == 'E'){
+                        tmp += str[index];
+                        ++index;
+                        if(str[index] == '-' || str[index] == '+'){
+                            tmp += str[index];
+                            ++index;
+                        }
+                        while(std::isdigit(str[index + 1])){
+                            tmp += str[index];
+                            ++index;
+                        }
+                    }
+                    --index;
+                    break;
                 }
                 content_ = std::move(tmp);
             }
@@ -309,7 +328,7 @@ namespace Json{
                     key = Json::escape_next(str, index, tail);
                     ++index;
                     // 分隔符
-                    while(index <= tail && std::isspace(str[index])) ++index;
+                    while(std::isspace(str[index])) ++index;
                     if(str[index] == ':') ++index;
                     else throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
 
@@ -319,7 +338,7 @@ namespace Json{
 
                     // index默认停在子元素的最后一个字符，所以需要先自增
                     ++index;
-                    while(index < tail && std::isspace(str[index])) ++index;
+                    while(std::isspace(str[index])) ++index;
                     // 判断合法性，结束后下个字符要么逗号，要么终止
                     if(str[index] == ',') ++index;
                     else if(index != tail) throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
@@ -343,7 +362,7 @@ namespace Json{
                     list.push_back(JsonBasic { str, index, tail });
                     // index默认停在子元素的最后一个字符，所以需要先自增
                     ++index;
-                    while(index < tail && std::isspace(str[index])) ++index;
+                    while(std::isspace(str[index])) ++index;
                     // 判断合法性，结束后下个字符要么逗号，要么终止
                     if(str[index] == ',') ++index;
                     else if(index != tail) throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
@@ -371,10 +390,10 @@ namespace Json{
         case 'n':
             if(tail - index <= 4 || str.compare(index, 4, "null")) throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
             type_ = JsonType::ISNULL;
-            content_ = std::string { "null" };
             break;
         default:
             if(!std::isdigit(str[index])  && str[index]!='-' && str[index]!='+') throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
+            if(!std::isdigit(str[index+1]) && (str[index]=='-' || str[index]=='+')) throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
             {
                 std::string tmp = str.substr(index, tail-index+1);
                 if(!Json::is_number(tmp)) throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
@@ -458,20 +477,18 @@ namespace Json{
             {
                 // 对象类型
                 // 是否在开头加上逗号
-                bool add_comma = false;
                 std::string res = "{";
                 const Map& map = std::get<Map>(content_);
-                for(const auto& it : map){
-                    if(add_comma) res += ',';
-                    res += ' ';
+                for(const std::pair<std::string, JsonBasic>& it : map){
                     // 键是字符串，需要反转义
                     res += reverse_escape(it.first);
-                    res += ": ";
+                    res += ":";
                     // 递归序列号
                     res += it.second.serialize();
-                    add_comma = true;
+                    res += ',';
                 }
-                res += " }";
+                if(*res.rbegin() == ',') *res.rbegin() = '}';
+                else res += "}";
                 return std::move(res);
             }
             break;
@@ -481,15 +498,13 @@ namespace Json{
                 // 是否在开头加上逗号
                 std::string res = "[";
                 const List& list = std::get<List>(content_);
-                bool add_comma = false;
                 for(const JsonBasic& it : list){
-                    if(add_comma) res += ',';
-                    res += ' ';
                     // 递归序列号
                     res += it.serialize();
-                    add_comma = true;
+                    res += ',';
                 }
-                res += " ]";
+                if(*res.rbegin() == ',') *res.rbegin() = ']';
+                else res += ']';
                 return std::move(res);
             }
             break;
@@ -581,6 +596,16 @@ namespace Json{
         Map& map = std::get<Map>(content_);
         if(map.find(key) == map.end()) map.insert(std::make_pair(key, JsonBasic {}));
         return map[key];
+    }
+
+    // 比较
+    bool JsonBasic::operator==(const std::string& str) const{
+        JsonBasic tmp { str };
+        return serialize() == tmp.serialize();
+    }
+    // 比较
+    bool JsonBasic::operator==(const JsonBasic& jsonBasic) const noexcept{
+        return serialize() == jsonBasic.serialize();
     }
 
     // 检查是否包含某个key

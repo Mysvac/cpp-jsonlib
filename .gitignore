@@ -4,6 +4,7 @@
 .vs/
 
 build/
+vcpkg_installed/
 
 CMakeUserPresets.json
 vcpkg-configuration.json

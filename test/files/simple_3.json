@@ -1,0 +1,43 @@
+{
+    "version": 9,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 30,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "base",
+            "displayName": "base-config",
+            "description": "base-config",
+            "generator": "Visual Studio 17 2022",
+            "binaryDir": "${sourceDir}/build",
+            "installDir": "${sourceDir}/install",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "environment": {
+                "VCINSTALLDIR": "E:/VisualStudio/VC"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "base-build",
+            "displayName": "base-build",
+            "description": "Global Debug Build preset in x64 Windows",
+            "configurePreset": "base",
+            "configuration": "Debug"
+        }
+    ]
+}

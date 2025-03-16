@@ -77,10 +77,27 @@ install(EXPORT ${package_name}-targets
 ) # 注意此处的 DESTINATION 是包名而非命名空间或库名
 
 
-enable_testing()
+if(ENABLE_BUILD_TEST_EXE STREQUAL "ON")
+    enable_testing()
+    
+    add_executable(my_test test/test.cpp src/jsonlib.cpp)
+    target_include_directories(my_test PRIVATE include)
 
-add_executable(my_test test/test.cpp src/jsonlib.cpp)
-target_include_directories(my_test PRIVATE include)
+    # 添加测试用例
+    add_test(NAME MyTest COMMAND my_test)
 
-# 添加测试用例
-add_test(NAME MyTest COMMAND my_test)
+    find_package(GTest CONFIG REQUIRED)
+    add_executable(g_test test/g_test.cpp src/jsonlib.cpp)
+    target_include_directories(g_test PRIVATE include)
+    target_link_libraries(g_test PRIVATE GTest::gtest GTest::gtest_main)
+    add_test(NAME GoogleTest COMMAND g_test)
+
+    add_custom_command(TARGET g_test POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/test/files
+        ${CMAKE_CURRENT_BINARY_DIR}/files
+        COMMENT "Copying files directory..."
+        VERBATIM
+    )
+
+endif()

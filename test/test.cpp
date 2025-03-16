@@ -1,23 +1,69 @@
 #include <iostream>
-#include "jsonlib.h"
+#include <fstream>
+#include <sstream>
+#include <chrono>
+// #include "jsonlib.h"
+
+
+// void read_json(const std::string& json_path, std::string& res) {
+//     std::ifstream ifs { json_path , std::ios::in | std::ios::binary };
+//     // 其他解析逻辑...
+//     if (!ifs.is_open()) {
+//         throw std::runtime_error("Could not open file: " + json_path);
+//         return;
+//     }
+//     std::stringstream buffer;
+//     buffer << ifs.rdbuf();
+//     res = buffer.str();
+//     ifs.close();
+// }
+
+// void write_json(const std::string& json_path,const std::string& res) {
+//     std::ofstream ofs { json_path , std::ios::out | std::ios::trunc  };
+//     // 其他解析逻辑...
+//     if (!ofs.is_open()) {
+//         throw std::runtime_error("Could not open file: " + json_path);
+//         return;
+//     }
+//     ofs << res;
+//     ofs.close();
+// }
+
+// void unserialize_json(const std::string& str, Json::JsonBasic& jsonBasic){
+//     jsonBasic = str;
+// }
+
+// void serialize_json(std::string& str,const Json::JsonBasic& jsonBasic){
+//     str = jsonBasic.serialize();
+// }
+
+    // 禁止输入空字符串
+static bool is_number(const std::string& str) noexcept{
+    size_t it=0;
+    size_t len = str.size();
+    if(str[0] == '-' || str[0] == '+'){
+        if(len == 1 && !std::isdigit(str[1])) return false;
+        ++it;
+    }
+    bool have_point = false;
+    for(;it<len;++it){
+        if(std::isdigit(str[it])) continue;
+        else if(str[it] == '.'){
+            if(have_point) return false;
+            have_point = true;
+        }
+        else return false;
+    }
+    return true;
+}
+
 
 int main(){
-    Json::JsonBasic json { R"__JSON__(
-        {
-            "语法": ["C++", "原始字符串", false ],
-            "key": "支持\t中文\\与\"转义字符",
-            "na\"\\me": [ 114,514 , null ],
-            "map": [ {} , [ [ "嵌套" ] , {} ] ]
-        }
-        )__JSON__"};
-        
-        json.erase("na\"\\me"); // 删除
-        json["map"][1].clear(); // 清空
-        json["语法"] = 114514; // 修改
-        json["add"] = "[[[]]]"; //增加
-        json["add"].push_back(Json::JsonBasic { 1 }); // 此处不完善，只能push对象
-        // 支持移动语义
-        
-        std::cout << json.serialize() << std::endl;
-        std::cout << json["key"].as_string() << std::endl; // 获取字符串并转义
+    try{
+
+    }
+    catch(const std::exception& e){
+        std::cerr << e.what() << std::endl;
+    }
+
 }

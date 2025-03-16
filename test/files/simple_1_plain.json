@@ -1,0 +1,1 @@
+{"description":"A simple JSON library using C++17.","features":{"test":{"dependencies":["gtest"],"description":"Enable tests"}},"homepage":"https://github.com/Mysvac/cpp-jsonlib","name":"cpp-jsonlib","version":"1.0.0"}
