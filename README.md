@@ -6,33 +6,73 @@
 提供如下功能：
 - 序列化，JSON控制对象->JSON文本。
 - 反序列化，JSON文本 -> JSON控制对象。
-- 增、删、改、查。
+- 便捷的 增、删、改、查。
 - 移动语义支持。
 - 异常处理支持（完善中）。
 
 ### 效率概述
 - **N** : JSON文本长度。
 - **m** : 子元素个数。
-- 下面提供最坏情况的时空复杂度：
+- 下面提供最坏情况的时空复杂度（虽然没什么用，后面都是常数优化。）：
 - **序列化**：时间复杂度O(N)，空间复杂度O(N)。
 - **反序列化**: 时间复杂度O(N)，空间复杂度O(N)。
 - **键值对-增删改查**: O(log m)。
 - **数组-增删**: 末尾操作O(1)，其余位置平均O(m)。
 - **数组-改查**: O(1)。
 
-### 与其他C++JSON解析库的对比
+## 与其他C++JSON解析库的对比
+测试框架:<https://github.com/miloyip/nativejson-benchmark>
 
+### 一致性测试
 
-### 简单示例
+#### 整体分数
+![整体分数](others/1-0-overall.png)
 
-#### 导入库
+#### 反序列化测试
+json字符串->可操作对象。<br>
+反序列化错误格式能否识别，正确格式能否解析准确等。
+![反序列化](others/1-1-unserialize.png)
+
+#### 浮点数解析
+解析后的精度差，各自格式的解析能力。
+![浮点数解析](others/1-2-double.png)
+
+#### 字符串解析
+非法字符串能否检测，字符转义是否正确。
+![字符串解析](others/1-3-string.png)
+
+#### roundtrip不知道是什么
+非法字符串能否检测，字符转义是否正确。
+![ROUNDTRIP](others/1-4-roundtrip.png)
+
+### 性能测试
+*我怀疑最快的几个库是多线程在跑...*
+
+#### 反序列化耗时（越低越好）
+![反序列化耗时](others/2-1-unserialize.png)
+
+#### 内存占用（越低越好）
+此处框架自带的QT代码内存泄漏，检测数据错误。
+![内存占用](others/2-2-memory.png)
+
+#### 序列化耗时
+可操作对象->json字符串。<br>
+![序列化耗时](others/2-3-serialize.png)
+
+#### 序列化+美化耗时
+美化是指输出的字符串带换行和缩进。
+![美化](others/2-4-pretty.png)
+
+## 简单示例
+
+### 导入库
 （暂未合并vcpkg官方仓库，提供源码，自行编译。）
 ```cmake
 find_package(cpp-jsonlib CONFIG REQUIRED)
 get_target_property(LIB_TYPE jsonlib::jsonlib TYPE)
 ```
 
-#### 1.使用JsonBasic类型
+### 1.使用JsonBasic类型
 ```cpp
 Json::JsonBasic json {};
 json = "{ \"key\": [ true, 12, \"val\" ] }";
@@ -62,7 +102,7 @@ Json::JsonBasic json2 { R"__JSON__(
 std::cout << json2.serialize() << std::endl;
 ```
 
-3. 增删改查
+### 3. 增删改查
 ```cpp
 Json::JsonBasic json { R"__JSON__(
 {
@@ -85,7 +125,7 @@ std::cout << json["key"].as_string() << std::endl; // 获取字符串并转义
 ```
 输出：
 ```
-{ "add": [ [ [ ] ], 1 ], "key": "支持\t中文\\\n与\"转义字符", "map": [ { }, [ ] ], "语法": 114514 }
+{"add":[[[]],1],"key":"支持\t中文\\\n与\"转义字符","map":[{},[]],"语法":114514}
 支持	中文\与"转义字符
 ```
 
