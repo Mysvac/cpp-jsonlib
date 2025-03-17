@@ -17,7 +17,8 @@
             "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
             "ENABLE_BUILD_TEST_EXE": "ON",
             "VCPKG_MANIFEST_FEATURES": "test",
-            "VCPKG_MANIFEST_MODE": "ON"
+            "VCPKG_MANIFEST_MODE": "ON",
+            "CMAKE_CXX_COMPILER": "cl.exe"
           },
         "architecture": {
             "value": "x64",

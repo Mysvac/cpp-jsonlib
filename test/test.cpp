@@ -60,11 +60,47 @@ static bool is_number(const std::string& str) noexcept{
 
 int main(){
     try{
-        Json::JsonBasic json { R"({"123":"123","321":["321"]})"};
-        const auto& map = json.getMapConst();
-        for(const auto& it : map){
-            std::cout << it.first << ' ' << it.second.serialize() << std::endl;
+        Json::JsonBasic json { R"__JSON__(
+{
+    "version": 5,
+    "cmakeMinimumRequired": {
+      "major": 3,
+      "minor": 24,
+      "patch": 0
+    },
+    "configurePresets": [
+      {
+        "name": "Ninja",
+        "description": "Global config preset - base",
+        "generator": "Ninja Multi-Config",
+        "binaryDir": "${sourceDir}/build/",
+        "installDir": "${sourceDir}/build/",
+        "cacheVariables": {
+            "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+            "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
+            "ENABLE_BUILD_TEST_EXE": "ON",
+            "VCPKG_MANIFEST_FEATURES": "test",
+            "VCPKG_MANIFEST_MODE": "ON",
+            "CMAKE_CXX_COMPILER": "cl.exe"
+          },
+        "architecture": {
+            "value": "x64",
+            "strategy": "external"
         }
+      }
+    ],
+    "buildPresets": [
+        {
+        "name": "build-debug",
+        "displayName": "Build Debug",
+        "configurePreset": "Ninja",
+        "configuration": "Debug"
+        }
+    ]
+}
+  
+            )__JSON__"};
+        std::cout << json.serialize_pretty() << std::endl;
     }
     catch(const std::exception& e){
         std::cerr << e.what() << std::endl;

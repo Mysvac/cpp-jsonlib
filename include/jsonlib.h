@@ -87,12 +87,15 @@ namespace Json{
             JsonStructureException(const std::string& message) : JsonException(message) {}
     };
 
+    class JsonObject;
+    class JsonArray;
+    class JsonValue;
 
     /**
-     * @class JsonObject
+     * @class JsonBasic
      * @brief Json数据对象。
      * @details JSON反序列化后的，可操作对象。
-     * @note 请直接使用此类。
+     * @note 可以直接使用此类。
      */
     class JSONLIB_EXPORT JsonBasic{
     public:
@@ -170,8 +173,21 @@ namespace Json{
          */
         JsonBasic& operator=(const double& tmp) noexcept;
 
+        JsonBasic(const JsonObject& jsonObject) noexcept;
+        JsonBasic(const JsonArray& jsonArray) noexcept;
+        JsonBasic(const JsonValue& jsonValue) noexcept;
+        JsonBasic(JsonObject&& jsonObject) noexcept;
+        JsonBasic(JsonArray&& jsonArray) noexcept;
+        JsonBasic(JsonValue&& jsonValue) noexcept;
+        JsonBasic& operator=(const JsonObject& jsonObject) noexcept;
+        JsonBasic& operator=(const JsonArray& jsonArray) noexcept;
+        JsonBasic& operator=(const JsonValue& jsonValue) noexcept;
+        JsonBasic& operator=(JsonObject&& jsonObject) noexcept;
+        JsonBasic& operator=(JsonArray&& jsonArray) noexcept;
+        JsonBasic& operator=(JsonValue&& jsonValue) noexcept;
+
     private:
-        JsonBasic::JsonBasic(const std::string& str, size_t& index, const size_t& tail);
+        JsonBasic(const std::string& str, size_t& index, const size_t& tail);
 
     protected:
         /**
@@ -211,10 +227,17 @@ namespace Json{
 
         /**
          * @brief 序列化对象
-         * @details 将对象序列号，生成JSON文本。
+         * @details 将对象序列号，生成JSON文本，去除无效空白字符。
          * @note 注意，序列化包含转义符号，不推荐此函数查询string数据内容。
          */
         std::string serialize() const noexcept;
+
+        /**
+         * @brief 序列化对象且美化
+         * @details 将对象序列号，生成JSON文本，包含空格和换行。
+         * @note 注意，序列化包含转义符号，不推荐此函数查询string数据内容。
+         */
+        std::string serialize_pretty(const size_t& space_num = 2,const size_t& depth = 0) const noexcept;
 
         /**
          * @brief 重置
@@ -365,9 +388,109 @@ namespace Json{
          * @note STRING类型则转义输出，非STRING则序列化
          */
         std::string to_string() const noexcept;
-        // JsonObject as_object() const;
-        // JsonArray as_array() const;
-        // JsonValue as_value() const;
+
+        JsonObject as_object() const;
+        JsonArray as_array() const ;
+        JsonValue as_value() const;
     };
+
+
+    /**
+     * @class JsonObject
+     * @brief Json对象类型对象。
+     * @details JSON反序列化后的，可操作对象。
+     * @note 可以直接使用此类。
+     */
+    class JSONLIB_EXPORT JsonObject : public JsonBasic{
+    public:
+        const List& getListConst() const = delete;
+        void reset() noexcept = delete;
+        JsonBasic& at(const size_t& index) = delete;
+        void push_back(const JsonBasic& jsonBasic) = delete;
+        void push_back(JsonBasic&& jsonBasic) = delete;
+        void insert(const size_t& index, const JsonBasic& jsonBasic) = delete;
+        void insert(const size_t& index, JsonBasic&& jsonBasic) = delete;
+        void erase(const size_t& index) = delete;
+        long long as_int64() const = delete;
+        double as_double() const = delete;
+        bool as_bool() const = delete;
+        std::string as_string() const = delete;
+
+        JsonObject(): JsonBasic( "{}" ){ }
+
+        explicit JsonObject(const JsonBasic& jsonBasic): JsonBasic(jsonBasic){
+            if(!jsonBasic.is_object()) throw JsonTypeException { "JsonObject's type must be JsonType::OBJECT.\n" };
+        }
+
+        /**
+         * 不再进行类型检查
+         */
+        JsonBasic& operator[](const std::string& key);
+    };
+
+
+    /**
+     * @class JsonArray
+     * @brief Json列表类型对象。
+     * @details JSON反序列化后的，可操作对象。
+     * @note 可以直接使用此类。
+     */
+    class JSONLIB_EXPORT JsonArray : public JsonBasic{
+    public:
+        const Map& getMapConst() const = delete;
+        void reset() noexcept = delete;
+        JsonBasic& at(const std::string& key) = delete;
+        bool hasKey(const std::string& key) const = delete;
+        void insert(const std::string& key,const JsonBasic& jsonBasic) = delete;
+        void insert(const std::string& key,JsonBasic&& jsonBasic) = delete;
+        void erase(const std::string& key) = delete;
+        long long as_int64() const = delete;
+        double as_double() const = delete;
+        bool as_bool() const = delete;
+        std::string as_string() const = delete;
+
+        JsonArray(): JsonBasic( "[]" ){ }
+        explicit JsonArray(const JsonBasic& jsonBasic): JsonBasic(jsonBasic){
+            if(!jsonBasic.is_array()) throw JsonTypeException { "JsonArray's type must be JsonType::ARRAY.\n" };
+        }
+
+        /**
+         * 不再进行类型检查
+         */
+        JsonBasic& operator[](const size_t& index);
+    };
+
+    /**
+     * @class JsonValue
+     * @brief Json值类型对象。
+     * @details JSON反序列化后的，可操作对象。
+     * @note 可以直接使用此类。
+     */
+    class JSONLIB_EXPORT JsonValue : public JsonBasic{
+    public:
+        const List& getListConst() const = delete;
+        const Map& getMapConst() const = delete;
+        JsonBasic& at(const size_t& index) = delete;
+        JsonBasic& at(const std::string& key) = delete;
+        bool hasKey(const std::string& key) const = delete;
+        void push_back(const JsonBasic& jsonBasic) = delete;
+        void push_back(JsonBasic&& jsonBasic) = delete;
+        void insert(const size_t& index, const JsonBasic& jsonBasic) = delete;
+        void insert(const size_t& index, JsonBasic&& jsonBasic) = delete;
+        void insert(const std::string& key,const JsonBasic& jsonBasic) = delete;
+        void insert(const std::string& key,JsonBasic&& jsonBasic) = delete;
+        void erase(const size_t& index) = delete;
+        void erase(const std::string& key) = delete;
+
+        JsonValue(): JsonBasic(){ }
+
+        
+
+        explicit JsonValue(const JsonBasic& jsonBasic): JsonBasic(jsonBasic){
+            if(jsonBasic.is_array() || jsonBasic.is_object()) throw JsonTypeException { "JsonValue's type must be not JsonType::ARRAY and JsonType::OBJECT.\n" };
+        }
+
+    };
+
 
 }

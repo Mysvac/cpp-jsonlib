@@ -469,7 +469,7 @@ namespace Json{
         return *this;
     }
 
-    // 序列号JSON对象
+    // 序列化JSON对象
     std::string JsonBasic::serialize() const noexcept{ 
         switch(type_)
         {
@@ -505,6 +505,62 @@ namespace Json{
                 }
                 if(*res.rbegin() == ',') *res.rbegin() = ']';
                 else res += ']';
+                return std::move(res);
+            }
+            break;
+        case JsonType::STRING:
+            // 字符串类型，直接反转义，然后输出
+            return reverse_escape(std::get<std::string>(content_));
+            break;
+        default:
+            // 非对象 非列表 非字符串，可以直接返回内容
+            return std::get<std::string>(content_);
+            break;
+        }
+    }
+
+    // 序列化JSON对象含空格和换行
+    std::string JsonBasic::serialize_pretty(const size_t& space_num ,const size_t& depth) const noexcept{
+        switch(type_)
+        {
+        case JsonType::OBJECT:
+            {
+                std::string tabs (depth*space_num, ' ');
+                // 对象类型
+                // 是否在开头加上逗号
+                std::string res { "{" };
+
+                const Map& map = std::get<Map>(content_);
+                for(const std::pair<std::string, JsonBasic>& it : map){
+                    res +='\n' + std::string(space_num, ' ') + tabs;
+                    // 键是字符串，需要反转义
+                    res += reverse_escape(it.first);
+                    res += ": ";
+                    // 递归序列号
+                    res += it.second.serialize_pretty(space_num, depth + 1);
+                    res += ',';
+                }
+                if(*res.rbegin() == ',') *res.rbegin() = '\n';
+                res += tabs + '}';
+                return std::move(res);
+            }
+            break;
+        case JsonType::ARRAY:
+            {
+                std::string tabs (depth*space_num, ' ');
+                // 数组类型
+                // 是否在开头加上逗号
+                std::string res { "[" };
+
+                const List& list = std::get<List>(content_);
+                for(const JsonBasic& it : list){
+                    // 递归序列号
+                    res += '\n' + std::string(space_num, ' ') + tabs;
+                    res += it.serialize_pretty(space_num, depth + 1);
+                    res += ',';
+                }
+                if(*res.rbegin() == ',') *res.rbegin() = '\n';
+                res += tabs + ']';
                 return std::move(res);
             }
             break;
@@ -697,6 +753,98 @@ namespace Json{
     std::string JsonBasic::to_string() const noexcept{
         if(type_ != JsonType::STRING) return std::get<std::string>(content_);
         return serialize();
+    }
+
+    JsonBasic::JsonBasic(const JsonObject& jsonObject) noexcept{
+        type_ = jsonObject.type();
+        content_ = jsonObject.content_;
+    }
+    JsonBasic::JsonBasic(const JsonArray& jsonArray) noexcept{
+        type_ = jsonArray.type();
+        content_ = jsonArray.content_;
+    }
+    JsonBasic::JsonBasic(const JsonValue& jsonValue) noexcept{
+        type_ = jsonValue.type();
+        content_ = jsonValue.content_;
+    }
+    JsonBasic::JsonBasic(JsonObject&& jsonObject) noexcept{
+        type_ = jsonObject.type();
+        content_ = std::move(jsonObject.content_);
+        jsonObject.clear();
+    }
+    JsonBasic::JsonBasic(JsonArray&& jsonArray) noexcept{
+        type_ = jsonArray.type();
+        content_ = std::move(jsonArray.content_);
+        jsonArray.clear();
+    }
+    JsonBasic::JsonBasic(JsonValue&& jsonValue) noexcept{
+        type_ = jsonValue.type();
+        content_ = std::move(jsonValue.content_);
+        jsonValue.reset();
+    }
+    JsonBasic& JsonBasic::operator=(const JsonObject& jsonObject) noexcept{
+        if(this == &jsonObject) return *this;
+        type_ = jsonObject.type();
+        content_ = jsonObject.content_;
+        return *this;
+    }
+    JsonBasic& JsonBasic::operator=(const JsonArray& jsonArray) noexcept{
+        if(this == &jsonArray) return *this;
+        type_ = jsonArray.type();
+        content_ = jsonArray.content_;
+        return *this;
+    }
+    JsonBasic& JsonBasic::operator=(const JsonValue& jsonValue) noexcept{
+        if(this == &jsonValue) return *this;
+        type_ = jsonValue.type();
+        content_ = jsonValue.content_;
+        return *this;
+    }
+    JsonBasic& JsonBasic::operator=(JsonObject&& jsonObject) noexcept{
+        if(this == &jsonObject) return *this;
+        type_ = jsonObject.type();
+        content_ = std::move(jsonObject.content_);
+        jsonObject.clear();
+        return *this;
+    }
+    JsonBasic& JsonBasic::operator=(JsonArray&& jsonArray) noexcept{
+        if(this == &jsonArray) return *this;
+        type_ = jsonArray.type();
+        content_ = std::move(jsonArray.content_);
+        jsonArray.clear();
+        return *this;
+    }
+    JsonBasic& JsonBasic::operator=(JsonValue&& jsonValue) noexcept{
+        if(this == &jsonValue) return *this;
+        type_ = jsonValue.type();
+        content_ = std::move(jsonValue.content_);
+        jsonValue.reset();
+        return *this;
+    }
+
+    JsonObject JsonBasic::as_object() const{
+        if(!(this->is_object())) throw JsonTypeException { "JsonObject's type must be JsonType::OBJECT.\n" };
+        return JsonObject { *this };
+    }
+    JsonArray JsonBasic::as_array() const{
+        if(!(this->is_array())) throw JsonTypeException { "JsonArray's type must be JsonType::ARRAY.\n" };
+        return JsonArray { *this };
+    }
+    JsonValue JsonBasic::as_value() const{
+        if(this->is_array() || this->is_object()) throw JsonTypeException { "JsonValue's type must be not JsonType::ARRAY and JsonType::OBJECT.\n" };
+        return JsonValue { *this };
+    }
+
+    JsonBasic& JsonObject::operator[](const std::string& key){
+        Map& map = std::get<Map>(content_);
+        if(map.find(key) == map.end()) map.insert(std::make_pair(key, JsonBasic {}));
+        return map[key];
+    }
+    JsonBasic& JsonArray::operator[](const size_t& index){
+        List& list = std::get<List>(content_);
+        if(index == list.size()) list.push_back( JsonBasic {} );
+        if(index < 0 || index > list.size()) throw std::out_of_range { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " out of range.\n"};
+        return list[index];
     }
 
 }
