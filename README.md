@@ -1,4 +1,4 @@
-# 一个简陋的CPP-JSON库（效率不高）
+# 一个现代CPP-JSON库（效率有待提升）
 
 ## 概要介绍
 
@@ -19,6 +19,8 @@
 - **键值对-增删改查**: O(log m)。
 - **数组-增删**: 末尾操作O(1)，其余位置平均O(m)。
 - **数组-改查**: O(1)。
+
+### 与其他C++JSON解析库的对比
 
 
 ### 简单示例
@@ -119,18 +121,26 @@ enum class JsonType{
 JsonBasic的子类，内部必然存放`JsonType::OBJECT`类型的数据。<br>
 （即内部必然是键值对。）
 
-提供额外的操作函数，并禁止其他类型的操作。
+禁止其他类型的操作。
 
-制作中...
+- 提供范围for支持。
+- 提供迭代器支持。
+- 提供加法运算，合并两个对象内容。
+
+完善中...
 
 ### JsonArray 类型
 **Json的数组类型。**<br>
 JsonBasic的子类，内部必然存放`JsonType::ARRAY`类型的数据。<br>
 （即内部必然是数组。）
 
-提供额外的操作函数，并禁止其他类型的操作。
+禁止其他类型的操作。
 
-制作中...
+- 提供范围for支持。
+- 提供迭代器支持。
+- 提供加法运算，合并两个对象内容。
+
+完善中...
 
 ### JsonValue 类型
 **Json的值类型。**<br>
@@ -141,7 +151,7 @@ JsonBasic的子类，内部存放`JsonType::ARRAY`和`JsonType::OBJECT`以外的
 
 提供更加简单的赋值，拼接，字符串化等操作。
 
-制作中...
+完善中...
 
 ### JsonException 异常
 **本库中异常的基类。**<br>
@@ -161,4 +171,57 @@ JsonBasic的子类，内部存放`JsonType::ARRAY`和`JsonType::OBJECT`以外的
 通常在操作对象时出现，比如对`OBJECT`对象使用了`push_back()`函数。<br>
 （`push_back()`函数用在`ARRAY`末尾插入元素，不能用在`OBJECT`。）
 
+## 函数表
+
+### JsonBasic类成员函数
+
+- JsonBasic() : 默认构造函数，生成 null 类型的json数据对象。
+- JsonBasic(const JsonType& jsonType) : 带类型的构造函数，按照类型默认初始化
+- JsonBasic(const char* str) : 文本字面量构造函数，解析文件生成对象。
+- JsonBasic(const std::string& str) : 字符串构造函数，解析字符串生成对象。
+- JsonBasic(const int& tmp) : 整数构造函数，生成NUMBER类型对象。
+- JsonBasic(const long long& tmp) : 整数构造函数，生成NUMBER类型对象。
+- JsonBasic(const double& tmp) : 浮点数构造函数，生成NUMBER类型对象。
+- 上述函数的赋值运算符版本。
+- 子类和自身类型的 **拷贝** 与 **移动** 构造函数和赋值函数。
+
+---
+
+- JsonType type() : 获取内部数据类型。
+- std::string serialize() : 序列化，去除所有无效空格。
+- std::string serialize_pretty() : 序列化，含美化（含空格，自动控制缩进）。
+- void reset() : 重置内部数据为 null。
+- void clear() : 根据当前类型，初始化内部值。
+- size_t size() : 获取子元素个数。（字符串和数值返回长度，布尔和null返回1）。
+- JsonBasic& at(index / key) ： 访问子元素，带越界检查，不会创建新元素。
+- JsonBasic& operator\[index / key\] ： 访问子元素，带越界检查，可能创建新元素。
+- bool operator== : 序列化后比较，耗时较长。
+- bool hasKey(const std::string& key) : 检测是否包含某个key。
+- std::set\<std::string\> getKeys() : 获取key的集合。
+- void push_back : 数组尾部插入
+- void insert : 数组指定位置插入，或键值对插入。
+- void erase : 删除数组指定位置，或某个key的元素。
+- bool is_xxx : 判断是不是xxx类型。
+- xxx as_xxx : 尝试转换成xxx类型。
+
+### JsonObject类成员函数
+
+- JsonBasic类中可对OBJECT类型使用的全部函数。
+- begin(),end() : 迭代器支持，范围for支持。
+- \+ 和 \+= 运算符重载 ： 合并两个JsonObject类型。
+- 拷贝与移动支持。
+
+### JsonArray类成员函数
+
+- JsonBasic类中可对ARRAY类型使用的全部函数。
+- begin(),end() : 迭代器支持，范围for支持。
+- \+ 和 \+= 运算符重载 ： 合并两个JsonArray类型。
+- 拷贝与移动支持。
+
+### JsonValue类成员函数
+
+- JsonBasic类中可对ARRAY类型使用的全部函数。
+- 更多更直接的构造函数。制作中...
+- 更多更直接的比较运算符。制作中...
+- 更多更直接的操作运算符。制作中...
 

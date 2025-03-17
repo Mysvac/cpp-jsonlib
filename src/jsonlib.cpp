@@ -1003,26 +1003,32 @@ namespace Json{
     JsonObject& JsonObject::operator=(const JsonBasic& jsonBasic){
         if(jsonBasic.is_object()) throw JsonTypeException { "JsonObject's type must be JsonType::OBJECT.\n" };
         *this = JsonObject { jsonBasic };
+        return *this;
     }
     JsonObject& JsonObject::operator=(JsonBasic&& jsonBasic){
         if(jsonBasic.is_object()) throw JsonTypeException { "JsonObject's type must be JsonType::OBJECT.\n" };
         *this = JsonObject { std::move(jsonBasic) };
+        return *this;
     }
     JsonArray& JsonArray::operator=(const JsonBasic& jsonBasic){
         if(jsonBasic.is_array()) throw JsonTypeException { "JsonObject's type must be JsonType::ARRAY.\n" };
         *this = JsonArray { jsonBasic };
+        return *this;
     }
     JsonArray& JsonArray::operator=(JsonBasic&& jsonBasic){
         if(jsonBasic.is_array()) throw JsonTypeException { "JsonObject's type must be JsonType::ARRAY.\n" };
         *this = JsonArray { std::move(jsonBasic) };
+        return *this;
     }
     JsonValue& JsonValue::operator=(const JsonBasic& jsonBasic){
         if(jsonBasic.is_value()) throw JsonTypeException { "JsonValue's type must be not JsonType::OBJECT and ARRAY.\n" };
         *this = JsonValue { jsonBasic };
+        return *this;
     }
     JsonValue& JsonValue::operator=(JsonBasic&& jsonBasic){
         if(jsonBasic.is_value()) throw JsonTypeException { "JsonValue's type must be not JsonType::OBJECT and ARRAY.\n" };
         *this = JsonValue { std::move(jsonBasic) };
+        return *this;
     }
 
     JsonObject::JsonObject(const JsonObject& jsonObject) noexcept {
