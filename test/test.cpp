@@ -60,7 +60,7 @@ static bool is_number(const std::string& str) noexcept{
 
 int main(){
     try{
-        Json::JsonBasic json { R"__JSON__(
+        Json::JsonObject json { R"__JSON__(
 {
     "version": 5,
     "cmakeMinimumRequired": {
@@ -99,7 +99,7 @@ int main(){
     ]
 }
   
-            )__JSON__"};
+            )__JSON__" };
         std::cout << json.serialize_pretty() << std::endl;
     }
     catch(const std::exception& e){

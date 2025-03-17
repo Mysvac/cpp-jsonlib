@@ -10,10 +10,6 @@
 
 namespace Json{
 
-    // template<typename T, typename = std::enable_if_t<std::is_base_of_v<JsonBasic, T>>>
-    // static bool is_number(const T& t) noexcept {
-    //     return t.getType() == JsonType::NUMBER;
-    // }
 
     // 禁止输入空字符串
     static bool is_number(const std::string& str) noexcept{
@@ -168,6 +164,28 @@ namespace Json{
         return std::move(res);
     }
 
+    // 指定类型的构造函数
+    JsonBasic::JsonBasic(const JsonType& jsonType){
+        type_ = jsonType;
+        switch (jsonType)
+        {
+        case JsonType::OBJECT:
+            content_ = Map {};
+            break;
+        case JsonType::ARRAY:
+            content_ = List {};
+            break;
+        case JsonType::STRING:
+            content_ = std::string {};
+            break;
+        case JsonType::NUMBER:
+            content_ = std::string { "0" };
+            break;
+        case JsonType::BOOLEN:
+            content_ = std::string { "false" };
+            break;
+        }
+    }
 
     // 辅助递归构造函数
     JsonBasic::JsonBasic(const std::string& str, size_t& index, const size_t& tail){
@@ -419,10 +437,8 @@ namespace Json{
     JsonBasic::JsonBasic(JsonBasic&& jsonBasic) noexcept{
         type_ = jsonBasic.type_;
         content_ = std::move(jsonBasic.content_);
-        jsonBasic.type_ = JsonType::ISNULL;
-        jsonBasic.content_ = std::string { "null" };
+        jsonBasic.reset();
     }
-
     // 拷贝赋值函数
     JsonBasic& JsonBasic::operator=(const JsonBasic& jsonBasic) noexcept{
         if(this == &jsonBasic) return *this;
@@ -435,9 +451,33 @@ namespace Json{
         if(this == &jsonBasic) return *this;
         type_ = jsonBasic.type_;
         content_ = std::move(jsonBasic.content_);
-        jsonBasic.type_ = JsonType::ISNULL;
-        jsonBasic.content_ = std::string { "null" };
+        jsonBasic.reset();
         return *this;
+    }
+    
+    // 强制类型构造函数
+    JsonBasic::JsonBasic(const JsonBasic& jsonBasic, const JsonType& jsonType){
+        if(jsonBasic.type_ != jsonType) throw JsonTypeException { "Illegel jsonType in constructure function." };
+        type_ = jsonBasic.type_;
+        content_ = jsonBasic.content_;
+    }
+    JsonBasic::JsonBasic(JsonBasic&& jsonBasic , const JsonType& jsonType){
+        if(jsonBasic.type_ != jsonType) throw JsonTypeException { "Illegel jsonType in constructure function." };
+        type_ = jsonBasic.type_;
+        content_ = std::move(jsonBasic.content_);
+        jsonBasic.reset(); // 重置状态
+    }
+    // 强制否定类型的构造函数
+    JsonBasic::JsonBasic(const JsonBasic& jsonBasic, const JsonType& not_jsonType1 ,const JsonType& not_jsonType2){
+        if(jsonBasic.type_ == not_jsonType1 || jsonBasic.type_ == not_jsonType2) throw JsonTypeException { "Illegel jsonType in constructure function." };
+        type_ = jsonBasic.type_;
+        content_ = jsonBasic.content_;
+    }
+    JsonBasic::JsonBasic(JsonBasic&& jsonBasic , const JsonType& not_jsonType1, const JsonType& not_jsonType2){
+        if(jsonBasic.type_ == not_jsonType1 || jsonBasic.type_ == not_jsonType2) throw JsonTypeException { "Illegel jsonType in constructure function." };
+        type_ = jsonBasic.type_;
+        content_ = std::move(jsonBasic.content_);
+        jsonBasic.reset(); // 重置状态
     }
 
     // 整数 浮点
@@ -467,6 +507,22 @@ namespace Json{
         *this = JsonBasic { std::to_string(tmp) };
         type_ = JsonType::NUMBER;
         return *this;
+    }
+
+    // 获取内部容器只读对象
+    const JsonBasic::Map& JsonBasic::getMapConst() const{
+        if(type_ != JsonType::OBJECT) throw JsonTypeException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n"};
+        return std::get<Map>(content_);
+    }
+    // 获取内部容器只读对象
+    const JsonBasic::List& JsonBasic::getListConst() const{
+        if(type_ != JsonType::ARRAY) throw JsonTypeException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not array.\n"};
+        return std::get<List>(content_);
+    }
+    // 获取内部容器只读对象
+    const std::string& JsonBasic::getStringConst() const{
+        if(type_ == JsonType::ARRAY || type_ == JsonType::OBJECT) throw JsonTypeException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Value Type.\n"};
+        return std::get<std::string>(content_);
     }
 
     // 序列化JSON对象
@@ -527,7 +583,6 @@ namespace Json{
             {
                 std::string tabs (depth*space_num, ' ');
                 // 对象类型
-                // 是否在开头加上逗号
                 std::string res { "{" };
 
                 const Map& map = std::get<Map>(content_);
@@ -549,7 +604,6 @@ namespace Json{
             {
                 std::string tabs (depth*space_num, ' ');
                 // 数组类型
-                // 是否在开头加上逗号
                 std::string res { "[" };
 
                 const List& list = std::get<List>(content_);
@@ -575,7 +629,7 @@ namespace Json{
         }
     }
 
-    // 重置为null
+    // 将内容重置为null
     void JsonBasic::reset() noexcept {
         type_ = JsonType::ISNULL;
         content_ = std::string { "null" };
@@ -619,7 +673,7 @@ namespace Json{
             return std::get<std::string>(content_).size();
             break;
         default:
-            return 0;
+            return 1;
             break;
         }
     }
@@ -664,22 +718,23 @@ namespace Json{
         return serialize() == jsonBasic.serialize();
     }
 
-    // 获取内部容器
-    const JsonBasic::Map& JsonBasic::getMapConst() const{
-        if(type_ != JsonType::OBJECT) throw JsonTypeException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n"};
-        return std::get<Map>(content_);
-    }
-    // 获取内部容器
-    const JsonBasic::List& JsonBasic::getListConst() const{
-        if(type_ != JsonType::ARRAY) throw JsonTypeException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not array.\n"};
-        return std::get<List>(content_);
-    }
+
 
     // 检查是否包含某个key
     bool JsonBasic::hasKey(const std::string& key) const{
         if(type_ != JsonType::OBJECT) throw JsonTypeException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n" };
         const Map& map = std::get<Map>(content_);
         return map.find(key) != map.end();
+    }
+    // 获取key的集合
+    std::set<std::string> JsonBasic::getKeys() const{
+        if(type_ != JsonType::OBJECT) throw JsonTypeException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n" };
+        const Map& map = std::get<Map>(content_);
+        std::set<std::string> keys;
+        for (const auto& pair : map) {
+            keys.insert(pair.first);
+        }
+        return std::move(keys);
     }
     // 数组末尾插入元素
     void JsonBasic::push_back(const JsonBasic& jsonBasic){
@@ -719,6 +774,12 @@ namespace Json{
         Map& map = std::get<Map>(content_);
         map[key] = std::move(jsonBasic);
     }
+    // 对象插入键值对
+    void JsonBasic::insert(const std::pair<const std::string, JsonBasic>& p){
+        if(type_ != JsonType::OBJECT) throw JsonTypeException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n"};
+        Map& map = std::get<Map>(content_);
+        map.insert(p);
+    }
     // 数值删除指定位置的元素
     void JsonBasic::erase(const size_t& index){
         if(type_ != JsonType::ARRAY) throw JsonTypeException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not array.\n"};
@@ -734,6 +795,7 @@ namespace Json{
         map.erase(key);
     }
 
+    // as 赋值内容或对象
     long long JsonBasic::as_int64() const{
         if(type_ != JsonType::NUMBER) throw JsonTypeException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Number.\n"};
         return std::stol(std::get<std::string>(content_));
@@ -754,7 +816,20 @@ namespace Json{
         if(type_ != JsonType::STRING) return std::get<std::string>(content_);
         return serialize();
     }
+    JsonObject JsonBasic::as_object() const{
+        if(!(this->is_object())) throw JsonTypeException { "JsonObject's type must be JsonType::OBJECT.\n" };
+        return JsonObject { *this };
+    }
+    JsonArray JsonBasic::as_array() const{
+        if(!(this->is_array())) throw JsonTypeException { "JsonArray's type must be JsonType::ARRAY.\n" };
+        return JsonArray { *this };
+    }
+    JsonValue JsonBasic::as_value() const{
+        if(this->is_array() || this->is_object()) throw JsonTypeException { "JsonValue's type must be not JsonType::ARRAY and JsonType::OBJECT.\n" };
+        return JsonValue { *this };
+    }
 
+    // 子类向基类的转换
     JsonBasic::JsonBasic(const JsonObject& jsonObject) noexcept{
         type_ = jsonObject.type();
         content_ = jsonObject.content_;
@@ -822,19 +897,7 @@ namespace Json{
         return *this;
     }
 
-    JsonObject JsonBasic::as_object() const{
-        if(!(this->is_object())) throw JsonTypeException { "JsonObject's type must be JsonType::OBJECT.\n" };
-        return JsonObject { *this };
-    }
-    JsonArray JsonBasic::as_array() const{
-        if(!(this->is_array())) throw JsonTypeException { "JsonArray's type must be JsonType::ARRAY.\n" };
-        return JsonArray { *this };
-    }
-    JsonValue JsonBasic::as_value() const{
-        if(this->is_array() || this->is_object()) throw JsonTypeException { "JsonValue's type must be not JsonType::ARRAY and JsonType::OBJECT.\n" };
-        return JsonValue { *this };
-    }
-
+    // 子类的访问修饰符
     JsonBasic& JsonObject::operator[](const std::string& key){
         Map& map = std::get<Map>(content_);
         if(map.find(key) == map.end()) map.insert(std::make_pair(key, JsonBasic {}));
@@ -845,6 +908,190 @@ namespace Json{
         if(index == list.size()) list.push_back( JsonBasic {} );
         if(index < 0 || index > list.size()) throw std::out_of_range { std::string{__FILE__} + ":" + std::to_string(__LINE__) + " out of range.\n"};
         return list[index];
+    }
+
+    // 比较运算符
+    bool JsonBasic::operator==(const JsonObject& jsonObject)const noexcept{
+        if(this->type_ != jsonObject.type()) return false;
+        return this->serialize() == jsonObject.serialize();
+    }
+    bool JsonBasic::operator==(const JsonArray& jsonArray)const noexcept{
+        if(this->type_ != jsonArray.type()) return false;
+        return this->serialize() == jsonArray.serialize();
+    }
+    bool JsonBasic::operator==(const JsonValue& jsonValue)const noexcept{
+        if(this->type_ != jsonValue.type()) return false;
+        return this->serialize() == jsonValue.serialize();
+    }
+    bool JsonObject::operator==(const std::string& str) const noexcept {
+        try{
+            JsonBasic tmp{str};
+            if(tmp.type() != this->type_) return false;
+            return tmp.serialize() == this->serialize();
+        }catch(...){
+            return false;
+        }
+    }
+    bool JsonObject::operator==(const JsonBasic& jsonBasic) const noexcept {
+        if(jsonBasic.type() != this->type_) return false;
+        return jsonBasic.serialize() == this->serialize();
+    }
+    bool JsonObject::operator==(const JsonObject& jsonObject) const noexcept {
+        return jsonObject.serialize() == this->serialize();
+    }
+    bool JsonArray::operator==(const std::string& str) const noexcept {
+        try{
+            JsonBasic tmp{str};
+            if(tmp.type() != this->type_) return false;
+            return tmp.serialize() == this->serialize();
+        }catch(...){
+            return false;
+        }
+    }
+    bool JsonArray::operator==(const JsonBasic& jsonBasic) const noexcept {
+        if(jsonBasic.type() != this->type_) return false;
+        return jsonBasic.serialize() == this->serialize();
+    }
+    bool JsonArray::operator==(const JsonArray& jsonArray) const noexcept {
+        return jsonArray.serialize() == this->serialize();
+    }
+    bool JsonValue::operator==(const std::string& str) const noexcept {
+        try{
+            JsonBasic tmp{str};
+            if(tmp.type() != this->type_) return false;
+            return tmp.serialize() == this->serialize();
+        }catch(...){
+            return false;
+        }
+    }
+    bool JsonValue::operator==(const JsonBasic& jsonBasic) const noexcept {
+        if(jsonBasic.type() != this->type_) return false;
+        return jsonBasic.serialize() == this->serialize();
+    }
+    bool JsonValue::operator==(const JsonValue& jsonValue) const noexcept {
+        return jsonValue.serialize() == this->serialize();
+    }
+
+    // 集合和数组的加法
+    JsonObject JsonObject::operator+(const JsonObject& jsonObject) const noexcept{
+        JsonObject result { *this };
+        for(const auto& it : jsonObject){
+            result.insert(it);
+        }
+        return std::move(result);
+    }
+    JsonObject& JsonObject::operator+=(const JsonObject& jsonObject) noexcept {
+        for(const auto& it : jsonObject){
+            this->insert(it);
+        }
+        return *this;
+    }
+    JsonArray JsonArray::operator+(const JsonArray& jsonArray) const noexcept{
+        JsonArray result { *this };
+        for(const auto& it : jsonArray){
+            result.push_back(it);
+        }
+        return std::move(result);
+    }
+    JsonArray& JsonArray::operator+=(const JsonArray& jsonArray) noexcept{
+        for(const auto& it : jsonArray){
+            this->push_back(it);
+        }
+        return *this;
+    }
+
+    JsonObject& JsonObject::operator=(const JsonBasic& jsonBasic){
+        if(jsonBasic.is_object()) throw JsonTypeException { "JsonObject's type must be JsonType::OBJECT.\n" };
+        *this = JsonObject { jsonBasic };
+    }
+    JsonObject& JsonObject::operator=(JsonBasic&& jsonBasic){
+        if(jsonBasic.is_object()) throw JsonTypeException { "JsonObject's type must be JsonType::OBJECT.\n" };
+        *this = JsonObject { std::move(jsonBasic) };
+    }
+    JsonArray& JsonArray::operator=(const JsonBasic& jsonBasic){
+        if(jsonBasic.is_array()) throw JsonTypeException { "JsonObject's type must be JsonType::ARRAY.\n" };
+        *this = JsonArray { jsonBasic };
+    }
+    JsonArray& JsonArray::operator=(JsonBasic&& jsonBasic){
+        if(jsonBasic.is_array()) throw JsonTypeException { "JsonObject's type must be JsonType::ARRAY.\n" };
+        *this = JsonArray { std::move(jsonBasic) };
+    }
+    JsonValue& JsonValue::operator=(const JsonBasic& jsonBasic){
+        if(jsonBasic.is_value()) throw JsonTypeException { "JsonValue's type must be not JsonType::OBJECT and ARRAY.\n" };
+        *this = JsonValue { jsonBasic };
+    }
+    JsonValue& JsonValue::operator=(JsonBasic&& jsonBasic){
+        if(jsonBasic.is_value()) throw JsonTypeException { "JsonValue's type must be not JsonType::OBJECT and ARRAY.\n" };
+        *this = JsonValue { std::move(jsonBasic) };
+    }
+
+    JsonObject::JsonObject(const JsonObject& jsonObject) noexcept {
+        type_ = jsonObject.type_;
+        content_ = jsonObject.content_;
+    }
+    JsonObject::JsonObject(JsonObject&& jsonObject) noexcept {
+        type_ = jsonObject.type_;
+        content_ = std::move(jsonObject.content_);
+        jsonObject.clear();
+    }
+    JsonObject& JsonObject::operator=(const JsonObject& jsonObject) noexcept {
+        if(this == &jsonObject) return *this;
+        type_ = jsonObject.type_;
+        content_ = jsonObject.content_;
+        return *this;
+    }
+    JsonObject& JsonObject::operator=(JsonObject&& jsonObject) noexcept {
+        if(this == &jsonObject) return *this;
+        type_ = jsonObject.type_;
+        content_ = std::move(jsonObject.content_);
+        jsonObject.clear();
+        return *this;
+    }
+
+    JsonArray::JsonArray(const JsonArray& jsonArray) noexcept : JsonBasic(){
+        type_ = jsonArray.type_;
+        content_ = jsonArray.content_;
+    }
+    JsonArray::JsonArray(JsonArray&& jsonArray) noexcept : JsonBasic(){
+        type_ = jsonArray.type_;
+        content_ = std::move(jsonArray.content_);
+        jsonArray.clear();
+    }
+    JsonArray& JsonArray::operator=(const JsonArray& jsonArray) noexcept{
+        if(this == &jsonArray) return *this;
+        type_ = jsonArray.type_;
+        content_ = jsonArray.content_;
+        return *this;
+    }
+    JsonArray& JsonArray::operator=(JsonArray&& jsonArray) noexcept{
+        if(this == &jsonArray) return *this;
+        type_ = jsonArray.type_;
+        content_ = std::move(jsonArray.content_);
+        jsonArray.clear();
+        return *this;
+    }
+
+    JsonValue::JsonValue(const JsonValue& jsonValue) noexcept : JsonBasic(){
+        type_ = jsonValue.type_;
+        content_ = jsonValue.content_;
+    }
+    JsonValue::JsonValue(JsonValue&& jsonValue) noexcept : JsonBasic(){
+        type_ = jsonValue.type_;
+        content_ = std::move(jsonValue.content_);
+        jsonValue.reset();
+    }
+    JsonValue& JsonValue::operator=(const JsonValue& jsonValue) noexcept{
+        if(this == &jsonValue) return *this;
+        type_ = jsonValue.type_;
+        content_ = jsonValue.content_;
+        return *this;
+    }
+    JsonValue& JsonValue::operator=(JsonValue&& jsonValue) noexcept{
+        if(this == &jsonValue) return *this;
+        type_ = jsonValue.type_;
+        content_ = std::move(jsonValue.content_);
+        jsonValue.reset();
+        return *this;
     }
 
 }
