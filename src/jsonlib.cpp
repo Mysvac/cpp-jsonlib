@@ -218,7 +218,7 @@ namespace Json{
                     while(index < tail && std::isspace(str[index])) ++index;
                     // 判断合法性，结束后下个字符要么逗号，要么终止
                     if(str[index] == ',') ++index;
-                    else if(str[index] != '}') throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
+                    else if(str[index] != '}') throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str.substr(index,20) + "\n" };
                 }
                 // 大于等于，说明内部括号未闭合
                 if(index >= tail) throw JsonStructureException { std::string{__FILE__} + ":" + std::to_string(__LINE__) + "\n" + std::to_string(index) + ':' + str[index] + "\n" };
@@ -301,7 +301,7 @@ namespace Json{
                             tmp += str[index];
                             ++index;
                         }
-                        while(std::isdigit(str[index + 1])){
+                        while(std::isdigit(str[index])){
                             tmp += str[index];
                             ++index;
                         }
