@@ -10,7 +10,7 @@
 
 ## 库内容文档
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓<br>
-[C++Doxygen文档](others/documents/html/index.html)<br>
+[C++Doxygen文档](https://mysvac.github.io/cpp-jsonlib/documents/html/index.html)<br>
 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 ## 效率概述
