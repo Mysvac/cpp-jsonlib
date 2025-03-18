@@ -1,0 +1,1840 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>cpp-jsonlib: Json::JsonValue类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">cpp-jsonlib<span id="projectnumber">&#160;v2.2.0</span>
+   </div>
+   <div id="projectbrief">现代C++JSON解析库（C++17)</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="搜索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){ initResizable(false); });
+/* @license-end */
+</script>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespace_json.html">Json</a></li><li class="navelem"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="class_json_1_1_json_value-members.html">所有成员列表</a>  </div>
+  <div class="headertitle"><div class="title">Json::JsonValue类 参考</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Json值类型对象。  
+ <a href="#details">更多...</a></p>
+
+<p><code>#include &lt;<a class="el" href="jsonlib_8h_source.html">jsonlib.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:af30e1f9eec1201e297fb6dd945e0641c" id="r_af30e1f9eec1201e297fb6dd945e0641c"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_json_1_1_json_basic.html#a148e441e0a6b8d93026a82adbef5b29c">List</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af30e1f9eec1201e297fb6dd945e0641c">getListConst</a> () const =delete</td></tr>
+<tr class="separator:af30e1f9eec1201e297fb6dd945e0641c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f8af42951430006ae1740937cc148f3" id="r_a1f8af42951430006ae1740937cc148f3"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_json_1_1_json_basic.html#ab0fa9e55d07142952533280b2b749d3f">Map</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f8af42951430006ae1740937cc148f3">getMapConst</a> () const =delete</td></tr>
+<tr class="separator:a1f8af42951430006ae1740937cc148f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e7ba85f72057face232cae93b8de8f5" id="r_a8e7ba85f72057face232cae93b8de8f5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e7ba85f72057face232cae93b8de8f5">at</a> (const size_t &amp;index)=delete</td></tr>
+<tr class="separator:a8e7ba85f72057face232cae93b8de8f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d3d21cc33ca0004692c7f2ff82176a5" id="r_a1d3d21cc33ca0004692c7f2ff82176a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1d3d21cc33ca0004692c7f2ff82176a5">at</a> (const std::string &amp;key)=delete</td></tr>
+<tr class="separator:a1d3d21cc33ca0004692c7f2ff82176a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a097dd44b5101403ddff455a40a1a95bd" id="r_a097dd44b5101403ddff455a40a1a95bd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a097dd44b5101403ddff455a40a1a95bd">hasKey</a> (const std::string &amp;key) const =delete</td></tr>
+<tr class="separator:a097dd44b5101403ddff455a40a1a95bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29739f3212af8fe114139d0884760e7f" id="r_a29739f3212af8fe114139d0884760e7f"><td class="memItemLeft" align="right" valign="top">std::set&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29739f3212af8fe114139d0884760e7f">getKeys</a> () const =delete</td></tr>
+<tr class="separator:a29739f3212af8fe114139d0884760e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a201417e56299aa6d38b7dcced0fa2cd3" id="r_a201417e56299aa6d38b7dcced0fa2cd3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a201417e56299aa6d38b7dcced0fa2cd3">push_back</a> (const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;jsonBasic)=delete</td></tr>
+<tr class="separator:a201417e56299aa6d38b7dcced0fa2cd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3feb2dccf5487ae84c288c9f760e9443" id="r_a3feb2dccf5487ae84c288c9f760e9443"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3feb2dccf5487ae84c288c9f760e9443">push_back</a> (<a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;jsonBasic)=delete</td></tr>
+<tr class="separator:a3feb2dccf5487ae84c288c9f760e9443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed3223fc06837f62550cf0f4ae763f4a" id="r_aed3223fc06837f62550cf0f4ae763f4a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed3223fc06837f62550cf0f4ae763f4a">insert</a> (const size_t &amp;index, const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;jsonBasic)=delete</td></tr>
+<tr class="separator:aed3223fc06837f62550cf0f4ae763f4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7637e39f8540b52d932fac1b54d81d65" id="r_a7637e39f8540b52d932fac1b54d81d65"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7637e39f8540b52d932fac1b54d81d65">insert</a> (const size_t &amp;index, <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;jsonBasic)=delete</td></tr>
+<tr class="separator:a7637e39f8540b52d932fac1b54d81d65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02993c324345c6085d3c487a3f562445" id="r_a02993c324345c6085d3c487a3f562445"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a02993c324345c6085d3c487a3f562445">insert</a> (const std::string &amp;key, const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;jsonBasic)=delete</td></tr>
+<tr class="separator:a02993c324345c6085d3c487a3f562445"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8c3d4dd4555683eb77aa6c20a3a59f0" id="r_ac8c3d4dd4555683eb77aa6c20a3a59f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac8c3d4dd4555683eb77aa6c20a3a59f0">insert</a> (const std::string &amp;key, <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;jsonBasic)=delete</td></tr>
+<tr class="separator:ac8c3d4dd4555683eb77aa6c20a3a59f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96dcca6f9db5625183e284cf5d7fd56f" id="r_a96dcca6f9db5625183e284cf5d7fd56f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a96dcca6f9db5625183e284cf5d7fd56f">insert</a> (const std::pair&lt; const std::string, <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &gt; &amp;p)=delete</td></tr>
+<tr class="separator:a96dcca6f9db5625183e284cf5d7fd56f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf61b18b38af7b1650fcba56491cd4b9" id="r_aaf61b18b38af7b1650fcba56491cd4b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf61b18b38af7b1650fcba56491cd4b9">erase</a> (const size_t &amp;index)=delete</td></tr>
+<tr class="separator:aaf61b18b38af7b1650fcba56491cd4b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e953b9c0a26495e8702d6ba4394b4e6" id="r_a6e953b9c0a26495e8702d6ba4394b4e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e953b9c0a26495e8702d6ba4394b4e6">erase</a> (const std::string &amp;key)=delete</td></tr>
+<tr class="separator:a6e953b9c0a26495e8702d6ba4394b4e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a498a611007c3396c6b9a611c86dbabdc" id="r_a498a611007c3396c6b9a611c86dbabdc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a498a611007c3396c6b9a611c86dbabdc">JsonValue</a> ()</td></tr>
+<tr class="memdesc:a498a611007c3396c6b9a611c86dbabdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">默认构造函数  <br /></td></tr>
+<tr class="separator:a498a611007c3396c6b9a611c86dbabdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6dede01a3d2a09bd2b06c9517a066af" id="r_aa6dede01a3d2a09bd2b06c9517a066af"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6dede01a3d2a09bd2b06c9517a066af">JsonValue</a> (const <a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;jsonValue) noexcept</td></tr>
+<tr class="memdesc:aa6dede01a3d2a09bd2b06c9517a066af"><td class="mdescLeft">&#160;</td><td class="mdescRight">拷贝构造  <br /></td></tr>
+<tr class="separator:aa6dede01a3d2a09bd2b06c9517a066af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a485383744620ed09f4a953a35849d1a4" id="r_a485383744620ed09f4a953a35849d1a4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a485383744620ed09f4a953a35849d1a4">JsonValue</a> (<a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&amp;jsonValue) noexcept</td></tr>
+<tr class="memdesc:a485383744620ed09f4a953a35849d1a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">移动构造  <br /></td></tr>
+<tr class="separator:a485383744620ed09f4a953a35849d1a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdecad36772364bc487390f2a9dc1518" id="r_afdecad36772364bc487390f2a9dc1518"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afdecad36772364bc487390f2a9dc1518">operator=</a> (const <a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;jsonValue) noexcept</td></tr>
+<tr class="memdesc:afdecad36772364bc487390f2a9dc1518"><td class="mdescLeft">&#160;</td><td class="mdescRight">拷贝赋值  <br /></td></tr>
+<tr class="separator:afdecad36772364bc487390f2a9dc1518"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae62b0b140639272c4a94e38296dbd65f" id="r_ae62b0b140639272c4a94e38296dbd65f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae62b0b140639272c4a94e38296dbd65f">operator=</a> (<a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&amp;jsonValue) noexcept</td></tr>
+<tr class="memdesc:ae62b0b140639272c4a94e38296dbd65f"><td class="mdescLeft">&#160;</td><td class="mdescRight">移动赋值  <br /></td></tr>
+<tr class="separator:ae62b0b140639272c4a94e38296dbd65f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98be4496a4155e8c2707dea00f3b51f7" id="r_a98be4496a4155e8c2707dea00f3b51f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a98be4496a4155e8c2707dea00f3b51f7">JsonValue</a> (<a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;jsonBasic)</td></tr>
+<tr class="memdesc:a98be4496a4155e8c2707dea00f3b51f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">显式父类转子类拷贝构造函数  <br /></td></tr>
+<tr class="separator:a98be4496a4155e8c2707dea00f3b51f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09aa066bae41b911ea13005c048d1cb6" id="r_a09aa066bae41b911ea13005c048d1cb6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a09aa066bae41b911ea13005c048d1cb6">JsonValue</a> (const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;jsonBasic)</td></tr>
+<tr class="memdesc:a09aa066bae41b911ea13005c048d1cb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">显式父类转子类移动构造函数  <br /></td></tr>
+<tr class="separator:a09aa066bae41b911ea13005c048d1cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ff7360636e091db92819526f29cbea2" id="r_a0ff7360636e091db92819526f29cbea2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ff7360636e091db92819526f29cbea2">operator=</a> (const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;jsonBasic)</td></tr>
+<tr class="memdesc:a0ff7360636e091db92819526f29cbea2"><td class="mdescLeft">&#160;</td><td class="mdescRight">父类转子类拷贝赋值函数  <br /></td></tr>
+<tr class="separator:a0ff7360636e091db92819526f29cbea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a377a3addce16fc530dfcd7f709194016" id="r_a377a3addce16fc530dfcd7f709194016"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a377a3addce16fc530dfcd7f709194016">operator=</a> (<a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;jsonBasic)</td></tr>
+<tr class="memdesc:a377a3addce16fc530dfcd7f709194016"><td class="mdescLeft">&#160;</td><td class="mdescRight">父类转子类移动赋值函数  <br /></td></tr>
+<tr class="separator:a377a3addce16fc530dfcd7f709194016"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a792df1a73f3c0957685f2e0669299aa2" id="r_a792df1a73f3c0957685f2e0669299aa2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a792df1a73f3c0957685f2e0669299aa2">JsonValue</a> (const char *str) noexcept</td></tr>
+<tr class="memdesc:a792df1a73f3c0957685f2e0669299aa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">文本字面量构造  <br /></td></tr>
+<tr class="separator:a792df1a73f3c0957685f2e0669299aa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab935afe6d8a3726e0a4f5389ea5dc763" id="r_ab935afe6d8a3726e0a4f5389ea5dc763"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab935afe6d8a3726e0a4f5389ea5dc763">operator=</a> (const char *str) noexcept</td></tr>
+<tr class="memdesc:ab935afe6d8a3726e0a4f5389ea5dc763"><td class="mdescLeft">&#160;</td><td class="mdescRight">文本字面量赋值  <br /></td></tr>
+<tr class="separator:ab935afe6d8a3726e0a4f5389ea5dc763"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dff2b2a1eef8a5d9ff93190bddb11f5" id="r_a6dff2b2a1eef8a5d9ff93190bddb11f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6dff2b2a1eef8a5d9ff93190bddb11f5">JsonValue</a> (const std::string &amp;str) noexcept</td></tr>
+<tr class="memdesc:a6dff2b2a1eef8a5d9ff93190bddb11f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">字符串构造  <br /></td></tr>
+<tr class="separator:a6dff2b2a1eef8a5d9ff93190bddb11f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5838c9d827a48a7ef8d2f91f1eea8721" id="r_a5838c9d827a48a7ef8d2f91f1eea8721"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5838c9d827a48a7ef8d2f91f1eea8721">operator=</a> (const std::string &amp;str) noexcept</td></tr>
+<tr class="memdesc:a5838c9d827a48a7ef8d2f91f1eea8721"><td class="mdescLeft">&#160;</td><td class="mdescRight">字符串赋值  <br /></td></tr>
+<tr class="separator:a5838c9d827a48a7ef8d2f91f1eea8721"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab39b8f200dca9c951b75217283606a9d" id="r_ab39b8f200dca9c951b75217283606a9d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab39b8f200dca9c951b75217283606a9d">JsonValue</a> (std::string &amp;&amp;str) noexcept</td></tr>
+<tr class="memdesc:ab39b8f200dca9c951b75217283606a9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">字符串移动构造  <br /></td></tr>
+<tr class="separator:ab39b8f200dca9c951b75217283606a9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af09075b086ed38e427c0265c986e57ba" id="r_af09075b086ed38e427c0265c986e57ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af09075b086ed38e427c0265c986e57ba">operator=</a> (std::string &amp;&amp;str) noexcept</td></tr>
+<tr class="memdesc:af09075b086ed38e427c0265c986e57ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">字符串移动赋值  <br /></td></tr>
+<tr class="separator:af09075b086ed38e427c0265c986e57ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b62ac2d0c2a9e5f834cb37e14bdfa2f" id="r_a6b62ac2d0c2a9e5f834cb37e14bdfa2f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6b62ac2d0c2a9e5f834cb37e14bdfa2f">JsonValue</a> (const int &amp;num) noexcept</td></tr>
+<tr class="memdesc:a6b62ac2d0c2a9e5f834cb37e14bdfa2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">数值构造  <br /></td></tr>
+<tr class="separator:a6b62ac2d0c2a9e5f834cb37e14bdfa2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0415fe53919f367a5345f14446ebe97a" id="r_a0415fe53919f367a5345f14446ebe97a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0415fe53919f367a5345f14446ebe97a">operator=</a> (const int &amp;num) noexcept</td></tr>
+<tr class="memdesc:a0415fe53919f367a5345f14446ebe97a"><td class="mdescLeft">&#160;</td><td class="mdescRight">数值赋值  <br /></td></tr>
+<tr class="separator:a0415fe53919f367a5345f14446ebe97a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac111915b010a156508e97efd206a1d63" id="r_ac111915b010a156508e97efd206a1d63"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac111915b010a156508e97efd206a1d63">JsonValue</a> (const long long &amp;num) noexcept</td></tr>
+<tr class="memdesc:ac111915b010a156508e97efd206a1d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">数值构造  <br /></td></tr>
+<tr class="separator:ac111915b010a156508e97efd206a1d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6eae801ebb8088a4813aaab95d63344" id="r_ae6eae801ebb8088a4813aaab95d63344"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6eae801ebb8088a4813aaab95d63344">operator=</a> (const long long &amp;num) noexcept</td></tr>
+<tr class="memdesc:ae6eae801ebb8088a4813aaab95d63344"><td class="mdescLeft">&#160;</td><td class="mdescRight">数值赋值  <br /></td></tr>
+<tr class="separator:ae6eae801ebb8088a4813aaab95d63344"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9730870040267ef9fac7dfa03d51493" id="r_ad9730870040267ef9fac7dfa03d51493"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9730870040267ef9fac7dfa03d51493">JsonValue</a> (const double &amp;num) noexcept</td></tr>
+<tr class="memdesc:ad9730870040267ef9fac7dfa03d51493"><td class="mdescLeft">&#160;</td><td class="mdescRight">数值构造  <br /></td></tr>
+<tr class="separator:ad9730870040267ef9fac7dfa03d51493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9b90db63449478caa4bfc698ba81f19" id="r_ad9b90db63449478caa4bfc698ba81f19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9b90db63449478caa4bfc698ba81f19">operator=</a> (const double &amp;num) noexcept</td></tr>
+<tr class="memdesc:ad9b90db63449478caa4bfc698ba81f19"><td class="mdescLeft">&#160;</td><td class="mdescRight">数值赋值  <br /></td></tr>
+<tr class="separator:ad9b90db63449478caa4bfc698ba81f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a773d5c402085b70f2a8d96b94b63c816" id="r_a773d5c402085b70f2a8d96b94b63c816"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a773d5c402085b70f2a8d96b94b63c816">JsonValue</a> (const long double &amp;num) noexcept</td></tr>
+<tr class="memdesc:a773d5c402085b70f2a8d96b94b63c816"><td class="mdescLeft">&#160;</td><td class="mdescRight">数值构造  <br /></td></tr>
+<tr class="separator:a773d5c402085b70f2a8d96b94b63c816"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a738bf215814bad713667f01999a2b976" id="r_a738bf215814bad713667f01999a2b976"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a738bf215814bad713667f01999a2b976">operator=</a> (const long double &amp;num) noexcept</td></tr>
+<tr class="memdesc:a738bf215814bad713667f01999a2b976"><td class="mdescLeft">&#160;</td><td class="mdescRight">数值赋值  <br /></td></tr>
+<tr class="separator:a738bf215814bad713667f01999a2b976"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7d67f66017f4ab82a7c352711c471b4" id="r_ae7d67f66017f4ab82a7c352711c471b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae7d67f66017f4ab82a7c352711c471b4">JsonValue</a> (const bool &amp;bl) noexcept</td></tr>
+<tr class="memdesc:ae7d67f66017f4ab82a7c352711c471b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">布尔构造  <br /></td></tr>
+<tr class="separator:ae7d67f66017f4ab82a7c352711c471b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4daa9c0309d44fc820d09f05557af75" id="r_aa4daa9c0309d44fc820d09f05557af75"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4daa9c0309d44fc820d09f05557af75">operator=</a> (const bool &amp;bl) noexcept</td></tr>
+<tr class="memdesc:aa4daa9c0309d44fc820d09f05557af75"><td class="mdescLeft">&#160;</td><td class="mdescRight">布尔赋值  <br /></td></tr>
+<tr class="separator:aa4daa9c0309d44fc820d09f05557af75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55a1f14263c20776db198e6df6d94172" id="r_a55a1f14263c20776db198e6df6d94172"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a55a1f14263c20776db198e6df6d94172">JsonValue</a> (const std::nullptr_t &amp;ptr) noexcept</td></tr>
+<tr class="memdesc:a55a1f14263c20776db198e6df6d94172"><td class="mdescLeft">&#160;</td><td class="mdescRight">null构造  <br /></td></tr>
+<tr class="separator:a55a1f14263c20776db198e6df6d94172"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a263b9ba6a3ce8343beefbeb137cb0f29" id="r_a263b9ba6a3ce8343beefbeb137cb0f29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a263b9ba6a3ce8343beefbeb137cb0f29">operator=</a> (const std::nullptr_t &amp;ptr) noexcept</td></tr>
+<tr class="memdesc:a263b9ba6a3ce8343beefbeb137cb0f29"><td class="mdescLeft">&#160;</td><td class="mdescRight">null赋值  <br /></td></tr>
+<tr class="separator:a263b9ba6a3ce8343beefbeb137cb0f29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fb1dd85d57e374359b70f848a34cbed" id="r_a8fb1dd85d57e374359b70f848a34cbed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8fb1dd85d57e374359b70f848a34cbed">operator==</a> (const std::string &amp;str) const noexcept</td></tr>
+<tr class="memdesc:a8fb1dd85d57e374359b70f848a34cbed"><td class="mdescLeft">&#160;</td><td class="mdescRight">字符串比较运算符  <br /></td></tr>
+<tr class="separator:a8fb1dd85d57e374359b70f848a34cbed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9245265e94f39df5e7203fc5df72d008" id="r_a9245265e94f39df5e7203fc5df72d008"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9245265e94f39df5e7203fc5df72d008">operator==</a> (const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;jsonBasic) const noexcept</td></tr>
+<tr class="memdesc:a9245265e94f39df5e7203fc5df72d008"><td class="mdescLeft">&#160;</td><td class="mdescRight">父类比较运算符  <br /></td></tr>
+<tr class="separator:a9245265e94f39df5e7203fc5df72d008"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac035197203a603de4a099024fc2f3625" id="r_ac035197203a603de4a099024fc2f3625"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac035197203a603de4a099024fc2f3625">operator==</a> (const <a class="el" href="class_json_1_1_json_object.html">JsonObject</a> &amp;) const noexcept</td></tr>
+<tr class="memdesc:ac035197203a603de4a099024fc2f3625"><td class="mdescLeft">&#160;</td><td class="mdescRight">其他比较运算符  <br /></td></tr>
+<tr class="separator:ac035197203a603de4a099024fc2f3625"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f0f5e3d02355748eb9a84aa3dd5f4aa" id="r_a9f0f5e3d02355748eb9a84aa3dd5f4aa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f0f5e3d02355748eb9a84aa3dd5f4aa">operator==</a> (const <a class="el" href="class_json_1_1_json_array.html">JsonArray</a> &amp;) const noexcept</td></tr>
+<tr class="memdesc:a9f0f5e3d02355748eb9a84aa3dd5f4aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">其他比较运算符  <br /></td></tr>
+<tr class="separator:a9f0f5e3d02355748eb9a84aa3dd5f4aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af972a76b5116e8fb1a6d44db793dc9e8" id="r_af972a76b5116e8fb1a6d44db793dc9e8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af972a76b5116e8fb1a6d44db793dc9e8">operator==</a> (const <a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;jsonValue) const noexcept</td></tr>
+<tr class="memdesc:af972a76b5116e8fb1a6d44db793dc9e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">比较运算符  <br /></td></tr>
+<tr class="separator:af972a76b5116e8fb1a6d44db793dc9e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_json_1_1_json_basic"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_json_1_1_json_basic')"><img src="closed.png" alt="-"/>&#160;Public 成员函数 继承自 <a class="el" href="class_json_1_1_json_basic.html">Json::JsonBasic</a></td></tr>
+<tr class="memitem:ac0c2a680eee561acf46402f7fa2ee2f2 inherit pub_methods_class_json_1_1_json_basic" id="r_ac0c2a680eee561acf46402f7fa2ee2f2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#ac0c2a680eee561acf46402f7fa2ee2f2">JsonBasic</a> ()=default</td></tr>
+<tr class="memdesc:ac0c2a680eee561acf46402f7fa2ee2f2 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">默认构造函数  <br /></td></tr>
+<tr class="separator:ac0c2a680eee561acf46402f7fa2ee2f2 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad84bf24d2b5de58aed5d7936086dff5 inherit pub_methods_class_json_1_1_json_basic" id="r_aad84bf24d2b5de58aed5d7936086dff5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#aad84bf24d2b5de58aed5d7936086dff5">JsonBasic</a> (const <a class="el" href="namespace_json.html#af95719ed1a10f4696da3a722a4e344e4">JsonType</a> &amp;jsonType)</td></tr>
+<tr class="memdesc:aad84bf24d2b5de58aed5d7936086dff5 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">指定类型的构造函数  <br /></td></tr>
+<tr class="separator:aad84bf24d2b5de58aed5d7936086dff5 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21f0aacb8f4e1d6e571c6cd58665bb93 inherit pub_methods_class_json_1_1_json_basic" id="r_a21f0aacb8f4e1d6e571c6cd58665bb93"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a21f0aacb8f4e1d6e571c6cd58665bb93">JsonBasic</a> (const char *str)</td></tr>
+<tr class="memdesc:a21f0aacb8f4e1d6e571c6cd58665bb93 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">字符串字面量构造函数  <br /></td></tr>
+<tr class="separator:a21f0aacb8f4e1d6e571c6cd58665bb93 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff2bbec211163e50f7c1acfff5ed5809 inherit pub_methods_class_json_1_1_json_basic" id="r_aff2bbec211163e50f7c1acfff5ed5809"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#aff2bbec211163e50f7c1acfff5ed5809">operator=</a> (const char *str)</td></tr>
+<tr class="memdesc:aff2bbec211163e50f7c1acfff5ed5809 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">字符串字面量赋值函数  <br /></td></tr>
+<tr class="separator:aff2bbec211163e50f7c1acfff5ed5809 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6764713b6772e48f2a4a5d547c515e26 inherit pub_methods_class_json_1_1_json_basic" id="r_a6764713b6772e48f2a4a5d547c515e26"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a6764713b6772e48f2a4a5d547c515e26">JsonBasic</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a6764713b6772e48f2a4a5d547c515e26 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">字符串构造函数  <br /></td></tr>
+<tr class="separator:a6764713b6772e48f2a4a5d547c515e26 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e8e7f5b75cbddad993a3fac39e76534 inherit pub_methods_class_json_1_1_json_basic" id="r_a2e8e7f5b75cbddad993a3fac39e76534"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a2e8e7f5b75cbddad993a3fac39e76534">operator=</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a2e8e7f5b75cbddad993a3fac39e76534 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">字符串赋值函数  <br /></td></tr>
+<tr class="separator:a2e8e7f5b75cbddad993a3fac39e76534 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44b9d4fd2ea8433f8e9836ce2f884893 inherit pub_methods_class_json_1_1_json_basic" id="r_a44b9d4fd2ea8433f8e9836ce2f884893"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a44b9d4fd2ea8433f8e9836ce2f884893">JsonBasic</a> (const bool &amp;bl) noexcept</td></tr>
+<tr class="memdesc:a44b9d4fd2ea8433f8e9836ce2f884893 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">布尔类型构造  <br /></td></tr>
+<tr class="separator:a44b9d4fd2ea8433f8e9836ce2f884893 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35985a854a428477636eac12a2e440ec inherit pub_methods_class_json_1_1_json_basic" id="r_a35985a854a428477636eac12a2e440ec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a35985a854a428477636eac12a2e440ec">JsonBasic</a> (const int &amp;num) noexcept</td></tr>
+<tr class="memdesc:a35985a854a428477636eac12a2e440ec inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">整数类型构造  <br /></td></tr>
+<tr class="separator:a35985a854a428477636eac12a2e440ec inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a467f17f98111477bc4148fc26b600f54 inherit pub_methods_class_json_1_1_json_basic" id="r_a467f17f98111477bc4148fc26b600f54"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a467f17f98111477bc4148fc26b600f54">JsonBasic</a> (const long long &amp;num) noexcept</td></tr>
+<tr class="memdesc:a467f17f98111477bc4148fc26b600f54 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">长整数类型构造  <br /></td></tr>
+<tr class="separator:a467f17f98111477bc4148fc26b600f54 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dca3c0225d420ed3600e3cfb2074a54 inherit pub_methods_class_json_1_1_json_basic" id="r_a7dca3c0225d420ed3600e3cfb2074a54"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a7dca3c0225d420ed3600e3cfb2074a54">JsonBasic</a> (const double &amp;num) noexcept</td></tr>
+<tr class="memdesc:a7dca3c0225d420ed3600e3cfb2074a54 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">浮点数类型构造  <br /></td></tr>
+<tr class="separator:a7dca3c0225d420ed3600e3cfb2074a54 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e7cecff582cf50cce24311b1381a67d inherit pub_methods_class_json_1_1_json_basic" id="r_a3e7cecff582cf50cce24311b1381a67d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a3e7cecff582cf50cce24311b1381a67d">JsonBasic</a> (const long double &amp;num) noexcept</td></tr>
+<tr class="memdesc:a3e7cecff582cf50cce24311b1381a67d inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">浮点数类型构造  <br /></td></tr>
+<tr class="separator:a3e7cecff582cf50cce24311b1381a67d inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6837385694b86d11052dc3b8771e89a8 inherit pub_methods_class_json_1_1_json_basic" id="r_a6837385694b86d11052dc3b8771e89a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a6837385694b86d11052dc3b8771e89a8">JsonBasic</a> (const std::nullptr_t &amp;n_ptr) noexcept</td></tr>
+<tr class="memdesc:a6837385694b86d11052dc3b8771e89a8 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">nullptr_t类型构造  <br /></td></tr>
+<tr class="separator:a6837385694b86d11052dc3b8771e89a8 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15c2587dbc09db2ee370646c5b39a07e inherit pub_methods_class_json_1_1_json_basic" id="r_a15c2587dbc09db2ee370646c5b39a07e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a15c2587dbc09db2ee370646c5b39a07e">operator=</a> (const bool &amp;bl) noexcept</td></tr>
+<tr class="memdesc:a15c2587dbc09db2ee370646c5b39a07e inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">布尔类型赋值  <br /></td></tr>
+<tr class="separator:a15c2587dbc09db2ee370646c5b39a07e inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cf7a2f3530a466d0e7ad2d66d02ba4b inherit pub_methods_class_json_1_1_json_basic" id="r_a7cf7a2f3530a466d0e7ad2d66d02ba4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a7cf7a2f3530a466d0e7ad2d66d02ba4b">operator=</a> (const int &amp;num) noexcept</td></tr>
+<tr class="memdesc:a7cf7a2f3530a466d0e7ad2d66d02ba4b inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">整数类型赋值  <br /></td></tr>
+<tr class="separator:a7cf7a2f3530a466d0e7ad2d66d02ba4b inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c3f017e2a3c4f0a65ba4c5a0cf4381b inherit pub_methods_class_json_1_1_json_basic" id="r_a9c3f017e2a3c4f0a65ba4c5a0cf4381b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a9c3f017e2a3c4f0a65ba4c5a0cf4381b">operator=</a> (const long long &amp;num) noexcept</td></tr>
+<tr class="memdesc:a9c3f017e2a3c4f0a65ba4c5a0cf4381b inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">长整数类型赋值  <br /></td></tr>
+<tr class="separator:a9c3f017e2a3c4f0a65ba4c5a0cf4381b inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee618f88d9410159feced53676af6a28 inherit pub_methods_class_json_1_1_json_basic" id="r_aee618f88d9410159feced53676af6a28"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#aee618f88d9410159feced53676af6a28">operator=</a> (const double &amp;num) noexcept</td></tr>
+<tr class="memdesc:aee618f88d9410159feced53676af6a28 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">浮点数类型赋值  <br /></td></tr>
+<tr class="separator:aee618f88d9410159feced53676af6a28 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ecbeb28fa130dbfc064db67d1c4acbf inherit pub_methods_class_json_1_1_json_basic" id="r_a2ecbeb28fa130dbfc064db67d1c4acbf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a2ecbeb28fa130dbfc064db67d1c4acbf">operator=</a> (const long double &amp;num) noexcept</td></tr>
+<tr class="memdesc:a2ecbeb28fa130dbfc064db67d1c4acbf inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">浮点数类型赋值  <br /></td></tr>
+<tr class="separator:a2ecbeb28fa130dbfc064db67d1c4acbf inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ca49ade813e64fcd7fda6c1235bc7a4 inherit pub_methods_class_json_1_1_json_basic" id="r_a9ca49ade813e64fcd7fda6c1235bc7a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a9ca49ade813e64fcd7fda6c1235bc7a4">operator=</a> (const std::nullptr_t &amp;n_ptr) noexcept</td></tr>
+<tr class="memdesc:a9ca49ade813e64fcd7fda6c1235bc7a4 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">null类型赋值  <br /></td></tr>
+<tr class="separator:a9ca49ade813e64fcd7fda6c1235bc7a4 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c9917db0650d4311c315d49fa91282a inherit pub_methods_class_json_1_1_json_basic" id="r_a3c9917db0650d4311c315d49fa91282a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a3c9917db0650d4311c315d49fa91282a">JsonBasic</a> (const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;jsonBasic) noexcept</td></tr>
+<tr class="memdesc:a3c9917db0650d4311c315d49fa91282a inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">拷贝构造  <br /></td></tr>
+<tr class="separator:a3c9917db0650d4311c315d49fa91282a inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1843d2b7aa9fed7912ae3413f94b02c1 inherit pub_methods_class_json_1_1_json_basic" id="r_a1843d2b7aa9fed7912ae3413f94b02c1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a1843d2b7aa9fed7912ae3413f94b02c1">JsonBasic</a> (<a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;jsonBasic) noexcept</td></tr>
+<tr class="memdesc:a1843d2b7aa9fed7912ae3413f94b02c1 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">移动构造  <br /></td></tr>
+<tr class="separator:a1843d2b7aa9fed7912ae3413f94b02c1 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2999d7ed3e01e031442f04e06e86cfb inherit pub_methods_class_json_1_1_json_basic" id="r_ac2999d7ed3e01e031442f04e06e86cfb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#ac2999d7ed3e01e031442f04e06e86cfb">operator=</a> (const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;jsonBasic) noexcept</td></tr>
+<tr class="memdesc:ac2999d7ed3e01e031442f04e06e86cfb inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">拷贝赋值  <br /></td></tr>
+<tr class="separator:ac2999d7ed3e01e031442f04e06e86cfb inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d914a32e5d97c9b1f0fc39d9a9d3198 inherit pub_methods_class_json_1_1_json_basic" id="r_a1d914a32e5d97c9b1f0fc39d9a9d3198"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a1d914a32e5d97c9b1f0fc39d9a9d3198">operator=</a> (<a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;jsonBasic) noexcept</td></tr>
+<tr class="memdesc:a1d914a32e5d97c9b1f0fc39d9a9d3198 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">移动赋值  <br /></td></tr>
+<tr class="separator:a1d914a32e5d97c9b1f0fc39d9a9d3198 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd9d98531e591b5393cc69b3b812e894 inherit pub_methods_class_json_1_1_json_basic" id="r_afd9d98531e591b5393cc69b3b812e894"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#afd9d98531e591b5393cc69b3b812e894">JsonBasic</a> (const <a class="el" href="class_json_1_1_json_object.html">JsonObject</a> &amp;jsonObject) noexcept</td></tr>
+<tr class="memdesc:afd9d98531e591b5393cc69b3b812e894 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">对象类型拷贝构造  <br /></td></tr>
+<tr class="separator:afd9d98531e591b5393cc69b3b812e894 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34a95e6a15737def5c092ccf5fc638cb inherit pub_methods_class_json_1_1_json_basic" id="r_a34a95e6a15737def5c092ccf5fc638cb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a34a95e6a15737def5c092ccf5fc638cb">JsonBasic</a> (const <a class="el" href="class_json_1_1_json_array.html">JsonArray</a> &amp;jsonArray) noexcept</td></tr>
+<tr class="memdesc:a34a95e6a15737def5c092ccf5fc638cb inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">数组类型拷贝构造  <br /></td></tr>
+<tr class="separator:a34a95e6a15737def5c092ccf5fc638cb inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a739af4eea5d0ede613557afe840c1681 inherit pub_methods_class_json_1_1_json_basic" id="r_a739af4eea5d0ede613557afe840c1681"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a739af4eea5d0ede613557afe840c1681">JsonBasic</a> (const <a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;jsonValue) noexcept</td></tr>
+<tr class="memdesc:a739af4eea5d0ede613557afe840c1681 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">值类型拷贝构造  <br /></td></tr>
+<tr class="separator:a739af4eea5d0ede613557afe840c1681 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96ef90c486569c55ba4213ec70d206e1 inherit pub_methods_class_json_1_1_json_basic" id="r_a96ef90c486569c55ba4213ec70d206e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a96ef90c486569c55ba4213ec70d206e1">JsonBasic</a> (<a class="el" href="class_json_1_1_json_object.html">JsonObject</a> &amp;&amp;jsonObject) noexcept</td></tr>
+<tr class="memdesc:a96ef90c486569c55ba4213ec70d206e1 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">对象类型移动构造  <br /></td></tr>
+<tr class="separator:a96ef90c486569c55ba4213ec70d206e1 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac00c63b1c5f54de9de39f11d4ec1c6c0 inherit pub_methods_class_json_1_1_json_basic" id="r_ac00c63b1c5f54de9de39f11d4ec1c6c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#ac00c63b1c5f54de9de39f11d4ec1c6c0">JsonBasic</a> (<a class="el" href="class_json_1_1_json_array.html">JsonArray</a> &amp;&amp;jsonArray) noexcept</td></tr>
+<tr class="memdesc:ac00c63b1c5f54de9de39f11d4ec1c6c0 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">数组类型移动构造  <br /></td></tr>
+<tr class="separator:ac00c63b1c5f54de9de39f11d4ec1c6c0 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbc0f02b2470082e5986bd8fed237910 inherit pub_methods_class_json_1_1_json_basic" id="r_afbc0f02b2470082e5986bd8fed237910"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#afbc0f02b2470082e5986bd8fed237910">JsonBasic</a> (<a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&amp;jsonValue) noexcept</td></tr>
+<tr class="memdesc:afbc0f02b2470082e5986bd8fed237910 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">值类型移动构造  <br /></td></tr>
+<tr class="separator:afbc0f02b2470082e5986bd8fed237910 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5da3b0dad9e56378539de39efa88a4e inherit pub_methods_class_json_1_1_json_basic" id="r_ae5da3b0dad9e56378539de39efa88a4e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#ae5da3b0dad9e56378539de39efa88a4e">operator=</a> (const <a class="el" href="class_json_1_1_json_object.html">JsonObject</a> &amp;jsonObject) noexcept</td></tr>
+<tr class="memdesc:ae5da3b0dad9e56378539de39efa88a4e inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">对象类型拷贝赋值  <br /></td></tr>
+<tr class="separator:ae5da3b0dad9e56378539de39efa88a4e inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4aa664333611228ac02103d5bf88fa49 inherit pub_methods_class_json_1_1_json_basic" id="r_a4aa664333611228ac02103d5bf88fa49"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a4aa664333611228ac02103d5bf88fa49">operator=</a> (const <a class="el" href="class_json_1_1_json_array.html">JsonArray</a> &amp;jsonArray) noexcept</td></tr>
+<tr class="memdesc:a4aa664333611228ac02103d5bf88fa49 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">数组类型拷贝赋值  <br /></td></tr>
+<tr class="separator:a4aa664333611228ac02103d5bf88fa49 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f0d5193f8e1c12fe9608d190ef5d7e3 inherit pub_methods_class_json_1_1_json_basic" id="r_a8f0d5193f8e1c12fe9608d190ef5d7e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a8f0d5193f8e1c12fe9608d190ef5d7e3">operator=</a> (const <a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;jsonValue) noexcept</td></tr>
+<tr class="memdesc:a8f0d5193f8e1c12fe9608d190ef5d7e3 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">值类型拷贝赋值  <br /></td></tr>
+<tr class="separator:a8f0d5193f8e1c12fe9608d190ef5d7e3 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4163537fe73fadc455ceab2816e06915 inherit pub_methods_class_json_1_1_json_basic" id="r_a4163537fe73fadc455ceab2816e06915"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a4163537fe73fadc455ceab2816e06915">operator=</a> (<a class="el" href="class_json_1_1_json_object.html">JsonObject</a> &amp;&amp;jsonObject) noexcept</td></tr>
+<tr class="memdesc:a4163537fe73fadc455ceab2816e06915 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">对象类型移动赋值  <br /></td></tr>
+<tr class="separator:a4163537fe73fadc455ceab2816e06915 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53a057c4a39b3e3605c4bae01bcc4973 inherit pub_methods_class_json_1_1_json_basic" id="r_a53a057c4a39b3e3605c4bae01bcc4973"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a53a057c4a39b3e3605c4bae01bcc4973">operator=</a> (<a class="el" href="class_json_1_1_json_array.html">JsonArray</a> &amp;&amp;jsonArray) noexcept</td></tr>
+<tr class="memdesc:a53a057c4a39b3e3605c4bae01bcc4973 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">数组类型移动赋值  <br /></td></tr>
+<tr class="separator:a53a057c4a39b3e3605c4bae01bcc4973 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4517c7419bb0d816c6dae739fc16d6bf inherit pub_methods_class_json_1_1_json_basic" id="r_a4517c7419bb0d816c6dae739fc16d6bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a4517c7419bb0d816c6dae739fc16d6bf">operator=</a> (<a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&amp;jsonValue) noexcept</td></tr>
+<tr class="memdesc:a4517c7419bb0d816c6dae739fc16d6bf inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">值类型移动赋值  <br /></td></tr>
+<tr class="separator:a4517c7419bb0d816c6dae739fc16d6bf inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f54032f438f4d3a64fc1c0bc873055c inherit pub_methods_class_json_1_1_json_basic" id="r_a5f54032f438f4d3a64fc1c0bc873055c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_json.html#af95719ed1a10f4696da3a722a4e344e4">JsonType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a5f54032f438f4d3a64fc1c0bc873055c">type</a> () const noexcept</td></tr>
+<tr class="memdesc:a5f54032f438f4d3a64fc1c0bc873055c inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取当前对象数据类型  <br /></td></tr>
+<tr class="separator:a5f54032f438f4d3a64fc1c0bc873055c inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9adcc7618f6db5a8b79240d2e975695 inherit pub_methods_class_json_1_1_json_basic" id="r_ae9adcc7618f6db5a8b79240d2e975695"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_json_1_1_json_basic.html#ab0fa9e55d07142952533280b2b749d3f">Map</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#ae9adcc7618f6db5a8b79240d2e975695">getMapConst</a> () const</td></tr>
+<tr class="memdesc:ae9adcc7618f6db5a8b79240d2e975695 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取内部容器只读对象，键值对。  <br /></td></tr>
+<tr class="separator:ae9adcc7618f6db5a8b79240d2e975695 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a5217743f3d622663298aa7a83c431f inherit pub_methods_class_json_1_1_json_basic" id="r_a6a5217743f3d622663298aa7a83c431f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_json_1_1_json_basic.html#a148e441e0a6b8d93026a82adbef5b29c">List</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a6a5217743f3d622663298aa7a83c431f">getListConst</a> () const</td></tr>
+<tr class="memdesc:a6a5217743f3d622663298aa7a83c431f inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取内部容器只读对象，键列表。  <br /></td></tr>
+<tr class="separator:a6a5217743f3d622663298aa7a83c431f inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f5db1cd070108efe7869186afcf81ea inherit pub_methods_class_json_1_1_json_basic" id="r_a7f5db1cd070108efe7869186afcf81ea"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a7f5db1cd070108efe7869186afcf81ea">getStringConst</a> () const</td></tr>
+<tr class="memdesc:a7f5db1cd070108efe7869186afcf81ea inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取内部容器只读对象，值类型。  <br /></td></tr>
+<tr class="separator:a7f5db1cd070108efe7869186afcf81ea inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4741d60c329bc2b379ea601a4df7ee52 inherit pub_methods_class_json_1_1_json_basic" id="r_a4741d60c329bc2b379ea601a4df7ee52"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a4741d60c329bc2b379ea601a4df7ee52">serialize</a> () const noexcept</td></tr>
+<tr class="memdesc:a4741d60c329bc2b379ea601a4df7ee52 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">序列化对象  <br /></td></tr>
+<tr class="separator:a4741d60c329bc2b379ea601a4df7ee52 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a458ee3b2bde1f513df43886bf4634d22 inherit pub_methods_class_json_1_1_json_basic" id="r_a458ee3b2bde1f513df43886bf4634d22"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a458ee3b2bde1f513df43886bf4634d22">serialize_pretty</a> (const size_t &amp;space_num=2, const size_t &amp;depth=0) const noexcept</td></tr>
+<tr class="memdesc:a458ee3b2bde1f513df43886bf4634d22 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">序列化对象且美化  <br /></td></tr>
+<tr class="separator:a458ee3b2bde1f513df43886bf4634d22 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a319de02238b2e8de40f52abcb587b095 inherit pub_methods_class_json_1_1_json_basic" id="r_a319de02238b2e8de40f52abcb587b095"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a319de02238b2e8de40f52abcb587b095">reset</a> () noexcept</td></tr>
+<tr class="memdesc:a319de02238b2e8de40f52abcb587b095 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">重置，设为null值  <br /></td></tr>
+<tr class="separator:a319de02238b2e8de40f52abcb587b095 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac37f71fd216c485d85af8ee993ec367 inherit pub_methods_class_json_1_1_json_basic" id="r_aac37f71fd216c485d85af8ee993ec367"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#aac37f71fd216c485d85af8ee993ec367">clear</a> () noexcept</td></tr>
+<tr class="memdesc:aac37f71fd216c485d85af8ee993ec367 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">按类型清除  <br /></td></tr>
+<tr class="separator:aac37f71fd216c485d85af8ee993ec367 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe2c626b7b8fcf83e4ecbce0262ab79d inherit pub_methods_class_json_1_1_json_basic" id="r_abe2c626b7b8fcf83e4ecbce0262ab79d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#abe2c626b7b8fcf83e4ecbce0262ab79d">size</a> () const noexcept</td></tr>
+<tr class="memdesc:abe2c626b7b8fcf83e4ecbce0262ab79d inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取子元素数量  <br /></td></tr>
+<tr class="separator:abe2c626b7b8fcf83e4ecbce0262ab79d inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a413ff16719ce6f5e21453445966daa5b inherit pub_methods_class_json_1_1_json_basic" id="r_a413ff16719ce6f5e21453445966daa5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a413ff16719ce6f5e21453445966daa5b">at</a> (const size_t &amp;index)</td></tr>
+<tr class="memdesc:a413ff16719ce6f5e21453445966daa5b inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">at元素访问  <br /></td></tr>
+<tr class="separator:a413ff16719ce6f5e21453445966daa5b inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ff7027346b5bf96455280eb87836869 inherit pub_methods_class_json_1_1_json_basic" id="r_a5ff7027346b5bf96455280eb87836869"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a5ff7027346b5bf96455280eb87836869">at</a> (const std::string &amp;key)</td></tr>
+<tr class="memdesc:a5ff7027346b5bf96455280eb87836869 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">at元素访问  <br /></td></tr>
+<tr class="separator:a5ff7027346b5bf96455280eb87836869 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78d94e4220c3c4a53861dc6f2d42cbf0 inherit pub_methods_class_json_1_1_json_basic" id="r_a78d94e4220c3c4a53861dc6f2d42cbf0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a78d94e4220c3c4a53861dc6f2d42cbf0">operator[]</a> (const size_t &amp;index)</td></tr>
+<tr class="memdesc:a78d94e4220c3c4a53861dc6f2d42cbf0 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">[]元素访问  <br /></td></tr>
+<tr class="separator:a78d94e4220c3c4a53861dc6f2d42cbf0 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1aafb1b473125ee03ef41a917492019 inherit pub_methods_class_json_1_1_json_basic" id="r_af1aafb1b473125ee03ef41a917492019"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#af1aafb1b473125ee03ef41a917492019">operator[]</a> (const std::string &amp;key)</td></tr>
+<tr class="memdesc:af1aafb1b473125ee03ef41a917492019 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">[]元素访问  <br /></td></tr>
+<tr class="separator:af1aafb1b473125ee03ef41a917492019 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8842d1b4a095feb3e30d2371f31ed37 inherit pub_methods_class_json_1_1_json_basic" id="r_aa8842d1b4a095feb3e30d2371f31ed37"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#aa8842d1b4a095feb3e30d2371f31ed37">operator==</a> (const std::string &amp;key) const</td></tr>
+<tr class="memdesc:aa8842d1b4a095feb3e30d2371f31ed37 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">字符串比较运算符  <br /></td></tr>
+<tr class="separator:aa8842d1b4a095feb3e30d2371f31ed37 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74457f9a87b5836bbe335fac4ca3414c inherit pub_methods_class_json_1_1_json_basic" id="r_a74457f9a87b5836bbe335fac4ca3414c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a74457f9a87b5836bbe335fac4ca3414c">operator==</a> (const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;jsonBasic) const noexcept</td></tr>
+<tr class="memdesc:a74457f9a87b5836bbe335fac4ca3414c inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">比较运算  <br /></td></tr>
+<tr class="separator:a74457f9a87b5836bbe335fac4ca3414c inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae33d8ac290a9d647b522ff551625332c inherit pub_methods_class_json_1_1_json_basic" id="r_ae33d8ac290a9d647b522ff551625332c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#ae33d8ac290a9d647b522ff551625332c">operator==</a> (const <a class="el" href="class_json_1_1_json_object.html">JsonObject</a> &amp;jsonObject) const noexcept</td></tr>
+<tr class="memdesc:ae33d8ac290a9d647b522ff551625332c inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">与子类的比较运算  <br /></td></tr>
+<tr class="separator:ae33d8ac290a9d647b522ff551625332c inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ccd9d8b632fe3574718c7eee167b5b6 inherit pub_methods_class_json_1_1_json_basic" id="r_a8ccd9d8b632fe3574718c7eee167b5b6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a8ccd9d8b632fe3574718c7eee167b5b6">operator==</a> (const <a class="el" href="class_json_1_1_json_array.html">JsonArray</a> &amp;jsonArray) const noexcept</td></tr>
+<tr class="memdesc:a8ccd9d8b632fe3574718c7eee167b5b6 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">与子类的比较运算  <br /></td></tr>
+<tr class="separator:a8ccd9d8b632fe3574718c7eee167b5b6 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4884bd6746e8a5f62f292197fd83dc6f inherit pub_methods_class_json_1_1_json_basic" id="r_a4884bd6746e8a5f62f292197fd83dc6f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a4884bd6746e8a5f62f292197fd83dc6f">operator==</a> (const <a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;<a class="el" href="class_json_1_1_json_value.html">JsonValue</a>) const noexcept</td></tr>
+<tr class="memdesc:a4884bd6746e8a5f62f292197fd83dc6f inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">与子类的比较运算  <br /></td></tr>
+<tr class="separator:a4884bd6746e8a5f62f292197fd83dc6f inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bd6590bdc629d11c7122ff7376316b7 inherit pub_methods_class_json_1_1_json_basic" id="r_a4bd6590bdc629d11c7122ff7376316b7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a4bd6590bdc629d11c7122ff7376316b7">hasKey</a> (const std::string &amp;key) const</td></tr>
+<tr class="memdesc:a4bd6590bdc629d11c7122ff7376316b7 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">检查是否存在某个key  <br /></td></tr>
+<tr class="separator:a4bd6590bdc629d11c7122ff7376316b7 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a55fc7507d9f1b3c3c934da580468a3 inherit pub_methods_class_json_1_1_json_basic" id="r_a1a55fc7507d9f1b3c3c934da580468a3"><td class="memItemLeft" align="right" valign="top">std::set&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a1a55fc7507d9f1b3c3c934da580468a3">getKeys</a> () const</td></tr>
+<tr class="memdesc:a1a55fc7507d9f1b3c3c934da580468a3 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">获取key的集合  <br /></td></tr>
+<tr class="separator:a1a55fc7507d9f1b3c3c934da580468a3 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75aaa5f93cb3748646b575eedc16e2d9 inherit pub_methods_class_json_1_1_json_basic" id="r_a75aaa5f93cb3748646b575eedc16e2d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a75aaa5f93cb3748646b575eedc16e2d9">push_back</a> (const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;jsonBasic)</td></tr>
+<tr class="memdesc:a75aaa5f93cb3748646b575eedc16e2d9 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">末尾插入元素  <br /></td></tr>
+<tr class="separator:a75aaa5f93cb3748646b575eedc16e2d9 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a240c47f3ddb06816e470be8ba8cbad inherit pub_methods_class_json_1_1_json_basic" id="r_a8a240c47f3ddb06816e470be8ba8cbad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a8a240c47f3ddb06816e470be8ba8cbad">push_back</a> (<a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;jsonBasic)</td></tr>
+<tr class="memdesc:a8a240c47f3ddb06816e470be8ba8cbad inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">末尾插入元素  <br /></td></tr>
+<tr class="separator:a8a240c47f3ddb06816e470be8ba8cbad inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2706be374de5630a25021062a5f509a inherit pub_methods_class_json_1_1_json_basic" id="r_ad2706be374de5630a25021062a5f509a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#ad2706be374de5630a25021062a5f509a">insert</a> (const size_t &amp;index, const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;jsonBasic)</td></tr>
+<tr class="memdesc:ad2706be374de5630a25021062a5f509a inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">在指定位置插入元素  <br /></td></tr>
+<tr class="separator:ad2706be374de5630a25021062a5f509a inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadc75917cc0087353a0a41e5fbe8a769 inherit pub_methods_class_json_1_1_json_basic" id="r_aadc75917cc0087353a0a41e5fbe8a769"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#aadc75917cc0087353a0a41e5fbe8a769">insert</a> (const size_t &amp;index, <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;jsonBasic)</td></tr>
+<tr class="memdesc:aadc75917cc0087353a0a41e5fbe8a769 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">在指定位置移入元素  <br /></td></tr>
+<tr class="separator:aadc75917cc0087353a0a41e5fbe8a769 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab26098e6531f5248fa1d60ef0c3c7c2c inherit pub_methods_class_json_1_1_json_basic" id="r_ab26098e6531f5248fa1d60ef0c3c7c2c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#ab26098e6531f5248fa1d60ef0c3c7c2c">insert</a> (const std::string &amp;key, const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;jsonBasic)</td></tr>
+<tr class="memdesc:ab26098e6531f5248fa1d60ef0c3c7c2c inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">插入键值对  <br /></td></tr>
+<tr class="separator:ab26098e6531f5248fa1d60ef0c3c7c2c inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b21107de1a8ea406582b4f3c789c41c inherit pub_methods_class_json_1_1_json_basic" id="r_a3b21107de1a8ea406582b4f3c789c41c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a3b21107de1a8ea406582b4f3c789c41c">insert</a> (const std::string &amp;key, <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;jsonBasic)</td></tr>
+<tr class="memdesc:a3b21107de1a8ea406582b4f3c789c41c inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">移动插入键值对  <br /></td></tr>
+<tr class="separator:a3b21107de1a8ea406582b4f3c789c41c inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a846d276ac2fc4357a27a00df9de4b2ba inherit pub_methods_class_json_1_1_json_basic" id="r_a846d276ac2fc4357a27a00df9de4b2ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a846d276ac2fc4357a27a00df9de4b2ba">insert</a> (const std::pair&lt; const std::string, <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &gt; &amp;p)</td></tr>
+<tr class="memdesc:a846d276ac2fc4357a27a00df9de4b2ba inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">移动插入键值对  <br /></td></tr>
+<tr class="separator:a846d276ac2fc4357a27a00df9de4b2ba inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06bcf66de1eb19ff878da20f9416bfc2 inherit pub_methods_class_json_1_1_json_basic" id="r_a06bcf66de1eb19ff878da20f9416bfc2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a06bcf66de1eb19ff878da20f9416bfc2">erase</a> (const size_t &amp;index)</td></tr>
+<tr class="memdesc:a06bcf66de1eb19ff878da20f9416bfc2 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">删除指定位置的元素  <br /></td></tr>
+<tr class="separator:a06bcf66de1eb19ff878da20f9416bfc2 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a229788ddfa067917ec1576e970916507 inherit pub_methods_class_json_1_1_json_basic" id="r_a229788ddfa067917ec1576e970916507"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a229788ddfa067917ec1576e970916507">erase</a> (const std::string &amp;key)</td></tr>
+<tr class="memdesc:a229788ddfa067917ec1576e970916507 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">删除key的元素  <br /></td></tr>
+<tr class="separator:a229788ddfa067917ec1576e970916507 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac415f8396dd9eae5db57a0489b5794f2 inherit pub_methods_class_json_1_1_json_basic" id="r_ac415f8396dd9eae5db57a0489b5794f2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#ac415f8396dd9eae5db57a0489b5794f2">is_object</a> () const noexcept</td></tr>
+<tr class="memdesc:ac415f8396dd9eae5db57a0489b5794f2 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断是不是对象  <br /></td></tr>
+<tr class="separator:ac415f8396dd9eae5db57a0489b5794f2 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add3cc155397903720dd3f5f26f47d779 inherit pub_methods_class_json_1_1_json_basic" id="r_add3cc155397903720dd3f5f26f47d779"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#add3cc155397903720dd3f5f26f47d779">is_array</a> () const noexcept</td></tr>
+<tr class="memdesc:add3cc155397903720dd3f5f26f47d779 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断是不是数组  <br /></td></tr>
+<tr class="separator:add3cc155397903720dd3f5f26f47d779 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2277ee5fa576461af06d5167a293e96a inherit pub_methods_class_json_1_1_json_basic" id="r_a2277ee5fa576461af06d5167a293e96a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a2277ee5fa576461af06d5167a293e96a">is_string</a> () const noexcept</td></tr>
+<tr class="memdesc:a2277ee5fa576461af06d5167a293e96a inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断是不是字符串  <br /></td></tr>
+<tr class="separator:a2277ee5fa576461af06d5167a293e96a inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67becf70d27d604eb8568cce42775f36 inherit pub_methods_class_json_1_1_json_basic" id="r_a67becf70d27d604eb8568cce42775f36"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a67becf70d27d604eb8568cce42775f36">is_bool</a> () const noexcept</td></tr>
+<tr class="memdesc:a67becf70d27d604eb8568cce42775f36 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断是不是布尔  <br /></td></tr>
+<tr class="separator:a67becf70d27d604eb8568cce42775f36 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9324a5e5fd2b83bbfa304f47c2de4a8 inherit pub_methods_class_json_1_1_json_basic" id="r_ad9324a5e5fd2b83bbfa304f47c2de4a8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#ad9324a5e5fd2b83bbfa304f47c2de4a8">is_number</a> () const noexcept</td></tr>
+<tr class="memdesc:ad9324a5e5fd2b83bbfa304f47c2de4a8 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断是不是数值  <br /></td></tr>
+<tr class="separator:ad9324a5e5fd2b83bbfa304f47c2de4a8 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd61c9ce571b87cef6e146424e95fe4d inherit pub_methods_class_json_1_1_json_basic" id="r_abd61c9ce571b87cef6e146424e95fe4d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#abd61c9ce571b87cef6e146424e95fe4d">is_int64</a> () const noexcept</td></tr>
+<tr class="memdesc:abd61c9ce571b87cef6e146424e95fe4d inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断是不是整数  <br /></td></tr>
+<tr class="separator:abd61c9ce571b87cef6e146424e95fe4d inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25dbef84ada22f63e51524fa015386ec inherit pub_methods_class_json_1_1_json_basic" id="r_a25dbef84ada22f63e51524fa015386ec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a25dbef84ada22f63e51524fa015386ec">is_double</a> () const noexcept</td></tr>
+<tr class="memdesc:a25dbef84ada22f63e51524fa015386ec inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断是不是浮点  <br /></td></tr>
+<tr class="separator:a25dbef84ada22f63e51524fa015386ec inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcbbd5955b23ff041c2d69f65ee2af7c inherit pub_methods_class_json_1_1_json_basic" id="r_adcbbd5955b23ff041c2d69f65ee2af7c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#adcbbd5955b23ff041c2d69f65ee2af7c">is_null</a> () const noexcept</td></tr>
+<tr class="memdesc:adcbbd5955b23ff041c2d69f65ee2af7c inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断是不是null  <br /></td></tr>
+<tr class="separator:adcbbd5955b23ff041c2d69f65ee2af7c inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad52c3c0f132bc8efcc3a6f8a71b51e43 inherit pub_methods_class_json_1_1_json_basic" id="r_ad52c3c0f132bc8efcc3a6f8a71b51e43"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#ad52c3c0f132bc8efcc3a6f8a71b51e43">is_value</a> () const noexcept</td></tr>
+<tr class="memdesc:ad52c3c0f132bc8efcc3a6f8a71b51e43 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断是不是值类型  <br /></td></tr>
+<tr class="separator:ad52c3c0f132bc8efcc3a6f8a71b51e43 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1226bda2d3b3741cd9f52935c65b793f inherit pub_methods_class_json_1_1_json_basic" id="r_a1226bda2d3b3741cd9f52935c65b793f"><td class="memItemLeft" align="right" valign="top">long long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a1226bda2d3b3741cd9f52935c65b793f">as_int64</a> () const</td></tr>
+<tr class="memdesc:a1226bda2d3b3741cd9f52935c65b793f inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">转换成long long类型  <br /></td></tr>
+<tr class="separator:a1226bda2d3b3741cd9f52935c65b793f inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38585a052c51c1aabdb3027ad99348c1 inherit pub_methods_class_json_1_1_json_basic" id="r_a38585a052c51c1aabdb3027ad99348c1"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a38585a052c51c1aabdb3027ad99348c1">as_double</a> () const</td></tr>
+<tr class="memdesc:a38585a052c51c1aabdb3027ad99348c1 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">转换成double类型  <br /></td></tr>
+<tr class="separator:a38585a052c51c1aabdb3027ad99348c1 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0196f67c182009adb08fa86c48a8c913 inherit pub_methods_class_json_1_1_json_basic" id="r_a0196f67c182009adb08fa86c48a8c913"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a0196f67c182009adb08fa86c48a8c913">as_bool</a> () const</td></tr>
+<tr class="memdesc:a0196f67c182009adb08fa86c48a8c913 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">转换成bool类型  <br /></td></tr>
+<tr class="separator:a0196f67c182009adb08fa86c48a8c913 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f1c892630f7287e030503f24e3cb2ef inherit pub_methods_class_json_1_1_json_basic" id="r_a5f1c892630f7287e030503f24e3cb2ef"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a5f1c892630f7287e030503f24e3cb2ef">as_string</a> () const</td></tr>
+<tr class="memdesc:a5f1c892630f7287e030503f24e3cb2ef inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">转换成string类型  <br /></td></tr>
+<tr class="separator:a5f1c892630f7287e030503f24e3cb2ef inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae473ee2ee1d6260815216037396a3613 inherit pub_methods_class_json_1_1_json_basic" id="r_ae473ee2ee1d6260815216037396a3613"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#ae473ee2ee1d6260815216037396a3613">to_string</a> () const noexcept</td></tr>
+<tr class="memdesc:ae473ee2ee1d6260815216037396a3613 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">转换成字符串  <br /></td></tr>
+<tr class="separator:ae473ee2ee1d6260815216037396a3613 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75f0e4d3c076ed5f6350fd68aadc56aa inherit pub_methods_class_json_1_1_json_basic" id="r_a75f0e4d3c076ed5f6350fd68aadc56aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_object.html">JsonObject</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a75f0e4d3c076ed5f6350fd68aadc56aa">as_object</a> () const</td></tr>
+<tr class="memdesc:a75f0e4d3c076ed5f6350fd68aadc56aa inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">拷贝一份Object对象  <br /></td></tr>
+<tr class="separator:a75f0e4d3c076ed5f6350fd68aadc56aa inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80551a13d3c71529c17ff4ebe9fed3fc inherit pub_methods_class_json_1_1_json_basic" id="r_a80551a13d3c71529c17ff4ebe9fed3fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_array.html">JsonArray</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a80551a13d3c71529c17ff4ebe9fed3fc">as_array</a> () const</td></tr>
+<tr class="memdesc:a80551a13d3c71529c17ff4ebe9fed3fc inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">拷贝一份Array对象  <br /></td></tr>
+<tr class="separator:a80551a13d3c71529c17ff4ebe9fed3fc inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92d1430cc84357dfa325f2adb7f1ba51 inherit pub_methods_class_json_1_1_json_basic" id="r_a92d1430cc84357dfa325f2adb7f1ba51"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a92d1430cc84357dfa325f2adb7f1ba51">as_value</a> () const</td></tr>
+<tr class="memdesc:a92d1430cc84357dfa325f2adb7f1ba51 inherit pub_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">拷贝一份值对象  <br /></td></tr>
+<tr class="separator:a92d1430cc84357dfa325f2adb7f1ba51 inherit pub_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+额外继承的成员函数</h2></td></tr>
+<tr class="inherit_header pub_types_class_json_1_1_json_basic"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_types_class_json_1_1_json_basic')"><img src="closed.png" alt="-"/>&#160;Public 类型 继承自 <a class="el" href="class_json_1_1_json_basic.html">Json::JsonBasic</a></td></tr>
+<tr class="memitem:ab0fa9e55d07142952533280b2b749d3f inherit pub_types_class_json_1_1_json_basic" id="r_ab0fa9e55d07142952533280b2b749d3f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#ab0fa9e55d07142952533280b2b749d3f">Map</a> = std::map&lt;std::string,<a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a>&gt;</td></tr>
+<tr class="separator:ab0fa9e55d07142952533280b2b749d3f inherit pub_types_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a148e441e0a6b8d93026a82adbef5b29c inherit pub_types_class_json_1_1_json_basic" id="r_a148e441e0a6b8d93026a82adbef5b29c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a148e441e0a6b8d93026a82adbef5b29c">List</a> = std::vector&lt;<a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a>&gt;</td></tr>
+<tr class="separator:a148e441e0a6b8d93026a82adbef5b29c inherit pub_types_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63b0569f1ff9e1d742dce65c4ecb6178 inherit pub_types_class_json_1_1_json_basic" id="r_a63b0569f1ff9e1d742dce65c4ecb6178"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a63b0569f1ff9e1d742dce65c4ecb6178">JsonVar</a> = std::variant&lt;std::string, <a class="el" href="class_json_1_1_json_basic.html#ab0fa9e55d07142952533280b2b749d3f">Map</a>, <a class="el" href="class_json_1_1_json_basic.html#a148e441e0a6b8d93026a82adbef5b29c">List</a>&gt;</td></tr>
+<tr class="separator:a63b0569f1ff9e1d742dce65c4ecb6178 inherit pub_types_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_json_1_1_json_basic"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_json_1_1_json_basic')"><img src="closed.png" alt="-"/>&#160;Protected 成员函数 继承自 <a class="el" href="class_json_1_1_json_basic.html">Json::JsonBasic</a></td></tr>
+<tr class="memitem:a247e939cb9d52b5f7eafa830df1e7aae inherit pro_methods_class_json_1_1_json_basic" id="r_a247e939cb9d52b5f7eafa830df1e7aae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a247e939cb9d52b5f7eafa830df1e7aae">JsonBasic</a> (const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;jsonBasic, const <a class="el" href="namespace_json.html#af95719ed1a10f4696da3a722a4e344e4">JsonType</a> &amp;not_jsonType1, const <a class="el" href="namespace_json.html#af95719ed1a10f4696da3a722a4e344e4">JsonType</a> &amp;not_jsonType2)</td></tr>
+<tr class="memdesc:a247e939cb9d52b5f7eafa830df1e7aae inherit pro_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">保护-否定类型的拷贝构造函数  <br /></td></tr>
+<tr class="separator:a247e939cb9d52b5f7eafa830df1e7aae inherit pro_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a5c33fd551d579e17f316a307e90388 inherit pro_methods_class_json_1_1_json_basic" id="r_a9a5c33fd551d579e17f316a307e90388"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a9a5c33fd551d579e17f316a307e90388">JsonBasic</a> (<a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;jsonBasic, const <a class="el" href="namespace_json.html#af95719ed1a10f4696da3a722a4e344e4">JsonType</a> &amp;not_jsonType1, const <a class="el" href="namespace_json.html#af95719ed1a10f4696da3a722a4e344e4">JsonType</a> &amp;not_jsonType2)</td></tr>
+<tr class="memdesc:a9a5c33fd551d579e17f316a307e90388 inherit pro_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">保护-否定类型的移动构造函数  <br /></td></tr>
+<tr class="separator:a9a5c33fd551d579e17f316a307e90388 inherit pro_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a100329ce1be5ddb0b665f98ae81336ff inherit pro_methods_class_json_1_1_json_basic" id="r_a100329ce1be5ddb0b665f98ae81336ff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a100329ce1be5ddb0b665f98ae81336ff">JsonBasic</a> (const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;jsonBasic, const <a class="el" href="namespace_json.html#af95719ed1a10f4696da3a722a4e344e4">JsonType</a> &amp;jsonType)</td></tr>
+<tr class="memdesc:a100329ce1be5ddb0b665f98ae81336ff inherit pro_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">保护-指定类型的拷贝构造函数  <br /></td></tr>
+<tr class="separator:a100329ce1be5ddb0b665f98ae81336ff inherit pro_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48adfc767d22eadb64e90a952f26189c inherit pro_methods_class_json_1_1_json_basic" id="r_a48adfc767d22eadb64e90a952f26189c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#a48adfc767d22eadb64e90a952f26189c">JsonBasic</a> (<a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;jsonBasic, const <a class="el" href="namespace_json.html#af95719ed1a10f4696da3a722a4e344e4">JsonType</a> &amp;jsonType)</td></tr>
+<tr class="memdesc:a48adfc767d22eadb64e90a952f26189c inherit pro_methods_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">保护-指定类型的移动构造函数  <br /></td></tr>
+<tr class="separator:a48adfc767d22eadb64e90a952f26189c inherit pro_methods_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_json_1_1_json_basic"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_json_1_1_json_basic')"><img src="closed.png" alt="-"/>&#160;Protected 属性 继承自 <a class="el" href="class_json_1_1_json_basic.html">Json::JsonBasic</a></td></tr>
+<tr class="memitem:adefc36c5d415ddc48078cd3044329e36 inherit pro_attribs_class_json_1_1_json_basic" id="r_adefc36c5d415ddc48078cd3044329e36"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_json_basic.html#a63b0569f1ff9e1d742dce65c4ecb6178">JsonVar</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#adefc36c5d415ddc48078cd3044329e36">content_</a> { std::string { &quot;null&quot; } }</td></tr>
+<tr class="memdesc:adefc36c5d415ddc48078cd3044329e36 inherit pro_attribs_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">存储JSON数据。  <br /></td></tr>
+<tr class="separator:adefc36c5d415ddc48078cd3044329e36 inherit pro_attribs_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab899c82badd1162d22a51e69755cfaa5 inherit pro_attribs_class_json_1_1_json_basic" id="r_ab899c82badd1162d22a51e69755cfaa5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_json.html#af95719ed1a10f4696da3a722a4e344e4">JsonType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_json_basic.html#ab899c82badd1162d22a51e69755cfaa5">type_</a> { <a class="el" href="namespace_json.html#af95719ed1a10f4696da3a722a4e344e4ac5dc611cb8490048db201f0710f4b379">JsonType::ISNULL</a> }</td></tr>
+<tr class="memdesc:ab899c82badd1162d22a51e69755cfaa5 inherit pro_attribs_class_json_1_1_json_basic"><td class="mdescLeft">&#160;</td><td class="mdescRight">表示当前对象存储的数据类型，  <br /></td></tr>
+<tr class="separator:ab899c82badd1162d22a51e69755cfaa5 inherit pro_attribs_class_json_1_1_json_basic"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
+<div class="textblock"><p>Json值类型对象。 </p>
+<p>JSON反序列化后的，可操作对象，内部必然是值类型。 </p><dl class="section note"><dt>注解</dt><dd>可以直接使用此类。 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l00933">933</a> 行定义.</p>
+</div><h2 class="groupheader">构造及析构函数说明</h2>
+<a id="a498a611007c3396c6b9a611c86dbabdc" name="a498a611007c3396c6b9a611c86dbabdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a498a611007c3396c6b9a611c86dbabdc">&#9670;&#160;</a></span>JsonValue() <span class="overload">[1/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::JsonValue::JsonValue </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>默认构造函数 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l00956">956</a> 行定义.</p>
+
+</div>
+</div>
+<a id="aa6dede01a3d2a09bd2b06c9517a066af" name="aa6dede01a3d2a09bd2b06c9517a066af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6dede01a3d2a09bd2b06c9517a066af">&#9670;&#160;</a></span>JsonValue() <span class="overload">[2/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::JsonValue::JsonValue </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>jsonValue</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>拷贝构造 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8cpp_source.html">jsonlib.cpp</a> 第 <a class="el" href="jsonlib_8cpp_source.html#l01218">1218</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a485383744620ed09f4a953a35849d1a4" name="a485383744620ed09f4a953a35849d1a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a485383744620ed09f4a953a35849d1a4">&#9670;&#160;</a></span>JsonValue() <span class="overload">[3/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::JsonValue::JsonValue </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>jsonValue</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>移动构造 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8cpp_source.html">jsonlib.cpp</a> 第 <a class="el" href="jsonlib_8cpp_source.html#l01222">1222</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a98be4496a4155e8c2707dea00f3b51f7" name="a98be4496a4155e8c2707dea00f3b51f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98be4496a4155e8c2707dea00f3b51f7">&#9670;&#160;</a></span>JsonValue() <span class="overload">[4/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::JsonValue::JsonValue </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>jsonBasic</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>显式父类转子类拷贝构造函数 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l00977">977</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a09aa066bae41b911ea13005c048d1cb6" name="a09aa066bae41b911ea13005c048d1cb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09aa066bae41b911ea13005c048d1cb6">&#9670;&#160;</a></span>JsonValue() <span class="overload">[5/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::JsonValue::JsonValue </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>jsonBasic</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>显式父类转子类移动构造函数 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l00981">981</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a792df1a73f3c0957685f2e0669299aa2" name="a792df1a73f3c0957685f2e0669299aa2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a792df1a73f3c0957685f2e0669299aa2">&#9670;&#160;</a></span>JsonValue() <span class="overload">[6/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::JsonValue::JsonValue </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>文本字面量构造 </p>
+<dl class="section note"><dt>注解</dt><dd>与JsonBasic的文本初始化不同，此处将直接视作STRING类型，不再解析内容。 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l00997">997</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a6dff2b2a1eef8a5d9ff93190bddb11f5" name="a6dff2b2a1eef8a5d9ff93190bddb11f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dff2b2a1eef8a5d9ff93190bddb11f5">&#9670;&#160;</a></span>JsonValue() <span class="overload">[7/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::JsonValue::JsonValue </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>字符串构造 </p>
+<dl class="section note"><dt>注解</dt><dd>与JsonBasic的文本初始化不同，此处将直接视作STRING类型，不再解析内容。 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01012">1012</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ab39b8f200dca9c951b75217283606a9d" name="ab39b8f200dca9c951b75217283606a9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab39b8f200dca9c951b75217283606a9d">&#9670;&#160;</a></span>JsonValue() <span class="overload">[8/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::JsonValue::JsonValue </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>字符串移动构造 </p>
+<dl class="section note"><dt>注解</dt><dd>与JsonBasic的文本初始化不同，此处将直接视作STRING类型，不再解析内容。 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01027">1027</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a6b62ac2d0c2a9e5f834cb37e14bdfa2f" name="a6b62ac2d0c2a9e5f834cb37e14bdfa2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b62ac2d0c2a9e5f834cb37e14bdfa2f">&#9670;&#160;</a></span>JsonValue() <span class="overload">[9/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::JsonValue::JsonValue </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;</td>          <td class="paramname"><span class="paramname"><em>num</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>数值构造 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01041">1041</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ac111915b010a156508e97efd206a1d63" name="ac111915b010a156508e97efd206a1d63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac111915b010a156508e97efd206a1d63">&#9670;&#160;</a></span>JsonValue() <span class="overload">[10/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::JsonValue::JsonValue </td>
+          <td>(</td>
+          <td class="paramtype">const long long &amp;</td>          <td class="paramname"><span class="paramname"><em>num</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>数值构造 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01052">1052</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ad9730870040267ef9fac7dfa03d51493" name="ad9730870040267ef9fac7dfa03d51493"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9730870040267ef9fac7dfa03d51493">&#9670;&#160;</a></span>JsonValue() <span class="overload">[11/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::JsonValue::JsonValue </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;</td>          <td class="paramname"><span class="paramname"><em>num</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>数值构造 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01063">1063</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a773d5c402085b70f2a8d96b94b63c816" name="a773d5c402085b70f2a8d96b94b63c816"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a773d5c402085b70f2a8d96b94b63c816">&#9670;&#160;</a></span>JsonValue() <span class="overload">[12/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::JsonValue::JsonValue </td>
+          <td>(</td>
+          <td class="paramtype">const long double &amp;</td>          <td class="paramname"><span class="paramname"><em>num</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>数值构造 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01074">1074</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ae7d67f66017f4ab82a7c352711c471b4" name="ae7d67f66017f4ab82a7c352711c471b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7d67f66017f4ab82a7c352711c471b4">&#9670;&#160;</a></span>JsonValue() <span class="overload">[13/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::JsonValue::JsonValue </td>
+          <td>(</td>
+          <td class="paramtype">const bool &amp;</td>          <td class="paramname"><span class="paramname"><em>bl</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>布尔构造 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01085">1085</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a55a1f14263c20776db198e6df6d94172" name="a55a1f14263c20776db198e6df6d94172"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55a1f14263c20776db198e6df6d94172">&#9670;&#160;</a></span>JsonValue() <span class="overload">[14/14]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::JsonValue::JsonValue </td>
+          <td>(</td>
+          <td class="paramtype">const std::nullptr_t &amp;</td>          <td class="paramname"><span class="paramname"><em>ptr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>null构造 </p>
+<dl class="section note"><dt>注解</dt><dd>不能用NULL宏，使用nullptr空指针 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01098">1098</a> 行定义.</p>
+
+</div>
+</div>
+<h2 class="groupheader">成员函数说明</h2>
+<a id="a8e7ba85f72057face232cae93b8de8f5" name="a8e7ba85f72057face232cae93b8de8f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e7ba85f72057face232cae93b8de8f5">&#9670;&#160;</a></span>at() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp; Json::JsonValue::at </td>
+          <td>(</td>
+          <td class="paramtype">const size_t &amp;</td>          <td class="paramname"><span class="paramname"><em>index</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1d3d21cc33ca0004692c7f2ff82176a5" name="a1d3d21cc33ca0004692c7f2ff82176a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d3d21cc33ca0004692c7f2ff82176a5">&#9670;&#160;</a></span>at() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp; Json::JsonValue::at </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaf61b18b38af7b1650fcba56491cd4b9" name="aaf61b18b38af7b1650fcba56491cd4b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf61b18b38af7b1650fcba56491cd4b9">&#9670;&#160;</a></span>erase() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Json::JsonValue::erase </td>
+          <td>(</td>
+          <td class="paramtype">const size_t &amp;</td>          <td class="paramname"><span class="paramname"><em>index</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6e953b9c0a26495e8702d6ba4394b4e6" name="a6e953b9c0a26495e8702d6ba4394b4e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e953b9c0a26495e8702d6ba4394b4e6">&#9670;&#160;</a></span>erase() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Json::JsonValue::erase </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a29739f3212af8fe114139d0884760e7f" name="a29739f3212af8fe114139d0884760e7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29739f3212af8fe114139d0884760e7f">&#9670;&#160;</a></span>getKeys()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::set&lt; std::string &gt; Json::JsonValue::getKeys </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af30e1f9eec1201e297fb6dd945e0641c" name="af30e1f9eec1201e297fb6dd945e0641c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af30e1f9eec1201e297fb6dd945e0641c">&#9670;&#160;</a></span>getListConst()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_json_1_1_json_basic.html#a148e441e0a6b8d93026a82adbef5b29c">List</a> &amp; Json::JsonValue::getListConst </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1f8af42951430006ae1740937cc148f3" name="a1f8af42951430006ae1740937cc148f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f8af42951430006ae1740937cc148f3">&#9670;&#160;</a></span>getMapConst()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_json_1_1_json_basic.html#ab0fa9e55d07142952533280b2b749d3f">Map</a> &amp; Json::JsonValue::getMapConst </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a097dd44b5101403ddff455a40a1a95bd" name="a097dd44b5101403ddff455a40a1a95bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a097dd44b5101403ddff455a40a1a95bd">&#9670;&#160;</a></span>hasKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Json::JsonValue::hasKey </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aed3223fc06837f62550cf0f4ae763f4a" name="aed3223fc06837f62550cf0f4ae763f4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed3223fc06837f62550cf0f4ae763f4a">&#9670;&#160;</a></span>insert() <span class="overload">[1/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Json::JsonValue::insert </td>
+          <td>(</td>
+          <td class="paramtype">const size_t &amp;</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>jsonBasic</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7637e39f8540b52d932fac1b54d81d65" name="a7637e39f8540b52d932fac1b54d81d65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7637e39f8540b52d932fac1b54d81d65">&#9670;&#160;</a></span>insert() <span class="overload">[2/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Json::JsonValue::insert </td>
+          <td>(</td>
+          <td class="paramtype">const size_t &amp;</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>jsonBasic</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a96dcca6f9db5625183e284cf5d7fd56f" name="a96dcca6f9db5625183e284cf5d7fd56f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96dcca6f9db5625183e284cf5d7fd56f">&#9670;&#160;</a></span>insert() <span class="overload">[3/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Json::JsonValue::insert </td>
+          <td>(</td>
+          <td class="paramtype">const std::pair&lt; const std::string, <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>p</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a02993c324345c6085d3c487a3f562445" name="a02993c324345c6085d3c487a3f562445"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02993c324345c6085d3c487a3f562445">&#9670;&#160;</a></span>insert() <span class="overload">[4/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Json::JsonValue::insert </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>jsonBasic</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac8c3d4dd4555683eb77aa6c20a3a59f0" name="ac8c3d4dd4555683eb77aa6c20a3a59f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8c3d4dd4555683eb77aa6c20a3a59f0">&#9670;&#160;</a></span>insert() <span class="overload">[5/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Json::JsonValue::insert </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>jsonBasic</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa4daa9c0309d44fc820d09f05557af75" name="aa4daa9c0309d44fc820d09f05557af75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4daa9c0309d44fc820d09f05557af75">&#9670;&#160;</a></span>operator=() <span class="overload">[1/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp; Json::JsonValue::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const bool &amp;</td>          <td class="paramname"><span class="paramname"><em>bl</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>布尔赋值 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01089">1089</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ab935afe6d8a3726e0a4f5389ea5dc763" name="ab935afe6d8a3726e0a4f5389ea5dc763"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab935afe6d8a3726e0a4f5389ea5dc763">&#9670;&#160;</a></span>operator=() <span class="overload">[2/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp; Json::JsonValue::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>文本字面量赋值 </p>
+<dl class="section note"><dt>注解</dt><dd>与JsonBasic的文本初始化不同，此处将直接视作STRING类型，不再解析内容。 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01003">1003</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ad9b90db63449478caa4bfc698ba81f19" name="ad9b90db63449478caa4bfc698ba81f19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9b90db63449478caa4bfc698ba81f19">&#9670;&#160;</a></span>operator=() <span class="overload">[3/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp; Json::JsonValue::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;</td>          <td class="paramname"><span class="paramname"><em>num</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>数值赋值 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01067">1067</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a0415fe53919f367a5345f14446ebe97a" name="a0415fe53919f367a5345f14446ebe97a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0415fe53919f367a5345f14446ebe97a">&#9670;&#160;</a></span>operator=() <span class="overload">[4/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp; Json::JsonValue::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;</td>          <td class="paramname"><span class="paramname"><em>num</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>数值赋值 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01045">1045</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a0ff7360636e091db92819526f29cbea2" name="a0ff7360636e091db92819526f29cbea2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ff7360636e091db92819526f29cbea2">&#9670;&#160;</a></span>operator=() <span class="overload">[5/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp; Json::JsonValue::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>jsonBasic</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>父类转子类拷贝赋值函数 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8cpp_source.html">jsonlib.cpp</a> 第 <a class="el" href="jsonlib_8cpp_source.html#l01161">1161</a> 行定义.</p>
+
+</div>
+</div>
+<a id="afdecad36772364bc487390f2a9dc1518" name="afdecad36772364bc487390f2a9dc1518"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdecad36772364bc487390f2a9dc1518">&#9670;&#160;</a></span>operator=() <span class="overload">[6/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp; Json::JsonValue::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>jsonValue</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>拷贝赋值 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8cpp_source.html">jsonlib.cpp</a> 第 <a class="el" href="jsonlib_8cpp_source.html#l01227">1227</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a738bf215814bad713667f01999a2b976" name="a738bf215814bad713667f01999a2b976"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a738bf215814bad713667f01999a2b976">&#9670;&#160;</a></span>operator=() <span class="overload">[7/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp; Json::JsonValue::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const long double &amp;</td>          <td class="paramname"><span class="paramname"><em>num</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>数值赋值 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01078">1078</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ae6eae801ebb8088a4813aaab95d63344" name="ae6eae801ebb8088a4813aaab95d63344"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6eae801ebb8088a4813aaab95d63344">&#9670;&#160;</a></span>operator=() <span class="overload">[8/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp; Json::JsonValue::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const long long &amp;</td>          <td class="paramname"><span class="paramname"><em>num</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>数值赋值 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01056">1056</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a263b9ba6a3ce8343beefbeb137cb0f29" name="a263b9ba6a3ce8343beefbeb137cb0f29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a263b9ba6a3ce8343beefbeb137cb0f29">&#9670;&#160;</a></span>operator=() <span class="overload">[9/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp; Json::JsonValue::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const std::nullptr_t &amp;</td>          <td class="paramname"><span class="paramname"><em>ptr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>null赋值 </p>
+<dl class="section note"><dt>注解</dt><dd>不能用NULL宏，使用nullptr空指针 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01104">1104</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a5838c9d827a48a7ef8d2f91f1eea8721" name="a5838c9d827a48a7ef8d2f91f1eea8721"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5838c9d827a48a7ef8d2f91f1eea8721">&#9670;&#160;</a></span>operator=() <span class="overload">[10/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp; Json::JsonValue::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>字符串赋值 </p>
+<dl class="section note"><dt>注解</dt><dd>与JsonBasic的文本初始化不同，此处将直接视作STRING类型，不再解析内容。 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01018">1018</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a377a3addce16fc530dfcd7f709194016" name="a377a3addce16fc530dfcd7f709194016"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a377a3addce16fc530dfcd7f709194016">&#9670;&#160;</a></span>operator=() <span class="overload">[11/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp; Json::JsonValue::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>jsonBasic</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>父类转子类移动赋值函数 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8cpp_source.html">jsonlib.cpp</a> 第 <a class="el" href="jsonlib_8cpp_source.html#l01166">1166</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ae62b0b140639272c4a94e38296dbd65f" name="ae62b0b140639272c4a94e38296dbd65f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae62b0b140639272c4a94e38296dbd65f">&#9670;&#160;</a></span>operator=() <span class="overload">[12/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp; Json::JsonValue::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>jsonValue</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>移动赋值 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8cpp_source.html">jsonlib.cpp</a> 第 <a class="el" href="jsonlib_8cpp_source.html#l01233">1233</a> 行定义.</p>
+
+</div>
+</div>
+<a id="af09075b086ed38e427c0265c986e57ba" name="af09075b086ed38e427c0265c986e57ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af09075b086ed38e427c0265c986e57ba">&#9670;&#160;</a></span>operator=() <span class="overload">[13/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp; Json::JsonValue::operator= </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>字符串移动赋值 </p>
+<dl class="section note"><dt>注解</dt><dd>与JsonBasic的文本初始化不同，此处将直接视作STRING类型，不再解析内容。 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01033">1033</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a9f0f5e3d02355748eb9a84aa3dd5f4aa" name="a9f0f5e3d02355748eb9a84aa3dd5f4aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f0f5e3d02355748eb9a84aa3dd5f4aa">&#9670;&#160;</a></span>operator==() <span class="overload">[1/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Json::JsonValue::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_json_array.html">JsonArray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>其他比较运算符 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01126">1126</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a9245265e94f39df5e7203fc5df72d008" name="a9245265e94f39df5e7203fc5df72d008"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9245265e94f39df5e7203fc5df72d008">&#9670;&#160;</a></span>operator==() <span class="overload">[2/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Json::JsonValue::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>jsonBasic</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>父类比较运算符 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8cpp_source.html">jsonlib.cpp</a> 第 <a class="el" href="jsonlib_8cpp_source.html#l01105">1105</a> 行定义.</p>
+
+</div>
+</div>
+<a id="ac035197203a603de4a099024fc2f3625" name="ac035197203a603de4a099024fc2f3625"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac035197203a603de4a099024fc2f3625">&#9670;&#160;</a></span>operator==() <span class="overload">[3/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Json::JsonValue::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_json_object.html">JsonObject</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>其他比较运算符 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8h_source.html">jsonlib.h</a> 第 <a class="el" href="jsonlib_8h_source.html#l01122">1122</a> 行定义.</p>
+
+</div>
+</div>
+<a id="af972a76b5116e8fb1a6d44db793dc9e8" name="af972a76b5116e8fb1a6d44db793dc9e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af972a76b5116e8fb1a6d44db793dc9e8">&#9670;&#160;</a></span>operator==() <span class="overload">[4/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Json::JsonValue::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_json_value.html">JsonValue</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>jsonValue</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>比较运算符 </p>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8cpp_source.html">jsonlib.cpp</a> 第 <a class="el" href="jsonlib_8cpp_source.html#l01109">1109</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a8fb1dd85d57e374359b70f848a34cbed" name="a8fb1dd85d57e374359b70f848a34cbed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fb1dd85d57e374359b70f848a34cbed">&#9670;&#160;</a></span>operator==() <span class="overload">[5/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Json::JsonValue::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>字符串比较运算符 </p>
+<dl class="section note"><dt>注解</dt><dd>与其他类型不同，此处直接比较内容 </dd></dl>
+
+<p class="definition">在文件 <a class="el" href="jsonlib_8cpp_source.html">jsonlib.cpp</a> 第 <a class="el" href="jsonlib_8cpp_source.html#l01101">1101</a> 行定义.</p>
+
+</div>
+</div>
+<a id="a201417e56299aa6d38b7dcced0fa2cd3" name="a201417e56299aa6d38b7dcced0fa2cd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a201417e56299aa6d38b7dcced0fa2cd3">&#9670;&#160;</a></span>push_back() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Json::JsonValue::push_back </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>jsonBasic</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3feb2dccf5487ae84c288c9f760e9443" name="a3feb2dccf5487ae84c288c9f760e9443"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3feb2dccf5487ae84c288c9f760e9443">&#9670;&#160;</a></span>push_back() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Json::JsonValue::push_back </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_json_1_1_json_basic.html">JsonBasic</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>jsonBasic</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>include/<a class="el" href="jsonlib_8h_source.html">jsonlib.h</a></li>
+<li>src/<a class="el" href="jsonlib_8cpp_source.html">jsonlib.cpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>

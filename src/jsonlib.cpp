@@ -9,9 +9,14 @@
 #include <stdexcept>
 #include <iostream>
 
+// #define JSONLIB_CHECK_END_COMMA 1
+// #define JSONLIB_CHECK_START_ZERO 1
+
 namespace Json {
 
-    // 转义UTF-8和UTF-16
+    /**
+     * @brief 内部函数，转义\u字符
+     */
     static void escapeUnicode(std::string& res, const std::string& str, size_t& index) {
         // 将十六进制字符串转换为 Unicode 码点
         if (index + 4 >= str.size()) throw JsonStructureException{ "Illegel string.\n" };
@@ -82,7 +87,10 @@ namespace Json {
         }
     }
 
-    // 禁止输入空字符串
+    /**
+     * @brief 内部函数，判断字符串是不是数值
+     * @note 静止输入空字符串
+     */
     static bool is_number(const std::string& str) noexcept {
         size_t it = 0;
         size_t len = str.size();
@@ -106,12 +114,17 @@ namespace Json {
             }
             else return false;
         }
-        // if (str[0] == '0' && have_not_point) throw JsonStructureException{"Intager could not start with 0.\n"};
+
+#ifdef JSONLIB_CHECK_START_ZERO
+        if (str[0] == '0' && have_not_point) throw JsonStructureException{"Intager could not start with 0.\n"};
+#endif
 
         return true;
     }
 
-    // 反转义字符串
+    /**
+     * @brief 内部函数，反转义字符串
+     */
     static std::string reverse_escape(const std::string& str) noexcept {
         std::string res;
         // 提前分配空间，减少扩容开销
@@ -148,7 +161,9 @@ namespace Json {
         return std::move(res);
     }
 
-    // 转义字符串，两端位置固定
+    /**
+     * @brief 内部函数，转义字符串
+     */
     static std::string escape(const std::string& str, const size_t& left, const size_t& right) {
         std::string res;
         // 预分配空间
@@ -201,7 +216,9 @@ namespace Json {
         return std::move(res);
     }
 
-    // 转义字符串，最终位置不确定但小于right，且修改外部参数left
+    /**
+     * @brief 内部函数，转义字符串且移动指针
+     */
     static std::string escape_next(const std::string& str, size_t& left, const size_t& right) {
         // 跳过字符串起始的双引号
         ++left;
@@ -298,7 +315,10 @@ namespace Json {
             content_ = Map{};
             Map& map = std::get<Map>(content_);
             std::string key;
+
+#ifdef JSONLIB_CHECK_END_COMMA
             unsigned int num_comma = 0;
+#endif
             ++index;
             while (str[index] != '}') {
                 while (std::isspace(str[index])) ++index;
@@ -321,10 +341,20 @@ namespace Json {
                 ++index;
                 while (index < tail && std::isspace(str[index])) ++index;
                 // 判断合法性，结束后下个字符要么逗号，要么终止
-                if (str[index] == ',') ++index, ++num_comma;
+                if (str[index] == ',') 
+#ifdef JSONLIB_CHECK_END_COMMA
+                    ++index, ++num_comma;
+#else
+                    ++index;
+#endif
                 else if (str[index] != '}') throw JsonStructureException{ "Unknow element.\n" };
             }
+
+            
+#ifdef JSONLIB_CHECK_END_COMMA
             if (num_comma == map.size() && num_comma) throw JsonStructureException{ "Redundant comma.\n" };
+#endif
+
             // 大于等于，说明内部括号未闭合
             if (index >= tail) throw JsonStructureException{ "The { } are not closed.\n" };
         }
@@ -334,7 +364,11 @@ namespace Json {
             type_ = JsonType::ARRAY;
             content_ = List{};
             List& list = std::get<List>(content_);
+
+#ifdef JSONLIB_CHECK_END_COMMA
             unsigned int num_comma = 0;
+#endif
+        
             ++index;
             while (str[index] != ']') {
                 while (std::isspace(str[index])) ++index;
@@ -346,10 +380,17 @@ namespace Json {
                 ++index;
                 while (index < tail && std::isspace(str[index])) ++index;
                 // 判断合法性，结束后下个字符要么逗号，要么终止
-                if (str[index] == ',') ++index, ++num_comma;
+                if (str[index] == ',') 
+#ifdef JSONLIB_CHECK_END_COMMA
+                    ++index, ++num_comma;
+#else
+                    ++index;
+#endif
                 else if (str[index] != ']') throw JsonStructureException{ "Unknow element.\n" };
             }
+#ifdef JSONLIB_CHECK_END_COMMA
             if (num_comma == list.size() && num_comma) throw JsonStructureException{ "Redundant comma.\n" };
+#endif
             // 大于等于，说明内部括号未闭合
             if (index >= tail) throw JsonStructureException{ "The [ ] are not closed.\n" };
         }
@@ -373,7 +414,7 @@ namespace Json {
             break;
         case 'n':
             if (tail - index <= 4 || str.compare(index, 4, "null")) throw JsonStructureException{ "Unknow element.\n" };
-            type_ = JsonType::ISNULL;
+            // type_ = JsonType::ISNULL;
             index += 3;
             break;
         default:
@@ -384,7 +425,10 @@ namespace Json {
                 bool have_not_point = true;
                 std::string tmp;
                 tmp += str[index];
-                // const char head_char= str[index];
+
+#ifdef JSONLIB_CHECK_START_ZERO
+                const char head_char= str[index];
+#endif
                 while (index < tail)
                 {
                     ++index;
@@ -415,7 +459,10 @@ namespace Json {
                     --index;
                     break;
                 }
-                // if (head_char == '0' && have_not_point) throw JsonStructureException{ "Intager could not start with 0.\n" };
+
+#ifdef JSONLIB_CHECK_START_ZERO
+                if (head_char == '0' && have_not_point) throw JsonStructureException{ "Intager could not start with 0.\n" };
+#endif
                 content_ = std::move(tmp);
             }
             break;
@@ -443,7 +490,10 @@ namespace Json {
                 content_ = Map{};
                 Map& map = std::get<Map>(content_);
                 std::string key;
+                
+#ifdef JSONLIB_CHECK_END_COMMA
                 unsigned int num_comma = 0;
+#endif
                 ++index;
                 while (index < tail) {
                     while (std::isspace(str[index])) ++index;
@@ -461,16 +511,23 @@ namespace Json {
                     // 获取值
                     while (std::isspace(str[index])) ++index;
                     map[std::move(key)] = JsonBasic{ str, index, tail };
-                    // map.insert(std::make_pair(key, JsonBasic { str, index, tail }));
 
                     // index默认停在子元素的最后一个字符，所以需要先自增
                     ++index;
                     while (std::isspace(str[index])) ++index;
                     // 判断合法性，结束后下个字符要么逗号，要么终止
-                    if (str[index] == ',') ++index, ++num_comma;
+                    if (str[index] == ',') 
+#ifdef JSONLIB_CHECK_END_COMMA
+                        ++index, ++num_comma;
+#else
+                        ++index;
+#endif
                     else if (index != tail) throw JsonStructureException{ "Unknow element.\n" };
                 }
+
+#ifdef JSONLIB_CHECK_END_COMMA
                 if (num_comma == map.size() && num_comma) throw JsonStructureException{ "Redundant comma.\n" };
+#endif
                 // 大于，说明大括号未闭合
                 if (index > tail) throw JsonStructureException{ "The { } are not closed.\n" };
             }
@@ -481,7 +538,11 @@ namespace Json {
                 type_ = JsonType::ARRAY;
                 content_ = List{};
                 List& list = std::get<List>(content_);
+
+#ifdef JSONLIB_CHECK_END_COMMA
                 unsigned int num_comma = 0;
+#endif
+
                 ++index;
                 while (index < tail) {
                     while (std::isspace(str[index])) ++index;
@@ -493,10 +554,17 @@ namespace Json {
                     ++index;
                     while (std::isspace(str[index])) ++index;
                     // 判断合法性，结束后下个字符要么逗号，要么终止
-                    if (str[index] == ',') ++index, ++num_comma;
+                    if (str[index] == ',')
+#ifdef JSONLIB_CHECK_END_COMMA
+                        ++index, ++num_comma;
+#else
+                        ++index;
+#endif
                     else if (index != tail) throw JsonStructureException{ "Unknow element.\n" };
                 }
+#ifdef JSONLIB_CHECK_END_COMMA
                 if (num_comma == list.size() && num_comma) throw JsonStructureException{ "Redundant comma.\n" };
+#endif
                 // 大于，说明方括号未闭合
                 if (index > tail) throw JsonStructureException{ "The [ ] are not closed.\n" };
             }
@@ -519,7 +587,7 @@ namespace Json {
             break;
         case 'n':
             if (tail - index <= 4 || str.compare(index, 4, "null")) throw JsonStructureException{ "Unknow element.\n" };
-            type_ = JsonType::ISNULL;
+            // type_ = JsonType::ISNULL;
             break;
         default:
             if (!std::isdigit(str[index]) && str[index] != '-' && str[index] != '+') throw JsonStructureException{ "Unknow element.\n" };
@@ -592,48 +660,19 @@ namespace Json {
         jsonBasic.reset(); // 重置状态
     }
 
-    // 整数 浮点
-    JsonBasic::JsonBasic(const int& tmp) noexcept {
-        *this = JsonBasic{ std::to_string(tmp) };
-        type_ = JsonType::NUMBER;
-    }
-    JsonBasic::JsonBasic(const long long& tmp) noexcept {
-        *this = JsonBasic{ std::to_string(tmp) };
-        type_ = JsonType::NUMBER;
-    }
-    JsonBasic::JsonBasic(const double& tmp) noexcept {
-        *this = JsonBasic{ std::to_string(tmp) };
-        type_ = JsonType::NUMBER;
-    }
-    JsonBasic& JsonBasic::operator=(const int& tmp) noexcept {
-        *this = JsonBasic{ std::to_string(tmp) };
-        type_ = JsonType::NUMBER;
-        return *this;
-    }
-    JsonBasic& JsonBasic::operator=(const long long& tmp) noexcept {
-        *this = JsonBasic{ std::to_string(tmp) };
-        type_ = JsonType::NUMBER;
-        return *this;
-    }
-    JsonBasic& JsonBasic::operator=(const double& tmp) noexcept {
-        *this = JsonBasic{ std::to_string(tmp) };
-        type_ = JsonType::NUMBER;
-        return *this;
-    }
-
     // 获取内部容器只读对象
     const JsonBasic::Map& JsonBasic::getMapConst() const {
-        if (type_ != JsonType::OBJECT) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n" };
+        if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
         return std::get<Map>(content_);
     }
     // 获取内部容器只读对象
     const JsonBasic::List& JsonBasic::getListConst() const {
-        if (type_ != JsonType::ARRAY) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not array.\n" };
+        if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not array.\n" };
         return std::get<List>(content_);
     }
     // 获取内部容器只读对象
     const std::string& JsonBasic::getStringConst() const {
-        if (type_ == JsonType::ARRAY || type_ == JsonType::OBJECT) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Value Type.\n" };
+        if (type_ == JsonType::ARRAY || type_ == JsonType::OBJECT) throw JsonTypeException{ "Is not Value Type.\n" };
         return std::get<std::string>(content_);
     }
 
@@ -708,7 +747,8 @@ namespace Json {
                 res += ',';
             }
             if (*res.rbegin() == ',') *res.rbegin() = '\n';
-            res += tabs + '}';
+            if(map.size()) res += tabs + '}';
+            else res += " }";
             return std::move(res);
         }
         break;
@@ -726,7 +766,8 @@ namespace Json {
                 res += ',';
             }
             if (*res.rbegin() == ',') *res.rbegin() = '\n';
-            res += tabs + ']';
+            if(list.size()) res += tabs + ']';
+            else res += " ]";
             return std::move(res);
         }
         break;
@@ -741,11 +782,46 @@ namespace Json {
         }
     }
 
-    // 将内容重置为null
-    void JsonBasic::reset() noexcept {
-        type_ = JsonType::ISNULL;
-        content_ = std::string{ "null" };
+    // 列表访问，拒绝新元素
+    JsonBasic& JsonBasic::at(const size_t& index) {
+        if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not array.\n" };
+        List& list = std::get<List>(content_);
+        if (index < 0 || index >= list.size()) throw std::out_of_range{ "out of range.\n" };
+        return list.at(index);
     }
+    // 对象访问，拒绝新元素
+    JsonBasic& JsonBasic::at(const std::string& key) {
+        if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
+        Map& map = std::get<Map>(content_);
+        if (map.find(key) == map.end()) throw std::out_of_range{ + "Key not find.\n" };
+        return map.at(key);
+    }
+    // 列表访问，可能创建新元素
+    JsonBasic& JsonBasic::operator[](const size_t& index) {
+        if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not array.\n" };
+        List& list = std::get<List>(content_);
+        if (index == list.size()) list.push_back(JsonBasic{});
+        if (index < 0 || index > list.size()) throw std::out_of_range{ "out of range.\n" };
+        return list[index];
+    }
+    // 对象访问，可能创建新元素
+    JsonBasic& JsonBasic::operator[](const std::string& key) {
+        if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
+        Map& map = std::get<Map>(content_);
+        if (map.find(key) == map.end()) map[key] = JsonBasic{};
+        return map[key];
+    }
+
+    // 比较
+    bool JsonBasic::operator==(const std::string& str) const {
+        JsonBasic tmp{ str };
+        return serialize() == tmp.serialize();
+    }
+    // 比较
+    bool JsonBasic::operator==(const JsonBasic& jsonBasic) const noexcept {
+        return serialize() == jsonBasic.serialize();
+    }
+
     // 清空内容
     void JsonBasic::clear() noexcept {
         switch (type_)
@@ -767,9 +843,8 @@ namespace Json {
             break;
         }
     }
-
-    // 检测长度
-    size_t JsonBasic::size()const noexcept {
+    // 长度获取
+    size_t JsonBasic::size() const noexcept{
         switch (type_)
         {
         case JsonType::OBJECT:
@@ -781,66 +856,21 @@ namespace Json {
         case JsonType::STRING:
             return std::get<std::string>(content_).size();
             break;
-        case JsonType::NUMBER:
-            return std::get<std::string>(content_).size();
-            break;
         default:
             return 1;
             break;
         }
     }
 
-    // 列表访问，拒绝新元素
-    JsonBasic& JsonBasic::at(const size_t& index) {
-        if (type_ != JsonType::ARRAY) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not array.\n" };
-        List& list = std::get<List>(content_);
-        if (index < 0 || index >= list.size()) throw std::out_of_range{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " out of range.\n" };
-        return list.at(index);
-    }
-    // 对象访问，拒绝新元素
-    JsonBasic& JsonBasic::at(const std::string& key) {
-        if (type_ != JsonType::OBJECT) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n" };
-        Map& map = std::get<Map>(content_);
-        if (map.find(key) == map.end()) throw std::out_of_range{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Key not find.\n" };
-        return map.at(key);
-    }
-    // 列表访问，可能创建新元素
-    JsonBasic& JsonBasic::operator[](const size_t& index) {
-        if (type_ != JsonType::ARRAY) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not array.\n" };
-        List& list = std::get<List>(content_);
-        if (index == list.size()) list.push_back(JsonBasic{});
-        if (index < 0 || index > list.size()) throw std::out_of_range{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " out of range.\n" };
-        return list[index];
-    }
-    // 对象访问，可能创建新元素
-    JsonBasic& JsonBasic::operator[](const std::string& key) {
-        if (type_ != JsonType::OBJECT) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n" };
-        Map& map = std::get<Map>(content_);
-        if (map.find(key) == map.end()) map.insert(std::make_pair(key, JsonBasic{}));
-        return map[key];
-    }
-
-    // 比较
-    bool JsonBasic::operator==(const std::string& str) const {
-        JsonBasic tmp{ str };
-        return serialize() == tmp.serialize();
-    }
-    // 比较
-    bool JsonBasic::operator==(const JsonBasic& jsonBasic) const noexcept {
-        return serialize() == jsonBasic.serialize();
-    }
-
-
-
     // 检查是否包含某个key
     bool JsonBasic::hasKey(const std::string& key) const {
-        if (type_ != JsonType::OBJECT) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n" };
+        if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
         const Map& map = std::get<Map>(content_);
         return map.find(key) != map.end();
     }
     // 获取key的集合
     std::set<std::string> JsonBasic::getKeys() const {
-        if (type_ != JsonType::OBJECT) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n" };
+        if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
         const Map& map = std::get<Map>(content_);
         std::set<std::string> keys;
         for (const auto& pair : map) {
@@ -850,83 +880,83 @@ namespace Json {
     }
     // 数组末尾插入元素
     void JsonBasic::push_back(const JsonBasic& jsonBasic) {
-        if (type_ != JsonType::ARRAY) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Array.\n" };
+        if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not Array.\n" };
         List& list = std::get<List>(content_);
         list.push_back(jsonBasic);
     }
     // 数组末尾移动进入元素
     void JsonBasic::push_back(JsonBasic&& jsonBasic) {
-        if (type_ != JsonType::ARRAY) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Array.\n" };
+        if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not Array.\n" };
         List& list = std::get<List>(content_);
         list.push_back(std::move(jsonBasic));
     }
     // 数值指定位置插入元素
     void JsonBasic::insert(const size_t& index, const JsonBasic& jsonBasic) {
-        if (type_ != JsonType::ARRAY) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Array.\n" };
+        if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not Array.\n" };
         List& list = std::get<List>(content_);
-        if (index < 0 || index > list.size()) throw std::out_of_range{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " out of range.\n" };
+        if (index < 0 || index > list.size()) throw std::out_of_range{ "out of range.\n" };
         list.insert(list.begin() + index, jsonBasic);
     }
     // 数组指定位置移入元素
     void JsonBasic::insert(const size_t& index, JsonBasic&& jsonBasic) {
-        if (type_ != JsonType::ARRAY) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Array.\n" };
+        if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not Array.\n" };
         List& list = std::get<List>(content_);
-        if (index < 0 || index > list.size()) throw std::out_of_range{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " out of range.\n" };
+        if (index < 0 || index > list.size()) throw std::out_of_range{ "out of range.\n" };
         list.insert(list.begin() + index, std::move(jsonBasic));
     }
     // 对象指定位置插入键值对
     void JsonBasic::insert(const std::string& key, const JsonBasic& jsonBasic) {
-        if (type_ != JsonType::OBJECT) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n" };
+        if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
         Map& map = std::get<Map>(content_);
         map[key] = jsonBasic;
     }
     // 对象指定位置移动插入键值对
     void JsonBasic::insert(const std::string& key, JsonBasic&& jsonBasic) {
-        if (type_ != JsonType::OBJECT) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n" };
+        if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
         Map& map = std::get<Map>(content_);
         map[key] = std::move(jsonBasic);
     }
     // 对象插入键值对
     void JsonBasic::insert(const std::pair<const std::string, JsonBasic>& p) {
-        if (type_ != JsonType::OBJECT) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n" };
+        if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
         Map& map = std::get<Map>(content_);
         map.insert(p);
     }
     // 数值删除指定位置的元素
     void JsonBasic::erase(const size_t& index) {
-        if (type_ != JsonType::ARRAY) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not array.\n" };
+        if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not array.\n" };
         List& list = std::get<List>(content_);
         if (index < 0 || index >= list.size()) throw std::out_of_range{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " out of range.\n" };
         list.erase(list.begin() + index);
     }
     // 对象删除指定key的元素
     void JsonBasic::erase(const std::string& key) {
-        if (type_ != JsonType::OBJECT) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Object.\n" };
+        if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
         Map& map = std::get<Map>(content_);
-        if (map.find(key) == map.end()) throw std::out_of_range{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Key not find.\n" };
+        if (map.find(key) == map.end()) throw std::out_of_range{ "Key not find.\n" };
         map.erase(key);
     }
 
     // as 赋值内容或对象
     long long JsonBasic::as_int64() const {
-        if (type_ != JsonType::NUMBER) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Number.\n" };
+        if (type_ != JsonType::NUMBER) throw JsonTypeException{ "Is not Number.\n" };
         return std::stol(std::get<std::string>(content_));
     }
     double JsonBasic::as_double() const {
-        if (type_ != JsonType::NUMBER) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Number.\n" };
+        if (type_ != JsonType::NUMBER) throw JsonTypeException{ "Is not Number.\n" };
         return std::stod(std::get<std::string>(content_));
     }
     bool JsonBasic::as_bool() const {
-        if (type_ != JsonType::BOOLEN) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Number.\n" };
+        if (type_ != JsonType::BOOLEN) throw JsonTypeException{ "Is not boolen.\n" };
         return std::get<std::string>(content_).at(0) == 't';
     }
     std::string JsonBasic::as_string() const {
-        if (type_ != JsonType::STRING) throw JsonTypeException{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " Is not Number.\n" };
+        if (type_ != JsonType::STRING) throw JsonTypeException{ "Is not String.\n" };
         return std::get<std::string>(content_);
     }
     std::string JsonBasic::to_string() const noexcept {
-        if (type_ != JsonType::STRING) return std::get<std::string>(content_);
-        return serialize();
+        if (type_ == JsonType::STRING) return std::get<std::string>(content_);
+        return this->serialize();
     }
     JsonObject JsonBasic::as_object() const {
         if (!(this->is_object())) throw JsonTypeException{ "JsonObject's type must be JsonType::OBJECT.\n" };
@@ -1010,13 +1040,14 @@ namespace Json {
     }
 
     // 子类的访问修饰符
-    JsonBasic& JsonObject::operator[](const std::string& key) {
+    JsonBasic& JsonObject::operator[](const std::string& key) noexcept{
         Map& map = std::get<Map>(content_);
         if (map.find(key) == map.end()) map.insert(std::make_pair(key, JsonBasic{}));
         return map[key];
     }
     JsonBasic& JsonArray::operator[](const size_t& index) {
         List& list = std::get<List>(content_);
+        if (index < 0 || index > list.size()) throw std::out_of_range{ "out of range.\n" };
         if (index == list.size()) list.push_back(JsonBasic{});
         if (index < 0 || index > list.size()) throw std::out_of_range{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " out of range.\n" };
         return list[index];
@@ -1070,14 +1101,8 @@ namespace Json {
         return jsonArray.serialize() == this->serialize();
     }
     bool JsonValue::operator==(const std::string& str) const noexcept {
-        try {
-            JsonBasic tmp{ str };
-            if (tmp.type() != this->type_) return false;
-            return tmp.serialize() == this->serialize();
-        }
-        catch (...) {
-            return false;
-        }
+        if(type_ != JsonType::STRING) return false;
+        return std::get<std::string>(content_) == str;
     }
     bool JsonValue::operator==(const JsonBasic& jsonBasic) const noexcept {
         if (jsonBasic.type() != this->type_) return false;
@@ -1116,32 +1141,32 @@ namespace Json {
     }
 
     JsonObject& JsonObject::operator=(const JsonBasic& jsonBasic) {
-        if (jsonBasic.is_object()) throw JsonTypeException{ "JsonObject's type must be JsonType::OBJECT.\n" };
+        if (jsonBasic.is_object()) throw JsonTypeException{ "JsonBasic's type must be JsonType::OBJECT.\n" };
         *this = JsonObject{ jsonBasic };
         return *this;
     }
     JsonObject& JsonObject::operator=(JsonBasic&& jsonBasic) {
-        if (jsonBasic.is_object()) throw JsonTypeException{ "JsonObject's type must be JsonType::OBJECT.\n" };
+        if (jsonBasic.is_object()) throw JsonTypeException{ "JsonBasic's type must be JsonType::OBJECT.\n" };
         *this = JsonObject{ std::move(jsonBasic) };
         return *this;
     }
     JsonArray& JsonArray::operator=(const JsonBasic& jsonBasic) {
-        if (jsonBasic.is_array()) throw JsonTypeException{ "JsonObject's type must be JsonType::ARRAY.\n" };
+        if (jsonBasic.is_array()) throw JsonTypeException{ "JsonBasic's type must be JsonType::ARRAY.\n" };
         *this = JsonArray{ jsonBasic };
         return *this;
     }
     JsonArray& JsonArray::operator=(JsonBasic&& jsonBasic) {
-        if (jsonBasic.is_array()) throw JsonTypeException{ "JsonObject's type must be JsonType::ARRAY.\n" };
+        if (jsonBasic.is_array()) throw JsonTypeException{ "JsonBasic's type must be JsonType::ARRAY.\n" };
         *this = JsonArray{ std::move(jsonBasic) };
         return *this;
     }
     JsonValue& JsonValue::operator=(const JsonBasic& jsonBasic) {
-        if (jsonBasic.is_value()) throw JsonTypeException{ "JsonValue's type must be not JsonType::OBJECT and ARRAY.\n" };
+        if (jsonBasic.is_value()) throw JsonTypeException{ "JsonBasic's type must be not JsonType::OBJECT and ARRAY.\n" };
         *this = JsonValue{ jsonBasic };
         return *this;
     }
     JsonValue& JsonValue::operator=(JsonBasic&& jsonBasic) {
-        if (jsonBasic.is_value()) throw JsonTypeException{ "JsonValue's type must be not JsonType::OBJECT and ARRAY.\n" };
+        if (jsonBasic.is_value()) throw JsonTypeException{ "JsonBasic's type must be not JsonType::OBJECT and ARRAY.\n" };
         *this = JsonValue{ std::move(jsonBasic) };
         return *this;
     }

@@ -1,0 +1,29 @@
+\doxysection{src/jsonlib.cpp 文件参考}
+\hypertarget{jsonlib_8cpp}{}\label{jsonlib_8cpp}\index{src/jsonlib.cpp@{src/jsonlib.cpp}}
+{\ttfamily \#include "{}jsonlib.\+h"{}}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$variant$>$}\newline
+{\ttfamily \#include $<$exception$>$}\newline
+{\ttfamily \#include $<$stdexcept$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+\doxysubsubsection*{命名空间}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_json}{Json}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{函数}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{namespace_json_ad1f0414b25bedce59e19cbe358b292f9}{Json\+::escape\+Unicode}} (std\+::string \&res, const std\+::string \&str, size\+\_\+t \&index)
+\begin{DoxyCompactList}\small\item\em 内部函数，转义\textbackslash{}u字符 \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{namespace_json_a8a44cda93558197104155e68fa8a4508}{Json\+::is\+\_\+number}} (const std\+::string \&str) noexcept
+\begin{DoxyCompactList}\small\item\em 内部函数，判断字符串是不是数值 \end{DoxyCompactList}\item 
+static std\+::string \mbox{\hyperlink{namespace_json_a8d99e9842e8250ed90a6a70c8b63f1e7}{Json\+::reverse\+\_\+escape}} (const std\+::string \&str) noexcept
+\begin{DoxyCompactList}\small\item\em 内部函数，反转义字符串 \end{DoxyCompactList}\item 
+static std\+::string \mbox{\hyperlink{namespace_json_a4140961045dcd5a54aa4080451bce678}{Json\+::escape}} (const std\+::string \&str, const size\+\_\+t \&left, const size\+\_\+t \&right)
+\begin{DoxyCompactList}\small\item\em 内部函数，转义字符串 \end{DoxyCompactList}\item 
+static std\+::string \mbox{\hyperlink{namespace_json_a1ac71ec4d52af17a63e28e10423c0310}{Json\+::escape\+\_\+next}} (const std\+::string \&str, size\+\_\+t \&left, const size\+\_\+t \&right)
+\begin{DoxyCompactList}\small\item\em 内部函数，转义字符串且移动指针 \end{DoxyCompactList}\end{DoxyCompactItemize}

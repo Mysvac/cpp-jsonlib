@@ -1,0 +1,1758 @@
+\doxysection{Json\+::Json\+Basic类 参考}
+\hypertarget{class_json_1_1_json_basic}{}\label{class_json_1_1_json_basic}\index{Json::JsonBasic@{Json::JsonBasic}}
+
+
+Json数据基类  
+
+
+
+
+{\ttfamily \#include $<$jsonlib.\+h$>$}
+
+\doxysubsubsection*{Public 类型}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{class_json_1_1_json_basic_ab0fa9e55d07142952533280b2b749d3f}{Map}} = std\+::map$<$std\+::string,\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}}$>$
+\item 
+using \mbox{\hyperlink{class_json_1_1_json_basic_a148e441e0a6b8d93026a82adbef5b29c}{List}} = std\+::vector$<$\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}}$>$
+\item 
+using \mbox{\hyperlink{class_json_1_1_json_basic_a63b0569f1ff9e1d742dce65c4ecb6178}{Json\+Var}} = std\+::variant$<$std\+::string, \mbox{\hyperlink{class_json_1_1_json_basic_ab0fa9e55d07142952533280b2b749d3f}{Map}}, \mbox{\hyperlink{class_json_1_1_json_basic_a148e441e0a6b8d93026a82adbef5b29c}{List}}$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public 成员函数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_ac0c2a680eee561acf46402f7fa2ee2f2}{Json\+Basic}} ()=default
+\begin{DoxyCompactList}\small\item\em 默认构造函数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_aad84bf24d2b5de58aed5d7936086dff5}{Json\+Basic}} (const \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \&json\+Type)
+\begin{DoxyCompactList}\small\item\em 指定类型的构造函数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a21f0aacb8f4e1d6e571c6cd58665bb93}{Json\+Basic}} (const char \texorpdfstring{$\ast$}{*}str)
+\begin{DoxyCompactList}\small\item\em 字符串字面量构造函数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_aff2bbec211163e50f7c1acfff5ed5809}{operator=}} (const char \texorpdfstring{$\ast$}{*}str)
+\begin{DoxyCompactList}\small\item\em 字符串字面量赋值函数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a6764713b6772e48f2a4a5d547c515e26}{Json\+Basic}} (const std\+::string \&str)
+\begin{DoxyCompactList}\small\item\em 字符串构造函数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a2e8e7f5b75cbddad993a3fac39e76534}{operator=}} (const std\+::string \&str)
+\begin{DoxyCompactList}\small\item\em 字符串赋值函数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a44b9d4fd2ea8433f8e9836ce2f884893}{Json\+Basic}} (const bool \&bl) noexcept
+\begin{DoxyCompactList}\small\item\em 布尔类型构造 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a35985a854a428477636eac12a2e440ec}{Json\+Basic}} (const int \&num) noexcept
+\begin{DoxyCompactList}\small\item\em 整数类型构造 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a467f17f98111477bc4148fc26b600f54}{Json\+Basic}} (const long long \&num) noexcept
+\begin{DoxyCompactList}\small\item\em 长整数类型构造 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a7dca3c0225d420ed3600e3cfb2074a54}{Json\+Basic}} (const double \&num) noexcept
+\begin{DoxyCompactList}\small\item\em 浮点数类型构造 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a3e7cecff582cf50cce24311b1381a67d}{Json\+Basic}} (const long double \&num) noexcept
+\begin{DoxyCompactList}\small\item\em 浮点数类型构造 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a6837385694b86d11052dc3b8771e89a8}{Json\+Basic}} (const std\+::nullptr\+\_\+t \&n\+\_\+ptr) noexcept
+\begin{DoxyCompactList}\small\item\em nullptr\+\_\+t类型构造 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a15c2587dbc09db2ee370646c5b39a07e}{operator=}} (const bool \&bl) noexcept
+\begin{DoxyCompactList}\small\item\em 布尔类型赋值 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a7cf7a2f3530a466d0e7ad2d66d02ba4b}{operator=}} (const int \&num) noexcept
+\begin{DoxyCompactList}\small\item\em 整数类型赋值 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a9c3f017e2a3c4f0a65ba4c5a0cf4381b}{operator=}} (const long long \&num) noexcept
+\begin{DoxyCompactList}\small\item\em 长整数类型赋值 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_aee618f88d9410159feced53676af6a28}{operator=}} (const double \&num) noexcept
+\begin{DoxyCompactList}\small\item\em 浮点数类型赋值 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a2ecbeb28fa130dbfc064db67d1c4acbf}{operator=}} (const long double \&num) noexcept
+\begin{DoxyCompactList}\small\item\em 浮点数类型赋值 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a9ca49ade813e64fcd7fda6c1235bc7a4}{operator=}} (const std\+::nullptr\+\_\+t \&n\+\_\+ptr) noexcept
+\begin{DoxyCompactList}\small\item\em null类型赋值 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a3c9917db0650d4311c315d49fa91282a}{Json\+Basic}} (const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&json\+Basic) noexcept
+\begin{DoxyCompactList}\small\item\em 拷贝构造 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a1843d2b7aa9fed7912ae3413f94b02c1}{Json\+Basic}} (\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&\&json\+Basic) noexcept
+\begin{DoxyCompactList}\small\item\em 移动构造 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_ac2999d7ed3e01e031442f04e06e86cfb}{operator=}} (const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&json\+Basic) noexcept
+\begin{DoxyCompactList}\small\item\em 拷贝赋值 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a1d914a32e5d97c9b1f0fc39d9a9d3198}{operator=}} (\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&\&json\+Basic) noexcept
+\begin{DoxyCompactList}\small\item\em 移动赋值 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_afd9d98531e591b5393cc69b3b812e894}{Json\+Basic}} (const \mbox{\hyperlink{class_json_1_1_json_object}{Json\+Object}} \&json\+Object) noexcept
+\begin{DoxyCompactList}\small\item\em 对象类型拷贝构造 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a34a95e6a15737def5c092ccf5fc638cb}{Json\+Basic}} (const \mbox{\hyperlink{class_json_1_1_json_array}{Json\+Array}} \&json\+Array) noexcept
+\begin{DoxyCompactList}\small\item\em 数组类型拷贝构造 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a739af4eea5d0ede613557afe840c1681}{Json\+Basic}} (const \mbox{\hyperlink{class_json_1_1_json_value}{Json\+Value}} \&json\+Value) noexcept
+\begin{DoxyCompactList}\small\item\em 值类型拷贝构造 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a96ef90c486569c55ba4213ec70d206e1}{Json\+Basic}} (\mbox{\hyperlink{class_json_1_1_json_object}{Json\+Object}} \&\&json\+Object) noexcept
+\begin{DoxyCompactList}\small\item\em 对象类型移动构造 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_ac00c63b1c5f54de9de39f11d4ec1c6c0}{Json\+Basic}} (\mbox{\hyperlink{class_json_1_1_json_array}{Json\+Array}} \&\&json\+Array) noexcept
+\begin{DoxyCompactList}\small\item\em 数组类型移动构造 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_afbc0f02b2470082e5986bd8fed237910}{Json\+Basic}} (\mbox{\hyperlink{class_json_1_1_json_value}{Json\+Value}} \&\&json\+Value) noexcept
+\begin{DoxyCompactList}\small\item\em 值类型移动构造 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_ae5da3b0dad9e56378539de39efa88a4e}{operator=}} (const \mbox{\hyperlink{class_json_1_1_json_object}{Json\+Object}} \&json\+Object) noexcept
+\begin{DoxyCompactList}\small\item\em 对象类型拷贝赋值 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a4aa664333611228ac02103d5bf88fa49}{operator=}} (const \mbox{\hyperlink{class_json_1_1_json_array}{Json\+Array}} \&json\+Array) noexcept
+\begin{DoxyCompactList}\small\item\em 数组类型拷贝赋值 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a8f0d5193f8e1c12fe9608d190ef5d7e3}{operator=}} (const \mbox{\hyperlink{class_json_1_1_json_value}{Json\+Value}} \&json\+Value) noexcept
+\begin{DoxyCompactList}\small\item\em 值类型拷贝赋值 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a4163537fe73fadc455ceab2816e06915}{operator=}} (\mbox{\hyperlink{class_json_1_1_json_object}{Json\+Object}} \&\&json\+Object) noexcept
+\begin{DoxyCompactList}\small\item\em 对象类型移动赋值 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a53a057c4a39b3e3605c4bae01bcc4973}{operator=}} (\mbox{\hyperlink{class_json_1_1_json_array}{Json\+Array}} \&\&json\+Array) noexcept
+\begin{DoxyCompactList}\small\item\em 数组类型移动赋值 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a4517c7419bb0d816c6dae739fc16d6bf}{operator=}} (\mbox{\hyperlink{class_json_1_1_json_value}{Json\+Value}} \&\&json\+Value) noexcept
+\begin{DoxyCompactList}\small\item\em 值类型移动赋值 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \mbox{\hyperlink{class_json_1_1_json_basic_a5f54032f438f4d3a64fc1c0bc873055c}{type}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 获取当前对象数据类型 \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{class_json_1_1_json_basic_ab0fa9e55d07142952533280b2b749d3f}{Map}} \& \mbox{\hyperlink{class_json_1_1_json_basic_ae9adcc7618f6db5a8b79240d2e975695}{get\+Map\+Const}} () const
+\begin{DoxyCompactList}\small\item\em 获取内部容器只读对象，键值对。 \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{class_json_1_1_json_basic_a148e441e0a6b8d93026a82adbef5b29c}{List}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a6a5217743f3d622663298aa7a83c431f}{get\+List\+Const}} () const
+\begin{DoxyCompactList}\small\item\em 获取内部容器只读对象，键列表。 \end{DoxyCompactList}\item 
+const std\+::string \& \mbox{\hyperlink{class_json_1_1_json_basic_a7f5db1cd070108efe7869186afcf81ea}{get\+String\+Const}} () const
+\begin{DoxyCompactList}\small\item\em 获取内部容器只读对象，值类型。 \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_json_1_1_json_basic_a4741d60c329bc2b379ea601a4df7ee52}{serialize}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 序列化对象 \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_json_1_1_json_basic_a458ee3b2bde1f513df43886bf4634d22}{serialize\+\_\+pretty}} (const size\+\_\+t \&space\+\_\+num=2, const size\+\_\+t \&depth=0) const noexcept
+\begin{DoxyCompactList}\small\item\em 序列化对象且美化 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_json_1_1_json_basic_a319de02238b2e8de40f52abcb587b095}{reset}} () noexcept
+\begin{DoxyCompactList}\small\item\em 重置，设为null值 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_json_1_1_json_basic_aac37f71fd216c485d85af8ee993ec367}{clear}} () noexcept
+\begin{DoxyCompactList}\small\item\em 按类型清除 \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_json_1_1_json_basic_abe2c626b7b8fcf83e4ecbce0262ab79d}{size}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 获取子元素数量 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a413ff16719ce6f5e21453445966daa5b}{at}} (const size\+\_\+t \&index)
+\begin{DoxyCompactList}\small\item\em at元素访问 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a5ff7027346b5bf96455280eb87836869}{at}} (const std\+::string \&key)
+\begin{DoxyCompactList}\small\item\em at元素访问 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_a78d94e4220c3c4a53861dc6f2d42cbf0}{operator\mbox{[}$\,$\mbox{]}}} (const size\+\_\+t \&index)
+\begin{DoxyCompactList}\small\item\em \mbox{[}\mbox{]}元素访问 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& \mbox{\hyperlink{class_json_1_1_json_basic_af1aafb1b473125ee03ef41a917492019}{operator\mbox{[}$\,$\mbox{]}}} (const std\+::string \&key)
+\begin{DoxyCompactList}\small\item\em \mbox{[}\mbox{]}元素访问 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_aa8842d1b4a095feb3e30d2371f31ed37}{operator==}} (const std\+::string \&key) const
+\begin{DoxyCompactList}\small\item\em 字符串比较运算符 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_a74457f9a87b5836bbe335fac4ca3414c}{operator==}} (const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&json\+Basic) const noexcept
+\begin{DoxyCompactList}\small\item\em 比较运算 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_ae33d8ac290a9d647b522ff551625332c}{operator==}} (const \mbox{\hyperlink{class_json_1_1_json_object}{Json\+Object}} \&json\+Object) const noexcept
+\begin{DoxyCompactList}\small\item\em 与子类的比较运算 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_a8ccd9d8b632fe3574718c7eee167b5b6}{operator==}} (const \mbox{\hyperlink{class_json_1_1_json_array}{Json\+Array}} \&json\+Array) const noexcept
+\begin{DoxyCompactList}\small\item\em 与子类的比较运算 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_a4884bd6746e8a5f62f292197fd83dc6f}{operator==}} (const \mbox{\hyperlink{class_json_1_1_json_value}{Json\+Value}} \&\mbox{\hyperlink{class_json_1_1_json_value}{Json\+Value}}) const noexcept
+\begin{DoxyCompactList}\small\item\em 与子类的比较运算 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_a4bd6590bdc629d11c7122ff7376316b7}{has\+Key}} (const std\+::string \&key) const
+\begin{DoxyCompactList}\small\item\em 检查是否存在某个key \end{DoxyCompactList}\item 
+std\+::set$<$ std\+::string $>$ \mbox{\hyperlink{class_json_1_1_json_basic_a1a55fc7507d9f1b3c3c934da580468a3}{get\+Keys}} () const
+\begin{DoxyCompactList}\small\item\em 获取key的集合 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_json_1_1_json_basic_a75aaa5f93cb3748646b575eedc16e2d9}{push\+\_\+back}} (const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&json\+Basic)
+\begin{DoxyCompactList}\small\item\em 末尾插入元素 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_json_1_1_json_basic_a8a240c47f3ddb06816e470be8ba8cbad}{push\+\_\+back}} (\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&\&json\+Basic)
+\begin{DoxyCompactList}\small\item\em 末尾插入元素 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_json_1_1_json_basic_ad2706be374de5630a25021062a5f509a}{insert}} (const size\+\_\+t \&index, const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&json\+Basic)
+\begin{DoxyCompactList}\small\item\em 在指定位置插入元素 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_json_1_1_json_basic_aadc75917cc0087353a0a41e5fbe8a769}{insert}} (const size\+\_\+t \&index, \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&\&json\+Basic)
+\begin{DoxyCompactList}\small\item\em 在指定位置移入元素 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_json_1_1_json_basic_ab26098e6531f5248fa1d60ef0c3c7c2c}{insert}} (const std\+::string \&key, const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&json\+Basic)
+\begin{DoxyCompactList}\small\item\em 插入键值对 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_json_1_1_json_basic_a3b21107de1a8ea406582b4f3c789c41c}{insert}} (const std\+::string \&key, \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&\&json\+Basic)
+\begin{DoxyCompactList}\small\item\em 移动插入键值对 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_json_1_1_json_basic_a846d276ac2fc4357a27a00df9de4b2ba}{insert}} (const std\+::pair$<$ const std\+::string, \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} $>$ \&p)
+\begin{DoxyCompactList}\small\item\em 移动插入键值对 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_json_1_1_json_basic_a06bcf66de1eb19ff878da20f9416bfc2}{erase}} (const size\+\_\+t \&index)
+\begin{DoxyCompactList}\small\item\em 删除指定位置的元素 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_json_1_1_json_basic_a229788ddfa067917ec1576e970916507}{erase}} (const std\+::string \&key)
+\begin{DoxyCompactList}\small\item\em 删除key的元素 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_ac415f8396dd9eae5db57a0489b5794f2}{is\+\_\+object}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 判断是不是对象 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_add3cc155397903720dd3f5f26f47d779}{is\+\_\+array}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 判断是不是数组 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_a2277ee5fa576461af06d5167a293e96a}{is\+\_\+string}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 判断是不是字符串 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_a67becf70d27d604eb8568cce42775f36}{is\+\_\+bool}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 判断是不是布尔 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_ad9324a5e5fd2b83bbfa304f47c2de4a8}{is\+\_\+number}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 判断是不是数值 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_abd61c9ce571b87cef6e146424e95fe4d}{is\+\_\+int64}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 判断是不是整数 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_a25dbef84ada22f63e51524fa015386ec}{is\+\_\+double}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 判断是不是浮点 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_adcbbd5955b23ff041c2d69f65ee2af7c}{is\+\_\+null}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 判断是不是null \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_ad52c3c0f132bc8efcc3a6f8a71b51e43}{is\+\_\+value}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 判断是不是值类型 \end{DoxyCompactList}\item 
+long long \mbox{\hyperlink{class_json_1_1_json_basic_a1226bda2d3b3741cd9f52935c65b793f}{as\+\_\+int64}} () const
+\begin{DoxyCompactList}\small\item\em 转换成long long类型 \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{class_json_1_1_json_basic_a38585a052c51c1aabdb3027ad99348c1}{as\+\_\+double}} () const
+\begin{DoxyCompactList}\small\item\em 转换成double类型 \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_json_1_1_json_basic_a0196f67c182009adb08fa86c48a8c913}{as\+\_\+bool}} () const
+\begin{DoxyCompactList}\small\item\em 转换成bool类型 \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_json_1_1_json_basic_a5f1c892630f7287e030503f24e3cb2ef}{as\+\_\+string}} () const
+\begin{DoxyCompactList}\small\item\em 转换成string类型 \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_json_1_1_json_basic_ae473ee2ee1d6260815216037396a3613}{to\+\_\+string}} () const noexcept
+\begin{DoxyCompactList}\small\item\em 转换成字符串 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_object}{Json\+Object}} \mbox{\hyperlink{class_json_1_1_json_basic_a75f0e4d3c076ed5f6350fd68aadc56aa}{as\+\_\+object}} () const
+\begin{DoxyCompactList}\small\item\em 拷贝一份\+Object对象 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_array}{Json\+Array}} \mbox{\hyperlink{class_json_1_1_json_basic_a80551a13d3c71529c17ff4ebe9fed3fc}{as\+\_\+array}} () const
+\begin{DoxyCompactList}\small\item\em 拷贝一份\+Array对象 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_value}{Json\+Value}} \mbox{\hyperlink{class_json_1_1_json_basic_a92d1430cc84357dfa325f2adb7f1ba51}{as\+\_\+value}} () const
+\begin{DoxyCompactList}\small\item\em 拷贝一份值对象 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected 成员函数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a247e939cb9d52b5f7eafa830df1e7aae}{Json\+Basic}} (const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&json\+Basic, const \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \&not\+\_\+json\+Type1, const \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \&not\+\_\+json\+Type2)
+\begin{DoxyCompactList}\small\item\em 保护-\/否定类型的拷贝构造函数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a9a5c33fd551d579e17f316a307e90388}{Json\+Basic}} (\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&\&json\+Basic, const \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \&not\+\_\+json\+Type1, const \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \&not\+\_\+json\+Type2)
+\begin{DoxyCompactList}\small\item\em 保护-\/否定类型的移动构造函数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a100329ce1be5ddb0b665f98ae81336ff}{Json\+Basic}} (const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&json\+Basic, const \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \&json\+Type)
+\begin{DoxyCompactList}\small\item\em 保护-\/指定类型的拷贝构造函数 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a48adfc767d22eadb64e90a952f26189c}{Json\+Basic}} (\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&\&json\+Basic, const \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \&json\+Type)
+\begin{DoxyCompactList}\small\item\em 保护-\/指定类型的移动构造函数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected 属性}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_a63b0569f1ff9e1d742dce65c4ecb6178}{Json\+Var}} \mbox{\hyperlink{class_json_1_1_json_basic_adefc36c5d415ddc48078cd3044329e36}{content\+\_\+}} \{ std\+::string \{ "{}null"{} \} \}
+\begin{DoxyCompactList}\small\item\em 存储\+JSON数据。 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \mbox{\hyperlink{class_json_1_1_json_basic_ab899c82badd1162d22a51e69755cfaa5}{type\+\_\+}} \{ \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4ac5dc611cb8490048db201f0710f4b379}{Json\+Type\+::\+ISNULL}} \}
+\begin{DoxyCompactList}\small\item\em 表示当前对象存储的数据类型， \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private 成员函数}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_json_1_1_json_basic_aa01d111ee96546b4d66773652fb5da77}{Json\+Basic}} (const std\+::string \&str, size\+\_\+t \&index, const size\+\_\+t \&tail)
+\begin{DoxyCompactList}\small\item\em 私有-\/递归辅助构造函数 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{详细描述}
+Json数据基类 
+
+JSON反序列化后的，可操作对象。 \begin{DoxyNote}{注解}
+可以直接使用此类。 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00092}{92}} 行定义.
+
+
+
+\doxysubsection{成员类型定义说明}
+\Hypertarget{class_json_1_1_json_basic_a63b0569f1ff9e1d742dce65c4ecb6178}\index{Json::JsonBasic@{Json::JsonBasic}!JsonVar@{JsonVar}}
+\index{JsonVar@{JsonVar}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonVar}{JsonVar}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a63b0569f1ff9e1d742dce65c4ecb6178} 
+using \mbox{\hyperlink{class_json_1_1_json_basic_a63b0569f1ff9e1d742dce65c4ecb6178}{Json\+::\+Json\+Basic\+::\+Json\+Var}} = std\+::variant$<$std\+::string, \mbox{\hyperlink{class_json_1_1_json_basic_ab0fa9e55d07142952533280b2b749d3f}{Map}}, \mbox{\hyperlink{class_json_1_1_json_basic_a148e441e0a6b8d93026a82adbef5b29c}{List}}$>$}
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00096}{96}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a148e441e0a6b8d93026a82adbef5b29c}\index{Json::JsonBasic@{Json::JsonBasic}!List@{List}}
+\index{List@{List}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{List}{List}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a148e441e0a6b8d93026a82adbef5b29c} 
+using \mbox{\hyperlink{class_json_1_1_json_basic_a148e441e0a6b8d93026a82adbef5b29c}{Json\+::\+Json\+Basic\+::\+List}} = std\+::vector$<$\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}}$>$}
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00095}{95}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_ab0fa9e55d07142952533280b2b749d3f}\index{Json::JsonBasic@{Json::JsonBasic}!Map@{Map}}
+\index{Map@{Map}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{Map}{Map}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_ab0fa9e55d07142952533280b2b749d3f} 
+using \mbox{\hyperlink{class_json_1_1_json_basic_ab0fa9e55d07142952533280b2b749d3f}{Json\+::\+Json\+Basic\+::\+Map}} = std\+::map$<$std\+::string,\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}}$>$}
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00094}{94}} 行定义.
+
+
+
+\doxysubsection{构造及析构函数说明}
+\Hypertarget{class_json_1_1_json_basic_ac0c2a680eee561acf46402f7fa2ee2f2}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [1/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_ac0c2a680eee561acf46402f7fa2ee2f2} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+默认构造函数 
+
+默认构造，生成\+ISNULL类型的\+JSON数据。 \Hypertarget{class_json_1_1_json_basic_aad84bf24d2b5de58aed5d7936086dff5}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [2/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_aad84bf24d2b5de58aed5d7936086dff5} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \&}]{json\+Type}{}\end{DoxyParamCaption})}
+
+
+
+指定类型的构造函数 
+
+根据类型进行初始化。 
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00287}{287}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a21f0aacb8f4e1d6e571c6cd58665bb93}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [3/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a21f0aacb8f4e1d6e571c6cd58665bb93} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+字符串字面量构造函数 
+
+
+\begin{DoxyParams}{参数}
+{\em str} & JSON格式的文本数据。\\
+\hline
+\end{DoxyParams}
+将输入字符串反序列化，生成对象。 
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_structure_exception}{Json\+Structure\+Exception}} & JSON格式错误异常 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+字符串将视作\+JSON数据进行解析，而非视作\+Json\+Type\+::\+STRING类型。 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00116}{116}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a6764713b6772e48f2a4a5d547c515e26}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [4/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a6764713b6772e48f2a4a5d547c515e26} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str}{}\end{DoxyParamCaption})}
+
+
+
+字符串构造函数 
+
+
+\begin{DoxyParams}{参数}
+{\em str} & JSON格式的文本数据。\\
+\hline
+\end{DoxyParams}
+将输入字符串反序列化，生成对象。 
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_structure_exception}{Json\+Structure\+Exception}} & JSON格式错误异常 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+字符串将视作\+JSON数据进行解析，而非视作\+Json\+Type\+::\+STRING类型。 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00473}{473}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a44b9d4fd2ea8433f8e9836ce2f884893}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [5/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a44b9d4fd2ea8433f8e9836ce2f884893} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const bool \&}]{bl}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+布尔类型构造 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00153}{153}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a35985a854a428477636eac12a2e440ec}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [6/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a35985a854a428477636eac12a2e440ec} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const int \&}]{num}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+整数类型构造 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00159}{159}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a467f17f98111477bc4148fc26b600f54}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [7/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a467f17f98111477bc4148fc26b600f54} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const long long \&}]{num}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+长整数类型构造 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00165}{165}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a7dca3c0225d420ed3600e3cfb2074a54}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [8/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a7dca3c0225d420ed3600e3cfb2074a54} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const double \&}]{num}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+浮点数类型构造 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00171}{171}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a3e7cecff582cf50cce24311b1381a67d}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [9/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a3e7cecff582cf50cce24311b1381a67d} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const long double \&}]{num}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+浮点数类型构造 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00177}{177}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a6837385694b86d11052dc3b8771e89a8}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [10/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a6837385694b86d11052dc3b8771e89a8} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const std\+::nullptr\+\_\+t \&}]{n\+\_\+ptr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+nullptr\+\_\+t类型构造 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00183}{183}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a3c9917db0650d4311c315d49fa91282a}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [11/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a3c9917db0650d4311c315d49fa91282a} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&}]{json\+Basic}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+拷贝构造 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00612}{612}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a1843d2b7aa9fed7912ae3413f94b02c1}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [12/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a1843d2b7aa9fed7912ae3413f94b02c1} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&\&}]{json\+Basic}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+移动构造 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00617}{617}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_afd9d98531e591b5393cc69b3b812e894}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [13/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_afd9d98531e591b5393cc69b3b812e894} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_object}{Json\+Object}} \&}]{json\+Object}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+对象类型拷贝构造 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00973}{973}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a34a95e6a15737def5c092ccf5fc638cb}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [14/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a34a95e6a15737def5c092ccf5fc638cb} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_array}{Json\+Array}} \&}]{json\+Array}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+数组类型拷贝构造 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00977}{977}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a739af4eea5d0ede613557afe840c1681}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [15/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a739af4eea5d0ede613557afe840c1681} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_value}{Json\+Value}} \&}]{json\+Value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+值类型拷贝构造 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00981}{981}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a96ef90c486569c55ba4213ec70d206e1}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [16/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a96ef90c486569c55ba4213ec70d206e1} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_json_1_1_json_object}{Json\+Object}} \&\&}]{json\+Object}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+对象类型移动构造 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00985}{985}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_ac00c63b1c5f54de9de39f11d4ec1c6c0}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [17/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_ac00c63b1c5f54de9de39f11d4ec1c6c0} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_json_1_1_json_array}{Json\+Array}} \&\&}]{json\+Array}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+数组类型移动构造 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00990}{990}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_afbc0f02b2470082e5986bd8fed237910}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [18/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_afbc0f02b2470082e5986bd8fed237910} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_json_1_1_json_value}{Json\+Value}} \&\&}]{json\+Value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+值类型移动构造 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00995}{995}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_aa01d111ee96546b4d66773652fb5da77}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [19/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_aa01d111ee96546b4d66773652fb5da77} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str}{, }\item[{size\+\_\+t \&}]{index}{, }\item[{const size\+\_\+t \&}]{tail}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+私有-\/递归辅助构造函数 
+
+\begin{DoxyNote}{注解}
+私有，外部不可访问 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00310}{310}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a247e939cb9d52b5f7eafa830df1e7aae}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [20/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a247e939cb9d52b5f7eafa830df1e7aae} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&}]{json\+Basic}{, }\item[{const \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \&}]{not\+\_\+json\+Type1}{, }\item[{const \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \&}]{not\+\_\+json\+Type2}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+保护-\/否定类型的拷贝构造函数 
+
+含类型要求的拷贝构造函数。保证事务性，要么成功，要么不修改任何内容。仅供子类使用。 
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00651}{651}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a9a5c33fd551d579e17f316a307e90388}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [21/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a9a5c33fd551d579e17f316a307e90388} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&\&}]{json\+Basic}{, }\item[{const \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \&}]{not\+\_\+json\+Type1}{, }\item[{const \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \&}]{not\+\_\+json\+Type2}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+保护-\/否定类型的移动构造函数 
+
+含类型要求的移动构造函数。保证事务性，要么成功，要么不修改任何内容。仅供子类使用。 
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00656}{656}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a100329ce1be5ddb0b665f98ae81336ff}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [22/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a100329ce1be5ddb0b665f98ae81336ff} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&}]{json\+Basic}{, }\item[{const \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \&}]{json\+Type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+保护-\/指定类型的拷贝构造函数 
+
+含类型要求的移动构造函数。保证事务性，要么成功，要么不修改任何内容。仅供子类使用。 
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00639}{639}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a48adfc767d22eadb64e90a952f26189c}\index{Json::JsonBasic@{Json::JsonBasic}!JsonBasic@{JsonBasic}}
+\index{JsonBasic@{JsonBasic}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{JsonBasic()}{JsonBasic()}\hspace{0.1cm}{\footnotesize\ttfamily [23/23]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a48adfc767d22eadb64e90a952f26189c} 
+Json\+::\+Json\+Basic\+::\+Json\+Basic (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&\&}]{json\+Basic}{, }\item[{const \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} \&}]{json\+Type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+保护-\/指定类型的移动构造函数 
+
+含类型要求的移动构造函数。保证事务性，要么成功，要么不修改任何内容。仅供子类使用。 
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00644}{644}} 行定义.
+
+
+
+\doxysubsection{成员函数说明}
+\Hypertarget{class_json_1_1_json_basic_a80551a13d3c71529c17ff4ebe9fed3fc}\index{Json::JsonBasic@{Json::JsonBasic}!as\_array@{as\_array}}
+\index{as\_array@{as\_array}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{as\_array()}{as\_array()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a80551a13d3c71529c17ff4ebe9fed3fc} 
+\mbox{\hyperlink{class_json_1_1_json_array}{Json\+Array}} Json\+::\+Json\+Basic\+::as\+\_\+array (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+拷贝一份\+Array对象 
+
+
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 转换失败，类型错误 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+类型必须是\+ARRAY 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00963}{963}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a0196f67c182009adb08fa86c48a8c913}\index{Json::JsonBasic@{Json::JsonBasic}!as\_bool@{as\_bool}}
+\index{as\_bool@{as\_bool}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{as\_bool()}{as\_bool()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a0196f67c182009adb08fa86c48a8c913} 
+bool Json\+::\+Json\+Basic\+::as\+\_\+bool (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+转换成bool类型 
+
+
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 转换失败，类型错误 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+必须是\+BOOL 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00947}{947}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a38585a052c51c1aabdb3027ad99348c1}\index{Json::JsonBasic@{Json::JsonBasic}!as\_double@{as\_double}}
+\index{as\_double@{as\_double}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{as\_double()}{as\_double()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a38585a052c51c1aabdb3027ad99348c1} 
+double Json\+::\+Json\+Basic\+::as\+\_\+double (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+转换成double类型 
+
+
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 转换失败，类型错误 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+必须是\+NUMBER 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00943}{943}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a1226bda2d3b3741cd9f52935c65b793f}\index{Json::JsonBasic@{Json::JsonBasic}!as\_int64@{as\_int64}}
+\index{as\_int64@{as\_int64}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{as\_int64()}{as\_int64()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a1226bda2d3b3741cd9f52935c65b793f} 
+long long Json\+::\+Json\+Basic\+::as\+\_\+int64 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+转换成long long类型 
+
+
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 转换失败，类型错误 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+必须是\+NUMBER 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00939}{939}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a75f0e4d3c076ed5f6350fd68aadc56aa}\index{Json::JsonBasic@{Json::JsonBasic}!as\_object@{as\_object}}
+\index{as\_object@{as\_object}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{as\_object()}{as\_object()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a75f0e4d3c076ed5f6350fd68aadc56aa} 
+\mbox{\hyperlink{class_json_1_1_json_object}{Json\+Object}} Json\+::\+Json\+Basic\+::as\+\_\+object (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+拷贝一份\+Object对象 
+
+
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 转换失败，类型错误 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+类型必须是\+OBJECT 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00959}{959}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a5f1c892630f7287e030503f24e3cb2ef}\index{Json::JsonBasic@{Json::JsonBasic}!as\_string@{as\_string}}
+\index{as\_string@{as\_string}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{as\_string()}{as\_string()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a5f1c892630f7287e030503f24e3cb2ef} 
+std\+::string Json\+::\+Json\+Basic\+::as\+\_\+string (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+转换成string类型 
+
+
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 转换失败，类型错误 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+必须是\+STRING 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00951}{951}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a92d1430cc84357dfa325f2adb7f1ba51}\index{Json::JsonBasic@{Json::JsonBasic}!as\_value@{as\_value}}
+\index{as\_value@{as\_value}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{as\_value()}{as\_value()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a92d1430cc84357dfa325f2adb7f1ba51} 
+\mbox{\hyperlink{class_json_1_1_json_value}{Json\+Value}} Json\+::\+Json\+Basic\+::as\+\_\+value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+拷贝一份值对象 
+
+
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 转换失败，类型错误 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+必须是值类型 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00967}{967}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a413ff16719ce6f5e21453445966daa5b}\index{Json::JsonBasic@{Json::JsonBasic}!at@{at}}
+\index{at@{at}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{at()}{at()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a413ff16719ce6f5e21453445966daa5b} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::at (\begin{DoxyParamCaption}\item[{const size\+\_\+t \&}]{index}{}\end{DoxyParamCaption})}
+
+
+
+at元素访问 
+
+at访问，带越界检查，必须是\+ARRAY类型 
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 类型错误异常 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+不会创建新元素 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00784}{784}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a5ff7027346b5bf96455280eb87836869}\index{Json::JsonBasic@{Json::JsonBasic}!at@{at}}
+\index{at@{at}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{at()}{at()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a5ff7027346b5bf96455280eb87836869} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::at (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key}{}\end{DoxyParamCaption})}
+
+
+
+at元素访问 
+
+at访问，带越界检查，必须是\+OBJECT类型 
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 类型错误异常 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+不会创建新元素 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00791}{791}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_aac37f71fd216c485d85af8ee993ec367}\index{Json::JsonBasic@{Json::JsonBasic}!clear@{clear}}
+\index{clear@{clear}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_aac37f71fd216c485d85af8ee993ec367} 
+void Json\+::\+Json\+Basic\+::clear (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+按类型清除 
+
+对象变为空字典 数组变空数组 数值变0 布尔变false 字符串变空串 \begin{DoxyNote}{注解}
+不会调用其他函数 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00824}{824}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a06bcf66de1eb19ff878da20f9416bfc2}\index{Json::JsonBasic@{Json::JsonBasic}!erase@{erase}}
+\index{erase@{erase}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{erase()}{erase()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a06bcf66de1eb19ff878da20f9416bfc2} 
+void Json\+::\+Json\+Basic\+::erase (\begin{DoxyParamCaption}\item[{const size\+\_\+t \&}]{index}{}\end{DoxyParamCaption})}
+
+
+
+删除指定位置的元素 
+
+\begin{DoxyNote}{注解}
+必须是\+ARRAY类型 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00924}{924}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a229788ddfa067917ec1576e970916507}\index{Json::JsonBasic@{Json::JsonBasic}!erase@{erase}}
+\index{erase@{erase}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{erase()}{erase()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a229788ddfa067917ec1576e970916507} 
+void Json\+::\+Json\+Basic\+::erase (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key}{}\end{DoxyParamCaption})}
+
+
+
+删除key的元素 
+
+\begin{DoxyNote}{注解}
+必须是\+OBJECT类型 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00931}{931}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a1a55fc7507d9f1b3c3c934da580468a3}\index{Json::JsonBasic@{Json::JsonBasic}!getKeys@{getKeys}}
+\index{getKeys@{getKeys}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{getKeys()}{getKeys()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a1a55fc7507d9f1b3c3c934da580468a3} 
+std\+::set$<$ std\+::string $>$ Json\+::\+Json\+Basic\+::get\+Keys (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+获取key的集合 
+
+
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 非对象类型抛出异常 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+必须是\+OBJECT类型 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00870}{870}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a6a5217743f3d622663298aa7a83c431f}\index{Json::JsonBasic@{Json::JsonBasic}!getListConst@{getListConst}}
+\index{getListConst@{getListConst}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{getListConst()}{getListConst()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a6a5217743f3d622663298aa7a83c431f} 
+const \mbox{\hyperlink{class_json_1_1_json_basic_a148e441e0a6b8d93026a82adbef5b29c}{Json\+Basic\+::\+List}} \& Json\+::\+Json\+Basic\+::get\+List\+Const (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+获取内部容器只读对象，键列表。 
+
+
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 类型错误 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{返回}
+\doxylink{class_json_1_1_json_basic_a148e441e0a6b8d93026a82adbef5b29c}{List}\&类型，当前对象内部列表的应用。 
+\end{DoxyReturn}
+\begin{DoxyNote}{注解}
+必须是\+ARRAY类型，否则抛出异常。 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00669}{669}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_ae9adcc7618f6db5a8b79240d2e975695}\index{Json::JsonBasic@{Json::JsonBasic}!getMapConst@{getMapConst}}
+\index{getMapConst@{getMapConst}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{getMapConst()}{getMapConst()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_ae9adcc7618f6db5a8b79240d2e975695} 
+const \mbox{\hyperlink{class_json_1_1_json_basic_ab0fa9e55d07142952533280b2b749d3f}{Json\+Basic\+::\+Map}} \& Json\+::\+Json\+Basic\+::get\+Map\+Const (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+获取内部容器只读对象，键值对。 
+
+
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 类型错误 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{返回}
+\doxylink{class_json_1_1_json_basic_ab0fa9e55d07142952533280b2b749d3f}{Map}\&类型，当前对象内部字典的应用。 
+\end{DoxyReturn}
+\begin{DoxyNote}{注解}
+必须是\+OBJECT类型，否则抛出异常。 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00664}{664}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a7f5db1cd070108efe7869186afcf81ea}\index{Json::JsonBasic@{Json::JsonBasic}!getStringConst@{getStringConst}}
+\index{getStringConst@{getStringConst}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{getStringConst()}{getStringConst()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a7f5db1cd070108efe7869186afcf81ea} 
+const std\+::string \& Json\+::\+Json\+Basic\+::get\+String\+Const (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+获取内部容器只读对象，值类型。 
+
+
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{返回}
+std\+::string\&类型，当前对象内部字符串值的应用。 
+\end{DoxyReturn}
+\begin{DoxyNote}{注解}
+必须是值类型，否则抛出异常。 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00674}{674}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a4bd6590bdc629d11c7122ff7376316b7}\index{Json::JsonBasic@{Json::JsonBasic}!hasKey@{hasKey}}
+\index{hasKey@{hasKey}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{hasKey()}{hasKey()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a4bd6590bdc629d11c7122ff7376316b7} 
+bool Json\+::\+Json\+Basic\+::has\+Key (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key}{}\end{DoxyParamCaption}) const}
+
+
+
+检查是否存在某个key 
+
+
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 非对象类型抛出异常 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+必须是\+OBJECT类型 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00864}{864}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_ad2706be374de5630a25021062a5f509a}\index{Json::JsonBasic@{Json::JsonBasic}!insert@{insert}}
+\index{insert@{insert}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_ad2706be374de5630a25021062a5f509a} 
+void Json\+::\+Json\+Basic\+::insert (\begin{DoxyParamCaption}\item[{const size\+\_\+t \&}]{index}{, }\item[{const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&}]{json\+Basic}{}\end{DoxyParamCaption})}
+
+
+
+在指定位置插入元素 
+
+\begin{DoxyNote}{注解}
+必须是\+ARRAY类型 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00892}{892}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_aadc75917cc0087353a0a41e5fbe8a769}\index{Json::JsonBasic@{Json::JsonBasic}!insert@{insert}}
+\index{insert@{insert}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_aadc75917cc0087353a0a41e5fbe8a769} 
+void Json\+::\+Json\+Basic\+::insert (\begin{DoxyParamCaption}\item[{const size\+\_\+t \&}]{index}{, }\item[{\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&\&}]{json\+Basic}{}\end{DoxyParamCaption})}
+
+
+
+在指定位置移入元素 
+
+\begin{DoxyNote}{注解}
+必须是\+ARRAY类型 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00899}{899}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a846d276ac2fc4357a27a00df9de4b2ba}\index{Json::JsonBasic@{Json::JsonBasic}!insert@{insert}}
+\index{insert@{insert}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a846d276ac2fc4357a27a00df9de4b2ba} 
+void Json\+::\+Json\+Basic\+::insert (\begin{DoxyParamCaption}\item[{const std\+::pair$<$ const std\+::string, \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} $>$ \&}]{p}{}\end{DoxyParamCaption})}
+
+
+
+移动插入键值对 
+
+\begin{DoxyNote}{注解}
+必须是\+Object类型 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00918}{918}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_ab26098e6531f5248fa1d60ef0c3c7c2c}\index{Json::JsonBasic@{Json::JsonBasic}!insert@{insert}}
+\index{insert@{insert}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_ab26098e6531f5248fa1d60ef0c3c7c2c} 
+void Json\+::\+Json\+Basic\+::insert (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key}{, }\item[{const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&}]{json\+Basic}{}\end{DoxyParamCaption})}
+
+
+
+插入键值对 
+
+\begin{DoxyNote}{注解}
+必须是\+Object类型 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00906}{906}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a3b21107de1a8ea406582b4f3c789c41c}\index{Json::JsonBasic@{Json::JsonBasic}!insert@{insert}}
+\index{insert@{insert}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{insert()}{insert()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a3b21107de1a8ea406582b4f3c789c41c} 
+void Json\+::\+Json\+Basic\+::insert (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key}{, }\item[{\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&\&}]{json\+Basic}{}\end{DoxyParamCaption})}
+
+
+
+移动插入键值对 
+
+\begin{DoxyNote}{注解}
+必须是\+Object类型 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00912}{912}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_add3cc155397903720dd3f5f26f47d779}\index{Json::JsonBasic@{Json::JsonBasic}!is\_array@{is\_array}}
+\index{is\_array@{is\_array}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{is\_array()}{is\_array()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_add3cc155397903720dd3f5f26f47d779} 
+bool Json\+::\+Json\+Basic\+::is\+\_\+array (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+判断是不是数组 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00565}{565}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a67becf70d27d604eb8568cce42775f36}\index{Json::JsonBasic@{Json::JsonBasic}!is\_bool@{is\_bool}}
+\index{is\_bool@{is\_bool}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{is\_bool()}{is\_bool()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a67becf70d27d604eb8568cce42775f36} 
+bool Json\+::\+Json\+Basic\+::is\+\_\+bool (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+判断是不是布尔 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00575}{575}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a25dbef84ada22f63e51524fa015386ec}\index{Json::JsonBasic@{Json::JsonBasic}!is\_double@{is\_double}}
+\index{is\_double@{is\_double}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{is\_double()}{is\_double()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a25dbef84ada22f63e51524fa015386ec} 
+bool Json\+::\+Json\+Basic\+::is\+\_\+double (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+判断是不是浮点 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00590}{590}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_abd61c9ce571b87cef6e146424e95fe4d}\index{Json::JsonBasic@{Json::JsonBasic}!is\_int64@{is\_int64}}
+\index{is\_int64@{is\_int64}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{is\_int64()}{is\_int64()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_abd61c9ce571b87cef6e146424e95fe4d} 
+bool Json\+::\+Json\+Basic\+::is\+\_\+int64 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+判断是不是整数 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00585}{585}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_adcbbd5955b23ff041c2d69f65ee2af7c}\index{Json::JsonBasic@{Json::JsonBasic}!is\_null@{is\_null}}
+\index{is\_null@{is\_null}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{is\_null()}{is\_null()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_adcbbd5955b23ff041c2d69f65ee2af7c} 
+bool Json\+::\+Json\+Basic\+::is\+\_\+null (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+判断是不是null 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00595}{595}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_ad9324a5e5fd2b83bbfa304f47c2de4a8}\index{Json::JsonBasic@{Json::JsonBasic}!is\_number@{is\_number}}
+\index{is\_number@{is\_number}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{is\_number()}{is\_number()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_ad9324a5e5fd2b83bbfa304f47c2de4a8} 
+bool Json\+::\+Json\+Basic\+::is\+\_\+number (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+判断是不是数值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00580}{580}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_ac415f8396dd9eae5db57a0489b5794f2}\index{Json::JsonBasic@{Json::JsonBasic}!is\_object@{is\_object}}
+\index{is\_object@{is\_object}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{is\_object()}{is\_object()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_ac415f8396dd9eae5db57a0489b5794f2} 
+bool Json\+::\+Json\+Basic\+::is\+\_\+object (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+判断是不是对象 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00560}{560}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a2277ee5fa576461af06d5167a293e96a}\index{Json::JsonBasic@{Json::JsonBasic}!is\_string@{is\_string}}
+\index{is\_string@{is\_string}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{is\_string()}{is\_string()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a2277ee5fa576461af06d5167a293e96a} 
+bool Json\+::\+Json\+Basic\+::is\+\_\+string (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+判断是不是字符串 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00570}{570}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_ad52c3c0f132bc8efcc3a6f8a71b51e43}\index{Json::JsonBasic@{Json::JsonBasic}!is\_value@{is\_value}}
+\index{is\_value@{is\_value}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{is\_value()}{is\_value()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_ad52c3c0f132bc8efcc3a6f8a71b51e43} 
+bool Json\+::\+Json\+Basic\+::is\+\_\+value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+判断是不是值类型 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00600}{600}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a15c2587dbc09db2ee370646c5b39a07e}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a15c2587dbc09db2ee370646c5b39a07e} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{const bool \&}]{bl}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+布尔类型赋值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00190}{190}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_aff2bbec211163e50f7c1acfff5ed5809}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_aff2bbec211163e50f7c1acfff5ed5809} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+字符串字面量赋值函数 
+
+
+\begin{DoxyParams}{参数}
+{\em str} & JSON格式的文本数据。\\
+\hline
+\end{DoxyParams}
+将输入字符串反序列化，生成对象。 
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_structure_exception}{Json\+Structure\+Exception}} & JSON格式错误异常 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+字符串将视作\+JSON数据进行解析，而非视作\+Json\+Type\+::\+STRING类型。 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00127}{127}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_aee618f88d9410159feced53676af6a28}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [3/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_aee618f88d9410159feced53676af6a28} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{const double \&}]{num}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+浮点数类型赋值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00214}{214}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a7cf7a2f3530a466d0e7ad2d66d02ba4b}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [4/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a7cf7a2f3530a466d0e7ad2d66d02ba4b} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{const int \&}]{num}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+整数类型赋值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00198}{198}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a4aa664333611228ac02103d5bf88fa49}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [5/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a4aa664333611228ac02103d5bf88fa49} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_array}{Json\+Array}} \&}]{json\+Array}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+数组类型拷贝赋值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l01006}{1006}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_ac2999d7ed3e01e031442f04e06e86cfb}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [6/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_ac2999d7ed3e01e031442f04e06e86cfb} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&}]{json\+Basic}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+拷贝赋值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00623}{623}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_ae5da3b0dad9e56378539de39efa88a4e}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [7/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_ae5da3b0dad9e56378539de39efa88a4e} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_object}{Json\+Object}} \&}]{json\+Object}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+对象类型拷贝赋值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l01000}{1000}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a8f0d5193f8e1c12fe9608d190ef5d7e3}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [8/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a8f0d5193f8e1c12fe9608d190ef5d7e3} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_value}{Json\+Value}} \&}]{json\+Value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+值类型拷贝赋值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l01012}{1012}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a2ecbeb28fa130dbfc064db67d1c4acbf}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [9/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a2ecbeb28fa130dbfc064db67d1c4acbf} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{const long double \&}]{num}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+浮点数类型赋值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00222}{222}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a9c3f017e2a3c4f0a65ba4c5a0cf4381b}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [10/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a9c3f017e2a3c4f0a65ba4c5a0cf4381b} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{const long long \&}]{num}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+长整数类型赋值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00206}{206}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a9ca49ade813e64fcd7fda6c1235bc7a4}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [11/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a9ca49ade813e64fcd7fda6c1235bc7a4} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{const std\+::nullptr\+\_\+t \&}]{n\+\_\+ptr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+null类型赋值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00230}{230}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a2e8e7f5b75cbddad993a3fac39e76534}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [12/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a2e8e7f5b75cbddad993a3fac39e76534} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str}{}\end{DoxyParamCaption})}
+
+
+
+字符串赋值函数 
+
+
+\begin{DoxyParams}{参数}
+{\em str} & JSON格式的文本数据\\
+\hline
+\end{DoxyParams}
+将输入字符串反序列化，生成对象。 
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_structure_exception}{Json\+Structure\+Exception}} & JSON格式错误异常 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+字符串将视作\+JSON数据进行解析，而非视作\+Json\+Type\+::\+STRING类型。 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00606}{606}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a53a057c4a39b3e3605c4bae01bcc4973}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [13/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a53a057c4a39b3e3605c4bae01bcc4973} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_json_1_1_json_array}{Json\+Array}} \&\&}]{json\+Array}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+数组类型移动赋值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l01025}{1025}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a1d914a32e5d97c9b1f0fc39d9a9d3198}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [14/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a1d914a32e5d97c9b1f0fc39d9a9d3198} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&\&}]{json\+Basic}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+移动赋值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00630}{630}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a4163537fe73fadc455ceab2816e06915}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [15/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a4163537fe73fadc455ceab2816e06915} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_json_1_1_json_object}{Json\+Object}} \&\&}]{json\+Object}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+对象类型移动赋值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l01018}{1018}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a4517c7419bb0d816c6dae739fc16d6bf}\index{Json::JsonBasic@{Json::JsonBasic}!operator=@{operator=}}
+\index{operator=@{operator=}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [16/16]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a4517c7419bb0d816c6dae739fc16d6bf} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_json_1_1_json_value}{Json\+Value}} \&\&}]{json\+Value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+值类型移动赋值 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l01032}{1032}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a8ccd9d8b632fe3574718c7eee167b5b6}\index{Json::JsonBasic@{Json::JsonBasic}!operator==@{operator==}}
+\index{operator==@{operator==}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a8ccd9d8b632fe3574718c7eee167b5b6} 
+bool Json\+::\+Json\+Basic\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_array}{Json\+Array}} \&}]{json\+Array}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+与子类的比较运算 
+
+\begin{DoxyNote}{注解}
+序列化后再比较，耗时较长，不应频繁使用 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l01059}{1059}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a74457f9a87b5836bbe335fac4ca3414c}\index{Json::JsonBasic@{Json::JsonBasic}!operator==@{operator==}}
+\index{operator==@{operator==}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a74457f9a87b5836bbe335fac4ca3414c} 
+bool Json\+::\+Json\+Basic\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&}]{json\+Basic}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+比较运算 
+
+比较内容，\+Object内部顺序无影响，\+ARRAY内部顺序有影响 \begin{DoxyNote}{注解}
+序列化后再比较，耗时较长，不应频繁使用 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00819}{819}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_ae33d8ac290a9d647b522ff551625332c}\index{Json::JsonBasic@{Json::JsonBasic}!operator==@{operator==}}
+\index{operator==@{operator==}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_ae33d8ac290a9d647b522ff551625332c} 
+bool Json\+::\+Json\+Basic\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_object}{Json\+Object}} \&}]{json\+Object}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+与子类的比较运算 
+
+\begin{DoxyNote}{注解}
+序列化后再比较，耗时较长，不应频繁使用 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l01055}{1055}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a4884bd6746e8a5f62f292197fd83dc6f}\index{Json::JsonBasic@{Json::JsonBasic}!operator==@{operator==}}
+\index{operator==@{operator==}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a4884bd6746e8a5f62f292197fd83dc6f} 
+bool Json\+::\+Json\+Basic\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_value}{Json\+Value}} \&}]{Json\+Value}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+与子类的比较运算 
+
+\begin{DoxyNote}{注解}
+序列化后再比较，耗时较长，不应频繁使用 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l01063}{1063}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_aa8842d1b4a095feb3e30d2371f31ed37}\index{Json::JsonBasic@{Json::JsonBasic}!operator==@{operator==}}
+\index{operator==@{operator==}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_aa8842d1b4a095feb3e30d2371f31ed37} 
+bool Json\+::\+Json\+Basic\+::operator== (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key}{}\end{DoxyParamCaption}) const}
+
+
+
+字符串比较运算符 
+
+先反序列化，再序列号比较字符串，\+Object内部顺序无影响，\+ARRAY内部顺序有影响 
+\begin{DoxyExceptions}{异常}
+{\em Json\+Structure} & json结构错误异常 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+序列化后再比较，耗时较长，不应频繁使用 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00814}{814}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a78d94e4220c3c4a53861dc6f2d42cbf0}\index{Json::JsonBasic@{Json::JsonBasic}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a78d94e4220c3c4a53861dc6f2d42cbf0} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{const size\+\_\+t \&}]{index}{}\end{DoxyParamCaption})}
+
+
+
+\mbox{[}\mbox{]}元素访问 
+
+\mbox{[}\mbox{]}访问，带越界检查，必须是\+ARRAY类型 
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 类型错误异常 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+如果指向末尾，会创建新元素， 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00798}{798}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_af1aafb1b473125ee03ef41a917492019}\index{Json::JsonBasic@{Json::JsonBasic}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_af1aafb1b473125ee03ef41a917492019} 
+\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \& Json\+::\+Json\+Basic\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key}{}\end{DoxyParamCaption})}
+
+
+
+\mbox{[}\mbox{]}元素访问 
+
+\mbox{[}\mbox{]}访问，带越界检查，必须是\+OBJECT类型 
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 类型错误异常 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+如果key不存在，会创建新元素，所以可以直接赋值。 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00806}{806}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a75aaa5f93cb3748646b575eedc16e2d9}\index{Json::JsonBasic@{Json::JsonBasic}!push\_back@{push\_back}}
+\index{push\_back@{push\_back}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{push\_back()}{push\_back()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a75aaa5f93cb3748646b575eedc16e2d9} 
+void Json\+::\+Json\+Basic\+::push\+\_\+back (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&}]{json\+Basic}{}\end{DoxyParamCaption})}
+
+
+
+末尾插入元素 
+
+
+\begin{DoxyExceptions}{异常}
+{\em \doxylink{class_json_1_1_json_type_exception}{Json\+Type\+Exception}} & 非数组类型抛出异常 \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{注解}
+必须是\+ARRAY类型 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00880}{880}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a8a240c47f3ddb06816e470be8ba8cbad}\index{Json::JsonBasic@{Json::JsonBasic}!push\_back@{push\_back}}
+\index{push\_back@{push\_back}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{push\_back()}{push\_back()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a8a240c47f3ddb06816e470be8ba8cbad} 
+void Json\+::\+Json\+Basic\+::push\+\_\+back (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_json_1_1_json_basic}{Json\+Basic}} \&\&}]{json\+Basic}{}\end{DoxyParamCaption})}
+
+
+
+末尾插入元素 
+
+\begin{DoxyNote}{注解}
+必须是\+ARRAY类型 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00886}{886}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a319de02238b2e8de40f52abcb587b095}\index{Json::JsonBasic@{Json::JsonBasic}!reset@{reset}}
+\index{reset@{reset}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a319de02238b2e8de40f52abcb587b095} 
+void Json\+::\+Json\+Basic\+::reset (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+重置，设为null值 
+
+\begin{DoxyNote}{注解}
+不会调用其他函数 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00410}{410}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a4741d60c329bc2b379ea601a4df7ee52}\index{Json::JsonBasic@{Json::JsonBasic}!serialize@{serialize}}
+\index{serialize@{serialize}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{serialize()}{serialize()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a4741d60c329bc2b379ea601a4df7ee52} 
+std\+::string Json\+::\+Json\+Basic\+::serialize (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+序列化对象 
+
+将对象序列化，生成\+JSON结构的字符串，去除无效空白字符。 \begin{DoxyReturn}{返回}
+std\+::string\&类型，当前对象内部字符串值的应用。 
+\end{DoxyReturn}
+\begin{DoxyNote}{注解}
+注意，序列化包含反转义，注意区分使用。 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00680}{680}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a458ee3b2bde1f513df43886bf4634d22}\index{Json::JsonBasic@{Json::JsonBasic}!serialize\_pretty@{serialize\_pretty}}
+\index{serialize\_pretty@{serialize\_pretty}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{serialize\_pretty()}{serialize\_pretty()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a458ee3b2bde1f513df43886bf4634d22} 
+std\+::string Json\+::\+Json\+Basic\+::serialize\+\_\+pretty (\begin{DoxyParamCaption}\item[{const size\+\_\+t \&}]{space\+\_\+num}{ = {\ttfamily 2}, }\item[{const size\+\_\+t \&}]{depth}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+序列化对象且美化 
+
+对象序列化，生成\+JSON结构的字符串，自动生成换行和空格缩进。 
+\begin{DoxyParams}{参数}
+{\em space\+\_\+num} & 每次缩进使用的空格数量 默认 2 \\
+\hline
+{\em depth} & 当前对象缩进次数，默认 0 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{注解}
+注意，序列化包含反转义，注意区分使用。 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00730}{730}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_abe2c626b7b8fcf83e4ecbce0262ab79d}\index{Json::JsonBasic@{Json::JsonBasic}!size@{size}}
+\index{size@{size}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_abe2c626b7b8fcf83e4ecbce0262ab79d} 
+size\+\_\+t Json\+::\+Json\+Basic\+::size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+获取子元素数量 
+
+对象和列表返回子元素个数，字符串返回长度。 \begin{DoxyNote}{注解}
+数值，布尔和null 返回值待定为1 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00845}{845}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_ae473ee2ee1d6260815216037396a3613}\index{Json::JsonBasic@{Json::JsonBasic}!to\_string@{to\_string}}
+\index{to\_string@{to\_string}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{to\_string()}{to\_string()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_ae473ee2ee1d6260815216037396a3613} 
+std\+::string Json\+::\+Json\+Basic\+::to\+\_\+string (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+
+
+转换成字符串 
+
+STRING类型则转义输出，非\+STRING则序列化 \begin{DoxyNote}{注解}
+非字符串直接调用序列化，所以必然成功，无异常 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8cpp_source}{jsonlib.\+cpp}} 第 \mbox{\hyperlink{jsonlib_8cpp_source_l00955}{955}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_a5f54032f438f4d3a64fc1c0bc873055c}\index{Json::JsonBasic@{Json::JsonBasic}!type@{type}}
+\index{type@{type}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{type()}{type()}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_a5f54032f438f4d3a64fc1c0bc873055c} 
+\mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} Json\+::\+Json\+Basic\+::type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+获取当前对象数据类型 
+
+\begin{DoxyReturn}{返回}
+Json\+::\+Json\+Type类型，表示当前对象数据类型 
+\end{DoxyReturn}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00363}{363}} 行定义.
+
+
+
+\doxysubsection{类成员变量说明}
+\Hypertarget{class_json_1_1_json_basic_adefc36c5d415ddc48078cd3044329e36}\index{Json::JsonBasic@{Json::JsonBasic}!content\_@{content\_}}
+\index{content\_@{content\_}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{content\_}{content\_}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_adefc36c5d415ddc48078cd3044329e36} 
+\mbox{\hyperlink{class_json_1_1_json_basic_a63b0569f1ff9e1d742dce65c4ecb6178}{Json\+Var}} Json\+::\+Json\+Basic\+::content\+\_\+ \{ std\+::string \{ "{}null"{} \} \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+存储\+JSON数据。 
+
+std\+::variant类型，存储\+JSON数据，需要C++17。 \begin{DoxyNote}{注解}
+注意，\+Map和\+List存储的也是\+Json\+Object对象，含有嵌套内容。 
+\end{DoxyNote}
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00330}{330}} 行定义.
+
+\Hypertarget{class_json_1_1_json_basic_ab899c82badd1162d22a51e69755cfaa5}\index{Json::JsonBasic@{Json::JsonBasic}!type\_@{type\_}}
+\index{type\_@{type\_}!Json::JsonBasic@{Json::JsonBasic}}
+\doxysubsubsection{\texorpdfstring{type\_}{type\_}}
+{\footnotesize\ttfamily \label{class_json_1_1_json_basic_ab899c82badd1162d22a51e69755cfaa5} 
+\mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4}{Json\+Type}} Json\+::\+Json\+Basic\+::type\+\_\+ \{ \mbox{\hyperlink{namespace_json_af95719ed1a10f4696da3a722a4e344e4ac5dc611cb8490048db201f0710f4b379}{Json\+Type\+::\+ISNULL}} \}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+表示当前对象存储的数据类型， 
+
+
+
+在文件 \mbox{\hyperlink{jsonlib_8h_source}{jsonlib.\+h}} 第 \mbox{\hyperlink{jsonlib_8h_source_l00335}{335}} 行定义.
+
+
+
+该类的文档由以下文件生成\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{jsonlib_8h}{jsonlib.\+h}}\item 
+src/\mbox{\hyperlink{jsonlib_8cpp}{jsonlib.\+cpp}}\end{DoxyCompactItemize}
