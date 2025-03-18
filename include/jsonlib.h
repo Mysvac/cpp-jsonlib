@@ -8,7 +8,7 @@
 #include <exception>
 #include <stdexcept>
 
-#if !defined(JSONLIB_EXPORT)
+#ifndef JSONLIB_EXPORT
     #define JSONLIB_EXPORT
 #endif
 
