@@ -726,6 +726,14 @@ namespace Json{
         inline explicit JsonObject(const JsonBasic& jsonBasic): JsonBasic(jsonBasic, JsonType::OBJECT){}
         
         /**
+         * @brief 字符串赋值
+         */
+        JsonObject& operator=(const std::string& str){
+            *this = JsonBasic{ str };
+            return *this;
+        }
+
+        /**
          * @brief 父类转子类拷贝赋值运算符
          */
         JsonObject& operator=(const JsonBasic& jsonBasic);
@@ -859,6 +867,15 @@ namespace Json{
          * @brief 显式父类转子类移动构造函数
          */
         inline explicit JsonArray(const JsonBasic& jsonBasic): JsonBasic(jsonBasic, JsonType::ARRAY){}
+
+        /**
+         * @brief 字符串赋值
+         */
+        JsonArray& operator=(const std::string& str){
+            *this = JsonBasic{ str };
+            return *this;
+        }
+
         /**
          * @brief 父类转子类拷贝赋值
          */

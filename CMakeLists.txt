@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
 
-set(jsonlib_VERSION 3.0.0)
+set(jsonlib_VERSION 1.0.0)
 
 set(package_name cpp-jsonlib)
 set(lib_name jsonlib)
@@ -79,12 +79,15 @@ install(EXPORT ${package_name}-targets
 if(ENABLE_BUILD_TEST_EXE STREQUAL "ON")
     enable_testing()
     
+    # ctest -R MyTest -C DEBUG --verbose
     add_executable(my_test test/test.cpp src/jsonlib.cpp)
     target_include_directories(my_test PRIVATE include)
 
     # 添加测试用例
     add_test(NAME MyTest COMMAND my_test)
 
+
+    # ctest -R GoogleTest -C DEBUG --verbose
     find_package(GTest CONFIG REQUIRED)
     add_executable(g_test test/g_test.cpp src/jsonlib.cpp)
     target_include_directories(g_test PRIVATE include)
@@ -99,4 +102,5 @@ if(ENABLE_BUILD_TEST_EXE STREQUAL "ON")
         VERBATIM
     )
 
+    # ctest -R GoogleTest -C DEBUG --verbose
 endif()
