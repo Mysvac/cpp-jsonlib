@@ -413,7 +413,7 @@ namespace Json {
             index += 4;
             break;
         case 'n':
-            if (tail - index <= 4 || str.compare(index, 4, "null")) throw JsonStructureException{ "Unknow element.\n" };
+            if (tail - index <= 3 || str.compare(index, 4, "null")) throw JsonStructureException{ "Unknow element.\n" };
             // type_ = JsonType::ISNULL;
             index += 3;
             break;
@@ -576,17 +576,17 @@ namespace Json {
             break;
         case 't':
             // str.compare return 0 if equal
-            if (tail - index <= 3 || str.compare(index, 4, "true")) throw JsonStructureException{ "Unknow element.\n" };
+            if (tail - index < 3 || str.compare(index, 4, "true")) throw JsonStructureException{ "Unknow element.\n" };
             type_ = JsonType::BOOLEN;
             content_ = std::string{ "true" };
             break;
         case 'f':
-            if (tail - index <= 4 || str.compare(index, 5, "false")) throw JsonStructureException{ "Unknow element.\n" };
+            if (tail - index < 4 || str.compare(index, 5, "false")) throw JsonStructureException{ "Unknow element.\n" };
             type_ = JsonType::BOOLEN;
             content_ = std::string{ "false" };
             break;
         case 'n':
-            if (tail - index <= 4 || str.compare(index, 4, "null")) throw JsonStructureException{ "Unknow element.\n" };
+            if (tail - index < 3 || str.compare(index, 4, "null")) throw JsonStructureException{ "Unknow element.\n" };
             // type_ = JsonType::ISNULL;
             break;
         default:
