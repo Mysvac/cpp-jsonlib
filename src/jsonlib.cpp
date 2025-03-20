@@ -110,7 +110,7 @@ namespace Json {
                 have_not_e = false;
                 ++it;
                 if (it >= len) return false;
-                if ((it == '-' || it == '+') && it < len - 1) ++it;
+                if ((str[it] == '-' || str[it] == '+') && it < len - 1) ++it;
             }
             else return false;
         }
