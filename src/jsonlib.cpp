@@ -940,7 +940,7 @@ namespace Json {
     // as 赋值内容或对象
     long long JsonBasic::as_int64() const {
         if (type_ != JsonType::NUMBER) throw JsonTypeException{ "Is not Number.\n" };
-        return std::stol(std::get<std::string>(content_));
+        return std::stoll(std::get<std::string>(content_));
     }
     double JsonBasic::as_double() const {
         if (type_ != JsonType::NUMBER) throw JsonTypeException{ "Is not Number.\n" };
