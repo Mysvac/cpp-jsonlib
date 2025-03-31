@@ -83,7 +83,16 @@ namespace Jsonlib{
 
     class JsonValue;
 
+    /**
+     * @brief JsonObject类型
+     * @note 本质是 std::map<std::string,JsonValue>
+     */
     using JsonObject = std::map<std::string,JsonValue>;
+
+    /**
+     * @brief JsonArray类型
+     * @note 本质是 std::vector<JsonValue>
+     */
     using JsonArray = std::vector<JsonValue>;
 
     /**
@@ -404,53 +413,57 @@ namespace Jsonlib{
         inline bool is_value() const noexcept { return type_ != JsonType::OBJECT && type_ != JsonType::ARRAY; }
 
         /**
-         * @brief 转换成long long类型
+         * @brief 转换成long long类型，复制一份
          * @exception JsonTypeException 转换失败，类型错误
          * @note 必须是NUMBER
          */
         long long as_int64() const;
         /**
-         * @brief 转换成double类型
+         * @brief 转换成double类型，复制一份
          * @exception JsonTypeException 转换失败，类型错误
          * @note 必须是NUMBER
          */
         double as_double() const;
         /**
-         * @brief 转换成bool类型
+         * @brief 转换成bool类型，复制一份
          * @exception JsonTypeException 转换失败，类型错误
          * @note 必须是BOOL
          */
         bool as_bool() const;
         /**
-         * @brief 转换成string类型
+         * @brief 转换成string类型，复制一份
          * @exception JsonTypeException 转换失败，类型错误
          * @note 必须是STRING
          */
         std::string as_string() const;
 
         /**
-         * @brief 拷贝一份Object对象
+         * @brief 获取内部Object对象的引用
+         * @details 获取内部Object对象的引用，可调用std::map相关函数，非const，可修改
          * @exception JsonTypeException 转换失败，类型错误
          * @note 类型必须是OBJECT
          */
         JsonObject& as_object();
 
         /**
-         * @brief 拷贝一份Object对象
+         * @brief 获取内部JsonObject对象的const引用
+         * @details 获取内部Object对象的const引用，可调用std::map相关函数，const，不可修改内容
          * @exception JsonTypeException 转换失败，类型错误
          * @note 类型必须是OBJECT
          */
         const JsonObject& as_object() const;
 
         /**
-         * @brief 拷贝一份Array对象
+         * @brief 获取内部Array对象的引用
+         * @details 获取内部Array对象的引用，可调用std::vector相关函数，非const，可修改
          * @exception JsonTypeException 转换失败，类型错误
          * @note 类型必须是ARRAY
          */
         JsonArray& as_array();
 
         /**
-         * @brief 拷贝一份Array对象
+         * @brief 获取内部JsonArray对象的const引用
+         * @details 获取内部Array对象的引用，可调用std::vector相关函数，const，不可修改内容
          * @exception JsonTypeException 转换失败，类型错误
          * @note 类型必须是ARRAY
          */
