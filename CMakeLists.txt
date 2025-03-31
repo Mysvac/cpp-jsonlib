@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
 
-set(jsonlib_VERSION 1.1.1)
+set(jsonlib_VERSION 2.0.0)
 
 set(package_name cpp-jsonlib)
 set(lib_name jsonlib)
