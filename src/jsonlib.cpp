@@ -761,11 +761,18 @@ namespace Jsonlib{
         if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not object.\n" };
         return std::get<JsonObject>(content_);
     }
+    const JsonObject& JsonValue::as_object() const{
+        if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not object.\n" };
+        return std::get<JsonObject>(content_);
+    }
     JsonArray& JsonValue::as_array(){
         if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not object.\n" };
         return std::get<JsonArray>(content_);
     }
-
+    const JsonArray& JsonValue::as_array() const{
+        if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not object.\n" };
+        return std::get<JsonArray>(content_);
+    }
     // 列表访问，拒绝新元素
     JsonValue& JsonValue::at(const size_t& index) {
         if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not array.\n" };

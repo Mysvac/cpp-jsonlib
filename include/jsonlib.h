@@ -436,12 +436,25 @@ namespace Jsonlib{
         JsonObject& as_object();
 
         /**
+         * @brief 拷贝一份Object对象
+         * @exception JsonTypeException 转换失败，类型错误
+         * @note 类型必须是OBJECT
+         */
+        const JsonObject& as_object() const;
+
+        /**
          * @brief 拷贝一份Array对象
          * @exception JsonTypeException 转换失败，类型错误
          * @note 类型必须是ARRAY
          */
         JsonArray& as_array();
 
+        /**
+         * @brief 拷贝一份Array对象
+         * @exception JsonTypeException 转换失败，类型错误
+         * @note 类型必须是ARRAY
+         */
+        const JsonArray& as_array() const;
 
         /**
          * @brief at元素访问
