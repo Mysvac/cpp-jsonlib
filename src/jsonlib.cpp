@@ -15,7 +15,7 @@ namespace Jsonlib{
      */
     static void json_escape_unicode(std::string& res, const std::string& str, std::string::const_iterator& it) {
         // 将十六进制字符串转换为 Unicode 码点
-        if (str.end() - it >= 4) throw JsonStructureException{ "Illegel unicode.\n" };
+        if (str.end() - it <= 4) throw JsonStructureException{ "Illegel unicode.\n" };
         ++it;
         std::istringstream iss(str.substr(it-str.begin(), 4));
         it += 3;
