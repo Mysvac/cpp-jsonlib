@@ -188,9 +188,10 @@ namespace Jsonlib{
      */
     static std::string json_escape(const std::string& str) {
         auto it = str.begin();
+        ++it;
         std::string res;
 
-        while (it != str.end()) {
+        while (it != str.end() && *it != '\"') {
             switch (*it) {
             case '\\':
             {

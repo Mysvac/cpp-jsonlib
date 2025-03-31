@@ -12,8 +12,27 @@
 int main(){
 
     try{
-        Jsonlib::JsonValue value{"1231415"};
-        std::cout << value.serialize() << std::endl;
+        {
+            Jsonlib::JsonValue value{"123456789012345"};
+            std::cout << value.serialize() << std::endl;
+        }
+        {
+            Jsonlib::JsonValue value{"\"string-text-test\""};
+            std::cout << value.serialize() << std::endl;
+            std::cout << value.as_string() << std::endl;
+        }
+        {
+            Jsonlib::JsonValue value{"true"};
+            std::cout << value.serialize() << std::endl;
+        }
+        {
+            Jsonlib::JsonValue value{"false"};
+            std::cout << value.serialize() << std::endl;
+        }
+        {
+            Jsonlib::JsonValue value{"null"};
+            std::cout << value.serialize() << std::endl;
+        }
     }
     catch(const Jsonlib::JsonStructureException& e){
         std::cerr << "JsonStructureException: " << e.what() << std::endl;
