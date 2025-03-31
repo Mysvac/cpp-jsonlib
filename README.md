@@ -26,7 +26,7 @@
 ## 对比其他库
 测试框架-1（不推荐使用）: <https://github.com/miloyip/nativejson-benchmark><br>
 测试框架-2 : <https://github.com/Mysvac/cpp-json-test>
-（不推荐尝试使用此框架，稀烂。正考虑后续自己做一个基准测试框架。）
+
 
 ### 一致性测试
 测试C++库解析json数据的正确性，语法严格性，浮点型精度等内容。
