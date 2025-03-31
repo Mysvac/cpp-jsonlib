@@ -183,7 +183,7 @@ namespace Jsonlib{
         return res;
     }
 
-        /**
+    /**
      * @brief 内部函数，转义字符串
      */
     static std::string json_escape(const std::string& str) {
@@ -574,62 +574,54 @@ namespace Jsonlib{
         return *this;
     }
 
-    /**
-     * @brief JsonArray拷贝构造
-     */
+
+    // JsonArray拷贝构造
     JsonValue::JsonValue(const JsonArray& jsonArray) noexcept{
         type_ = JsonType::ARRAY;
         content_ = jsonArray;
     }
-    /**
-     * @brief JsonArray移动构造
-     */
+
+    // JsonArray移动构造
     JsonValue::JsonValue(JsonArray&& jsonArray) noexcept{
         type_ = JsonType::ARRAY;
         content_ = std::move(jsonArray);
     }
-    /**
-     * @brief JsonObject拷贝构造
-     */
+
+    // JsonObject拷贝构造
     JsonValue::JsonValue(const JsonObject& jsonObject) noexcept{
         type_ = JsonType::OBJECT;
         content_ = jsonObject;
     }
-    /**
-     * @brief JsonObject移动构造
-     */
+
+    // JsonObject移动构造
     JsonValue::JsonValue(JsonObject&& jsonObject) noexcept{
         type_ = JsonType::OBJECT;
         content_ = std::move(jsonObject);
     }
 
-    /**
-     * @brief JsonArray拷贝赋值
-     */
+
+    // JsonArray拷贝赋值
     JsonValue& JsonValue::operator=(const JsonArray& jsonArray) noexcept{
         type_ = JsonType::ARRAY;
         content_ = jsonArray;
         return *this;
     }
-    /**
-     * @brief JsonArray移动赋值
-     */
+
+    // JsonArray移动赋值
     JsonValue& JsonValue::operator=(JsonArray&& jsonArray) noexcept{
         type_ = JsonType::ARRAY;
         content_ = std::move(jsonArray);
         return *this;
     }
-    /**
-     * @brief JsonObject拷贝赋值
-     */
+
+    // JsonObject拷贝赋值
     JsonValue& JsonValue::operator=(const JsonObject& jsonObject) noexcept{
         type_ = JsonType::OBJECT;
         content_ = jsonObject;
         return *this;
     }
-    /**
-     * @brief JsonObject移动赋值
-     */
+
+    // JsonObject移动赋值
     JsonValue& JsonValue::operator=(JsonObject&& jsonObject) noexcept{
         type_ = JsonType::OBJECT;
         content_ = std::move(jsonObject);

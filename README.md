@@ -24,7 +24,8 @@
 - **数组-改查**: O(1)。
 
 ## 对比其他库
-测试框架: <https://github.com/miloyip/nativejson-benchmark><br>
+测试框架-1（不推荐使用）: <https://github.com/miloyip/nativejson-benchmark><br>
+测试框架-2 : <https://github.com/Mysvac/cpp-json-test>
 （不推荐尝试使用此框架，稀烂。正考虑后续自己做一个基准测试框架。）
 
 ### 一致性测试
@@ -83,14 +84,13 @@ target_link_libraries(main PRIVATE jsonlib::jsonlib)
 
 ### 1. 三种类型和六中JSON类型
 ```cpp
-// 基类 可直接使用 提供了大部分函数
-class Json::JsonBasic;
-// 子类，内部是JSON对象类型，提供额外函数
-class Json::JsonObject;
-// 子类，内部是JSON数组类型，提供额外函数
-class Json::JsonArray;
-// 子类，内部是值类型，提供额外函数
-class Json::JsonValue;
+// “值类型” 实际上包含 对象 数组 等全部6种类型。
+class Jsonlib::JsonValue;
+// 对象类型，可以转换成JsonValue，本质是 std::map<std::string, Jsonlib::JsonValue>
+class Jsonlib::JsonObject;
+// 数组类型，可以转换成JsonValue，本质是 std::vector<Jsonlib::JsonValue>
+class Jsonlib::JsonArray;
+
 
 // 使用 对象.type() 获取内部JSON数据类型
 enum class JsonType{
@@ -105,7 +105,7 @@ enum class JsonType{
 
 ### 2. 反序列化与序列化
 ```cpp
-Json::JsonBasic json { R"__JSON__(
+Jsonlib::JsonValue json { R"__JSON__(
 {
     "语法": ["C++", "原始字符串", false ],
     "key": "支持\t中文\t 与\"转义字符",
@@ -135,16 +135,16 @@ std::cout << json["key"].as_string() << std::endl; // 获取字符串并转义
 {"add":[[[]],1],"key":"支持\t中文\\\n与\"转义字符","map":[{},[]],"语法":114514}
 支持	中文\与"转义字符
 ```
-### 4. 使用类型更加明确的子类
+### 4. 无损获取array或object类型的引用
 ```cpp
-Json::JsonObject my_obj { R"__JSON__(
+Json::JsonValue my_obj { R"__JSON__(
     {
         "key1" : "value1",
         "key2" : [ null , 666 ]
     }
 )__JSON__"};
 
-Json::JsonArray my_arr { R"__JSON__(
+Json::JsonValue my_arr { R"__JSON__(
     [
         null,
         {}
@@ -155,9 +155,8 @@ Json::JsonArray my_arr { R"__JSON__(
 // 其他类型将字符串视为JSON数据，会解析内部内容
 Json::JsonValue my_val { "[ {} string ]" };
 
-// JsonObject 和 JsonArray类型明确，所以支持迭代器和范围for
-// 注意，任何对JsonObject和JsonArray子类的访问，都会退化成JsonBasic类型
-for(auto& it: my_arr){ 
+// as_array() 和 as_object() 返回引用，其他类型的as_XXX()返回 副本
+for(auto& it: my_arr.as_array()){ 
     // it的类型是 JsonBasic&
     // ...
 }
@@ -185,31 +184,8 @@ std::cout << my_arr.serialize_pretty() << std::endl;
 ]
 ```
 
-### 5. 列表和对象的合并
-JsonObject和JsonArray重载了加法运算，可以轻松合并同类对象。
-```cpp
-// 完全支持JSON标准的数值类型要求，可以是各种奇怪的格式
-Json::JsonBasic json1 = "[ 1, 2. , 3, 4.e+ ]";
-std::cout << std::boolalpha << json1[1].is_double() << std::endl;
 
-Json::JsonArray json2 { " [ 5,6,7,8 ]" };
-// 注意 .as_array() 是拷贝一份对象，C++17难以支持父类直接调用子类代码
-json2 += json1.as_array();
-// JsonType::STRING的to_string()输出字符串内容，其他类型等于serialize()序列号函数。
-std::cout << json2.serialize() << std::endl; 
-
-json1 = R"( { "1":"11", "2": [2 , 2] } )";
-Json::JsonObject json3 { R"( {"3": false } )" };
-std::cout << (json3 + json1.as_object()).serialize() << std::endl;
-```
-结果：
-```
-true
-[[5,6,7,8],[1,2.,3,4.e+]]
-{"1":"11","2":[2,2],"3":false}
-```
-
-### 6. 异常处理
+### 5. 异常处理
 本库定义了三种异常：
 1. **Json::JsonException** : 基础自`std::runtime_runtime_error`，没有地方抛出此异常。
 2. **Json::JsonTypeException** : 基础自`JsonException`，表示类型错误。<br>
