@@ -49,7 +49,6 @@ json字符串->可操作对象。<br>
 ![字符串解析](others/images/1-3-string.png)
 
 #### roundtrip不知道是什么
-非法字符串能否检测，字符转义是否正确。
 ![ROUNDTRIP](others/images/1-4-roundtrip.png)
 
 ### 性能测试
