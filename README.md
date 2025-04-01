@@ -218,10 +218,10 @@ std::cout << my_arr.serialize_pretty() << std::endl;
 
 ### 6. 异常处理
 本库定义了三种异常：
-1. **Json::JsonException** : 基础自`std::runtime_runtime_error`，没有地方抛出此异常。
-2. **Json::JsonTypeException** : 基础自`JsonException`，表示类型错误。<br>
+1. **Jsonlib::JsonException** : 基础自`std::runtime_runtime_error`，没有地方抛出此异常。
+2. **Jsonlib::JsonTypeException** : 基础自`JsonException`，表示类型错误。<br>
 （比如对值类型对象使用了`[]`运算符查找，`as_XXX()`函数类型转换失败）。
-3. **Json::JsonStructureException** : 基础自`JsonException`，表示JSON结构错误。<br>
+3. **Jsonlib::JsonStructureException** : 基础自`JsonException`，表示JSON结构错误。<br>
 （一般只在将JSON格式的文本数据，反序列化成对象时抛出。）
 
 本库还可能抛出一个异常: `std::out_of_range`。<br>
