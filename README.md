@@ -115,6 +115,26 @@ Jsonlib::JsonValue json { R"__JSON__(
 std::cout << json.serialize() << std::endl;
 ```
 
+特别注意，`std::string`的构造和赋值，会被认为是JSON文本，对内容进行解析。<br>
+如果希望生成 纯字符串类型 的可操作对象，参考下方代码：
+```cpp
+// 0. 字符串构造，将被认为是json数据并解析
+Jsonlib::JsonValue json0 { "123 456" }; // 错误，解析内部数据，123认为数值类型，但是后方出现空格和456，解析失败，抛出异常.
+
+
+// 1. 双重分号，解析是检测到双引号，则作为字符串解析。 但是内部不能出现特殊符号，否则行为未定义。
+Jsonlib::JsonValue json1 { R"__( "123 456")__" };
+
+Jsonlib::JsonValue json2{ R"__( "123
+345" )__" }; // json2错误，字符串内部出现了换行符号，行为未定义。 必须写成 R"__( "123\n456" )__"
+
+// 2. 使用set_string()，会自动反转义字符，所以可以出现转义字符
+Jsonlib::JsonValue json3;
+json3.set_string("123
+456"); // 正确，自动反转义，两端加上双引号，变成 "123\n345"
+
+```
+
 ### 3. 增删改查
 ```cpp
 // json变量是上面【2. 反序列...】中的json变量
@@ -133,16 +153,30 @@ std::cout << json["key"].as_string() << std::endl; // 获取字符串并转义
 {"add":[[[]],1],"key":"支持\t中文\\\n与\"转义字符","map":[{},[]],"语法":114514}
 支持	中文\与"转义字符
 ```
-### 4. 无损获取array或object类型的引用
+
+### 4.使用is检测类型，使用as获取内容
 ```cpp
-Json::JsonValue my_obj { R"__JSON__(
+Jsonlib::JsonValue value{"123456789012345"};
+value.is_array(); // false
+value.is_object(); // false
+value.is_double(); // false 内部没有小数点
+value.is_number(); // true int64和double都算number
+std::cout << value.as_int64(); // 123456789012345
+std::cout << value.as_double(); // 123456789012345.0 能够转化时，不会出现异常，但是可能丢失精度
+std::cout << value.as_array(); // 抛出异常 Jsonlib::JsonTypeException
+```
+
+
+### 5. 无损获取array或object类型的引用
+```cpp
+Jsonlib::JsonValue my_obj { R"__JSON__(
     {
         "key1" : "value1",
         "key2" : [ null , 666 ]
     }
 )__JSON__"};
 
-Json::JsonValue my_arr { R"__JSON__(
+Jsonlib::JsonValue my_arr { R"__JSON__(
     [
         null,
         {}
@@ -151,20 +185,19 @@ Json::JsonValue my_arr { R"__JSON__(
 
 // 注意，JsonValue将字符串直接视为JSON的STRING，不再解析内容
 // 其他类型将字符串视为JSON数据，会解析内部内容
-Json::JsonValue my_val { "[ {} string ]" };
+Jsonlib::JsonValue my_val { "[ {} string ]" };
 
 // as_array() 和 as_object() 返回引用，其他类型的as_XXX()返回 副本
 for(auto& it: my_arr.as_array()){ 
-    // it的类型是 JsonBasic&
     // ...
 }
 
 // 支持移动语义，移动后初始成null值，不会删除
-// 三种子类都能隐式转换成父类JsonBasic，所以可以直接赋值给JsonBasic对象
+// JsonArray和JsonObject能隐式转换成父类JsonValue，所以可以直接赋值或移动给JsonValue对象
 my_arr.insert(1, std::move(my_obj["key2"]));
 my_arr.push_back(my_val);
 
-// 带美化（带缩进和空格）的序列化，四个类型都支持
+// 带美化（带缩进和空格）的序列化
 std::cout << my_arr.serialize_pretty() << std::endl;
 ```
 输出：
@@ -183,7 +216,7 @@ std::cout << my_arr.serialize_pretty() << std::endl;
 ```
 
 
-### 5. 异常处理
+### 6. 异常处理
 本库定义了三种异常：
 1. **Json::JsonException** : 基础自`std::runtime_runtime_error`，没有地方抛出此异常。
 2. **Json::JsonTypeException** : 基础自`JsonException`，表示类型错误。<br>
@@ -200,17 +233,17 @@ OBJECT对象可以用此方式创建新键值对，ARRAY对象可以在末尾添
 例：
 ```cpp
 try{
-    Json::JsonBasic json1 = "[ {}} ]";
+    Jsonlib::JsonValue json1 = "[ {}} ]";
 }
-catch(const Json::JsonStructureException& e){
+catch(const Jsonlib::JsonStructureException& e){
     std::cerr << "JsonStructureException: " << e.what() << std::endl;
 }
-catch(const Json::JsonException& e){
+catch(const Jsonlib::JsonException& e){
     std::cerr << "JsonException: " << e.what() << std::endl;
 }
 catch(...){ std::cerr << "other" << std::endl; }
 ```
-输出：
+可能的输出：
 ```
 JsonStructureException: Unknow element.
 ```
