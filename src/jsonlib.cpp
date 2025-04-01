@@ -265,8 +265,11 @@ namespace Jsonlib{
         auto it = str.begin();
         while(it!=str.end() && std::isspace(*it)) ++it;
 
-        // 空内容 生成null对象
-        if(it == str.end()) return;
+        // 禁止空内容
+        if(it == str.end()){
+            throw JsonStructureException{ "Empty JSON data.\n" };
+            return;
+        }
 
         switch (*it){
             case '{':

@@ -80,9 +80,9 @@ target_link_libraries(main PRIVATE jsonlib::jsonlib)
 #include "jsonlib.h"
 ```
 
-### 1. 三种类型和六中JSON类型
+### 1. 三种可操作类型和六种JSON数据类型
 ```cpp
-// “值类型” 实际上包含 对象 数组 等全部6种类型。
+// 广义的“值类型”，实际上包含 对象 数组 等全部6种JSON数据类型。
 class Jsonlib::JsonValue;
 // 对象类型，可以转换成JsonValue，本质是 std::map<std::string, Jsonlib::JsonValue>
 class Jsonlib::JsonObject;
@@ -90,7 +90,7 @@ class Jsonlib::JsonObject;
 class Jsonlib::JsonArray;
 
 
-// 使用 对象.type() 获取内部JSON数据类型
+// 使用 JsonValue.type() 函数，获取内部JSON数据类型
 enum class JsonType{
     OBJECT, /**< JSON 对象类型 */
     ARRAY,/**< JSON 数组类型 */
@@ -115,23 +115,23 @@ Jsonlib::JsonValue json { R"__JSON__(
 std::cout << json.serialize() << std::endl;
 ```
 
-特别注意，`std::string`的构造和赋值，会被认为是JSON文本，对内容进行解析。<br>
+特别注意，`std::string`类型的构造和赋值，会被认为是JSON文本输入，会解析内容。<br>
 如果希望生成 纯字符串类型 的可操作对象，参考下方代码：
 ```cpp
 // 0. 字符串构造，将被认为是json数据并解析
-Jsonlib::JsonValue json0 { "123 456" }; // 错误，解析内部数据，123认为数值类型，但是后方出现空格和456，解析失败，抛出异常.
+Jsonlib::JsonValue json0 { "123 456" }; // 错误，解析内部数据失败，抛出异常.
 
 
-// 1. 双重分号，解析是检测到双引号，则作为字符串解析。 但是内部不能出现特殊符号，否则行为未定义。
+// 1. 双重分号，检测到双引号，则作为字符串解析。 内部不能出现特殊符号，否则行为未定义。
 Jsonlib::JsonValue json1 { R"__( "123 456")__" };
 
 Jsonlib::JsonValue json2{ R"__( "123
-345" )__" }; // json2错误，字符串内部出现了换行符号，行为未定义。 必须写成 R"__( "123\n456" )__"
+345" )__" }; // json2错误，字符串内部出现了换行符，行为未定义。 必须写成 R"__( "123\n456" )__"
 
-// 2. 使用set_string()，会自动反转义字符，所以可以出现转义字符
+// 2. 使用set_string()，会自动反转义字符，内部可以出现转义字符。
 Jsonlib::JsonValue json3;
 json3.set_string("123
-456"); // 正确，自动反转义，两端加上双引号，变成 "123\n345"
+456"); // 正确，自动反转义，然后两端加上双引号，变成 "123\n345"
 
 ```
 
@@ -148,7 +148,7 @@ json["add"].push_back(1);
 std::cout << json.serialize() << std::endl;
 std::cout << json["key"].as_string() << std::endl; // 获取字符串并转义
 ```
-输出：
+可能的输出：
 ```
 {"add":[[[]],1],"key":"支持\t中文\\\n与\"转义字符","map":[{},[]],"语法":114514}
 支持	中文\与"转义字符
@@ -157,12 +157,14 @@ std::cout << json["key"].as_string() << std::endl; // 获取字符串并转义
 ### 4.使用is检测类型，使用as获取内容
 ```cpp
 Jsonlib::JsonValue value{"123456789012345"};
+// is保证不会抛出异常
 value.is_array(); // false
 value.is_object(); // false
 value.is_double(); // false 内部没有小数点
 value.is_number(); // true int64和double都算number
+// as 转换失败时抛出异常
 std::cout << value.as_int64(); // 123456789012345
-std::cout << value.as_double(); // 123456789012345.0 能够转化时，不会出现异常，但是可能丢失精度
+std::cout << value.as_double(); // 123456789012345.0 能够转化，但可能丢失精度
 std::cout << value.as_array(); // 抛出异常 Jsonlib::JsonTypeException
 ```
 
@@ -183,46 +185,44 @@ Jsonlib::JsonValue my_arr { R"__JSON__(
     ]
 )__JSON__"};
 
-// 注意，JsonValue将字符串直接视为JSON的STRING，不再解析内容
-// 其他类型将字符串视为JSON数据，会解析内部内容
-Jsonlib::JsonValue my_val { "[ {} string ]" };
+// 纯文本类型，需要调用set_string创建，不能直接构造或赋值
+Jsonlib::JsonValue my_val;
+my_val.set_string("[ {} this is string ]");
 
-// as_array() 和 as_object() 返回引用，其他类型的as_XXX()返回 副本
+// as_array() 和 as_object() 返回引用，其他的 as_XXX() 返回副本
 for(auto& it: my_arr.as_array()){ 
-    // ...
+    // 操作...
 }
 
 // 支持移动语义，移动后初始成null值，不会删除
-// JsonArray和JsonObject能隐式转换成父类JsonValue，所以可以直接赋值或移动给JsonValue对象
 my_arr.insert(1, std::move(my_obj["key2"]));
 my_arr.push_back(my_val);
+// JsonArray和JsonObject也能隐式转换成JsonValue，可以直接赋值或移动
 
-// 带美化（带缩进和空格）的序列化
+// 带美化（缩进和空格）的序列化
 std::cout << my_arr.serialize_pretty() << std::endl;
 ```
-输出：
+可能的输出：
 ```json
 [
-  [
-    null,
-    { }
-  ],
+  null,
   [
     null,
     666
   ],
-  "[ {} string ]"
+  { },
+  "[ {} this is string ]"
 ]
 ```
 
 
 ### 6. 异常处理
 本库定义了三种异常：
-1. **Jsonlib::JsonException** : 基础自`std::runtime_runtime_error`，没有地方抛出此异常。
-2. **Jsonlib::JsonTypeException** : 基础自`JsonException`，表示类型错误。<br>
-（比如对值类型对象使用了`[]`运算符查找，`as_XXX()`函数类型转换失败）。
-3. **Jsonlib::JsonStructureException** : 基础自`JsonException`，表示JSON结构错误。<br>
-（一般只在将JSON格式的文本数据，反序列化成对象时抛出。）
+1. **Jsonlib::JsonException** : 继承自`std::runtime_runtime_error`，没有地方抛出此异常。
+2. **Jsonlib::JsonTypeException** : 继承自`JsonException`，表示类型错误。<br>
+（比如对值类型使用了`[]`运算符，或`as_XXX()`类型转换失败。）
+3. **Jsonlib::JsonStructureException** : 继承自`JsonException`，表示JSON结构错误。<br>
+（将JSON格式的文本 反序列化失败时 抛出。）
 
 本库还可能抛出一个异常: `std::out_of_range`。<br>
 会出现在以下函数中：
@@ -233,7 +233,7 @@ OBJECT对象可以用此方式创建新键值对，ARRAY对象可以在末尾添
 例：
 ```cpp
 try{
-    Jsonlib::JsonValue json1 = "[ {}} ]";
+    Jsonlib::JsonValue json = "[ {}} ]";
 }
 catch(const Jsonlib::JsonStructureException& e){
     std::cerr << "JsonStructureException: " << e.what() << std::endl;
@@ -247,3 +247,10 @@ catch(...){ std::cerr << "other" << std::endl; }
 ```
 JsonStructureException: Unknow element.
 ```
+
+#### 注意
+同类赋值/拷贝/移动/序列化/is类型检查/type()/size()...等操作保证不会抛出异常。
+
+只有文本解析构造/赋值函数，或者类型转换失败，访问越界时可能抛出异常。
+
+
