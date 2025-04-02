@@ -2,3 +2,6 @@
 others export-ignore
 test export-ignore
 CMakePresets.json export-ignore
+README.md export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
