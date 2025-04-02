@@ -165,29 +165,31 @@ namespace Jsonlib{
         JsonValue(const JsonType& jsonType);
 
         /**
-         * @brief 字符串构造函数
+         * @brief 解析构造函数
          * @param str JSON格式的文本数据。
          * @details 将输入字符串反序列化，生成对象。
          * @exception JsonStructureException JSON格式错误异常
          * @note 字符串将视作JSON数据进行解析，而非视作JsonType::STRING类型。
          */
-        JsonValue(const std::string& str);
+        JsonValue(const std::string& str, int);
+
+        /**
+         * @brief 字符串构造函数
+         * @param str 需要转义的字符串
+         * @details 将输入字符串反转义，生成对象。
+         * @note 字符串将视作值进行解析，而非视为JSON数据
+         */
+        JsonValue(const std::string& str) noexcept;
 
         /**
          * @brief 字符串赋值函数
          * @param str JSON格式的文本数据
-         * @details 将输入字符串反序列化，生成对象。
+         * @details 直接视为文本数据，反转义后生成对象
          * @exception JsonStructureException JSON格式错误异常
-         * @note 字符串将视作JSON数据进行解析，而非视作JsonType::STRING类型。
+         * @note 不会视为JSON结构解析，而是直接当做JSON字符串
          */
         JsonValue& operator=(const std::string& str);
 
-        /**
-         * @brief 字符串作为值类型直接解析
-         * @param str 需要转义的字符串
-         * @note 字符串将视作值进行解析，而非视为JSON数据
-         */
-        void set_string(const std::string& str) noexcept;
 
         /**
          * @brief 字符串字面量构造函数
@@ -560,5 +562,15 @@ namespace Jsonlib{
          */
         void erase(const std::string& key);
     };
+
+    /**
+     * @brief 反序列化函数
+     * @param str 需要反转义的原JSON字符串
+     * @note 解析JSON数据统一使用此函数
+     */
+    JSONLIB_EXPORT
+    inline JsonValue deserialize(const std::string& str){
+        return JsonValue (str, 1);
+    }
 
 }

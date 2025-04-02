@@ -261,7 +261,7 @@ namespace Jsonlib{
     }
 
     // 字符串反序列化构造函数
-    JsonValue::JsonValue(const std::string& str) {
+    JsonValue::JsonValue(const std::string& str, int) {
         auto it = str.begin();
         while(it!=str.end() && std::isspace(*it)) ++it;
 
@@ -494,9 +494,16 @@ namespace Jsonlib{
         }
     }
 
-    // 反序列化赋值运算符
+    // 字符串类型构造，不解析
+    JsonValue::JsonValue(const std::string& str) noexcept{
+        type_ = JsonType::STRING;
+        content_ = json_reverse_escape(str);
+    }
+
+    // 字符串类型赋值
     JsonValue& JsonValue::JsonValue::operator=(const std::string& str) {
-        *this = JsonValue ( str );
+        type_ = JsonType::STRING;
+        content_ = json_reverse_escape(str);
         return *this;
     }
 
@@ -540,11 +547,6 @@ namespace Jsonlib{
             return 1;
             break;
         }
-    }
-
-    void JsonValue::set_string(const std::string& str) noexcept{
-        type_ = JsonType::STRING;
-        content_ = json_reverse_escape(str);
     }
 
 

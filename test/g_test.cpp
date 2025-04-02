@@ -17,9 +17,9 @@ void read_json(const std::string& json_path, std::string& res) {
     ifs.close();
 }
 
-void unserialize_json(const std::string& str, Jsonlib::JsonValue& jsonBasic){
+void deserialize_json(const std::string& str, Jsonlib::JsonValue& jsonBasic){
     auto start = std::chrono::system_clock::now();
-    jsonBasic = str;
+    jsonBasic = Jsonlib::deserialize(str);
     auto end = std::chrono::system_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::cout << "unserialize time: " << duration.count() << " ms"  << std::endl;
@@ -38,7 +38,7 @@ void model_JsonAnalysis(const std::string& fileName) {
     std::string json_plain;
     Jsonlib::JsonValue jsonBasic;
     ASSERT_NO_THROW(read_json("files/" + fileName + "_plain.json", json));
-    ASSERT_NO_THROW(unserialize_json(json, jsonBasic));
+    ASSERT_NO_THROW(deserialize_json(json, jsonBasic));
     ASSERT_NO_THROW(read_json("files/" + fileName + "_plain.json", json_plain));
     ASSERT_NO_THROW(serialize_json(json, jsonBasic));
     ASSERT_EQ(json, json_plain);
