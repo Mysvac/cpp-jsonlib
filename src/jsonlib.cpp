@@ -239,7 +239,6 @@ namespace Jsonlib{
         return res;
     }
 
-
     // 指定类型的构造函数
     JsonValue::JsonValue(const JsonType& jsonType) {
         type_ = jsonType;
@@ -260,131 +259,30 @@ namespace Jsonlib{
         }
     }
 
-    // 字符串反序列化构造函数
-    JsonValue::JsonValue(const std::string& str, int) {
+    // 反序列化
+    JsonValue deserialize(const std::string& str){
         auto it = str.begin();
         while(it!=str.end() && std::isspace(*it)) ++it;
-
+        
         // 禁止空内容
         if(it == str.end()){
             throw JsonStructureException{ "Empty JSON data.\n" };
-            return;
+            return JsonValue ();
         }
 
-        switch (*it){
-            case '{':
-            {
-                type_ = JsonType::OBJECT;
-                content_ = JsonObject {};
-                JsonObject& jsonObject = std::get<JsonObject>(content_);
-                std::string key;
-                ++it;
-                while(it!=str.end()){
-                    while (it!=str.end() && std::isspace(*it)) ++it;
-                    if(it == str.end() || *it == '}') break;
-                    // 寻找key
-                    if (*it != '\"') throw JsonStructureException{ "Key is not string.\n" };
-                    key = json_escape_next(str, it);
-                    // 寻找分号
-                    while (it != str.end() && std::isspace(*it)) ++it;
-                    if(it == str.end()) throw JsonStructureException{ "Illegal Json Object content.\n" };
-                    if (*it == ':') ++it;
-                    else throw JsonStructureException{ "Unknow element.\n" };
-                    // 寻找值
-                    while (it != str.end() && std::isspace(*it)) ++it;
-                    jsonObject[std::move(key)] = JsonValue ( str, it );
-                    // 寻找分隔符或结束位
-                    while (it != str.end() && std::isspace(*it)) ++it;
-                    if (it != str.end() && *it == ',') ++it;
-                }
-                if(it == str.end()) throw JsonStructureException{ "Unclosed Json Object.\n" };
-                else ++it;
-            }
-            break;
-            case '[':
-            {
-                type_ = JsonType::ARRAY;
-                content_ = JsonArray{};
-                JsonArray& jsonArray = std::get<JsonArray>(content_);
-                ++it;
-                while(it!=str.end()){
-                    while (it!=str.end() && std::isspace(*it)) ++it;
-                    if(it == str.end() || *it == ']') break;
-                    // 寻找值
-                    jsonArray.emplace_back( str, it );
-                    // 寻找分隔符或结束位
-                    while (it != str.end() && std::isspace(*it)) ++it;
-                    if (it != str.end() && *it == ',') ++it;
-                }
-                if(it==str.end()) throw JsonStructureException{ "Unclosed Json Object.\n" };
-                else ++it;
-            }
-            break;
-            case '\"':
-            {
-                auto left = it;
-                ++it;
-                while(it!=str.end() && *it != '\"'){
-                    if(*it == '\\'){
-                        ++it;
-                        if(it == str.end()) break;
-                    }
-                    ++it;
-                }
-                if(it == str.end()) throw JsonStructureException {"Unclosed string.\n"};
-                content_ = std::string (left, ++it);
-                type_ = JsonType::STRING;
-            }
-            break;
-            case 't':
-                if(str.end() - it < 4 || str.compare(it-str.begin(), 4, "true")) throw JsonStructureException {};
-                type_ = JsonType::BOOLEN;
-                content_ = true;
-                it += 4;
-            break;
-            case 'f':
-                if(str.end() - it < 5 || str.compare(it-str.begin(), 5, "false")) throw JsonStructureException {};
-                type_ = JsonType::BOOLEN;
-                it += 5;
-            break;
-            case 'n':
-                if(str.end() - it < 4 || str.compare(it-str.begin(), 4, "null")) throw JsonStructureException {};
-                it += 4;
-            break;
-            default:
-            {
-                type_ = JsonType::NUMBER;
-                bool have_not_point = true;
-                bool have_not_e = true;
-                auto left = it;
-                if(*it == '-') ++it;
-                // 必须数字开头
-                if(it == str.end() || !std::isdigit(*it)) throw JsonStructureException {};
-                while (it != str.end()) {
-                    if (std::isdigit(*it)) ++it;
-                    else if (*it == '.' && have_not_point && have_not_e) {
-                        have_not_point = false;
-                        ++it;
-                    }
-                    else if ((*it == 'e' || *it == 'E') && have_not_e) {
-                        have_not_e = false;
-                        ++it;
-                        if (it != str.end() && (*it == '-' || *it == '+')) ++it;
-                    }
-                    else break;
-                }
-                if(it == left || (*left=='-' && it==left+1)) throw JsonStructureException {};
-                content_ = std::string (left, it);
-            }
-            break;
-        }
+        JsonValue jsonValue (str, it);
+
         while( it != str.end() ){
             if(!std::isspace(*it)) throw JsonStructureException {"Unknow content at the end.\n"};
             ++it;
         }
+        return jsonValue;
     }
 
+    // 反序列化构造
     JsonValue::JsonValue(const std::string& str, std::string::const_iterator& it){
+        while(it != str.end() && std::isspace(*it)) ++it;
+        if(it == str.end()) throw JsonStructureException{ "Empty JSON data.\n" };
         switch (*it){
             case '{':
             {
@@ -393,7 +291,7 @@ namespace Jsonlib{
                 JsonObject& jsonObject = std::get<JsonObject>(content_);
                 std::string key;
                 ++it;
-                while(it!=str.end()){
+                while(it != str.end()){
                     while (it!=str.end() && std::isspace(*it)) ++it;
                     if(it == str.end() || *it == '}') break;
                     // 寻找key
@@ -403,7 +301,7 @@ namespace Jsonlib{
                     while (it != str.end() && std::isspace(*it)) ++it;
                     if(it == str.end()) throw JsonStructureException{ "Illegal Json Object content.\n" };
                     if (*it == ':') ++it;
-                    else throw JsonStructureException{ "Unknow element.\n" };
+                    else throw JsonStructureException {};
                     // 寻找值
                     while (it != str.end() && std::isspace(*it)) ++it;
                     jsonObject[std::move(key)] = JsonValue ( str, it );
@@ -436,9 +334,10 @@ namespace Jsonlib{
             break;
             case '\"':
             {
+                type_ = JsonType::STRING;
                 auto left = it;
                 ++it;
-                while(it!=str.end() && *it != '\"'){
+                while(it != str.end() && *it != '\"'){
                     if(*it == '\\'){
                         ++it;
                         if(it == str.end()) break;
@@ -447,7 +346,6 @@ namespace Jsonlib{
                 }
                 if(it == str.end()) throw JsonStructureException {"Unclosed string.\n"};
                 content_ = std::string (left, ++it);
-                type_ = JsonType::STRING;
             }
             break;
             case 't':
@@ -494,7 +392,7 @@ namespace Jsonlib{
         }
     }
 
-    // 字符串类型构造，不解析
+    // 字符串类型构造
     JsonValue::JsonValue(const std::string& str) noexcept{
         type_ = JsonType::STRING;
         content_ = json_reverse_escape(str);
@@ -507,6 +405,17 @@ namespace Jsonlib{
         return *this;
     }
 
+    // 字符串字面量构造
+    JsonValue::JsonValue(const char* str) noexcept{
+        type_ = JsonType::STRING;
+        content_ = json_reverse_escape(str);
+    }
+    // 字符串字面量赋值
+    JsonValue& JsonValue::operator=(const char* str) noexcept{
+        type_ = JsonType::STRING;
+        content_ = json_reverse_escape(str);
+        return *this;
+    }
 
     // 清空内容
     void JsonValue::clear() noexcept {
@@ -608,6 +517,9 @@ namespace Jsonlib{
 
     // JsonArray拷贝赋值
     JsonValue& JsonValue::operator=(const JsonArray& jsonArray) noexcept{
+        if (type_ == JsonType::ARRAY && &jsonArray == &std::get<JsonArray>(content_))
+            return *this; 
+
         type_ = JsonType::ARRAY;
         content_ = jsonArray;
         return *this;
@@ -615,6 +527,9 @@ namespace Jsonlib{
 
     // JsonArray移动赋值
     JsonValue& JsonValue::operator=(JsonArray&& jsonArray) noexcept{
+        if (type_ == JsonType::ARRAY && &jsonArray == &std::get<JsonArray>(content_))
+            return *this; 
+
         type_ = JsonType::ARRAY;
         content_ = std::move(jsonArray);
         return *this;
@@ -622,6 +537,9 @@ namespace Jsonlib{
 
     // JsonObject拷贝赋值
     JsonValue& JsonValue::operator=(const JsonObject& jsonObject) noexcept{
+        if (type_ == JsonType::OBJECT && &jsonObject == &std::get<JsonObject>(content_))
+            return *this; 
+
         type_ = JsonType::OBJECT;
         content_ = jsonObject;
         return *this;
@@ -629,6 +547,9 @@ namespace Jsonlib{
 
     // JsonObject移动赋值
     JsonValue& JsonValue::operator=(JsonObject&& jsonObject) noexcept{
+        if (type_ == JsonType::OBJECT && &jsonObject == &std::get<JsonObject>(content_))
+            return *this; 
+
         type_ = JsonType::OBJECT;
         content_ = std::move(jsonObject);
         return *this;
@@ -656,7 +577,7 @@ namespace Jsonlib{
             }
             if (*res.rbegin() == ',') *res.rbegin() = '}';
             else res += '}';
-            return std::move(res);
+            return res;
         }
         break;
         case JsonType::ARRAY:
@@ -672,7 +593,7 @@ namespace Jsonlib{
             }
             if (*res.rbegin() == ',') *res.rbegin() = ']';
             else res += ']';
-            return std::move(res);
+            return res;
         }
         break;
         case JsonType::BOOLEN:
@@ -711,7 +632,7 @@ namespace Jsonlib{
             if (*res.rbegin() == ',') *res.rbegin() = '\n';
             if(map.size()) res += tabs + '}';
             else res += " }";
-            return std::move(res);
+            return res;
         }
         break;
         case JsonType::ARRAY:
@@ -730,7 +651,7 @@ namespace Jsonlib{
             if (*res.rbegin() == ',') *res.rbegin() = '\n';
             if(list.size()) res += tabs + ']';
             else res += " ]";
-            return std::move(res);
+            return res;
         }
         break;
         case JsonType::BOOLEN:
@@ -760,8 +681,24 @@ namespace Jsonlib{
         return std::get<bool>(content_);
     }
     std::string JsonValue::as_string() const {
-        if (type_ != JsonType::STRING) throw JsonTypeException{ "Is not String.\n" };
-        return json_escape(std::get<std::string>(content_));
+        if (type_ == JsonType::ARRAY || type_ == JsonType::OBJECT) throw JsonTypeException{ "Is not String.\n" };
+        switch (type_)
+        {
+        case JsonType::STRING:
+            return json_escape(std::get<std::string>(content_));
+            break;
+        case JsonType::BOOLEN:
+            return std::get<bool>(content_) ? "true" : "false";
+            break;
+        case JsonType::ISNULL:
+            return "null";
+            break;
+        default:
+            // 数值，可以直接返回内容
+            return std::get<std::string>(content_);
+            break;
+        }
+
     }
     JsonObject& JsonValue::as_object(){
         if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not object.\n" };
@@ -798,20 +735,18 @@ namespace Jsonlib{
         if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not array.\n" };
         JsonArray& list = std::get<JsonArray>(content_);
         if (index == list.size()) list.emplace_back();
-        if (index < 0 || index > list.size()) throw std::out_of_range{ "out of range.\n" };
         return list[index];
     }
     // 对象访问，可能创建新元素
     JsonValue& JsonValue::operator[](const std::string& key) {
         if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
         JsonObject& map = std::get<JsonObject>(content_);
-        if (map.find(key) == map.end()) map[key] = JsonValue{};
         return map[key];
     }
 
     // 检查是否包含某个key
-    bool JsonValue::hasKey(const std::string& key) const {
-        if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
+    bool JsonValue::hasKey(const std::string& key) const noexcept{
+        if (type_ != JsonType::OBJECT) return false;
         const JsonObject& map = std::get<JsonObject>(content_);
         return map.find(key) != map.end();
     }
@@ -853,12 +788,6 @@ namespace Jsonlib{
         JsonObject& map = std::get<JsonObject>(content_);
         map[key] = std::move(jsonValue);
     }
-    // 对象插入键值对
-    void JsonValue::insert(const std::pair<const std::string, JsonValue>& p) {
-        if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
-        JsonObject& map = std::get<JsonObject>(content_);
-        map.insert(p);
-    }
     // 数值删除指定位置的元素
     void JsonValue::erase(const size_t& index) {
         if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not array.\n" };
@@ -870,7 +799,6 @@ namespace Jsonlib{
     void JsonValue::erase(const std::string& key) {
         if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
         JsonObject& map = std::get<JsonObject>(content_);
-        if (map.find(key) == map.end()) throw std::out_of_range{ "Key not find.\n" };
         map.erase(key);
     }
 

@@ -31,7 +31,8 @@ namespace Jsonlib{
     /**
      * @class JsonException
      * @brief Json专用异常基类类
-     * @note 继承自std::runtime_error。
+     * @details 继承自std::runtime_error。
+     * @note 本异常不会直接抛出。
      */
     class JSONLIB_EXPORT JsonException : public std::runtime_error {
     public:
@@ -49,6 +50,7 @@ namespace Jsonlib{
     /**
      * @class JsonTypeException
      * @brief Json类型错误异常类
+     * @details as类型转换，或at,[],insert等操作发现类型不正确时抛出
      */
     class JSONLIB_EXPORT JsonTypeException : public JsonException {
     public:
@@ -66,6 +68,7 @@ namespace Jsonlib{
     /**
      * @class JsonStructureException
      * @brief Json结构错误异常类
+     * @details 结构错误，只在调用deserialize()函数时可能抛出
      */
     class JSONLIB_EXPORT JsonStructureException : public JsonException {
     public:
@@ -96,6 +99,14 @@ namespace Jsonlib{
     using JsonArray = std::vector<JsonValue>;
 
     /**
+     * @brief 反序列化函数
+     * @param str 需要反转义的原JSON字符串
+     * @note 解析JSON数据统一使用此函数
+     */
+    JSONLIB_EXPORT
+    JsonValue deserialize(const std::string& str);
+
+    /**
      * @class JsonValue
      * @brief Json数据通用类
      * @details JSON反序列化后的，可操作对象。
@@ -118,10 +129,12 @@ namespace Jsonlib{
 
     public:
         /**
-         * @brief 从str的it位置开始解析
-         * @note 私有，外部不可访问
+         * @brief 反序列化构造函数
+         * @details 从str的it位置开始解析，请勿使用此构造，请使用deserialize()函数。
+         * @note 虽然是公共函数，能够正常工作，但不推荐直接使用。
          */
         JsonValue(const std::string& str, std::string::const_iterator& it);
+
 
         /**
          * @brief 获取当前对象数据类型
@@ -165,19 +178,10 @@ namespace Jsonlib{
         JsonValue(const JsonType& jsonType);
 
         /**
-         * @brief 解析构造函数
-         * @param str JSON格式的文本数据。
-         * @details 将输入字符串反序列化，生成对象。
-         * @exception JsonStructureException JSON格式错误异常
-         * @note 字符串将视作JSON数据进行解析，而非视作JsonType::STRING类型。
-         */
-        JsonValue(const std::string& str, int);
-
-        /**
          * @brief 字符串构造函数
          * @param str 需要转义的字符串
          * @details 将输入字符串反转义，生成对象。
-         * @note 字符串将视作值进行解析，而非视为JSON数据
+         * @note 不会视为JSON结构解析，而是直接当做JSON字符串
          */
         JsonValue(const std::string& str) noexcept;
 
@@ -185,7 +189,6 @@ namespace Jsonlib{
          * @brief 字符串赋值函数
          * @param str JSON格式的文本数据
          * @details 直接视为文本数据，反转义后生成对象
-         * @exception JsonStructureException JSON格式错误异常
          * @note 不会视为JSON结构解析，而是直接当做JSON字符串
          */
         JsonValue& operator=(const std::string& str);
@@ -194,25 +197,18 @@ namespace Jsonlib{
         /**
          * @brief 字符串字面量构造函数
          * @param str JSON格式的文本数据。
-         * @details 将输入字符串反序列化，生成对象。
-         * @exception JsonStructureException JSON格式错误异常
-         * @note 字符串将视作JSON数据进行解析，而非视作JsonType::STRING类型。
+         * @details 直接视为文本数据，反转义后生成对象
+         * @note 不会视为JSON结构解析，而是直接当做JSON字符串
          */
-        inline JsonValue(const char* str){
-            *this = JsonValue { std::string {str} };
-        }
+        JsonValue(const char* str) noexcept;
 
         /**
          * @brief 字符串字面量赋值函数
          * @param str JSON格式的文本数据。
-         * @details 将输入字符串反序列化，生成对象。
-         * @exception JsonStructureException JSON格式错误异常
-         * @note 字符串将视作JSON数据进行解析，而非视作JsonType::STRING类型。
+         * @details 直接视为文本数据，反转义后生成对象
+         * @note 不会视为JSON结构解析，而是直接当做JSON字符串
          */
-        inline JsonValue& operator=(const char* str){
-            *this = JsonValue { std::string {str} };
-            return *this;
-        }
+        JsonValue& operator=(const char* str) noexcept;
         
         /**
          * @brief 布尔类型构造
@@ -432,16 +428,17 @@ namespace Jsonlib{
          * @note 必须是BOOL
          */
         bool as_bool() const;
+
         /**
-         * @brief 转换成string类型，复制一份
-         * @exception JsonTypeException 转换失败，类型错误
-         * @note 必须是STRING
+         * @brief 转换成string类型，注意是拷贝一份
+         * @exception JsonTypeException 转换失败，类型错误（只有ARRAY和OBJECT会转换失败）。
+         * @note 只要不是ARRAY和OBJECT，都能正常返回。
          */
         std::string as_string() const;
 
         /**
          * @brief 获取内部Object对象的引用
-         * @details 获取内部Object对象的引用，可调用std::map相关函数，非const，可修改
+         * @details 获取内部Object对象的引用，可调用std::map相关函数，非const，可修改内容
          * @exception JsonTypeException 转换失败，类型错误
          * @note 类型必须是OBJECT
          */
@@ -457,7 +454,7 @@ namespace Jsonlib{
 
         /**
          * @brief 获取内部Array对象的引用
-         * @details 获取内部Array对象的引用，可调用std::vector相关函数，非const，可修改
+         * @details 获取内部Array对象的引用，可调用std::vector相关函数，非const，可修改内容
          * @exception JsonTypeException 转换失败，类型错误
          * @note 类型必须是ARRAY
          */
@@ -473,28 +470,30 @@ namespace Jsonlib{
 
         /**
          * @brief at元素访问
-         * @details at访问，带越界检查，必须是ARRAY类型
+         * @details at访问，带越界检查，越界抛出out_of_range，必须是ARRAY类型
          * @exception JsonTypeException 类型错误异常
+         * @exception std::out_of_range 越界不存在
          * @note 不会创建新元素
          */
         JsonValue& at(const size_t& index);
         /**
          * @brief at元素访问
-         * @details at访问，带越界检查，必须是OBJECT类型
+         * @details at访问，带越界检查，key不存在时抛出out_of_range，必须是OBJECT类型
          * @exception JsonTypeException 类型错误异常
+         * @exception std::out_of_range key不存在
          * @note 不会创建新元素
          */
         JsonValue& at(const std::string& key);
         /**
          * @brief []元素访问
-         * @details []访问，带越界检查，必须是ARRAY类型
+         * @details []访问，必须是ARRAY类型，无越界检查。
          * @exception JsonTypeException 类型错误异常
          * @note 如果指向末尾，会创建新元素，
          */
         JsonValue& operator[](const size_t& index);
         /**
          * @brief []元素访问
-         * @details []访问，带越界检查，必须是OBJECT类型
+         * @details []访问，必须是OBJECT类型，无越界检查。
          * @exception JsonTypeException 类型错误异常
          * @note 如果key不存在，会创建新元素，所以可以直接赋值。
          */
@@ -502,10 +501,9 @@ namespace Jsonlib{
 
         /**
          * @brief 检查是否存在某个key
-         * @exception JsonTypeException 非对象类型抛出异常
-         * @note 必须是OBJECT类型
+         * @details 检查是否存在某个key，不会抛出异常，非object类型直接返回false
          */
-        bool hasKey(const std::string& key) const;
+        bool hasKey(const std::string& key) const noexcept;
 
 
         /**
@@ -545,32 +543,22 @@ namespace Jsonlib{
          */
         void insert(const std::string& key,JsonValue&& jsonBasic);
 
-        /**
-         * @brief 移动插入键值对
-         * @note 必须是Object类型
-         */
-        void insert(const std::pair<const std::string, JsonValue>& p);
 
         /**
          * @brief 删除指定位置的元素
-         * @note 必须是ARRAY类型
+         * @details 删除指定位置的元素，当前对象必须是ARRAY类型，不能越界
+         * @exception JsonTypeException 当前对象并非ARRAY类型。
+         * @exception out_of_range 索引越界。
+         * @note 你也可以使用 as_array().erase( x )，调用std::map的erase函数
          */
         void erase(const size_t& index);
         /**
          * @brief 删除key的元素
-         * @note 必须是OBJECT类型
+         * @details 删除指定key的元素，当前对象必须是OBJECT类型，key可以不存在(不会执行任何操作，不会抛出异常）。
+         * @exception JsonTypeException 当前对象并非OBJECT类型。
+         * @note 你也可以使用 as_object().erase( x )，调用std::map的erase函数
          */
         void erase(const std::string& key);
     };
-
-    /**
-     * @brief 反序列化函数
-     * @param str 需要反转义的原JSON字符串
-     * @note 解析JSON数据统一使用此函数
-     */
-    JSONLIB_EXPORT
-    inline JsonValue deserialize(const std::string& str){
-        return JsonValue (str, 1);
-    }
 
 }

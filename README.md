@@ -242,6 +242,6 @@ JsonStructureException: Unknown Json Structure.
 #### 注意
 赋值/拷贝/移动/序列化/is类型检查/type()/size()...等操作保证不会抛出异常。
 
-只有deserialze()解析构造/赋值函数，或者类型转换失败，访问越界时可能抛出异常。
+只有deserialze()反序列化函数，或者类型转换失败，访问越界时可能抛出异常。
 
 
