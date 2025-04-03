@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.24)
 
-set(jsonlib_VERSION 3.0.0)
+set(jsonlib_VERSION 4.0.0)
 
-set(package_name cpp-jsonlib)
+set(package_name mysvac-cpp-jsonlib)
 set(lib_name jsonlib)
 
 project(${package_name} 
@@ -43,7 +43,7 @@ target_include_directories(${lib_name}
 
 # 第3步 生成Package配置文件
 configure_package_config_file(
-    cmake/cpp-jsonlib-config.cmake.in
+    cmake/mysvac-cpp-jsonlib-config.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/${package_name}-config.cmake
     INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIR}/${package_name}
     NO_SET_AND_CHECK_MACRO
