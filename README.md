@@ -104,13 +104,13 @@ enum class JsonType{
 ### 2. 反序列化与序列化
 ```cpp
 Jsonlib::JsonValue json = Jsonlib::deserialize(R"__JSON__(
-{
-    "语法": ["C++", "原始字符串", false ],
-    "key": "支持\t中文\t 与\"转义字符",
-    "na\"\\me": [ 114,514 , null ],
-    "map": [ {} , [ [ "嵌套" ] , {} ] ]
-}
-)__JSON__");
+    {
+        "语法": ["C++", "原始字符串", false ],
+        "key": "支持\t中文\\\n与\"转义字符",
+        "na\"\\me": [ 114,514 , null ],
+        "map": [ {} , [ [ "嵌套" ] , {} ] ]
+    }
+    )__JSON__");
 
 std::cout << json.serialize() << std::endl;
 ```
@@ -143,7 +143,8 @@ std::cout << json["key"].as_string() << std::endl; // 获取字符串并转义
 可能的输出：
 ```
 {"add":[[[]],1],"key":"支持\t中文\\\n与\"转义字符","map":[{},[]],"语法":114514}
-支持	中文\与"转义字符
+支持	中文\
+与"转义字符
 ```
 
 ### 4.使用is检测类型，使用as获取内容
