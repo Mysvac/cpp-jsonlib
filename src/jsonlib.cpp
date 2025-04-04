@@ -163,7 +163,7 @@ namespace Jsonlib{
     static std::string json_reverse_escape(const std::string& str) noexcept {
         std::string res;
         // 提前分配空间，减少扩容开销
-        if (str.size() > 13) res.reserve(str.size() + 3 + (str.size() >> 4));
+        if (str.size() > 15) res.reserve(str.size() + (str.size() >> 4));
         res += "\"";
         for (const char& it : str) {
             switch (it) {
