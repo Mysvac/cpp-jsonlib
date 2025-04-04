@@ -14,38 +14,50 @@ namespace Jsonlib{
      * @brief 内部函数，转义\u字符
      */
     static void json_escape_unicode(std::string& res, const std::string& str, std::string::const_iterator& it) {
-        // 将十六进制字符串转换为 Unicode 码点
+        // 进入时 it 在 \uXXXX 的 u 的位置。
         if (str.end() - it <= 4) throw JsonStructureException{ "Illegel unicode.\n" };
         ++it;
         std::istringstream iss(str.substr(it-str.begin(), 4));
+        // 函数返回时，it应该在\uABCD 的 D位置，所以只能 +3
         it += 3;
         unsigned int codePoint;
         iss >> std::hex >> codePoint;
 
-        if (iss.fail() || codePoint > 0x10FFFF) {
+        if (iss.fail() || codePoint > 0xFFFF) {
+            // 错误的\u转义字符，会直接跳过，不会报错。
+            throw JsonStructureException{ "Illegel unicode.\n" };
             return;
         }
 
+        // [0xD800 , 0xE000) 范围，是代理对，是连续2波\u转码
         if (codePoint >= 0xD800 && codePoint <= 0xDFFF) {
+            // 代理队，必须是 高代理 + 低代理
+            // 高代理 [\uD800, \uDBFF]
+            // 低代理 [\uDC00, \uDFFF]
             if (codePoint >= 0xDC00) {
+                // 低代理开头，直接结束
+                throw JsonStructureException{ "Illegel unicode - start with lowcode.\n" };
                 return;
             }
 
             // 检查下一个转义序列是否是低代理
-            if (str.end() - it <= 6 || *(it+1) != '\\' || *(it+2) != 'u') {
+            if (str.end() - it < 7 || *(it+1) != '\\' || *(it+2) != 'u') {
+                // 当前是高代理，但是下个位置不是低代理，也直接返回
+                throw JsonStructureException{ "Illegel unicode - only highcode.\n" };
                 return;
             }
 
-            // 解析低代理
+            // 解析低代理 +3 进入 \uABCD 的 A位置
             it += 3;
-            std::string lowHexStr = str.substr(it-str.begin(), 4);
-            it += 3; // 将索引移动到低代理转义序列之后
+            std::istringstream lowIss( str.substr(it-str.begin(), 4) );
+            it += 3; // 移动到 \uABCD的D位置
 
             unsigned int lowCodePoint;
-            std::istringstream lowIss(lowHexStr);
             lowIss >> std::hex >> lowCodePoint;
 
             if (lowIss.fail() || lowCodePoint < 0xDC00 || lowCodePoint > 0xDFFF) {
+                // 不是低代理对，说明错误
+                throw JsonStructureException{ "Illegel unicode - not end with lowcode.\n" };
                 return;
             }
 
@@ -72,7 +84,7 @@ namespace Jsonlib{
             res += static_cast<char>(0x80 | ((codePoint >> 6) & 0x3F));
             res += static_cast<char>(0x80 | (codePoint & 0x3F));
         }
-        else return;
+        else throw JsonStructureException{ "Illegel unicode.\n" };;
     }
 
     /**
@@ -117,6 +129,7 @@ namespace Jsonlib{
                     res += '\b';
                     break;
                 case 'u':
+                case 'U':
                     json_escape_unicode(res, str, it);
                     break;
                 default:
@@ -225,6 +238,7 @@ namespace Jsonlib{
                     res += '\b';
                     break;
                 case 'u':
+                case 'U':
                     json_escape_unicode(res, str, it);
                     break;
                 }
