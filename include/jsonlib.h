@@ -1,4 +1,6 @@
 #pragma once
+#ifndef MYSVAC_CPP_JSONLIB_H
+#define MYSVAC_CPP_JSONLIB_H
 
 #include <string>
 #include <map>
@@ -562,3 +564,5 @@ namespace Jsonlib{
     };
 
 }
+
+#endif
