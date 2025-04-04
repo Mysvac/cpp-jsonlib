@@ -70,13 +70,27 @@ json字符串->可操作对象。<br>
 ## 应用示例
 
 ### 0. 导入库与头文件
-（暂未合并vcpkg官方仓库，提供源码，自行编译。）
+你可以直接下载`src`和`include`中的两个文件，放到项目中使用。<br>
+也可以作为第三方库导入，方式如下：
+
+```shell
+# 推荐使用vcpkg进行第三方依赖管理
+# 全局模式
+vcpkg install mysvac-cpp-jsonlib
+
+# 清单模式
+vcpkg add port mysvac-cpp-jsonlib
+vcpkg install
+```
+
 ```cmake
 # CmakeLists.txt
-find_package(cpp-jsonlib CONFIG REQUIRED)
+find_package(mysvac-cpp-jsonlib CONFIG REQUIRED)
 target_link_libraries(main PRIVATE jsonlib::jsonlib)
 ```
+
 ```cpp
+// 头文件
 #include "jsonlib.h"
 ```
 
