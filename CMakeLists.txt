@@ -25,7 +25,7 @@ add_library(${lib_name} src/jsonlib.cpp include/jsonlib.h)
 add_library(${prev_name}::${lib_name} ALIAS ${lib_name})
 
 set_target_properties(${lib_name} PROPERTIES
-    OUTPUT_NAME "mysvac-${lib_name}"
+    OUTPUT_NAME "${prev_name}-${lib_name}"
 )
 
 # win下生成动态库，添加导入导出标记
@@ -69,11 +69,11 @@ DESTINATION
 # 第2步 安装库文件和头文件，此处是库文件目标
 install(TARGETS ${lib_name} EXPORT ${package_name}-targets)
 # 第2步 安装库文件和头文件，此处是头文件
-install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/mysvac)
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${prev_name})
 
 # 安装库文件
 install(EXPORT ${package_name}-targets
-        NAMESPACE ${lib_name}::
+        NAMESPACE ${prev_name}::
         DESTINATION ${CMAKE_INSTALL_DATADIR}/${package_name}
 ) # 注意此处的 DESTINATION 是包名而非命名空间或库名
 
