@@ -20,12 +20,12 @@ C++17标准，仅使用标准库，代码不到1000行，提供如下功能：
 也可以作为第三方库导入，方式如下：
 
 ```shell
-# 推荐使用vcpkg进行第三方依赖管理
+# 推荐使用vcpkg进行第三方依赖管理（正在尝试加入vcpkg）
 # 全局模式
-vcpkg install mysvac-cpp-jsonlib
+vcpkg install mysvac-jsonlib
 
 # 清单模式
-vcpkg add port mysvac-cpp-jsonlib
+vcpkg add port mysvac-jsonlib
 ```
 
 ```cmake

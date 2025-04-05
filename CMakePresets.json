@@ -15,7 +15,7 @@
         "cacheVariables": {
             "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
             "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
-            "ENABLE_BUILD_TEST_EXE": "ON",
+            "MYSVAC_JSONLIB_ENABLE_TEST": "ON",
             "VCPKG_MANIFEST_FEATURES": "test",
             "VCPKG_MANIFEST_MODE": "ON",
             "CMAKE_CXX_COMPILER": "cl.exe"
