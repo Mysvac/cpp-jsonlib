@@ -1,4 +1,4 @@
-# 一个现代CPP-JSON库
+# 一个现代CPP-JSON解析库
 
 ## 概述
 C++17标准，仅使用标准库，代码不到1000行，提供如下功能：
@@ -36,7 +36,7 @@ target_link_libraries(main PRIVATE jsonlib::jsonlib)
 
 ```cpp
 // C++代码 导入头文件
-#include "jsonlib.h"
+#include "mysvac/jsonlib.h"
 ```
 
 ### 1. 三种可操作类型和六种JSON数据类型
@@ -214,6 +214,7 @@ JsonStructureException: Unknown Json Structure.
 - **数组-改查**: O(1)。
 
 ## 对比其他库
+下面图中的 **cpp-jsonlib** 指的是本库。<br>
 测试框架-1（不推荐使用）: <https://github.com/miloyip/nativejson-benchmark><br>
 测试框架-2 : <https://github.com/Mysvac/cpp-json-test>
 
