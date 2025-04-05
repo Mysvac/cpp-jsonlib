@@ -1,4 +1,4 @@
 @PACKAGE_INIT@
 
-include(${CMAKE_CURRENT_LIST_DIR}/mysvac-cpp-jsonlib-targets.cmake)
-check_required_components(mysvac-cpp-jsonlib)
+include(${CMAKE_CURRENT_LIST_DIR}/mysvac-jsonlib-targets.cmake)
+check_required_components(mysvac-jsonlib)
