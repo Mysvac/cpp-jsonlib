@@ -7,6 +7,9 @@ C++17标准，仅使用标准库，代码不到1000行，提供如下功能：
 - 便捷的 增、删、改、查。
 - 移动语义支持。
 - 异常处理支持。
+- vcpkg依赖管理。
+
+库性能比较参考：<https://github.com/Mysvac/cpp-json-test>
 
 ## 文档
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓<br>
@@ -16,11 +19,12 @@ C++17标准，仅使用标准库，代码不到1000行，提供如下功能：
 ## 应用示例
 
 ### 0. 导入库与头文件
-你可以直接下载`src`和`include`中的两个文件，放到项目中使用。<br>
-也可以作为第三方库导入，方式如下：
+你可以直接下载`src`和`include`中的两个代码文件，放到项目中使用。
+
+也可以作为第三方库导入（默认静态库），方式如下：
 
 ```shell
-# 推荐使用vcpkg进行第三方依赖管理（正在尝试加入vcpkg）
+# 使用vcpkg进行第三方依赖管理
 # 全局模式
 vcpkg install mysvac-jsonlib
 
@@ -30,8 +34,8 @@ vcpkg add port mysvac-jsonlib
 
 ```cmake
 # CmakeLists.txt
-find_package(mysvac-cpp-jsonlib CONFIG REQUIRED)
-target_link_libraries(main PRIVATE jsonlib::jsonlib)
+find_package(mysvac-jsonlib CONFIG REQUIRED)
+target_link_libraries(main PRIVATE mysvac::jsonlib)
 ```
 
 ```cpp
@@ -41,10 +45,12 @@ target_link_libraries(main PRIVATE jsonlib::jsonlib)
 
 ### 1. 三种可操作类型和六种JSON数据类型
 ```cpp
-// 广义的“值类型”，实际上包含 对象 数组 等全部6种JSON数据类型。
+// 广义的“值类型”，包含 对象 数组 等全部6种JSON数据类型。
 class Jsonlib::JsonValue;
+
 // 对象类型，本质是 std::map<std::string, Jsonlib::JsonValue>
 class Jsonlib::JsonObject;
+
 // 数组类型，本质是 std::vector<Jsonlib::JsonValue>
 class Jsonlib::JsonArray;
 
@@ -80,14 +86,20 @@ std::cout << json.serialize_pretty() << std::endl;
 
 特别注意，`std::string`类型的构造和赋值，不会解析内容。解析请使用`deserialize()`函数。
 ```cpp
-// 0. 字符串构造， json0.type()是 STRING，serialize输出的结果是 "123456"
+// 字符串构造， 内部类型是STRING，不能调用as_int64()
 Jsonlib::JsonValue json0 { "123456" }; 
 
-Jsonlib::JsonValue json1 ("123
-456"); // 正确，自动反转义，然后两端加上双引号，变成 "123\n345"
+// 解析构造，内部类型是NUMBER，可以调用as_int64()
+Jsonlib::JsonValue json1 = Jsonlib::deserialize("12356");
 
+// 字符串构造，自带反转义，加上双引号，变成  "123\n345"
+Jsonlib::JsonValue json1 ("123
+456");
+
+// 解析构造，不会反转义，字符串内部静止特殊符号
 Jsonlib::JsonValue json2 = Jsonlib::deserialize(R"(  "123
-456"  )"); // 错误，解析内容，不会反转义，认为是字符串，但是内部出现了换行符，抛出异常。 应该写成 "123\n456"。
+456"  )"); // 字符串内部出现换行符，将抛出异常
+// 应该改成 R"(  "123\n456"  )"
 ```
 
 ### 3. 增删改查
@@ -140,16 +152,17 @@ Jsonlib::JsonValue my_arr = Jsonlib::deserialize( R"__JSON__(
     ]
 )__JSON__");
 
-// 纯文本类型，不会解析内部数据，不会报错
+// 字符串构造，不会解析内部数据，不会报错
 Jsonlib::JsonValue my_val {"[ {} this is string ]"};
 
-// 获取内部数据的引用，然后可以范围for
-// as_array() 和 as_object() 返回引用，其他的 as_XXX() 返回副本
+// 获取内部数据的引用
+// as_array()和as_object()返回引用，其他的as_XXX()返回副本
 for(auto& it: my_arr.as_array()){ 
-    // 操作...
+    // it 的类型是 Jsonlib::JsonValue&
+    // 具体操作...
 }
 
-// 支持移动语义，移动后初始成null值，不会删除
+// 支持移动，被移动的对象变成JsonType::ISNULL类型，不会删除
 my_arr.insert(1, std::move(my_obj["key2"]));
 my_arr.push_back(my_val);
 // JsonArray和JsonObject也能隐式转换成JsonValue，可以直接赋值或移动
@@ -198,11 +211,11 @@ JsonStructureException: Unknown Json Structure.
 ```
 
 #### 注意
-赋值/拷贝/移动/序列化/is类型检查/type()/size()...等操作保证不会抛出异常。
+赋值/拷贝/移动/序列化/`is`/`type`/`size`...等操作保证不会抛出异常。
 
-只有deserialze()反序列化函数，或者类型转换失败，访问越界时可能抛出异常。
+只有`deserialze()`反序列化函数，或者`as`类型转换失败，访问越界时可能抛出异常。
 
-## 效率概述
+## 性能概述
 *时间复杂度其实没什么用，看看就好，后面都是常数优化。*
 - **N** : JSON文本长度。
 - **m** : 子元素个数。
@@ -214,10 +227,12 @@ JsonStructureException: Unknown Json Structure.
 - **数组-改查**: O(1)。
 
 ## 对比其他库
-下面图中的 **cpp-jsonlib** 指的是本库。<br>
-测试框架-1（不推荐使用）: <https://github.com/miloyip/nativejson-benchmark><br>
-测试框架-2 : <https://github.com/Mysvac/cpp-json-test>
+最新性能比较参考：[Mysvac/cpp-json-test](https://github.com/Mysvac/cpp-json-test)
 
+下面内容的测试框架：<br>
+测试框架-1（不推荐使用）: <https://github.com/miloyip/nativejson-benchmark><br>
+测试框架-2 : <https://github.com/Mysvac/cpp-json-test><br>
+注：下面的测试进行时间较早，`cpp-jsonlib`代指本库。
 
 ### 一致性测试
 测试C++库解析json数据的正确性，语法严格性，浮点型精度等内容。
