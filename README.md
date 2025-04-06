@@ -9,16 +9,17 @@
 </p>
 <p>
     <a href="#simple-cmp">
-        <img src="https://img.shields.io/badge/简要对比 | Simple Comparison-green?style=for-the-badge" alt="Simple Comparison  | 简要对比" />
+        <img src="https://img.shields.io/badge/Simple Comparison | 简要对比-green?style=for-the-badge" alt="Simple Comparison  | 简要对比" />
     </a>
     &nbsp;&nbsp;
     <a href="https://github.com/Mysvac/cpp-json-test">
-        <img src="https://img.shields.io/badge/详细对比 | Comprehensive Comparison-yellow?style=for-the-badge" alt="Comprehensive Comparison | 详细对比" />
+        <img src="https://img.shields.io/badge/Comprehensive Comparison | 详细对比-yellow?style=for-the-badge" alt="Comprehensive Comparison | 详细对比" />
     </a>
 </p>
 </div>
 
 ---
+
 <div id="ENGLISH">
 
 # Modern C++JSON parsing library
@@ -225,6 +226,7 @@ Worst-case complexity:
     - Update/access: O(1)
 
 </div>
+
 ---
 
 <div id="中文">
@@ -440,7 +442,7 @@ JsonStructureException: Unknown Json Structure.
 <div id="simple-cmp">
 
 # Simple Comparison | 简要对比
-Lastest comprehensive test: <https://github.com/Mysvac/cpp-json-test>
+Lastest comprehensive test | 最新全面比较: <https://github.com/Mysvac/cpp-json-test>
 
 test framework-1 | 测试框架-1 : <https://github.com/miloyip/nativejson-benchmark><br>
 test framework-2 | 测试框架-2 : <https://github.com/Mysvac/cpp-json-test>
@@ -453,9 +455,9 @@ Test the correctness, syntax rigor, floating-point precision, and other aspects 
 测试C++库解析json数据的正确性，语法严格性，浮点型精度等内容。
 
 ### Overall score | 整体分数
-![Overall score | 整体分数](others/images/1-0-overall.png)
+![整体分数](others/images/1-0-overall.png)
 
-### Deserialize test | 反序列化测试
+### Deserialize strictness test | 反序列化严格性测试
 ![反序列化](others/images/1-1-unserialize.png)
 
 ### Floating point precision test | 浮点数精度测试
