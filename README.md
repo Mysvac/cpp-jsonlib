@@ -491,7 +491,7 @@ Unit milliseconds, the lower the better<br>
 Unit KB, the lower the better<br>
 单位 KB ，越低越好
 
-Beautification refers to the output JSON text with line breaks and indentation. (The libraries not shown below do not support beautifying output directly.)<br>
+Pretty refers to the output JSON text with line breaks and indentation. (The libraries not shown below do not support prettify directly.)<br>
 美化是指输出的JSON文本带换行和缩进。（没显示的库是不支持直接美化输出。）
 ![美化](others/images/2-4-pretty.png)
 
