@@ -487,12 +487,12 @@ Unit milliseconds, the lower the better<br>
 ![序列化耗时](others/images/2-3-serialize.png)
 
 
-### Time for serialize and prettify | 序列化+美化耗时
-Unit KB, the lower the better<br>
-单位 KB ，越低越好
+### Time for Modification and Query | 增删改查加权耗时
+Unit milliseconds, the lower the better<br>
+单位毫秒，越低越好
 
-Pretty refers to the output JSON text with line breaks and indentation. (The libraries not shown below do not support prettify directly.)<br>
-美化是指输出的JSON文本带换行和缩进。（没显示的库是不支持直接美化输出。）
-![美化](others/images/2-4-pretty.png)
+The QT deletion speed is very slow, resulting in an overall slow performance.<br>
+QT删除子元素速度非常忙，导致整体偏慢。
+![美化](others/images/2-4-change.png)
 
 </div>

@@ -668,6 +668,10 @@ namespace Jsonlib{
         if (type_ != JsonType::NUMBER) throw JsonTypeException{ "Is not Number.\n" };
         return std::stod(std::get<std::string>(content_));
     }
+    long double JsonValue::as_ldouble() const{
+        if (type_ != JsonType::NUMBER) throw JsonTypeException{ "Is not Number.\n" };
+        return std::stold(std::get<std::string>(content_));
+    }
     bool JsonValue::as_bool() const {
         if (type_ != JsonType::BOOL) throw JsonTypeException{ "Is not bool.\n" };
         return std::get<bool>(content_);

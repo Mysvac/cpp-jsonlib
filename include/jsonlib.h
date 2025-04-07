@@ -424,6 +424,12 @@ namespace Jsonlib{
          */
         double as_double() const;
         /**
+         * @brief 转换成double类型，复制一份
+         * @exception JsonTypeException 转换失败，类型错误
+         * @note 必须是NUMBER
+         */
+        long double as_ldouble() const;
+        /**
          * @brief 转换成bool类型，复制一份
          * @exception JsonTypeException 转换失败，类型错误
          * @note 必须是BOOL
