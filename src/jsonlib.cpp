@@ -4,7 +4,6 @@
 #include <vector>
 #include <sstream>
 #include <variant>
-#include <exception>
 #include <stdexcept>
 #include <iostream>
 
@@ -13,11 +12,11 @@ namespace Jsonlib{
     /**
      * @brief 内部函数，转义\u字符
      */
-    static void json_escape_unicode(std::string& res, const std::string& str, std::string::const_iterator& it) {
+    static void json_escape_unicode(std::string& res, std::string_view str, std::string_view::const_iterator& it) {
         // 进入时 it 在 \uXXXX 的 u 的位置。
-        if (str.end() - it <= 4) throw JsonStructureException{ "Illegel unicode.\n" };
+        if (str.end() - it <= 4) throw JsonStructureException{ "Illegal unicode.\n" };
         ++it;
-        std::istringstream iss(str.substr(it-str.begin(), 4));
+        std::istringstream iss( std::string(str.substr(it-str.begin(), 4)));
         // 函数返回时，it应该在\uABCD 的 D位置，所以只能 +3
         it += 3;
         unsigned int codePoint;
@@ -25,8 +24,7 @@ namespace Jsonlib{
 
         if (iss.fail() || codePoint > 0xFFFF) {
             // 错误的\u转义字符，会直接跳过，不会报错。
-            throw JsonStructureException{ "Illegel unicode.\n" };
-            return;
+            throw JsonStructureException{ "Illegal unicode.\n" };
         }
 
         // [0xD800 , 0xE000) 范围，是代理对，是连续2波\u转码
@@ -36,20 +34,18 @@ namespace Jsonlib{
             // 低代理 [\uDC00, \uDFFF]
             if (codePoint >= 0xDC00) {
                 // 低代理开头，直接结束
-                throw JsonStructureException{ "Illegel unicode - start with lowcode.\n" };
-                return;
+                throw JsonStructureException{ "Illegal unicode - start with low-code.\n" };
             }
 
             // 检查下一个转义序列是否是低代理
             if (str.end() - it < 7 || *(it+1) != '\\' || *(it+2) != 'u') {
                 // 当前是高代理，但是下个位置不是低代理，也直接返回
-                throw JsonStructureException{ "Illegel unicode - only highcode.\n" };
-                return;
+                throw JsonStructureException{ "Illegal unicode - only high-code.\n" };
             }
 
             // 解析低代理 +3 进入 \uABCD 的 A位置
             it += 3;
-            std::istringstream lowIss( str.substr(it-str.begin(), 4) );
+            std::istringstream lowIss( std::string(str.substr(it-str.begin(), 4) ));
             it += 3; // 移动到 \uABCD的D位置
 
             unsigned int lowCodePoint;
@@ -57,8 +53,7 @@ namespace Jsonlib{
 
             if (lowIss.fail() || lowCodePoint < 0xDC00 || lowCodePoint > 0xDFFF) {
                 // 不是低代理对，说明错误
-                throw JsonStructureException{ "Illegel unicode - not end with lowcode.\n" };
-                return;
+                throw JsonStructureException{ "Illegal unicode - not end with lowcode.\n" };
             }
 
             // 将代理对组合为单个码点
@@ -84,18 +79,18 @@ namespace Jsonlib{
             res += static_cast<char>(0x80 | ((codePoint >> 6) & 0x3F));
             res += static_cast<char>(0x80 | (codePoint & 0x3F));
         }
-        else throw JsonStructureException{ "Illegel unicode.\n" };;
+        else throw JsonStructureException{ "Illegal unicode.\n" };;
     }
 
     /**
      * @brief 内部函数，转义字符串且移动指针
      */
-    static std::string json_escape_next(const std::string& str, std::string::const_iterator& it) {
+    static std::string json_escape_next(std::string_view str, std::string_view::const_iterator& it) {
         // 跳过字符串起始的双引号
         ++it;
         std::string res;
 
-        while (it !=str.end() && *it != '\"') {
+        while (it != str.end() && *it != '\"') {
             switch (*it) {
             case '\\':
             {
@@ -134,7 +129,6 @@ namespace Jsonlib{
                     break;
                 default:
                     throw JsonStructureException{ "Illegal escape characters.\n " };
-                    break;
                 }
             }
             break;
@@ -144,7 +138,6 @@ namespace Jsonlib{
             case '\b':
             case '\r':
                 throw JsonStructureException{ "There are characters that have not been escaped.\n" };
-                break;
             default:
                 res += *it;
                 break;
@@ -160,7 +153,7 @@ namespace Jsonlib{
     /**
      * @brief 内部函数，反转义字符串
      */
-    static std::string json_reverse_escape(const std::string& str) noexcept {
+    static std::string json_reverse_escape(std::string_view str) noexcept {
         std::string res;
         // 提前分配空间，减少扩容开销
         if (str.size() > 15) res.reserve(str.size() + (str.size() >> 4));
@@ -199,7 +192,7 @@ namespace Jsonlib{
     /**
      * @brief 内部函数，转义字符串
      */
-    static std::string json_escape(const std::string& str) {
+    static std::string json_escape(std::string_view str) {
         auto it = str.begin();
         ++it;
         std::string res;
@@ -274,27 +267,26 @@ namespace Jsonlib{
     }
 
     // 反序列化
-    JsonValue deserialize(const std::string& str){
+    JsonValue deserialize(std::string_view str){
         auto it = str.begin();
         while(it!=str.end() && std::isspace(*it)) ++it;
         
         // 禁止空内容
         if(it == str.end()){
             throw JsonStructureException{ "Empty JSON data.\n" };
-            return JsonValue ();
         }
 
         JsonValue jsonValue (str, it);
 
         while( it != str.end() ){
-            if(!std::isspace(*it)) throw JsonStructureException {"Unknow content at the end.\n"};
+            if(!std::isspace(*it)) throw JsonStructureException {"Unknown content at the end.\n"};
             ++it;
         }
         return jsonValue;
     }
 
     // 反序列化构造
-    JsonValue::JsonValue(const std::string& str, std::string::const_iterator& it){
+    JsonValue::JsonValue(std::string_view str, std::string_view::const_iterator& it){
         while(it != str.end() && std::isspace(*it)) ++it;
         if(it == str.end()) throw JsonStructureException{ "Empty JSON data.\n" };
         switch (*it){
@@ -364,13 +356,13 @@ namespace Jsonlib{
             break;
             case 't':
                 if(str.end() - it < 4 || str.compare(it-str.begin(), 4, "true")) throw JsonStructureException {};
-                type_ = JsonType::BOOLEN;
+                type_ = JsonType::BOOL;
                 content_ = true;
                 it += 4;
             break;
             case 'f':
                 if(str.end() - it < 5 || str.compare(it-str.begin(), 5, "false")) throw JsonStructureException {};
-                type_ = JsonType::BOOLEN;
+                type_ = JsonType::BOOL;
                 it += 5;
             break;
             case 'n':
@@ -407,13 +399,13 @@ namespace Jsonlib{
     }
 
     // 字符串类型构造
-    JsonValue::JsonValue(const std::string& str) noexcept{
+    JsonValue::JsonValue(std::string_view str) noexcept{
         type_ = JsonType::STRING;
         content_ = json_reverse_escape(str);
     }
 
     // 字符串类型赋值
-    JsonValue& JsonValue::JsonValue::operator=(const std::string& str) {
+    JsonValue& JsonValue::operator=(std::string_view str) {
         type_ = JsonType::STRING;
         content_ = json_reverse_escape(str);
         return *this;
@@ -447,7 +439,7 @@ namespace Jsonlib{
         case JsonType::NUMBER:
             content_ = std::string{ "0" };
             break;
-        case JsonType::BOOLEN:
+        case JsonType::BOOL:
             content_ = false;
             break;
         }
@@ -459,16 +451,12 @@ namespace Jsonlib{
         {
         case JsonType::OBJECT:
             return std::get<JsonObject>(content_).size();
-            break;
         case JsonType::ARRAY:
             return std::get<JsonArray>(content_).size();
-            break;
         case JsonType::STRING:
             return std::get<std::string>(content_).size();
-            break;
         default:
             return 1;
-            break;
         }
     }
 
@@ -581,19 +569,18 @@ namespace Jsonlib{
             // 是否在开头加上逗号
             std::string res{ "{" };
             const JsonObject& map = std::get<JsonObject>(content_);
-            for (const std::pair<std::string, JsonValue>& it : map) {
+            for (const auto& [fst, snd] : map) {
                 // 键是字符串，需要反转义
-                res += json_reverse_escape(it.first);
+                res += json_reverse_escape(fst);
                 res += ':';
                 // 递归序列号
-                res += it.second.serialize();
+                res += snd.serialize();
                 res += ',';
             }
             if (*res.rbegin() == ',') *res.rbegin() = '}';
             else res += '}';
             return res;
         }
-        break;
         case JsonType::ARRAY:
         {
             // 数组类型
@@ -609,17 +596,13 @@ namespace Jsonlib{
             else res += ']';
             return res;
         }
-        break;
-        case JsonType::BOOLEN:
+        case JsonType::BOOL:
             return std::get<bool>(content_) ? "true" : "false";
-            break;
         case JsonType::ISNULL:
             return "null";
-            break;
         default:
             // 数值和字符串，可以直接返回内容
             return std::get<std::string>(content_);
-            break;
         }
     }
 
@@ -634,13 +617,13 @@ namespace Jsonlib{
             std::string res{ "{" };
 
             const JsonObject& map = std::get<JsonObject>(content_);
-            for (const std::pair<std::string, JsonValue>& it : map) {
+            for (const auto& [fst, snd] : map) {
                 res += '\n' + std::string(space_num, ' ') + tabs;
                 // 键是字符串，需要反转义
-                res += json_reverse_escape(it.first);
+                res += json_reverse_escape(fst);
                 res += ": ";
                 // 递归序列号
-                res += it.second.serialize_pretty(space_num, depth + 1);
+                res += snd.serialize_pretty(space_num, depth + 1);
                 res += ',';
             }
             if (*res.rbegin() == ',') *res.rbegin() = '\n';
@@ -648,7 +631,6 @@ namespace Jsonlib{
             else res += " }";
             return res;
         }
-        break;
         case JsonType::ARRAY:
         {
             std::string tabs(depth * space_num, ' ');
@@ -667,17 +649,13 @@ namespace Jsonlib{
             else res += " ]";
             return res;
         }
-        break;
-        case JsonType::BOOLEN:
+        case JsonType::BOOL:
             return std::get<bool>(content_) ? "true" : "false";
-            break;
         case JsonType::ISNULL:
             return "null";
-            break;
         default:
             // 数值和字符串，可以直接返回内容
             return std::get<std::string>(content_);
-            break;
         }
     }
 
@@ -691,7 +669,7 @@ namespace Jsonlib{
         return std::stod(std::get<std::string>(content_));
     }
     bool JsonValue::as_bool() const {
-        if (type_ != JsonType::BOOLEN) throw JsonTypeException{ "Is not boolen.\n" };
+        if (type_ != JsonType::BOOL) throw JsonTypeException{ "Is not bool.\n" };
         return std::get<bool>(content_);
     }
     std::string JsonValue::as_string() const {
@@ -700,17 +678,13 @@ namespace Jsonlib{
         {
         case JsonType::STRING:
             return json_escape(std::get<std::string>(content_));
-            break;
-        case JsonType::BOOLEN:
+        case JsonType::BOOL:
             return std::get<bool>(content_) ? "true" : "false";
-            break;
         case JsonType::ISNULL:
             return "null";
-            break;
         default:
             // 数值，可以直接返回内容
             return std::get<std::string>(content_);
-            break;
         }
 
     }

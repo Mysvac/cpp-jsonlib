@@ -84,7 +84,7 @@ enum class JsonType{
     ARRAY,/**< JSON array */
     STRING, /**< JSON string */
     NUMBER, /**< JSON numver */
-    BOOLEN, /**< JSON bool */
+    BOOL, /**< JSON bool */
     ISNULL, /**< JSON null */
 };
 ```
@@ -295,7 +295,7 @@ enum class JsonType{
     ARRAY,/**< JSON 数组类型 */
     STRING, /**< JSON 字符串类型 */
     NUMBER, /**< JSON 数值类型 */
-    BOOLEN, /**< JSON 布尔类型 */
+    BOOL, /**< JSON 布尔类型 */
     ISNULL, /**< JSON null类型 */
 };
 ```

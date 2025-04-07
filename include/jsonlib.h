@@ -4,7 +4,6 @@
 
 #include <string>
 #include <map>
-#include <set>
 #include <vector>
 #include <variant>
 #include <exception>
@@ -25,7 +24,7 @@ namespace Jsonlib{
         ARRAY,/**< JSON 数组类型 */
         STRING, /**< JSON 字符串类型，值类型 */
         NUMBER, /**< JSON 数值类型，值类型 */
-        BOOLEN, /**< JSON 布尔类型，值类型 */
+        BOOL, /**< JSON 布尔类型，值类型 */
         ISNULL, /**< JSON null类型，值类型 */
     };
 
@@ -106,7 +105,7 @@ namespace Jsonlib{
      * @note 解析JSON数据统一使用此函数
      */
     JSONLIB_EXPORT
-    JsonValue deserialize(const std::string& str);
+    JsonValue deserialize(std::string_view str);
 
     /**
      * @class JsonValue
@@ -135,7 +134,7 @@ namespace Jsonlib{
          * @details 从str的it位置开始解析，请勿使用此构造，请使用deserialize()函数。
          * @note 虽然是公共函数，能够正常工作，但不推荐直接使用。
          */
-        JsonValue(const std::string& str, std::string::const_iterator& it);
+        JsonValue(std::string_view str, std::string_view::const_iterator& it);
 
 
         /**
@@ -185,7 +184,7 @@ namespace Jsonlib{
          * @details 将输入字符串反转义，生成对象。
          * @note 不会视为JSON结构解析，而是直接当做JSON字符串
          */
-        JsonValue(const std::string& str) noexcept;
+        JsonValue(std::string_view str) noexcept;
 
         /**
          * @brief 字符串赋值函数
@@ -193,7 +192,7 @@ namespace Jsonlib{
          * @details 直接视为文本数据，反转义后生成对象
          * @note 不会视为JSON结构解析，而是直接当做JSON字符串
          */
-        JsonValue& operator=(const std::string& str);
+        JsonValue& operator=(std::string_view str);
 
 
         /**
@@ -215,7 +214,7 @@ namespace Jsonlib{
         /**
          * @brief 布尔类型构造
          */
-        inline JsonValue(const bool& bl) noexcept: type_(JsonType::BOOLEN) {
+        inline JsonValue(const bool& bl) noexcept: type_(JsonType::BOOL) {
             content_ = bl;
         }
         /**
@@ -285,7 +284,7 @@ namespace Jsonlib{
          * @brief 布尔类型赋值
          */
         inline JsonValue& operator=(const bool& bl) noexcept { 
-            type_ = JsonType::BOOLEN;
+            type_ = JsonType::BOOL;
             content_ = bl;
             return *this;
         }
@@ -385,7 +384,7 @@ namespace Jsonlib{
         /**
          * @brief 判断是不是布尔
          */
-        inline bool is_bool() const noexcept { return type_ == JsonType::BOOLEN; }
+        inline bool is_bool() const noexcept { return type_ == JsonType::BOOL; }
 
         /**
          * @brief 判断是不是数值
