@@ -3,6 +3,7 @@
 #define MYSVAC_CPP_JSONLIB_H
 
 #include <string>
+#include <string_view>
 #include <map>
 #include <vector>
 #include <variant>
