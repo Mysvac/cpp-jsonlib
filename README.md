@@ -50,6 +50,7 @@ You can directly download the two code files from `src` and `include` and use th
 
 You can also install from vcpkg, with a default static library (very small).
 ```shell
+# Please update the vcpkg port using 'git pull' at first
 # In classic mode
 vcpkg install mysvac-jsonlib
 
@@ -258,7 +259,7 @@ Worst-case complexity:
 也可以作为第三方库导入（默认静态库），方式如下：
 
 ```shell
-# 使用vcpkg进行第三方依赖管理
+# 请先使用'git pull'更新vcpkg端口文件
 # 全局模式
 vcpkg install mysvac-jsonlib
 
