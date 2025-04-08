@@ -20,7 +20,7 @@ namespace Jsonlib{
      * @enum JsonType
      * @brief 表示Json对象内部数据类型
      */
-    enum class JsonType{
+    enum class JSONLIB_EXPORT JsonType{
         OBJECT, /**< JSON 对象类型 */
         ARRAY,/**< JSON 数组类型 */
         STRING, /**< JSON 字符串类型，值类型 */
