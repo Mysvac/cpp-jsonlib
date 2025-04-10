@@ -46,7 +46,7 @@ namespace Jsonlib{
         /**
          * @brief 带异常描述文本的构造函数。
          */
-        JsonException(const std::string& message) : std::runtime_error(message) {}
+        explicit JsonException(const std::string& message) : std::runtime_error(message) {}
     };
     
     /**
@@ -54,7 +54,7 @@ namespace Jsonlib{
      * @brief Json类型错误异常类
      * @details as类型转换，或at,[],insert等操作发现类型不正确时抛出
      */
-    class JSONLIB_EXPORT JsonTypeException : public JsonException {
+    class JSONLIB_EXPORT JsonTypeException final : public JsonException {
     public:
         /**
          * @brief 默认构造函数。
@@ -64,7 +64,7 @@ namespace Jsonlib{
         /**
          * @brief 带异常描述文本的构造函数。
          */
-        JsonTypeException(const std::string& message) : JsonException(message) {}
+        explicit JsonTypeException(const std::string& message) : JsonException(message) {}
     };
 
     /**
@@ -72,7 +72,7 @@ namespace Jsonlib{
      * @brief Json结构错误异常类
      * @details 结构错误，只在调用deserialize()函数时可能抛出
      */
-    class JSONLIB_EXPORT JsonStructureException : public JsonException {
+    class JSONLIB_EXPORT JsonStructureException final : public JsonException {
     public:
         /**
          * @brief 默认构造函数。
@@ -82,7 +82,7 @@ namespace Jsonlib{
         /**
          * @brief 带异常描述文本的构造函数。
          */
-        JsonStructureException(const std::string& message) : JsonException(message) {}
+        explicit JsonStructureException(const std::string& message) : JsonException(message) {}
     };
 
 
@@ -137,18 +137,30 @@ namespace Jsonlib{
          */
         JsonValue(std::string_view str, std::string_view::const_iterator& it);
 
+        /**
+         * @brief 列表初始化器
+         * @param init_list 初始化列表
+         * @details
+         * 参数数量为0时，被认为是null类型
+         * 参数数量为2且第一个参数是字符串类型时，被认为是object
+         * 其他时候都会被认为是array
+         * @note 注意，如果想构造只有2个值且第一个值是string的array，请不要使用列表初始化器
+         */
+        JsonValue(const std::initializer_list<JsonValue>& init_list);
+
 
         /**
          * @brief 获取当前对象数据类型
          * @return Json::JsonType类型，表示当前对象数据类型
          */
-        inline JsonType type() const noexcept { return type_; }
+        [[nodiscard]]
+        JsonType type() const noexcept { return type_; }
 
         /**
          * @brief 重置，设为null值
          * @note 不会调用其他函数
          */
-        inline void reset() noexcept {
+        void reset() noexcept {
             type_ = JsonType::ISNULL;
             content_ = false;
         }
@@ -165,6 +177,7 @@ namespace Jsonlib{
          * @details 对象和列表返回子元素个数，字符串返回长度。
          * @note 数值，布尔和null 返回值待定为1
          */
+        [[nodiscard]]
         size_t size() const noexcept;
 
         /**
@@ -177,7 +190,7 @@ namespace Jsonlib{
          * @brief 指定类型的构造函数
          * @details 根据类型进行初始化。
          */
-        JsonValue(const JsonType& jsonType);
+        explicit JsonValue(const JsonType& jsonType);
 
         /**
          * @brief 字符串构造函数
@@ -215,37 +228,37 @@ namespace Jsonlib{
         /**
          * @brief 布尔类型构造
          */
-        inline JsonValue(const bool& bl) noexcept: type_(JsonType::BOOL) {
+        JsonValue(const bool& bl) noexcept: type_(JsonType::BOOL) {
             content_ = bl;
         }
         /**
          * @brief 整数类型构造
          */
-        inline JsonValue(const int& num) noexcept: type_(JsonType::NUMBER) {
+        JsonValue(const int& num) noexcept: type_(JsonType::NUMBER) {
             content_ = std::to_string(num);
         }
         /**
          * @brief 长整数类型构造
          */
-        inline JsonValue(const long long& num) noexcept: type_(JsonType::NUMBER) {
+        JsonValue(const long long& num) noexcept: type_(JsonType::NUMBER) {
             content_ = std::to_string(num);
         }
         /**
          * @brief 浮点数类型构造
          */
-        inline JsonValue(const double& num) noexcept: type_(JsonType::NUMBER) {
+        JsonValue(const double& num) noexcept: type_(JsonType::NUMBER) {
             content_ = std::to_string(num);
         }
         /**
          * @brief 浮点数类型构造
          */
-        inline JsonValue(const long double& num) noexcept: type_(JsonType::NUMBER) {
+        JsonValue(const long double& num) noexcept: type_(JsonType::NUMBER) {
             content_ = std::to_string(num);
         }
         /**
          * @brief nullptr_t类型构造
          */
-        inline JsonValue(const std::nullptr_t& n_ptr) noexcept{}
+        JsonValue(const std::nullptr_t&) noexcept{}
 
         /**
          * @brief JsonArray拷贝构造
@@ -284,7 +297,7 @@ namespace Jsonlib{
         /**
          * @brief 布尔类型赋值
          */
-        inline JsonValue& operator=(const bool& bl) noexcept { 
+        JsonValue& operator=(const bool& bl) noexcept {
             type_ = JsonType::BOOL;
             content_ = bl;
             return *this;
@@ -292,7 +305,7 @@ namespace Jsonlib{
         /**
          * @brief 整数类型赋值
          */
-        inline JsonValue& operator=(const int& num) noexcept {
+        JsonValue& operator=(const int& num) noexcept {
             type_ = JsonType::NUMBER;
             content_ = std::to_string(num);
             return *this;
@@ -300,7 +313,7 @@ namespace Jsonlib{
         /**
          * @brief 长整数类型赋值
          */
-        inline JsonValue& operator=(const long long& num) noexcept{
+        JsonValue& operator=(const long long& num) noexcept{
             type_ = JsonType::NUMBER;
             content_ = std::to_string(num);
             return *this;
@@ -308,7 +321,7 @@ namespace Jsonlib{
         /**
          * @brief 浮点数类型赋值
          */
-        inline JsonValue& operator=(const double& num) noexcept {
+        JsonValue& operator=(const double& num) noexcept {
             type_ = JsonType::NUMBER;
             content_ = std::to_string(num);
             return *this;
@@ -316,7 +329,7 @@ namespace Jsonlib{
         /**
          * @brief 浮点数类型赋值
          */
-        inline JsonValue& operator=(const long double& num) noexcept{
+        JsonValue& operator=(const long double& num) noexcept{
             type_ = JsonType::NUMBER;
             content_ = std::to_string(num);
             return *this;
@@ -324,7 +337,7 @@ namespace Jsonlib{
         /**
          * @brief null类型赋值
          */
-        inline JsonValue& operator=(const std::nullptr_t& n_ptr) noexcept{
+        JsonValue& operator=(const std::nullptr_t& ) noexcept{
             type_ = JsonType::ISNULL;
             content_ = false;
             return *this;
@@ -356,6 +369,7 @@ namespace Jsonlib{
          * @return std::string&类型，当前对象内部字符串值的应用。
          * @note 注意，序列化包含反转义，注意区分使用。
          */
+        [[nodiscard]]
         std::string serialize() const noexcept;
 
         /**
@@ -365,76 +379,90 @@ namespace Jsonlib{
          * @param depth 当前对象缩进次数，默认 0
          * @note 注意，序列化包含反转义，注意区分使用。
          */
+        [[nodiscard]]
         std::string serialize_pretty(const size_t& space_num = 2,const size_t& depth = 0) const noexcept;
 
         /**
          * @brief 判断是不是对象
          */
-        inline bool is_object() const noexcept { return type_ == JsonType::OBJECT; }
+        [[nodiscard]]
+        bool is_object() const noexcept { return type_ == JsonType::OBJECT; }
 
         /**
          * @brief 判断是不是数组
          */
-        inline bool is_array() const noexcept { return type_ == JsonType::ARRAY; }
+        [[nodiscard]]
+        bool is_array() const noexcept { return type_ == JsonType::ARRAY; }
 
         /**
          * @brief 判断是不是字符串
          */
-        inline bool is_string() const noexcept { return type_ == JsonType::STRING; }
+        [[nodiscard]]
+        bool is_string() const noexcept { return type_ == JsonType::STRING; }
 
         /**
          * @brief 判断是不是布尔
          */
-        inline bool is_bool() const noexcept { return type_ == JsonType::BOOL; }
+        [[nodiscard]]
+        bool is_bool() const noexcept { return type_ == JsonType::BOOL; }
 
         /**
          * @brief 判断是不是数值
          */
-        inline bool is_number() const noexcept { return type_ == JsonType::NUMBER; }
+        [[nodiscard]]
+        bool is_number() const noexcept { return type_ == JsonType::NUMBER; }
 
         /**
          * @brief 判断是不是整数
          */
-        inline bool is_int64() const noexcept { return type_ == JsonType::NUMBER && std::get<std::string>(content_).find('.') == std::string::npos; }
+        [[nodiscard]]
+        bool is_int64() const noexcept { return type_ == JsonType::NUMBER && std::get<std::string>(content_).find('.') == std::string::npos; }
 
         /**
          * @brief 判断是不是浮点
          */
-        inline bool is_double() const noexcept { return type_ == JsonType::NUMBER && std::get<std::string>(content_).find('.') != std::string::npos; }
+        [[nodiscard]]
+        bool is_double() const noexcept { return type_ == JsonType::NUMBER && std::get<std::string>(content_).find('.') != std::string::npos; }
 
         /**
          * @brief 判断是不是null
          */
-        inline bool is_null() const noexcept { return type_ == JsonType::ISNULL; }
+        [[nodiscard]]
+        bool is_null() const noexcept { return type_ == JsonType::ISNULL; }
 
         /**
          * @brief 判断是不是值类型
          */
-        inline bool is_value() const noexcept { return type_ != JsonType::OBJECT && type_ != JsonType::ARRAY; }
+        [[nodiscard]]
+        bool is_value() const noexcept { return type_ != JsonType::OBJECT && type_ != JsonType::ARRAY; }
 
         /**
          * @brief 转换成long long类型，复制一份
          * @exception JsonTypeException 转换失败，类型错误
          * @note 必须是NUMBER
          */
+        [[nodiscard]]
         long long as_int64() const;
         /**
          * @brief 转换成double类型，复制一份
          * @exception JsonTypeException 转换失败，类型错误
          * @note 必须是NUMBER
          */
+        [[nodiscard]]
         double as_double() const;
         /**
          * @brief 转换成double类型，复制一份
          * @exception JsonTypeException 转换失败，类型错误
          * @note 必须是NUMBER
          */
+        [[nodiscard]]
         long double as_ldouble() const;
         /**
          * @brief 转换成bool类型，复制一份
          * @exception JsonTypeException 转换失败，类型错误
          * @note 必须是BOOL
          */
+        [[nodiscard]]
         bool as_bool() const;
 
         /**
@@ -442,6 +470,7 @@ namespace Jsonlib{
          * @exception JsonTypeException 转换失败，类型错误（只有ARRAY和OBJECT会转换失败）。
          * @note 只要不是ARRAY和OBJECT，都能正常返回。
          */
+        [[nodiscard]]
         std::string as_string() const;
 
         /**
@@ -458,6 +487,7 @@ namespace Jsonlib{
          * @exception JsonTypeException 转换失败，类型错误
          * @note 类型必须是OBJECT
          */
+        [[nodiscard]]
         const JsonObject& as_object() const;
 
         /**
@@ -474,6 +504,7 @@ namespace Jsonlib{
          * @exception JsonTypeException 转换失败，类型错误
          * @note 类型必须是ARRAY
          */
+        [[nodiscard]]
         const JsonArray& as_array() const;
 
         /**
@@ -511,21 +542,30 @@ namespace Jsonlib{
          * @brief 检查是否存在某个key
          * @details 检查是否存在某个key，不会抛出异常，非object类型直接返回false
          */
+        [[nodiscard]]
         bool hasKey(const std::string& key) const noexcept;
 
 
         /**
-         * @brief 末尾插入元素
+         * @brief 末尾拷贝插入元素，O(1)
          * @exception JsonTypeException 非数组类型抛出异常
          * @note 必须是ARRAY类型
          */
         void push_back(const JsonValue& jsonBasic);
 
         /**
-         * @brief 末尾插入元素
+         * @brief 末尾移动插入元素，O(1)
+         * @exception JsonTypeException 非数组类型抛出异常
          * @note 必须是ARRAY类型
          */
         void push_back(JsonValue&& jsonBasic);
+
+        /**
+         * @brief 末尾删除元素，O(1)
+         * @exception JsonTypeException 非数组类型抛出异常
+         * @note 必须是ARRAY类型
+         */
+        void pop_back();
 
         /**
          * @brief 在指定位置插入元素

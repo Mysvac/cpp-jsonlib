@@ -235,6 +235,8 @@ namespace Jsonlib{
                 case 'U':
                     json_escape_unicode(res, str, it);
                     break;
+                default:
+                    break;
                 }
             }
             break;
@@ -263,6 +265,8 @@ namespace Jsonlib{
             break;
         case JsonType::NUMBER:
             content_ = std::string{ "0" };
+            break;
+        default:
             break;
         }
     }
@@ -295,7 +299,7 @@ namespace Jsonlib{
             {
                 type_ = JsonType::OBJECT;
                 content_ = JsonObject {};
-                JsonObject& jsonObject = std::get<JsonObject>(content_);
+                auto& jsonObject = std::get<JsonObject>(content_);
                 std::string key;
                 ++it;
                 while(it != str.end()){
@@ -324,7 +328,7 @@ namespace Jsonlib{
             {
                 type_ = JsonType::ARRAY;
                 content_ = JsonArray{};
-                JsonArray& jsonArray = std::get<JsonArray>(content_);
+                auto& jsonArray = std::get<JsonArray>(content_);
                 ++it;
                 while(it!=str.end()){
                     while (it!=str.end() && std::isspace(*it)) ++it;
@@ -424,6 +428,26 @@ namespace Jsonlib{
         return *this;
     }
 
+    // 列表初始化器
+    JsonValue::JsonValue(const std::initializer_list<JsonValue>& init_list) {
+        if (init_list.size() == 0) return;
+        if (init_list.size() == 2 && init_list.begin()->is_string()){
+            type_ = JsonType::OBJECT;
+            content_ = JsonObject{};
+            auto& map = std::get<JsonObject>(content_);
+            map[init_list.begin()->as_string()] = init_list.begin()[1];
+        }
+        else {
+            type_ = JsonType::ARRAY;
+            content_ = JsonArray{};
+            auto& list = std::get<JsonArray>(content_);
+            list.reserve(init_list.size());
+            for (const auto& it : init_list) {
+                list.push_back(it);
+            }
+        }
+    }
+
     // 清空内容
     void JsonValue::clear() noexcept {
         switch (type_)
@@ -442,6 +466,8 @@ namespace Jsonlib{
             break;
         case JsonType::BOOL:
             content_ = false;
+            break;
+        default:
             break;
         }
     }
@@ -569,7 +595,7 @@ namespace Jsonlib{
             // 对象类型
             // 是否在开头加上逗号
             std::string res{ "{" };
-            const JsonObject& map = std::get<JsonObject>(content_);
+            const auto& map = std::get<JsonObject>(content_);
             for (const auto& [fst, snd] : map) {
                 // 键是字符串，需要反转义
                 res += json_reverse_escape(fst);
@@ -587,7 +613,7 @@ namespace Jsonlib{
             // 数组类型
             // 是否在开头加上逗号
             std::string res{ "[" };
-            const JsonArray& list = std::get<JsonArray>(content_);
+            const auto& list = std::get<JsonArray>(content_);
             for (const JsonValue& it : list) {
                 // 递归序列号
                 res += it.serialize();
@@ -617,7 +643,7 @@ namespace Jsonlib{
             // 对象类型
             std::string res{ "{" };
 
-            const JsonObject& map = std::get<JsonObject>(content_);
+            const auto& map = std::get<JsonObject>(content_);
             for (const auto& [fst, snd] : map) {
                 res += '\n' + std::string(space_num, ' ') + tabs;
                 // 键是字符串，需要反转义
@@ -628,7 +654,7 @@ namespace Jsonlib{
                 res += ',';
             }
             if (*res.rbegin() == ',') *res.rbegin() = '\n';
-            if(map.size()) res += tabs + '}';
+            if(!map.empty()) res += tabs + '}';
             else res += " }";
             return res;
         }
@@ -638,7 +664,7 @@ namespace Jsonlib{
             // 数组类型
             std::string res{ "[" };
 
-            const JsonArray& list = std::get<JsonArray>(content_);
+            const auto& list = std::get<JsonArray>(content_);
             for (const JsonValue& it : list) {
                 // 递归序列号
                 res += '\n' + std::string(space_num, ' ') + tabs;
@@ -646,7 +672,7 @@ namespace Jsonlib{
                 res += ',';
             }
             if (*res.rbegin() == ',') *res.rbegin() = '\n';
-            if(list.size()) res += tabs + ']';
+            if(!list.empty()) res += tabs + ']';
             else res += " ]";
             return res;
         }
@@ -712,86 +738,93 @@ namespace Jsonlib{
     // 列表访问，拒绝新元素
     JsonValue& JsonValue::at(const size_t& index) {
         if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not array.\n" };
-        JsonArray& list = std::get<JsonArray>(content_);
+        auto& list = std::get<JsonArray>(content_);
         if (index < 0 || index >= list.size()) throw std::out_of_range{ "out of range.\n" };
         return list.at(index);
     }
     // 对象访问，拒绝新元素
     JsonValue& JsonValue::at(const std::string& key) {
         if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
-        JsonObject& map = std::get<JsonObject>(content_);
+        auto& map = std::get<JsonObject>(content_);
         if (map.find(key) == map.end()) throw std::out_of_range{ + "Key not find.\n" };
         return map.at(key);
     }
     // 列表访问，可能创建新元素
     JsonValue& JsonValue::operator[](const size_t& index) {
         if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not array.\n" };
-        JsonArray& list = std::get<JsonArray>(content_);
+        auto& list = std::get<JsonArray>(content_);
         if (index == list.size()) list.emplace_back();
         return list[index];
     }
     // 对象访问，可能创建新元素
     JsonValue& JsonValue::operator[](const std::string& key) {
         if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
-        JsonObject& map = std::get<JsonObject>(content_);
+        auto& map = std::get<JsonObject>(content_);
         return map[key];
     }
 
     // 检查是否包含某个key
     bool JsonValue::hasKey(const std::string& key) const noexcept{
         if (type_ != JsonType::OBJECT) return false;
-        const JsonObject& map = std::get<JsonObject>(content_);
+        const auto& map = std::get<JsonObject>(content_);
         return map.find(key) != map.end();
     }
     // 数组末尾插入元素
     void JsonValue::push_back(const JsonValue& jsonValue) {
         if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not Array.\n" };
-        JsonArray& list = std::get<JsonArray>(content_);
+        auto& list = std::get<JsonArray>(content_);
         list.push_back(jsonValue);
     }
     // 数组末尾移动进入元素
     void JsonValue::push_back(JsonValue&& jsonValue) {
         if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not Array.\n" };
-        JsonArray& list = std::get<JsonArray>(content_);
+        auto& list = std::get<JsonArray>(content_);
         list.push_back(std::move(jsonValue));
     }
+    // 数组尾部删除元素
+    void JsonValue::pop_back() {
+        if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not Array.\n" };
+        auto& list = std::get<JsonArray>(content_);
+        list.pop_back();
+    }
+
     // 数值指定位置插入元素
     void JsonValue::insert(const size_t& index, const JsonValue& jsonValue) {
         if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not Array.\n" };
-        JsonArray& list = std::get<JsonArray>(content_);
+        auto& list = std::get<JsonArray>(content_);
         if (index < 0 || index > list.size()) throw std::out_of_range{ "out of range.\n" };
-        list.insert(list.begin() + index, jsonValue);
+        list.insert(std::next(list.begin(), static_cast<std::ptrdiff_t>(index)), jsonValue);
     }
     // 数组指定位置移入元素
     void JsonValue::insert(const size_t& index, JsonValue&& jsonValue) {
         if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not Array.\n" };
-        JsonArray& list = std::get<JsonArray>(content_);
+        auto& list = std::get<JsonArray>(content_);
         if (index < 0 || index > list.size()) throw std::out_of_range{ "out of range.\n" };
-        list.insert(list.begin() + index, std::move(jsonValue));
+        list.insert(std::next(list.begin(), static_cast<std::ptrdiff_t>(index)), std::move(jsonValue));
     }
     // 对象指定位置插入键值对
     void JsonValue::insert(const std::string& key, const JsonValue& jsonValue) {
         if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
-        JsonObject& map = std::get<JsonObject>(content_);
+        auto& map = std::get<JsonObject>(content_);
         map[key] = jsonValue;
     }
     // 对象指定位置移动插入键值对
     void JsonValue::insert(const std::string& key, JsonValue&& jsonValue) {
         if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
-        JsonObject& map = std::get<JsonObject>(content_);
+        auto& map = std::get<JsonObject>(content_);
         map[key] = std::move(jsonValue);
     }
     // 数值删除指定位置的元素
     void JsonValue::erase(const size_t& index) {
         if (type_ != JsonType::ARRAY) throw JsonTypeException{ "Is not array.\n" };
-        JsonArray& list = std::get<JsonArray>(content_);
+        auto& list = std::get<JsonArray>(content_);
         if (index < 0 || index >= list.size()) throw std::out_of_range{ std::string{__FILE__} + ":" + std::to_string(__LINE__) + " out of range.\n" };
-        list.erase(list.begin() + index);
+        list.erase(std::next(list.begin(),static_cast<std::ptrdiff_t>(index)));
     }
     // 对象删除指定key的元素
     void JsonValue::erase(const std::string& key) {
         if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
-        JsonObject& map = std::get<JsonObject>(content_);
+        auto& map = std::get<JsonObject>(content_);
         map.erase(key);
     }
 

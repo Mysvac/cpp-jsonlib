@@ -12,7 +12,21 @@
 int main(){
 
     try{
-        Jsonlib::JsonValue json = Jsonlib::deserialize("[ {}} ]");
+        // Jsonlib::JsonValue json = Jsonlib::deserialize("[ {}} ]");
+        Jsonlib::JsonValue json1 = Jsonlib::JsonArray{
+            Jsonlib::JsonObject { {"key", nullptr} },
+            Jsonlib::JsonArray{ 1, 2, 3, 4, 5 },
+            "string",
+            true,
+            false,
+            1234.5
+        };
+        std::cout << json1[0].serialize() << std::endl;
+        std::cout << json1[0].is_object() << std::endl;
+        std::cout << json1[0]["key"].is_string() << std::endl;
+        std::cout << json1[0]["key"].is_null() << std::endl;
+        std::cout << json1.serialize() << std::endl;
+
     }
     catch(const Jsonlib::JsonStructureException& e){
         std::cerr << "JsonStructureException: " << e.what() << std::endl;
