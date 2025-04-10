@@ -2,6 +2,7 @@
 #ifndef MYSVAC_CPP_JSONLIB_H
 #define MYSVAC_CPP_JSONLIB_H
 
+#include <initializer_list>
 #include <string>
 #include <string_view>
 #include <map>
