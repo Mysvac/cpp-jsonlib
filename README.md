@@ -1,4 +1,4 @@
-<div align="center">
+<div style="text-align: center;">
 
 # mysvac-jsonlib
 
@@ -26,7 +26,7 @@
 
 ## Overview
 - C++17 standard
-- Only standard library, cross platform
+- Only standard library, cross-platform
 - Less than 1000 lines of code, lightweight
 - Good performance
 - Easy to use
@@ -143,7 +143,7 @@ JsonValue json1 = JsonArray{
 ```
 
 
-### 3. Deserialize and serialze
+### 3. Deserialize and serialize
 Use the `deserialize()` function for deserialization.<br>
 Use the member function `object.serialize()` for serialization. <br>
 Use the member function `object.serialize_pretty()` function for pretty-printed serialization.
@@ -268,7 +268,7 @@ When using move semantics on internal sub-elements:
 
 ##### Undefined Behavior Example:
 
-```cpp
+```c++
 B = std::move(A.as_object());  // ❌ Dangerous!
 ```
 This directly moves A's internal data block without updating A's type control data, leading to undefined behavior.<br>
@@ -276,7 +276,7 @@ This directly moves A's internal data block without updating A's type control da
 
 ##### Safe Operations:
 
-```cpp
+```c++
 B = std::move(A);          // ✅ Properly resets A to null.  
 B = std::move(A["xxx"]);   // ✅ Sub-element access returns JsonValue, ensuring type safety.  
 ```
@@ -289,7 +289,64 @@ B = std::move(A["xxx"]);   // ✅ Sub-element access returns JsonValue, ensuring
 
 💡 Best Practice: Prefer moving JsonValue objects (not JsonObject/JsonArray views) to ensure type consistency. Use operator[] for nested element moves.
 
-### 7. Exception handle
+### 7. Serialization of Custom Types
+You can implement JSON formatting for custom types by overloading the type conversion operator.
+
+Reference code:
+```c++
+struct A {
+    std::string name;
+    int value;
+    bool check;
+    // Decide whether to add `explicit` based on your needs
+    operator JsonValue() const {
+        JsonValue result(JsonType::OBJECT);
+        result["name"] = name;
+        result["value"] = value;
+        result["check"] = check;
+        return result;
+    };
+};
+```
+
+When needed, perform serialization via type conversion or even direct assignment:
+```c++
+A a {"XX", 1, true};
+std::cout << JsonValue(a).serialize(); // ✅  
+JsonValue json = a; // ✅ (may require explicit conversion if `explicit` is declared)  
+```
+
+Alternatively, you can try writing a macro:
+```c++
+#define Field(name) result[#name] = name;
+#define Serializable(...) \
+    operator Jsonlib::JsonValue(){ \
+        Jsonlib::JsonValue result(Jsonlib::JsonType::OBJECT);    \
+        __VA_ARGS__    \
+        return result;    \
+    }
+```
+
+Then register the fields using the macro to achieve the same effect:
+```c++
+struct A {
+    std::string name;
+    int value;
+    bool check;
+    Serializable(
+        Field(name)
+        Field(value)
+        Field(check)
+    );
+};
+```
+
+This macro can also support nested types, as long as the member variables can be implicitly converted to `JsonValue`.
+
+The library header file does not provide such macros, as the author believes they could pollute the codebase.<br>
+If needed, you can copy the above macro code into your own project for use.
+
+### 8. Exception handle
 
 1. `JsonException` : inherits from `std::runtime_runtime_error`, is not thrown anywhere.
 2. `JsonTypeException` : inherits from`JsonException`, type error (e.g. type conversion failed).
@@ -297,7 +354,7 @@ B = std::move(A["xxx"]);   // ✅ Sub-element access returns JsonValue, ensuring
 4. `std::out_of_range` : Accessing child element with `at()` but the element is out of bounds or doesn't exist
 
 Example：
-```cpp
+```c++
 try{
     JsonValue json = deserialize("[ {}} ]");
 }
@@ -309,7 +366,7 @@ catch(const JsonException& e){
 }
 catch(...){ std::cerr << "other" << std::endl; }
 ```
-possiable output:
+possible output:
 ```
 JsonStructureException: Unknown Json Structure.
 ```
@@ -366,7 +423,7 @@ Worst-case complexity:
 也可以作为第三方库导入（默认静态库），方式如下：
 
 ```shell
-# 请先使用'git pull'更新vcpkg端口文件
+# 请先使用 'git pull' 更新vcpkg端口文件
 # 全局模式
 vcpkg install mysvac-jsonlib
 
@@ -574,8 +631,64 @@ B = std::move(A["xxx"]); // ✅
 直接移动A时，会正常重置类型信息，重置为null。<br>
 正常的子元素访问，返回的是`JsonValue`类型，移动子元素，也能正常重置类型信息。
 
+### 7. 自定义类型的序列化
+你可以通过重载类型转换运算符，实现自定义类型的JSON格式化。
 
-### 7. 异常处理
+参考代码：
+```c++
+struct A{
+    std::string name;
+    int value;
+    bool check;
+    // 自行判断是否添加 explicit
+    operator JsonValue() const {
+        JsonValue result(JsonType::OBJECT);
+        result["name"] = name;
+        result["value"] = value;
+        result["check"] = check;
+        return result;
+    };
+};
+```
+
+需要的的时候，通过类型转换进行序列化，甚至直接赋值：
+```c++
+A a {"XX", 1, true};
+std::cout << JsonValue(a).serialize(); // ✅
+JsonValue json = a; // ✅ 如果声明了explicit，或许要显示转换
+```
+
+或者尝试写一个宏：
+```c++
+#define Field(name) result[#name] = name;
+#define Serializable(...) \
+    operator Jsonlib::JsonValue(){ \
+        Jsonlib::JsonValue result(Jsonlib::JsonType::OBJECT);    \
+        __VA_ARGS__    \
+        return result;    \
+    }
+```
+
+然后可以通过宏进行注册，实现一样的效果：
+```c++
+struct A{
+    std::string name;
+    int value;
+    bool check;
+    Serializable(
+        Field(name)
+        Field(value)
+        Field(check)
+    );
+};
+```
+
+这样的宏还可以实现类型的嵌套，只要成员变量能隐式转换成JsonValue类型。
+
+库头文件中并没有提供这样的宏，作者认为宏的导入会污染代码。 <br>
+如果需要，你可以将上述宏函数代码赋值到自己的项目中使用。
+
+### 8. 异常处理
 本库使用了三种自定义异常和一种标准：
 1. `JsonException` : 继承自`std::runtime_runtime_error`，没有地方抛出此异常。
 2. `JsonTypeException` : 继承自`JsonException`，表示类型错误，比如`as_xxx()`函数。
@@ -624,7 +737,7 @@ JsonStructureException: Unknown Json Structure.
 <div id="simple-cmp">
 
 # Simple Comparison | 简要对比
-Lastest comprehensive test | 最新全面比较: <https://github.com/Mysvac/cpp-json-test>
+Latest comprehensive test | 最新全面比较: <https://github.com/Mysvac/cpp-json-test>
 
 test framework-1 | 测试框架-1 : <https://github.com/miloyip/nativejson-benchmark><br>
 test framework-2 | 测试框架-2 : <https://github.com/Mysvac/cpp-json-test>

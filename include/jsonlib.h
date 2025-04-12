@@ -145,7 +145,7 @@ namespace Jsonlib{
          * 参数数量为0时，被认为是null类型
          * 参数数量为2且第一个参数是字符串类型时，被认为是object
          * 其他时候都会被认为是array
-         * @note 注意，如果想构造只有2个值且第一个值是string的array，请不要使用列表初始化器
+         * @note 注意区分{}初始化器和()初始化器，二者效果不同
          */
         JsonValue(const std::initializer_list<JsonValue>& init_list);
 
