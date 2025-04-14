@@ -260,34 +260,21 @@ possible output:
 ]
 ```
 
-#### WARNING:
-Consider two `JsonValue` objects, **A** and **B**, where **A** contains **OBJECT** or **ARRAY** data.<br>
-When using move semantics on internal sub-elements:
-
-- **The sub-element must be of type `JsonValue`, not `JsonObject` or `JsonArray`**.
-
-##### Undefined Behavior Example:
-
+#### notes:
+Not recommended style:
 ```c++
-B = std::move(A.as_object());  // ❌ Dangerous!
+// std-container is not guaranteed to be reset after after movement.
+B = std::move(A.as_object());  // ❌ Always feasible, but not recommended.
 ```
-This directly moves A's internal data block without updating A's type control data, leading to undefined behavior.<br>
-(Reason: This invokes the move operation for JsonObject, bypassing JsonValue's type management.)
 
-##### Safe Operations:
-
+Recommended style:
 ```c++
+// The JsonValue of this library is guaranteed to be reset after being moved
 B = std::move(A);          // ✅ Properly resets A to null.  
 B = std::move(A["xxx"]);   // ✅ Sub-element access returns JsonValue, ensuring type safety.  
 ```
 
-##### Key Takeaways:
 
-1. Direct moves of as_object()/as_array() are unsafe—they bypass JsonValue's type system.
-2. Moving the entire JsonValue or its sub-elements (via operator[]) is safe and correctly handles type transitions.
-3. Moved-from objects become JsonType::ISNULL but remain valid (no deletion).
-
-💡 Best Practice: Prefer moving JsonValue objects (not JsonObject/JsonArray views) to ensure type consistency. Use operator[] for nested element moves.
 
 ### 7. Serialization of Custom Types
 You can implement JSON formatting for custom types by overloading the type conversion operator.
@@ -320,7 +307,7 @@ Alternatively, you can try writing a macro:
 ```c++
 #define Field(name) result[#name] = name;
 #define Serializable(...) \
-    operator Jsonlib::JsonValue(){ \
+    operator Jsonlib::JsonValue() const { \
         Jsonlib::JsonValue result(Jsonlib::JsonType::OBJECT);    \
         __VA_ARGS__    \
         return result;    \
@@ -611,25 +598,19 @@ std::cout << my_arr.serialize_pretty() << std::endl;
 ]
 ```
 
-**警告**: 
-
-假设现在有两个`JsonValue`类型的对象，A和B，A存储的是OBJECT或者ARRAY类型的数据。<br>
-在使用移动语义时，如果移动内部子数据，必须保证子数据类型是`JsonValue`，而不是`JsonObject`或者`JsonArray`。
-
-**比如下面的代码，将产生未定义行为：**
+#### 提醒:
+不推荐的移动方式：
 ```c++
-B = std::move(A.as_object()); // ❌ 危险!
+// 标准库容器不保证被移动后变回初始状态。（as_object返回JsonObject，本质是std::map。 JsonArray则是std::vector。）
+B = std::move(A.as_object());  // ❌ 总是可行，但是不推荐这样写。
 ```
-这直接把A的内部数据块移动了出去，却没有修改A的类型控制数据，行为未定义。<br>
-（因为这会调用针对`JsonObject`的移动方法，无法处理A作为`JsonValue`类型的特有信息。）
 
-**而下面的操作都是可行的：**
+Recommended style:
 ```c++
-B = std::move(A); // ✅
-B = std::move(A["xxx"]); // ✅
+// 本库的JsonValue类型，保证被移动后重置为ISNULL状态，可以正常使用。
+B = std::move(A);          // ✅ A会被重置为初始状态。
+B = std::move(A["xxx"]);   // ✅ 这样访问子元素，得到的类型是JsonValue&，所以也是安全的。
 ```
-直接移动A时，会正常重置类型信息，重置为null。<br>
-正常的子元素访问，返回的是`JsonValue`类型，移动子元素，也能正常重置类型信息。
 
 ### 7. 自定义类型的序列化
 你可以通过重载类型转换运算符，实现自定义类型的JSON格式化。
@@ -662,7 +643,7 @@ JsonValue json = a; // ✅ 如果声明了explicit，或许要显示转换
 ```c++
 #define Field(name) result[#name] = name;
 #define Serializable(...) \
-    operator Jsonlib::JsonValue(){ \
+    operator Jsonlib::JsonValue() const { \
         Jsonlib::JsonValue result(Jsonlib::JsonType::OBJECT);    \
         __VA_ARGS__    \
         return result;    \
