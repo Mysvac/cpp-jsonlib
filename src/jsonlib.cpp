@@ -529,6 +529,7 @@ namespace Jsonlib{
     JsonValue::JsonValue(JsonArray&& jsonArray) noexcept{
         type_ = JsonType::ARRAY;
         content_ = std::move(jsonArray);
+        jsonArray.clear();
     }
 
     // JsonObject拷贝构造
@@ -541,6 +542,7 @@ namespace Jsonlib{
     JsonValue::JsonValue(JsonObject&& jsonObject) noexcept{
         type_ = JsonType::OBJECT;
         content_ = std::move(jsonObject);
+        jsonObject.clear();
     }
 
 
@@ -561,6 +563,7 @@ namespace Jsonlib{
 
         type_ = JsonType::ARRAY;
         content_ = std::move(jsonArray);
+        jsonArray.clear();
         return *this;
     }
 
@@ -581,6 +584,7 @@ namespace Jsonlib{
 
         type_ = JsonType::OBJECT;
         content_ = std::move(jsonObject);
+        jsonObject.clear();
         return *this;
     }
 
@@ -746,8 +750,8 @@ namespace Jsonlib{
     JsonValue& JsonValue::at(const std::string& key) {
         if (type_ != JsonType::OBJECT) throw JsonTypeException{ "Is not Object.\n" };
         auto& map = std::get<JsonObject>(content_);
-        if (map.find(key) == map.end()) throw std::out_of_range{ + "Key not find.\n" };
-        return map.at(key);
+        if (auto it = map.find(key); it == map.end()) throw std::out_of_range{ + "Key not find.\n" };
+        else return it->second;
     }
     // 列表访问，可能创建新元素
     JsonValue& JsonValue::operator[](const size_t& index) {
