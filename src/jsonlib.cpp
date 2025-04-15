@@ -643,40 +643,44 @@ namespace Jsonlib{
         {
         case JsonType::OBJECT:
         {
-            std::string tabs(depth * space_num, ' ');
             // 对象类型
             std::string res{ "{" };
-
+            int tabs  = depth * space_num + space_num;
             const auto& map = std::get<JsonObject>(content_);
             for (const auto& [fst, snd] : map) {
-                res += '\n' + std::string(space_num, ' ') + tabs;
+                res += '\n';
+                res.append(tabs, ' ');
                 // 键是字符串，需要反转义
                 res += json_reverse_escape(fst);
                 res += ": ";
-                // 递归序列号
                 res += snd.serialize_pretty(space_num, depth + 1);
                 res += ',';
             }
             if (*res.rbegin() == ',') *res.rbegin() = '\n';
-            if(!map.empty()) res += tabs + '}';
+            if(!map.empty()){
+                res.append(tabs - space_num, ' ');
+                res += '}';
+            }
             else res += " }";
             return res;
         }
         case JsonType::ARRAY:
         {
-            std::string tabs(depth * space_num, ' ');
             // 数组类型
             std::string res{ "[" };
-
+            int tabs  = depth * space_num + space_num;
             const auto& list = std::get<JsonArray>(content_);
             for (const JsonValue& it : list) {
-                // 递归序列号
-                res += '\n' + std::string(space_num, ' ') + tabs;
+                res += '\n';
+                res.append(tabs, ' ');
                 res += it.serialize_pretty(space_num, depth + 1);
                 res += ',';
             }
             if (*res.rbegin() == ',') *res.rbegin() = '\n';
-            if(!list.empty()) res += tabs + ']';
+            if(!list.empty()){
+                res.append(tabs - space_num, ' ');
+                res += ']';
+            }
             else res += " ]";
             return res;
         }
