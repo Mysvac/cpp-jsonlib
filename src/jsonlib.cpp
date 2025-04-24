@@ -261,7 +261,7 @@ namespace Jsonlib{
             content_ = JsonArray{};
             break;
         case JsonType::STRING:
-            content_ = std::string{};
+            content_ = std::string{ "\"\"" };
             break;
         case JsonType::NUMBER:
             content_ = std::string{ "0" };
@@ -459,7 +459,7 @@ namespace Jsonlib{
             content_ = JsonArray{};
             break;
         case JsonType::STRING:
-            content_ = std::string{};
+            content_ = std::string{ "\"\"" };
             break;
         case JsonType::NUMBER:
             content_ = std::string{ "0" };
