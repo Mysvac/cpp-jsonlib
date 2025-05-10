@@ -39,7 +39,7 @@
 *I'm sorry, generate through document annotations, only zh_cn.*
 
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓<br>
-[C++Doxygen文档](https://mysvac.github.io/cpp-jsonlib/documents/html/index.html)<br>
+[C++Doxygen文档](https://mysvac.github.io/cpp-jsonlib/)<br>
 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 ## Application examples
@@ -399,7 +399,7 @@ Worst-case complexity:
 
 ## 文档
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓<br>
-[C++Doxygen文档](https://mysvac.github.io/cpp-jsonlib/documents/html/index.html)<br>
+[C++Doxygen文档](https://mysvac.github.io/cpp-jsonlib/)<br>
 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 ## 应用示例

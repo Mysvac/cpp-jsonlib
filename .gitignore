@@ -3,6 +3,7 @@
 .idea/
 .vs/
 
+docs/
 build/
 vcpkg_installed/
 
