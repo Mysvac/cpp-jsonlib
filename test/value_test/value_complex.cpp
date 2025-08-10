@@ -7,7 +7,7 @@ using namespace mysvac;
 
 M_TEST(Value, Complex) {
     // Test complex nested structures with all 6 JSON types
-    // Number, String, Bool, Null, Array, Object
+    // Number, String, Bool, Nul, Array, Object
 
     Json complex_data = Json::Object{
         {"application", Json::Object{
@@ -134,13 +134,13 @@ M_TEST(Value, Complex) {
     // Test very deep nesting access
     M_ASSERT_EQ( complex_data["application"]["config"]["database"]["connection"]["pool"]["min"].to<Json::Number>(), 5 );
     M_ASSERT_EQ( complex_data["application"]["config"]["database"]["connection"]["pool"]["max"].to<Json::Number>(), 20 );
-    M_ASSERT_EQ( complex_data["application"]["config"]["database"]["connection"]["pool"]["connection_timeout"].type(), json::Type::eNull );
+    M_ASSERT_EQ( complex_data["application"]["config"]["database"]["connection"]["pool"]["connection_timeout"].type(), json::Type::eNul );
     
     // Test migrations array access
     M_ASSERT_EQ( complex_data["application"]["config"]["database"]["migrations"].arr().size(), 3 );
     M_ASSERT_EQ( complex_data["application"]["config"]["database"]["migrations"][0]["version"].to<Json::String>(), "001" );
     M_ASSERT_EQ( complex_data["application"]["config"]["database"]["migrations"][0]["applied"].to<Json::Bool>(), true );
-    M_ASSERT_EQ( complex_data["application"]["config"]["database"]["migrations"][2]["timestamp"].type(), json::Type::eNull );
+    M_ASSERT_EQ( complex_data["application"]["config"]["database"]["migrations"][2]["timestamp"].type(), json::Type::eNul );
     
     // Test users array access
     M_ASSERT_EQ( complex_data["users"].type(), json::Type::eArray );
@@ -155,7 +155,7 @@ M_TEST(Value, Complex) {
     M_ASSERT_EQ( complex_data["users"][0]["profile"]["preferences"]["theme"].to<Json::String>(), "dark" );
     M_ASSERT_EQ( complex_data["users"][0]["profile"]["preferences"]["notifications"].to<Json::Bool>(), true );
     M_ASSERT_EQ( complex_data["users"][1]["profile"]["preferences"]["theme"].to<Json::String>(), "light" );
-    M_ASSERT_EQ( complex_data["users"][1]["last_login"].type(), json::Type::eNull );
+    M_ASSERT_EQ( complex_data["users"][1]["last_login"].type(), json::Type::eNul );
     
     // Test statistics access
     M_ASSERT_EQ( complex_data["statistics"]["total_users"].to<Json::Number>(), 2 );
@@ -475,12 +475,12 @@ M_TEST(Value, Complex) {
     M_ASSERT_EQ( complex_data["application"]["active"].type(), json::Type::eBool );
     M_ASSERT_EQ( complex_data["application"]["config"]["port"].type(), json::Type::eNumber );
     M_ASSERT_EQ( complex_data["application"]["config"]["features"].type(), json::Type::eArray );
-    M_ASSERT_EQ( complex_data["application"]["config"]["database"]["connection"]["pool"]["connection_timeout"].type(), json::Type::eNull );
+    M_ASSERT_EQ( complex_data["application"]["config"]["database"]["connection"]["pool"]["connection_timeout"].type(), json::Type::eNul );
     M_ASSERT_EQ( complex_data["users"].type(), json::Type::eArray );
     M_ASSERT_EQ( complex_data["users"][0].type(), json::Type::eObject );
     M_ASSERT_EQ( complex_data["users"][0]["permissions"].type(), json::Type::eArray );
     M_ASSERT_EQ( complex_data["users"][0]["permissions"][0].type(), json::Type::eString );
-    M_ASSERT_EQ( complex_data["users"][1]["last_login"].type(), json::Type::eNull );
+    M_ASSERT_EQ( complex_data["users"][1]["last_login"].type(), json::Type::eNul );
     M_ASSERT_EQ( complex_data["statistics"]["performance"]["uptime"].type(), json::Type::eNumber );
     
     // Test contains() method on various levels
@@ -529,7 +529,7 @@ M_TEST(Value, Complex) {
     M_ASSERT_EQ( large_nested["section_5"]["subsection_7"][8]["name"].to<Json::String>(), "item_8" );
     M_ASSERT_EQ( large_nested["section_5"]["subsection_7"][8]["active"].to<Json::Bool>(), true );
     M_ASSERT_EQ( large_nested["section_5"]["subsection_7"][8]["value"].to<Json::Number>(), 84.0 );
-    M_ASSERT_EQ( large_nested["section_5"]["subsection_7"][9]["metadata"].type(), json::Type::eNull );
+    M_ASSERT_EQ( large_nested["section_5"]["subsection_7"][9]["metadata"].type(), json::Type::eNul );
     M_ASSERT_EQ( large_nested["section_5"]["subsection_7"][7]["metadata"]["info"].to<Json::String>(), "data" );
     
     // Test serialization performance on large structure

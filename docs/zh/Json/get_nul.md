@@ -1,16 +1,16 @@
 # **Json.nul**
 
 ```cpp
-constexpr Null& nul() & ;
-constexpr Null&& nul() && ;
-constexpr const Null& nul() const & ;
-constexpr const Null&& nul() const && ;
+constexpr Nul& nul() & ;
+constexpr Nul&& nul() && ;
+constexpr const Nul& nul() const & ;
+constexpr const Nul&& nul() const && ;
 ```
 
-Returns a reference to the internal `Null` value.
+Returns a reference to the internal `Nul` value.
 
 **Return Value**  
-Returns a reference with matching const/volatile qualification and value category (lvalue/rvalue) to the `Null` value
+Returns a reference with matching const/volatile qualification and value category (lvalue/rvalue) to the `Nul` value
 
 **Exceptions**  
 Throws `std::bad_variant_access` if the stored value is not null

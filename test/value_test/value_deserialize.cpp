@@ -70,11 +70,11 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_EQ(result_false->bol(), false);
     }
 
-    // --- Null parsing ---
+    // --- Nul parsing ---
     {
         auto result_null = Json::parse("null");
         M_ASSERT_TRUE(result_null.has_value());
-        M_ASSERT_EQ(result_null->type(), json::Type::eNull);
+        M_ASSERT_EQ(result_null->type(), json::Type::eNul);
     }
 
     // --- Array parsing ---
@@ -102,7 +102,7 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_EQ((*result_mixed_array)[0].to<Json::Number>(), 1);
         M_ASSERT_EQ((*result_mixed_array)[1].to<Json::String>(), "hello");
         M_ASSERT_EQ((*result_mixed_array)[2].to<Json::Bool>(), true);
-        M_ASSERT_EQ((*result_mixed_array)[3].type(), json::Type::eNull);
+        M_ASSERT_EQ((*result_mixed_array)[3].type(), json::Type::eNul);
         M_ASSERT_EQ((*result_mixed_array)[4].to<Json::Bool>(), false);
     }
 
@@ -152,7 +152,7 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_EQ((*result_nested_object)["user"]["profile"]["email"].to<Json::String>(), "alice@example.com");
         M_ASSERT_EQ((*result_nested_object)["user"]["profile"]["preferences"]["theme"].to<Json::String>(), "dark");
         M_ASSERT_EQ((*result_nested_object)["user"]["profile"]["preferences"]["notifications"].to<Json::Bool>(), false);
-        M_ASSERT_EQ((*result_nested_object)["metadata"].type(), json::Type::eNull);
+        M_ASSERT_EQ((*result_nested_object)["metadata"].type(), json::Type::eNul);
     }
 
     // --- Nested array parsing ---
@@ -180,7 +180,7 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_EQ((*result_nested_array)[1][2].to<Json::String>(), "c");
         M_ASSERT_EQ((*result_nested_array)[2][0].to<Json::Bool>(), true);
         M_ASSERT_EQ((*result_nested_array)[2][1].to<Json::Bool>(), false);
-        M_ASSERT_EQ((*result_nested_array)[2][2].type(), json::Type::eNull);
+        M_ASSERT_EQ((*result_nested_array)[2][2].type(), json::Type::eNul);
         M_ASSERT_EQ((*result_nested_array)[3][0]["x"].to<Json::Number>(), 1);
         M_ASSERT_EQ((*result_nested_array)[3][0]["y"].to<Json::Number>(), 2);
         M_ASSERT_EQ((*result_nested_array)[3][1]["x"].to<Json::Number>(), 3);
@@ -247,7 +247,7 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_EQ((*result_complex)["application"]["config"]["database"]["port"].to<Json::Number>(), 5432);
         M_ASSERT_EQ((*result_complex)["application"]["config"]["database"]["credentials"]["username"].to<Json::String>(), "admin");
         M_ASSERT_EQ((*result_complex)["application"]["config"]["database"]["options"]["ssl"].to<Json::Bool>(), true);
-        M_ASSERT_EQ((*result_complex)["application"]["config"]["database"]["options"]["retries"].type(), json::Type::eNull);
+        M_ASSERT_EQ((*result_complex)["application"]["config"]["database"]["options"]["retries"].type(), json::Type::eNul);
         M_ASSERT_EQ((*result_complex)["application"]["config"]["features"].arr().size(), 3);
         M_ASSERT_EQ((*result_complex)["application"]["config"]["features"][0].to<Json::String>(), "auth");
         M_ASSERT_EQ((*result_complex)["application"]["config"]["features"][1].to<Json::String>(), "logging");
@@ -312,7 +312,7 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_EQ((*result_roundtrip)["string"].to<Json::String>(), "hello");
         M_ASSERT_EQ((*result_roundtrip)["number"].to<Json::Number>(), 42.5);
         M_ASSERT_EQ((*result_roundtrip)["bool"].to<Json::Bool>(), true);
-        M_ASSERT_EQ((*result_roundtrip)["null"].type(), json::Type::eNull);
+        M_ASSERT_EQ((*result_roundtrip)["null"].type(), json::Type::eNul);
         M_ASSERT_EQ((*result_roundtrip)["array"].arr().size(), 3);
         M_ASSERT_EQ((*result_roundtrip)["array"][0].to<Json::Number>(), 1);
         M_ASSERT_EQ((*result_roundtrip)["object"]["nested"].to<Json::String>(), "value");

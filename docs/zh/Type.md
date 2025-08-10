@@ -2,7 +2,7 @@
 
 ```cpp
 enum class Type{
-    eNull = 0,
+    eNul = 0,
     eBool,    
     eNumber,  
     eString,  

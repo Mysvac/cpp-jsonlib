@@ -1,22 +1,22 @@
 # **Json.reset**
 
 ```cpp
-template<typename T = Null>
+template<typename T = Nul>
 requires json_type<Json, T>
 void reset() noexcept;
 ```
 
-Resets internal data to the specified type (defaults to Null).
+Resets internal data to the specified type (defaults to Nul).
 
 ## implementation
 
 ??? note "implementation"
     ```cpp
-    template<typename T = Null>
+    template<typename T = Nul>
     requires json_type<Json, T>
     void reset() noexcept {
-        if constexpr(std::is_same_v<T, Null>) {
-            m_data = Null{};
+        if constexpr(std::is_same_v<T, Nul>) {
+            m_data = Nul{};
         } else if constexpr(std::is_same_v<T, Bool>) {
             m_data = Bool{};
         } else if constexpr(std::is_same_v<T, Number>) {

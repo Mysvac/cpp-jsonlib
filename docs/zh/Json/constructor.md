@@ -26,11 +26,11 @@ requires !constructible<Json, std::remove_cvref_t<T>> && constructible_map<Json,
 explicit Json(T&& other) noexcept;
 ```
 
-1. Default constructor - initializes to `Null`
+1. Default constructor - initializes to `Nul`
 
 2. Copy constructor - creates new `Json` object with copied value
 
-3. Move constructor - transfers value to new `Json` object (source becomes `Null`), noexcept
+3. Move constructor - transfers value to new `Json` object (source becomes `Nul`), noexcept
 
 4. Implicit constructor - accepts any type convertible to JSON (arithmetic/enum→Number, JSON types, custom convertible types)
     - Noexcept guaranteed only for simple types or rvalue complex types

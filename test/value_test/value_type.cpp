@@ -17,13 +17,13 @@ M_TEST(Value, type_constructors) {
     M_ASSERT_NO_THROW( std::ignore = Json (json::Type::eString) );
     M_ASSERT_NO_THROW( std::ignore = Json (json::Type::eNumber) );
     M_ASSERT_NO_THROW( std::ignore = Json (json::Type::eBool)   );
-    M_ASSERT_NO_THROW( std::ignore = Json (json::Type::eNull)   );
+    M_ASSERT_NO_THROW( std::ignore = Json (json::Type::eNul)   );
     M_ASSERT_NO_THROW( std::ignore = Json (Json::Object()) );
     M_ASSERT_NO_THROW( std::ignore = Json (Json::Array())  );
     M_ASSERT_NO_THROW( std::ignore = Json (Json::String()) );
     M_ASSERT_NO_THROW( std::ignore = Json (Json::Number()) );
     M_ASSERT_NO_THROW( std::ignore = Json (Json::Bool())   );
-    M_ASSERT_NO_THROW( std::ignore = Json (Json::Null())   );
+    M_ASSERT_NO_THROW( std::ignore = Json (Json::Nul())   );
 
     M_ASSERT_NO_THROW( std::ignore = Json().is_nul() );
     M_ASSERT_NO_THROW( std::ignore = Json().is_obj() );
@@ -32,20 +32,20 @@ M_TEST(Value, type_constructors) {
     M_ASSERT_NO_THROW( std::ignore = Json().is_num() );
     M_ASSERT_NO_THROW( std::ignore = Json().is_bol() );
 
-    M_ASSERT_EQ(Json().type(), json::Type::eNull);
+    M_ASSERT_EQ(Json().type(), json::Type::eNul);
     M_ASSERT_EQ(Json(json::Type::eObject).type(), json::Type::eNumber);
     M_ASSERT_EQ(Json(json::Type::eArray ).type(), json::Type::eNumber);
     M_ASSERT_EQ(Json(json::Type::eString).type(), json::Type::eNumber);
     M_ASSERT_EQ(Json(json::Type::eNumber).type(), json::Type::eNumber);
     M_ASSERT_EQ(Json(json::Type::eBool  ).type(), json::Type::eNumber);
-    M_ASSERT_EQ(Json(json::Type::eNull  ).type(), json::Type::eNumber);
+    M_ASSERT_EQ(Json(json::Type::eNul  ).type(), json::Type::eNumber);
 
     M_EXPECT_STREQ( json::type_name(Json{ Json::Object{} }.type()), "Object");
     M_EXPECT_STREQ( json::type_name(Json{ Json::Array{}  }.type()), "Array");
     M_EXPECT_STREQ( json::type_name(Json{ Json::String{} }.type()), "String");
     M_EXPECT_STREQ( json::type_name(Json{ Json::Number{} }.type()), "Number");
     M_EXPECT_STREQ( json::type_name(Json{ Json::Bool{}   }.type()), "Bool");
-    M_EXPECT_STREQ( json::type_name(Json{ Json::Null{}   }.type()), "Null");
+    M_EXPECT_STREQ( json::type_name(Json{ Json::Nul{}   }.type()), "Nul");
 
     M_ASSERT_TRUE(Json().is_nul());
     M_ASSERT_FALSE(Json().is_obj());

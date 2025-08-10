@@ -9,7 +9,7 @@ using namespace mysvac;
 
 // Test the Type enum values
 M_TEST(Type, enum) {
-    M_ASSERT_NO_THROW( M_EXPECT_EQ( static_cast<int>(json::Type::eNull),   0 ) );
+    M_ASSERT_NO_THROW( M_EXPECT_EQ( static_cast<int>(json::Type::eNul),   0 ) );
     M_ASSERT_NO_THROW( M_EXPECT_EQ( static_cast<int>(json::Type::eBool), 1 ) );
     M_ASSERT_NO_THROW( M_EXPECT_EQ( static_cast<int>(json::Type::eNumber),  2 ) );
     M_ASSERT_NO_THROW( M_EXPECT_EQ( static_cast<int>(json::Type::eString), 3 ) );
@@ -54,11 +54,11 @@ M_TEST(Type, Bool) {
     M_ASSERT_EQ( false , Json::Bool() );
 }
 
-// Test the Null type
-M_TEST(Type, Null) {
-    M_ASSERT_TRUE( (std::is_same_v<Json::Null, std::nullptr_t>) );
-    M_ASSERT_EQ( nullptr , Json::Null{} );
-    M_ASSERT_EQ( nullptr , Json::Null() );
+// Test the Nul type
+M_TEST(Type, Nul) {
+    M_ASSERT_TRUE( (std::is_same_v<Json::Nul, std::nullptr_t>) );
+    M_ASSERT_EQ( nullptr , Json::Nul{} );
+    M_ASSERT_EQ( nullptr , Json::Nul() );
 }
 
 // Test the json_types concept
@@ -68,7 +68,7 @@ M_TEST(Type, concept) {
     M_ASSERT_TRUE( (requires { requires json::json_type<Json, Json::Number>; } ));
     M_ASSERT_TRUE( (requires { requires json::json_type<Json, Json::String>; } ));
     M_ASSERT_TRUE( (requires { requires json::json_type<Json, Json::Bool>; }   ));
-    M_ASSERT_TRUE( (requires { requires json::json_type<Json, Json::Null>; }   ));
+    M_ASSERT_TRUE( (requires { requires json::json_type<Json, Json::Nul>; }   ));
 }
 
 M_TEST(Type, value) {

@@ -4,10 +4,10 @@
 constexpr bool is_nul() const noexcept;
 ```
 
-Checks if the internal data is of `Null` type.
+Checks if the internal data is of `Nul` type.
 
 ## Return Value
-Returns `true` if the internal data is `Null`, otherwise `false`.
+Returns `true` if the internal data is `Nul`, otherwise `false`.
 
 ## Exceptions
 No exceptions thrown.

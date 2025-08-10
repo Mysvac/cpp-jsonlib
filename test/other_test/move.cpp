@@ -9,11 +9,11 @@ using namespace mysvac;
 enum class MyEnum { A = 5, B = 6, C = -1 };
 
 M_TEST(Value, Move) {
-    // Null
+    // Nul
     Json v_null{nullptr};
-    auto moved_null = v_null.move<Json::Null>();
+    auto moved_null = v_null.move<Json::Nul>();
     M_ASSERT_EQ(moved_null, nullptr);
-    M_ASSERT_EQ(v_null.type(), json::Type::eNull);
+    M_ASSERT_EQ(v_null.type(), json::Type::eNul);
 
     // Bool
     Json v_true{true};

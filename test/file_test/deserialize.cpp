@@ -26,7 +26,7 @@ M_TEST(File, Deser_Unicode) {
     const auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - bein).count();
     std::println("-----------------------------------------------Deser_Unicode: {} us", time);
 
-    M_ASSERT_NE( json.type(), json::Type::eNull );
+    M_ASSERT_NE( json.type(), json::Type::eNul );
 }
 
 M_TEST(File, Deser_Number) {
@@ -40,7 +40,7 @@ M_TEST(File, Deser_Number) {
     const auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - bein).count();
     std::println("-----------------------------------------------Deser_Number: {} us", time);
 
-    M_ASSERT_NE( json.type(), json::Type::eNull );
+    M_ASSERT_NE( json.type(), json::Type::eNul );
 }
 
 M_TEST(File, Deser_Complex) {
@@ -54,7 +54,7 @@ M_TEST(File, Deser_Complex) {
     const auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - bein).count();
     std::println("-----------------------------------------------Deser_Complex: {} us", time);
 
-    M_ASSERT_NE( json.type(), json::Type::eNull );
+    M_ASSERT_NE( json.type(), json::Type::eNul );
 }
 
 M_TEST(File, Deser_All) {
@@ -68,7 +68,7 @@ M_TEST(File, Deser_All) {
     const auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - bein).count();
     std::println("-----------------------------------------------Deser_All: {} us", time);
 
-    M_ASSERT_NE( json.type(), json::Type::eNull );
+    M_ASSERT_NE( json.type(), json::Type::eNul );
 }
 
 M_TEST(File, Deser_String) {
@@ -83,6 +83,6 @@ M_TEST(File, Deser_String) {
     const auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - bein).count();
     std::println("-----------------------------------------------Deser_String: {} us", time);
 
-    M_ASSERT_NE( json.type(), json::Type::eNull );
+    M_ASSERT_NE( json.type(), json::Type::eNul );
 }
 

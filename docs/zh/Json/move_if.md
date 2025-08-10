@@ -1,7 +1,7 @@
 # **Json.move_if**
 
 ```cpp
-template<typename T, typename D = Null>
+template<typename T, typename D = Nul>
 requires convertible<Json, T> || convertible_map<Json, T, D> || convertible_array<Json, T, D>
 std::optional<T>  move_if( D default_range_elem = D{} ) noexcept;
 ```
@@ -11,12 +11,12 @@ Attempts to move-convert internal data to type `T`, returning `std::nullopt` on 
 Extensive compile-time checks eliminate incompatible conversions during compilation.  
 Runtime conversion may still fail due to JSON's dynamic typing nature.
 
-Warning: Successful move operations will leave the source object empty (set to Null), even if the result isn't used.  
+Warning: Successful move operations will leave the source object empty (set to Nul), even if the result isn't used.  
 Recommended practice: Reset source object after moving.
 
 ## Move Conversion Rules
 
-1. Null → Null
+1. Nul → Nul
 2. Object → Object (moved)
 3. Array → Array (moved)
 4. String → String (moved)
@@ -30,7 +30,7 @@ Recommended practice: Reset source object after moving.
 12. String → Implicitly convertible (move preferred)
 13. Number → Implicitly convertible
 14. Bool → Implicitly convertible
-15. Null → Implicitly convertible (except bool)
+15. Nul → Implicitly convertible (except bool)
 16. Object → Convertible key-value types (element-wise, move preferred)
 17. Array → Convertible container types (element-wise, move preferred)
 18. Returns `std::nullopt`
@@ -51,7 +51,7 @@ No-throw guarantee.
 
 Key characteristics:
 - Never throws for type mismatches (uses nullopt)
-- Source object becomes Null after move
+- Source object becomes Nul after move
 - Preserves move semantics optimization opportunities
 
 ## Version

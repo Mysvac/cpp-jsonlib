@@ -72,7 +72,7 @@ M_TEST(Macros, Simple) {
         v_mover["name"] = "Test move xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
         MyData d_recipient{ std::move(v_mover) };
         M_ASSERT_EQ(d_recipient.m_name, "Test move xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-        M_ASSERT_EQ(v_mover.type(), json::Type::eNull);
+        M_ASSERT_EQ(v_mover.type(), json::Type::eNul);
     }
 
 }

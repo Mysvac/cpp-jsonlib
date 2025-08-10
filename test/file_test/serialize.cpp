@@ -21,7 +21,7 @@ M_TEST(File, Serial_Unicode) {
     const auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - bein).count();
     std::println("-----------------------------------------------Serial_Unicode: {} us", time);
 
-    M_ASSERT_NE( json.type(), json::Type::eNull );
+    M_ASSERT_NE( json.type(), json::Type::eNul );
 }
 
 M_TEST(File, Serial_Number) {
@@ -37,7 +37,7 @@ M_TEST(File, Serial_Number) {
     const auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - bein).count();
     std::println("-----------------------------------------------Serial_Number: {} us", time);
 
-    M_ASSERT_NE( json.type(), json::Type::eNull );
+    M_ASSERT_NE( json.type(), json::Type::eNul );
 }
 
 
@@ -54,7 +54,7 @@ M_TEST(File, Serial_Complex) {
     const auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - bein).count();
     std::println("-----------------------------------------------Serial_Complex: {} us", time);
 
-    M_ASSERT_NE( json.type(), json::Type::eNull );
+    M_ASSERT_NE( json.type(), json::Type::eNul );
 }
 
 M_TEST(File, Serial_All) {
@@ -70,7 +70,7 @@ M_TEST(File, Serial_All) {
     const auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - bein).count();
     std::println("-----------------------------------------------Serial_All: {} us", time);
 
-    M_ASSERT_NE( json.type(), json::Type::eNull );
+    M_ASSERT_NE( json.type(), json::Type::eNul );
 }
 
 // M_TEST(File, Serial_String) {
@@ -86,7 +86,7 @@ M_TEST(File, Serial_All) {
 //     const auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - bein).count();
 //     std::println("-----------------------------------------------Serial_String: {} us", time);
 //
-//     M_ASSERT_NE( json.type(), json::Type::eNull );
+//     M_ASSERT_NE( json.type(), json::Type::eNul );
 // }
 
 

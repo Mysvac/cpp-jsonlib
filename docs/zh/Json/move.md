@@ -1,7 +1,7 @@
 # **Json.move**
 
 ```cpp
-template<typename T, typename D = Null>
+template<typename T, typename D = Nul>
 requires convertible<T> || convertible_map<T, D> || convertible_array<T, D>
 [[nodiscard]]
 T  move( D default_range_elem = D{} );
@@ -17,7 +17,7 @@ Recommended to reset source object after moving.
 
 ## Move Conversion Rules
 
-1. Null → Null
+1. Nul → Nul
 2. Object → Object (moved)
 3. Array → Array (moved)
 4. String → String (moved)
@@ -31,7 +31,7 @@ Recommended to reset source object after moving.
 12. String → Implicitly convertible (move preferred)
 13. Number → Implicitly convertible
 14. Bool → Implicitly convertible
-15. Null → Implicitly convertible (except bool)
+15. Nul → Implicitly convertible (except bool)
 16. Object → Convertible key-value types (element-wise, move preferred)
 17. Array → Convertible container types (element-wise, move preferred)
 18. Throws std::runtime_error
@@ -51,7 +51,7 @@ Throws on Move construction failures.
 - O(n) for element-wise conversions
 
 Key Notes:
-- Source object becomes Null after successful move
+- Source object becomes Nul after successful move
 - Prefers move semantics where possible
 - Numeric/bool conversions remain copy operations
 

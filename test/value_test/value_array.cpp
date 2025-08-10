@@ -36,7 +36,7 @@ M_TEST(Value, Array) {
     M_ASSERT_EQ(mixed_arr[0].to<Json::Number>(), 42);
     M_ASSERT_EQ(mixed_arr[1].to<Json::String>(), "hello");
     M_ASSERT_EQ(mixed_arr[2].to<Json::Bool>(), true);
-    M_ASSERT_EQ(mixed_arr[3].type(), json::Type::eNull);
+    M_ASSERT_EQ(mixed_arr[3].type(), json::Type::eNul);
 
     const Json const_arr{Json::Array{{1, 2, 3}}};
     M_ASSERT_EQ(const_arr[2].to<Json::Number>(), 3);
@@ -246,7 +246,7 @@ M_TEST(Value, Array) {
     M_ASSERT_EQ(simplified_multi_dim[2].arr().size(), 2);
     M_ASSERT_EQ(simplified_multi_dim[0][0][0].to<Json::Number>(), 1);
     M_ASSERT_EQ(simplified_multi_dim[1][1][1].to<Json::String>(), "e");
-    M_ASSERT_EQ(simplified_multi_dim[2][0][2].type(), json::Type::eNull);
+    M_ASSERT_EQ(simplified_multi_dim[2][0][2].type(), json::Type::eNul);
     M_ASSERT_EQ(simplified_multi_dim[2][0][2].is_nul(), true);
     M_ASSERT_EQ(simplified_multi_dim[2][1][1].to<Json::String>(), "mixed");
     M_ASSERT_EQ(simplified_multi_dim[2][1][2].to<Json::Number>(), 3.14);

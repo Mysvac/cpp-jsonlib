@@ -9,15 +9,15 @@ using namespace mysvac;
 enum class MyEnum { A = 5, B = 6, C = -1 };
 
 M_TEST(Value, To) {
-    // Null
+    // Nul
     Json v_null{nullptr};
-    M_ASSERT_EQ(v_null.to<Json::Null>(), nullptr);
-    M_ASSERT_THROW(std::ignore = v_null.to<bool>(), std::runtime_error); // Null->Bool抛异常
-    M_ASSERT_EQ(v_null.to_or<bool>(true), true); // Null->Bool不可转换，返回默认值true
-    M_ASSERT_EQ(v_null.to_or<bool>(false), false); // Null->Bool不可转换，返回默认值false
+    M_ASSERT_EQ(v_null.to<Json::Nul>(), nullptr);
+    M_ASSERT_THROW(std::ignore = v_null.to<bool>(), std::runtime_error); // Nul->Bool抛异常
+    M_ASSERT_EQ(v_null.to_or<bool>(true), true); // Nul->Bool不可转换，返回默认值true
+    M_ASSERT_EQ(v_null.to_or<bool>(false), false); // Nul->Bool不可转换，返回默认值false
     M_ASSERT_FALSE(v_null.to_if<bool>().has_value());
-    M_ASSERT_TRUE(v_null.to_if<Json::Null>().has_value());
-    M_ASSERT_EQ(v_null.to_if<Json::Null>().value(), nullptr);
+    M_ASSERT_TRUE(v_null.to_if<Json::Nul>().has_value());
+    M_ASSERT_EQ(v_null.to_if<Json::Nul>().value(), nullptr);
 
     // Bool
     Json v_true{true};
@@ -154,7 +154,7 @@ M_TEST(Value, To) {
     M_ASSERT_EQ(v_nested[0]["x"].to<int>(), 1);
     M_ASSERT_EQ(v_nested[1][0].to<int>(), 2);
 
-    // Null->其他类型
+    // Nul->其他类型
     M_ASSERT_THROW(std::ignore = v_null.to<Json::Array>(), std::runtime_error);
     M_ASSERT_EQ(v_null.to_or<Json::Array>(Json::Array{{1,2}}).size(), 2);
     M_ASSERT_FALSE(v_null.to_if<Json::Array>().has_value());

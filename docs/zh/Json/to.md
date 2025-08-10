@@ -1,7 +1,7 @@
 # **Json.to**
 
 ```cpp
-template<typename T, typename D = Null>
+template<typename T, typename D = Nul>
 requires convertible<Json, T> || convertible_map<Json, T, D> || convertible_array<Json, T, D>
 T  to( D default_range_elem = D{} ) const;
 ```
@@ -13,7 +13,7 @@ However, conversion may still fail at runtime due to JSON's dynamic typing natur
 
 ## Conversion Rules
 
-1. Null → Null
+1. Nul → Nul
 2. Object → Object
 3. Array → Array
 4. String → String
@@ -27,7 +27,7 @@ However, conversion may still fail at runtime due to JSON's dynamic typing natur
 12. String → Implicitly convertible types
 13. Number → Implicitly convertible types
 14. Bool → Implicitly convertible types
-15. Null → Implicitly convertible types (except bool)
+15. Nul → Implicitly convertible types (except bool)
 16. Object → Convertible key-value types (element-wise)
 17. Array → Convertible container types (element-wise)
 18. Throws std::runtime_error

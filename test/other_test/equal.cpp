@@ -6,8 +6,8 @@ import mysvac.json;
 
 using namespace mysvac;
 
-// --- Null type tests ---
-M_TEST(Equal, Null) {
+// --- Nul type tests ---
+M_TEST(Equal, Nul) {
     Json null_val{};
     Json another_null{nullptr};
     M_ASSERT_TRUE(null_val == nullptr);
@@ -248,7 +248,7 @@ M_TEST(Equal, StrictTypeAndEdge) {
 
     M_ASSERT_FALSE(str_val == arr_val);      // String vs Array
     M_ASSERT_FALSE(arr_val == obj_val);      // Array vs Object
-    M_ASSERT_FALSE(obj_val == null_val);     // Object vs Null
+    M_ASSERT_FALSE(obj_val == null_val);     // Object vs Nul
 
     // Reverse comparison
     M_ASSERT_TRUE(42 == Json{42});

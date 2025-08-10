@@ -10,7 +10,7 @@ concept convertible = std::disjunction_v<
     std::is_convertible<typename J::String, T>,
     std::is_convertible<typename J::Number, T>,
     std::is_convertible<typename J::Bool, T>,
-    std::is_convertible<typename J::Null, T>,
+    std::is_convertible<typename J::Nul, T>,
     std::is_constructible<T, J>
 >;
 ```

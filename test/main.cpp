@@ -29,7 +29,7 @@ int main() {
     // val.writef(out);
     // out.close();
 
-    std::println("Null size: {}", sizeof(Json::Null));
+    std::println("Nul size: {}", sizeof(Json::Nul));
     std::println("Number size: {}", sizeof(Json::Number));
     std::println("String size: {}", sizeof(Json::String));
     std::println("Bool size: {}", sizeof(Json::Bool));

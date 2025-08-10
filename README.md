@@ -33,7 +33,7 @@ JSON 存在六种基本类型，本库使用了一个枚举来表示它们：
 
 ```cpp
 enum class Type{
-    eNull = 0,  ///< Null type
+    eNul = 0,  ///< Nul type
     eBool,      ///< Boolean type
     eNumber,    ///< Number type
     eString,    ///< String type
@@ -73,7 +73,7 @@ namespace mysvac {
 
 | 别名             | 默认类型                          | 实际类型                                                                        |
 |----------------|-------------------------------|-----------------------------------------------------------------------------|
-| `Json::Null`   | `std::nullptr_t`              | `std::nullptr_t`                                                            |
+| `Json::Nul`   | `std::nullptr_t`              | `std::nullptr_t`                                                            |
 | `Json::Bool`   | `bool`                        | `bool`                                                                      |
 | `Json::Number` | `double`                      | `double`                                                                    |
 | `Json::String` | `std::string`                 | `std::basic_string<...,StrAllocator<char>>`                                 |
@@ -86,10 +86,10 @@ namespace mysvac {
 
 ### 1. 初始化
 
-`Value` 的默认构造函数会创建 `Null` 类型的值，但你可以直接通过上述六种类型进行初始化：
+`Value` 的默认构造函数会创建 `Nul` 类型的值，但你可以直接通过上述六种类型进行初始化：
 
 ```cpp
-Json null_val;                  // 默认构造，类型为 Null
+Json null_val;                  // 默认构造，类型为 Nul
 Json bool_val(3.3);             // 浮点初始化，类型为 Number
 Json obj_val = Json::Object{};  // 直接使用 Object 初始化
 ```
@@ -129,7 +129,7 @@ smp_val.is_arr();     // 返回 false
 `is` 共有六个，分别是 `arr`、`obj`、`str`、`num`、`bol` 和 `nul` ，对应六种 JSON 类型。
 
 你可以通过赋值语句重置内容，也可以使用 `reset()` 成员函数。
-这是个模板函数，默认重置回 `Null` 类型，但你可以显示指定重置类型，比如使用 `reset<Json::Object>()` 将内容重置为一个空的 `Object` 。
+这是个模板函数，默认重置回 `Nul` 类型，但你可以显示指定重置类型，比如使用 `reset<Json::Object>()` 将内容重置为一个空的 `Object` 。
 
 `reset` 的模板形参只能是六种 JSON 类型之一，否则无法通过编译。
 
@@ -153,7 +153,7 @@ double i_42 = vi_42.num();
 
 ```cpp
 smp_val["arr"][1].num(); // 返回 3.14
-smp_val.at("obj").at("nested_k") = nullptr; // 修改对象，变为 Null
+smp_val.at("obj").at("nested_k") = nullptr; // 修改对象，变为 Nul
 smp_val["obj"].at("nested_k").is_nul(); // [] 和 at 可以混合使用
 ```
 
@@ -474,7 +474,7 @@ xxx = val.to<std::vector<MyData>, MyData>( MyData{} );
 xxx = val.to<std::vector<MyData>>( MyData{} ); 
 ```
 
-第二个模板参数默认是 `Json::Null` ，即 `std:::nullptr_t` 。如果转换目标不是数组或对象，完全不需要添加它。
+第二个模板参数默认是 `Json::Nul` ，即 `std:::nullptr_t` 。如果转换目标不是数组或对象，完全不需要添加它。
 
 注意， `to/move` 在完全不匹配时直接抛出异常，所以我们只指定了子元素默认值。
 而宏定义实际由 `to_or` 和 `move_or` 实现，因此需要两个默认值：

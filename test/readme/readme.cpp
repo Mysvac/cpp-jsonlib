@@ -52,7 +52,7 @@ struct MyData2 {
 
 M_TEST(README, readme) {
     // {
-    //     Json null_val;                  // 默认构造，类型为 Null
+    //     Json null_val;                  // 默认构造，类型为 Nul
     //     Json bool_val(3.3);             // 浮点初始化，类型为 Number
     //     Json obj_val = Json::Object{};  // 直接使用 Object 初始化
     //
@@ -76,7 +76,7 @@ M_TEST(README, readme) {
     //     double i_42 = vi_42.num();
     //
     //     std::ignore = smp_val["arr"][1].num(); // 返回 3.14
-    //     smp_val.at("obj").at("nested_k") = nullptr; // 修改对象，变为 Null 类型
+    //     smp_val.at("obj").at("nested_k") = nullptr; // 修改对象，变为 Nul 类型
     //     std::ignore = smp_val["obj"].at("nested_k").is_nul(); // 返回true, [] 和 at 可以随意混合使用
     //
     //     auto str_view = smp_val["key2"].to<std::string_view>(); // 返回内部字符串的视图

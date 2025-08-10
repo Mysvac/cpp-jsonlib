@@ -7,28 +7,28 @@ import mysvac.json;
 using namespace mysvac;
 
 // --- Construction tests ---
-M_TEST(Value, Null) {
+M_TEST(Value, Nul) {
     // Default construction
     M_ASSERT_NO_THROW(Json null_default);
-    M_ASSERT_EQ(Json{}.type(), json::Type::eNull);
+    M_ASSERT_EQ(Json{}.type(), json::Type::eNul);
 
     // Explicit null construction
-    M_ASSERT_NO_THROW(Json null_jsonlicit{Json::Null{}});
-    M_ASSERT_EQ(Json{Json::Null{}}.type(), json::Type::eNull);
+    M_ASSERT_NO_THROW(Json null_jsonlicit{Json::Nul{}});
+    M_ASSERT_EQ(Json{Json::Nul{}}.type(), json::Type::eNul);
 
     // nullptr construction
     M_ASSERT_NO_THROW(Json null_ptr{nullptr});
-    M_ASSERT_EQ(Json{nullptr}.type(), json::Type::eNull);
+    M_ASSERT_EQ(Json{nullptr}.type(), json::Type::eNul);
 
     // Implicit construction
     Json implicit_null = nullptr;
-    M_ASSERT_EQ(implicit_null.type(), json::Type::eNull);
+    M_ASSERT_EQ(implicit_null.type(), json::Type::eNul);
 
     // --- Type checking ---
     Json null_val{nullptr};
     M_ASSERT_TRUE(null_val.is_nul());
     M_ASSERT_FALSE(null_val.is_str());
-    M_EXPECT_STREQ(json::type_name(null_val.type()), "Null");
+    M_EXPECT_STREQ(json::type_name(null_val.type()), "Nul");
 
     // --- Reference access ---
     M_ASSERT_NO_THROW(std::ignore = null_val.nul());
@@ -45,7 +45,7 @@ M_TEST(Value, Null) {
     // --- Assignment tests ---
     Json assign_val{ Json::Bool{} };
     assign_val = nullptr;
-    M_ASSERT_EQ(assign_val.type(), json::Type::eNull);
+    M_ASSERT_EQ(assign_val.type(), json::Type::eNul);
 
     // --- Comparison tests ---
     Json null_cmp1{nullptr}, null_cmp2{nullptr}, null_cmp3{};
@@ -72,7 +72,7 @@ M_TEST(Value, Null) {
     // --- Parsing tests ---
     auto parsed_null = Json::parse("null");
     if (parsed_null.has_value()) {
-        M_ASSERT_EQ(parsed_null->type(), json::Type::eNull);
+        M_ASSERT_EQ(parsed_null->type(), json::Type::eNul);
         M_ASSERT_EQ(parsed_null->nul(), nullptr);
     } else {
         M_ASSERT_FAIL("Failed to parse 'null'");
@@ -82,7 +82,7 @@ M_TEST(Value, Null) {
     auto serialized_null = Json{nullptr}.dump();
     auto parsed_back_null = Json::parse(serialized_null);
     if (parsed_back_null.has_value()) {
-        M_ASSERT_EQ(parsed_back_null->type(), json::Type::eNull);
+        M_ASSERT_EQ(parsed_back_null->type(), json::Type::eNul);
         M_ASSERT_EQ(parsed_back_null->nul(), nullptr);
     } else {
         M_ASSERT_FAIL("Failed to parse back serialized null");
@@ -105,15 +105,15 @@ M_TEST(Value, Null) {
     M_ASSERT_THROW(std::ignore = null_val.to<Json::Array>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = null_val.to<Json::Object>(), std::runtime_error);
 
-    // Null to non-pointer types should throw
+    // Nul to non-pointer types should throw
     M_ASSERT_THROW(std::ignore = null_val.to<int>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = null_val.to<float>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = null_val.to<double>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = null_val.to<bool>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = null_val.to<std::string>(), std::runtime_error);
 
-    // --- Null consistency ---
-    Json consistency_null1{}, consistency_null2{nullptr}, consistency_null3{Json::Null{}};
+    // --- Nul consistency ---
+    Json consistency_null1{}, consistency_null2{nullptr}, consistency_null3{Json::Nul{}};
     M_ASSERT_TRUE(consistency_null1 == consistency_null2);
     M_ASSERT_TRUE(consistency_null2 == consistency_null3);
     M_ASSERT_TRUE(consistency_null1 == consistency_null3);

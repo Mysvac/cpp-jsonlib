@@ -81,7 +81,7 @@ export namespace mysvac::json {
      */
     template<typename J, typename T>
     concept json_type = std::disjunction_v<
-        std::is_same<T, typename J::Null>,
+        std::is_same<T, typename J::Nul>,
         std::is_same<T, typename J::Bool>,
         std::is_same<T, typename J::Number>,
         std::is_same<T, typename J::String>,
@@ -103,7 +103,7 @@ export namespace mysvac::json {
         std::is_convertible<T, typename J::String>,
         std::is_convertible<T, typename J::Number>,
         std::is_convertible<T, typename J::Bool>,
-        std::is_convertible<T, typename J::Null>
+        std::is_convertible<T, typename J::Nul>
     >;
 
     /**
@@ -139,7 +139,7 @@ export namespace mysvac::json {
         std::is_convertible<typename J::String, T>,
         std::is_convertible<typename J::Number, T>,
         std::is_convertible<typename J::Bool, T>,
-        std::is_convertible<typename J::Null, T>,
+        std::is_convertible<typename J::Nul, T>,
         std::is_constructible<T, J>
     >;
 
@@ -182,7 +182,7 @@ export namespace mysvac::json {
      * @brief Enum class representing the type of JSON data.
      */
     enum class Type{
-        eNull = 0,  ///< Null type
+        eNul = 0,  ///< Nul type
         eBool,      ///< Boolean type
         eNumber,    ///< Number type
         eString,    ///< String type
@@ -203,7 +203,7 @@ export namespace mysvac::json {
             case Type::eString: return "String";
             case Type::eNumber: return "Number";
             case Type::eBool:   return "Bool";
-            case Type::eNull:   return "Null";
+            case Type::eNul:   return "Nul";
             default: return "Unknown Enum Value"; // should never happen
         }
     }
@@ -231,9 +231,9 @@ export namespace mysvac::json {
     class Json {
     public:
         /**
-         * @brief Json's Null Type, must be `std::nullptr_t`.
+         * @brief Json's Nul Type, must be `std::nullptr_t`.
          */
-        using Null = std::nullptr_t;
+        using Nul = std::nullptr_t;
         /**
          * @brief Json's Bool Type, must be `bool`.
          */
@@ -264,13 +264,13 @@ export namespace mysvac::json {
 
     protected:
         std::variant<
-            Null,
+            Nul,
             Bool,
             Number,
             String,
             Array,
             Object
-        > m_data { Null{} };
+        > m_data { Nul{} };
 
     private:
         /**
@@ -588,7 +588,7 @@ export namespace mysvac::json {
                         ++it == end_ptr || *it != 'l' ||
                         ++it == end_ptr || *it != 'l'
                     ) return std::nullopt;
-                    json = Null{};
+                    json = Nul{};
                     ++it;
                 } break;
                 default: {
@@ -622,10 +622,10 @@ export namespace mysvac::json {
         constexpr Type type() const noexcept { return static_cast<Type>(m_data.index()); }
 
         /**
-         * @brief Check if the JSON data is of type Null.
+         * @brief Check if the JSON data is of type Nul.
          */
         [[nodiscard]]
-        constexpr bool is_nul() const noexcept { return type() == Type::eNull; }
+        constexpr bool is_nul() const noexcept { return type() == Type::eNul; }
 
         /**
          * @brief Check if the JSON data is of type Bool.
@@ -659,17 +659,17 @@ export namespace mysvac::json {
 
 
         /**
-         * @brief Get a reference to the Null type.
-         * @throw std::bad_variant_access if the JSON data is not of type Null.
+         * @brief Get a reference to the Nul type.
+         * @throw std::bad_variant_access if the JSON data is not of type Nul.
          */
         [[nodiscard]]
-        constexpr Null& nul() & { return std::get<Null>(m_data); }
+        constexpr Nul& nul() & { return std::get<Nul>(m_data); }
         [[nodiscard]]
-        constexpr Null&& nul() && { return std::get<Null>(std::move(m_data)); }
+        constexpr Nul&& nul() && { return std::get<Nul>(std::move(m_data)); }
         [[nodiscard]]
-        constexpr const Null& nul() const & { return std::get<Null>(m_data); }
+        constexpr const Nul& nul() const & { return std::get<Nul>(m_data); }
         [[nodiscard]]
-        constexpr const Null&& nul() const && { return std::get<Null>(std::move(m_data)); }
+        constexpr const Nul&& nul() const && { return std::get<Nul>(std::move(m_data)); }
 
         /**
          * @brief Get a reference to the Bool type.
@@ -737,7 +737,7 @@ export namespace mysvac::json {
         constexpr const Object&& obj() const && { return std::get<Object>(std::move(m_data)); }
 
         /**
-         * @brief Default constructor for Json, data is Null type.
+         * @brief Default constructor for Json, data is Nul type.
          */
         constexpr Json() noexcept = default;
         /**
@@ -755,20 +755,20 @@ export namespace mysvac::json {
 
         /**
          * @brief Move constructor for Json, transfers ownership of data.
-         * @param other The Json object to move from, will be set to Null.
+         * @param other The Json object to move from, will be set to Nul.
          */
         Json(Json&& other) noexcept {
             m_data = std::move(other.m_data);
-            other.m_data = Null{};
+            other.m_data = Nul{};
         }
         /**
          * @brief Move assignment operator for Json, transfers ownership of data.
-         * @param other The Json object to move from, will be set to Null.
+         * @param other The Json object to move from, will be set to Nul.
          */
         Json& operator=(Json&& other) noexcept {
             if (this == &other) return *this;
             m_data = std::move(other.m_data);
-            other.m_data = Null{};
+            other.m_data = Nul{};
             return *this;
         }
 
@@ -780,8 +780,8 @@ export namespace mysvac::json {
         template<typename T>
         requires constructible<Json, std::remove_cvref_t<T>>
         Json(T&& other) noexcept {
-            if constexpr(std::is_same_v<T, Null>) {
-                m_data = Null{};
+            if constexpr(std::is_same_v<T, Nul>) {
+                m_data = Nul{};
             } else if constexpr(std::is_same_v<T, Bool>) {
                 m_data = other;
             } else if constexpr(std::is_same_v<T, Number>) {
@@ -805,7 +805,7 @@ export namespace mysvac::json {
             } else if constexpr(std::is_convertible_v<T,Bool>) {
                 m_data = static_cast<Bool>(std::forward<T>(other));
             } else {
-                m_data = Null{};
+                m_data = Nul{};
             }
         }
 
@@ -817,8 +817,8 @@ export namespace mysvac::json {
         template<typename T>
         requires constructible<Json, std::remove_cvref_t<T>>
         Json& operator=(T&& other) noexcept {
-            if constexpr(std::is_same_v<T, Null>) {
-                m_data = Null{};
+            if constexpr(std::is_same_v<T, Nul>) {
+                m_data = Nul{};
             } else if constexpr(std::is_same_v<T, Bool>) {
                 m_data = other;
             } else if constexpr(std::is_same_v<T, Number>) {
@@ -842,7 +842,7 @@ export namespace mysvac::json {
             } else if constexpr(std::is_convertible_v<T,Bool>) {
                 m_data = static_cast<Bool>(std::forward<T>(other));
             } else {
-                m_data = Null{};
+                m_data = Nul{};
             }
             return *this;
         }
@@ -877,13 +877,13 @@ export namespace mysvac::json {
 
         /**
          * @brief Reset the JSON data to a specific type.
-         * @tparam T The type to reset the JSON data to, defaults to Null.
+         * @tparam T The type to reset the JSON data to, defaults to Nul.
          */
-        template<typename T = Null>
+        template<typename T = Nul>
         requires json_type<Json, T>
         void reset() noexcept {
-            if constexpr(std::is_same_v<T, Null>) {
-                m_data = Null{};
+            if constexpr(std::is_same_v<T, Nul>) {
+                m_data = Nul{};
             } else if constexpr(std::is_same_v<T, Bool>) {
                 m_data = Bool{};
             } else if constexpr(std::is_same_v<T, Number>) {
@@ -949,7 +949,7 @@ export namespace mysvac::json {
                 case Type::eBool:
                     out.append(std::get<Bool>(m_data) ? "true" : "false");
                     break;
-                case Type::eNull:
+                case Type::eNul:
                     out.append("null");
                     break;
                 case Type::eString:
@@ -1006,7 +1006,7 @@ export namespace mysvac::json {
                 case Type::eBool:
                     out << (std::get<Bool>(m_data) ? "true" : "false");
                     break;
-                case Type::eNull:
+                case Type::eNul:
                     out << "null";
                     break;
                 case Type::eString:
@@ -1085,7 +1085,7 @@ export namespace mysvac::json {
                 case Type::eBool:
                     out.append(std::get<Bool>(m_data) ? "true" : "false");
                     break;
-                case Type::eNull:
+                case Type::eNul:
                     out.append("null");
                     break;
                 case Type::eString:
@@ -1162,7 +1162,7 @@ export namespace mysvac::json {
                 case Type::eBool:
                     out << (std::get<Bool>(m_data) ? "true" : "false");
                     break;
-                case Type::eNull:
+                case Type::eNul:
                     out << "null";
                     break;
                 case Type::eString:
@@ -1241,14 +1241,14 @@ export namespace mysvac::json {
         /**
          * @brief type conversion, copy inner value to specified type
          * @tparam T The target type to convert to
-         * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Null for other types(useless).
+         * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Nul for other types(useless).
          * @param default_range_elem if T is a range type and is not json::Array or json::Object, must be specified for safe conversion. Else, please use default value.
          * @return The converted value
          * @note Number is double, so conversions to integral (and enum) types will round to nearest.
          * @details
          * Attempt sequence of conversions:
          * inner value type -> target type
-         * 1. Null -> Null
+         * 1. Nul -> Nul
          * 2. Object -> Object
          * 3. Array -> Array
          * 4. String -> String
@@ -1262,17 +1262,17 @@ export namespace mysvac::json {
          * 12. String -> implicit convertible types
          * 13. Number -> implicit convertible types
          * 14. Bool -> implicit convertible types
-         * 15. Null -> implicit convertible types (Null is not convertible to bool !!!!!)
+         * 15. Nul -> implicit convertible types (Nul is not convertible to bool !!!!!)
          * 16. Object -> Try copy to `range && String->key_type && Value->mapped_type types && have default_range_value`
          * 17. Array -> Try copy to `range && Value->value_type types && have default_range_value`
          * 18. return std::nullopt;
          */
-        template<typename T, typename D = Null>
+        template<typename T, typename D = Nul>
         requires convertible<Json, T> || convertible_map<Json, T, D> || convertible_array<Json, T, D>
         [[nodiscard]]
         std::optional<T>  to_if( D default_range_elem = D{} ) const noexcept {
-            if constexpr (std::is_same_v<T, Null>) {
-                if (type() == Type::eNull) return Null{};
+            if constexpr (std::is_same_v<T, Nul>) {
+                if (type() == Type::eNul) return Nul{};
             } else if constexpr (std::is_same_v<T, Object>) {
                 if (type() == Type::eObject) return std::get<Object>(m_data);
             } else if constexpr (std::is_same_v<T, Array>) {
@@ -1306,8 +1306,8 @@ export namespace mysvac::json {
             if constexpr (std::is_convertible_v<Bool, T>) {
                 if (type() == Type::eBool) return static_cast<T>(std::get<Bool>(m_data));
             }
-            if constexpr (std::is_convertible_v<Null, T>) {
-                if (type() == Type::eNull) return static_cast<T>(Null{});
+            if constexpr (std::is_convertible_v<Nul, T>) {
+                if (type() == Type::eNul) return static_cast<T>(Nul{});
             }
             if constexpr ( convertible_map<Json, T, D> ) {
                 if (type() == Type::eObject) {
@@ -1337,7 +1337,7 @@ export namespace mysvac::json {
         /**
          * @brief type conversion, copy inner value to specified type
          * @tparam T The target type to convert to
-         * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Null for other types(useless).
+         * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Nul for other types(useless).
          * @param default_range_elem if T is a range type and is not json::Array or json::Object, must be specified for safe conversion. Else, please use default value.
          * @return The converted value
          * @throws std::runtime_error if conversion fails
@@ -1348,7 +1348,7 @@ export namespace mysvac::json {
          * 1-17: equal to `to_if<T, D>()`
          * 18. throw std::runtime_error
          */
-        template<typename T, typename D = Null>
+        template<typename T, typename D = Nul>
         requires convertible<Json, T> || convertible_map<Json, T, D> || convertible_array<Json, T, D>
         [[nodiscard]]
         T  to( D default_range_elem = D{} ) const {
@@ -1360,7 +1360,7 @@ export namespace mysvac::json {
         /**
          * @brief type conversion, copy inner value to specified type
          * @tparam T The target type to convert to
-         * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Null for other types(useless).
+         * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Nul for other types(useless).
          * @param default_result The default value to return if conversion fails
          * @param default_range_elem if T is a range type and is not json::Array or json::Object, must be specified for safe conversion. Else, please use default value.
          * @return The converted value or default_value if conversion fails
@@ -1371,7 +1371,7 @@ export namespace mysvac::json {
          * 1-17: equal to `to_if<T, D>()`
          * 18: return default_result
          */
-        template<typename T, typename D = Null>
+        template<typename T, typename D = Nul>
         requires convertible<Json, T> || convertible_map<Json, T, D> || convertible_array<Json, T, D>
         [[nodiscard]]
         T  to_or( T default_result, D default_range_elem = D{} ) const noexcept {
@@ -1383,17 +1383,17 @@ export namespace mysvac::json {
         /**
          * @brief type conversion, Move or Copy inner value to specified type
          * @tparam T The target type to convert to
-         * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Null for other types(useless).
+         * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Nul for other types(useless).
          * @param default_range_elem if T is a range type and is not json::Array or json::Object, must be specified for safe conversion. Else, please use default value.
          * @return The converted value
          * @note
          * Number is double, so conversions to integral (and enum) types will round to nearest.
          * Complex types like Object, Array, String will be moved if possible.
-         * Simple types like Bool, Number, Null will be copied.
+         * Simple types like Bool, Number, Nul will be copied.
          * @details
          * Attempt sequence of conversions:
          * inner value type -> target type
-         * 1. Null -> Null
+         * 1. Nul -> Nul
          * 2. Object -> Object (Move)
          * 3. Array -> Array (Move)
          * 4. String -> String (Move)
@@ -1407,17 +1407,17 @@ export namespace mysvac::json {
          * 12. String -> implicit convertible types (try Move)
          * 13. Number -> implicit convertible types
          * 14. Bool -> implicit convertible types
-         * 15. Null -> implicit convertible types (Null is not convertible to bool !!!!!)
+         * 15. Nul -> implicit convertible types (Nul is not convertible to bool !!!!!)
          * 16. Object -> Try copy to `range && String->key_type && Value->mapped_type types && have default_range_value`  (try Move)
          * 17. Array -> Try copy to `range && Value->value_type types && have default_range_value`  (try Move)
          * 18. return std::nullopt;
          */
-        template<typename T, typename D = Null>
+        template<typename T, typename D = Nul>
         requires convertible<Json, T> || convertible_map<Json, T, D> || convertible_array<Json, T, D>
         [[nodiscard]]
         std::optional<T>  move_if( D default_range_elem = D{} ) noexcept  {
-            if constexpr (std::is_same_v<T, Null>) {
-                if (type() == Type::eNull) return Null{};
+            if constexpr (std::is_same_v<T, Nul>) {
+                if (type() == Type::eNul) return Nul{};
             } else if constexpr (std::is_same_v<T, Object>) {
                 if (type() == Type::eObject) return std::move(std::get<Object>(m_data));
             } else if constexpr (std::is_same_v<T, Array>) {
@@ -1451,8 +1451,8 @@ export namespace mysvac::json {
             if constexpr (std::is_convertible_v<Bool, T>) {
                 if (type() == Type::eBool) return static_cast<T>(std::get<Bool>(m_data));
             }
-            if constexpr (std::is_convertible_v<Null, T>) {
-                if (type() == Type::eNull) return static_cast<T>(Null{});
+            if constexpr (std::is_convertible_v<Nul, T>) {
+                if (type() == Type::eNul) return static_cast<T>(Nul{});
             }
             if constexpr ( convertible_map<Json, T, D> ) {
                 if (type() == Type::eObject) {
@@ -1482,21 +1482,21 @@ export namespace mysvac::json {
         /**
          * @brief type conversion, Move or Copy inner value to specified type
          * @tparam T The target type to convert to
-         * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Null for other types(useless).
+         * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Nul for other types(useless).
          * @param default_range_elem if T is a range type and is not json::Array or json::Object, must be specified for safe conversion. Else, please use default value.
          * @return The converted value
          * @throws std::runtime_error if conversion fails
          * @note
          * Number is double, so conversions to integral (and enum) types will round to nearest.
          * Complex types like Object, Array, String will be moved if possible.
-         * Simple types like Bool, Number, Null will be copied.
+         * Simple types like Bool, Number, Nul will be copied.
          * @details
          * Attempt sequence of conversions:
          * inner value type -> target type
          * 1-17: equal to `move_if<T, D>()`
          * 18: throw std::runtime_error
          */
-        template<typename T, typename D = Null>
+        template<typename T, typename D = Nul>
         requires convertible<Json, T> || convertible_map<Json, T, D> || convertible_array<Json, T, D>
         [[nodiscard]]
         T  move( D default_range_elem = D{} ) {
@@ -1508,21 +1508,21 @@ export namespace mysvac::json {
         /**
          * @brief type conversion, Move or Copy inner value to specified type
          * @tparam T The target type to convert to
-         * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Null for other types(useless).
+         * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Nul for other types(useless).
          * @param default_result The default value to return if conversion fails
          * @param default_range_elem if T is a range type and is not json::Array or json::Object, must be specified for safe conversion. Else, please use default value.
          * @return The converted value
          * @note
          * Number is double, so conversions to integral (and enum) types will round to nearest.
          * Complex types like Object, Array, String will be moved if possible.
-         * Simple types like Bool, Number, Null will be copied.
+         * Simple types like Bool, Number, Nul will be copied.
          * @details
          * Attempt sequence of conversions:
          * inner value type -> target type
          * 1-17: equal to `move_if<T, D>()`
          * 18: return default_result;
          */
-        template<typename T, typename D = Null>
+        template<typename T, typename D = Nul>
         requires convertible<Json, T> || convertible_map<Json, T, D> || convertible_array<Json, T, D>
         [[nodiscard]]
         T  move_or( T default_result, D default_range_elem = D{} ) noexcept {
@@ -1542,7 +1542,7 @@ export namespace mysvac::json {
         bool operator==(const Json& other) const noexcept {
             if (type() != other.type()) return false; // Different types cannot be equal
             switch (type()) {
-                case Type::eNull: return true; // Both are null
+                case Type::eNul: return true; // Both are null
                 case Type::eBool: return std::get<Bool>(m_data) == std::get<Bool>(other.m_data);
                 case Type::eNumber: return std::get<Number>(m_data) == std::get<Number>(other.m_data);
                 case Type::eString: return std::get<String>(m_data) == std::get<String>(other.m_data);
@@ -1560,11 +1560,11 @@ export namespace mysvac::json {
          *
          * @details
          * rules:
-         * A. different json types are not equal( Bool, Number, String, Array, Object, Null )
+         * A. different json types are not equal( Bool, Number, String, Array, Object, Nul )
          * B. IF T is Value, use Value::operator==(const Value& other) ,
          *    it's Accurate comparison !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
          * --------------------------------------------------------------------------------------------
-         * 1.  IF T is Null, return true if this Value is null, false otherwise
+         * 1.  IF T is Nul, return true if this Value is null, false otherwise
          * 2.  Else if T is Bool, return true if Value is Bool and Equal to Tvalue
          * 3.  Else if T is Number, return true if Value is Number and Equal to Tvalue
          * 4.  Else if T is String, return true if Value is String and Equal to Tvalue
@@ -1582,8 +1582,8 @@ export namespace mysvac::json {
         requires (!std::is_same_v<T, Json>)
         [[nodiscard]]
         bool operator==(const T& other) const  noexcept {
-            if constexpr ( std::is_same_v<T,Null> ) {
-                return type() == Type::eNull;
+            if constexpr ( std::is_same_v<T,Nul> ) {
+                return type() == Type::eNul;
             } else if constexpr ( std::is_same_v<T,Bool> ) {
                 if ( type() == Type::eBool ) return std::get<Bool>(m_data) == other;
             } else if constexpr ( std::is_same_v<T,Number> ) {
@@ -1612,13 +1612,13 @@ export namespace mysvac::json {
 
         /**
          * @brief Get inner container size.
-         * @return The size of the inner container(Array or Object), or 0 for Null, Bool, Number, String.
+         * @return The size of the inner container(Array or Object), or 0 for Nul, Bool, Number, String.
          */
         [[nodiscard]]
         std::size_t size() const noexcept {
             if (type() == Type::eObject)  return std::get<Object>(m_data).size();
             if (type() == Type::eArray) return std::get<Array>(m_data).size();
-            return 0; // Null, Bool, Number, String are considered to have size 0
+            return 0; // Nul, Bool, Number, String are considered to have size 0
         }
 
         /**
@@ -1629,7 +1629,7 @@ export namespace mysvac::json {
         bool empty() const noexcept {
             if (type() == Type::eObject)  return std::get<Object>(m_data).empty();
             if (type() == Type::eArray) return std::get<Array>(m_data).empty();
-            return true; // Null, Bool, Number, String are considered empty
+            return true; // Nul, Bool, Number, String are considered empty
         }
 
         /**
