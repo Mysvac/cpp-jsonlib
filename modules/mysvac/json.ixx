@@ -82,7 +82,7 @@ export namespace mysvac::json {
     template<typename J, typename T>
     concept json_type = std::disjunction_v<
         std::is_same<T, typename J::Nul>,
-        std::is_same<T, typename J::Bool>,
+        std::is_same<T, typename J::Bol>,
         std::is_same<T, typename J::Number>,
         std::is_same<T, typename J::String>,
         std::is_same<T, typename J::Array>,
@@ -102,7 +102,7 @@ export namespace mysvac::json {
         std::is_convertible<T, typename J::Object>,
         std::is_convertible<T, typename J::String>,
         std::is_convertible<T, typename J::Number>,
-        std::is_convertible<T, typename J::Bool>,
+        std::is_convertible<T, typename J::Bol>,
         std::is_convertible<T, typename J::Nul>
     >;
 
@@ -138,7 +138,7 @@ export namespace mysvac::json {
         std::is_convertible<typename J::Object, T>,
         std::is_convertible<typename J::String, T>,
         std::is_convertible<typename J::Number, T>,
-        std::is_convertible<typename J::Bool, T>,
+        std::is_convertible<typename J::Bol, T>,
         std::is_convertible<typename J::Nul, T>,
         std::is_constructible<T, J>
     >;
@@ -183,7 +183,7 @@ export namespace mysvac::json {
      */
     enum class Type{
         eNul = 0,  ///< Nul type
-        eBool,      ///< Boolean type
+        eBol,      ///< boolean type
         eNumber,    ///< Number type
         eString,    ///< String type
         eArray,     ///< Array type
@@ -202,7 +202,7 @@ export namespace mysvac::json {
             case Type::eArray:  return "Array";
             case Type::eString: return "String";
             case Type::eNumber: return "Number";
-            case Type::eBool:   return "Bool";
+            case Type::eBol:   return "Bol";
             case Type::eNul:   return "Nul";
             default: return "Unknown Enum Value"; // should never happen
         }
@@ -235,9 +235,9 @@ export namespace mysvac::json {
          */
         using Nul = std::nullptr_t;
         /**
-         * @brief Json's Bool Type, must be `bool`.
+         * @brief Json's Bol Type, must be `bool`.
          */
-        using Bool = bool;
+        using Bol = bool;
         /**
          * @brief Json's Number Type, must be `double`.
          * @note When converted to integers, it will be rounded to the nearest integer.
@@ -265,7 +265,7 @@ export namespace mysvac::json {
     protected:
         std::variant<
             Nul,
-            Bool,
+            Bol,
             Number,
             String,
             Array,
@@ -569,7 +569,7 @@ export namespace mysvac::json {
                         ++it == end_ptr || *it != 'u' ||
                         ++it == end_ptr || *it != 'e'
                     ) return std::nullopt;
-                    json = Bool{true};
+                    json = Bol{true};
                     ++it;
                 } break;
                 case 'f': {
@@ -579,7 +579,7 @@ export namespace mysvac::json {
                         ++it == end_ptr || *it != 's' ||
                         ++it == end_ptr || *it != 'e'
                     ) return std::nullopt;
-                    json = Bool{false};
+                    json = Bol{false};
                     ++it;
                 } break;
                 case 'n': {
@@ -628,10 +628,10 @@ export namespace mysvac::json {
         constexpr bool is_nul() const noexcept { return type() == Type::eNul; }
 
         /**
-         * @brief Check if the JSON data is of type Bool.
+         * @brief Check if the JSON data is of type Bol.
          */
         [[nodiscard]]
-        constexpr bool is_bol() const noexcept { return type() == Type::eBool; }
+        constexpr bool is_bol() const noexcept { return type() == Type::eBol; }
 
         /**
          * @brief Check if the JSON data is of type Number.
@@ -672,17 +672,17 @@ export namespace mysvac::json {
         constexpr const Nul&& nul() const && { return std::get<Nul>(std::move(m_data)); }
 
         /**
-         * @brief Get a reference to the Bool type.
-         * @throw std::bad_variant_access if the JSON data is not of type Bool.
+         * @brief Get a reference to the Bol type.
+         * @throw std::bad_variant_access if the JSON data is not of type Bol.
          */
         [[nodiscard]]
-        constexpr Bool& bol() & { return std::get<Bool>(m_data); }
+        constexpr Bol& bol() & { return std::get<Bol>(m_data); }
         [[nodiscard]]
-        constexpr Bool&& bol() && { return std::get<Bool>(std::move(m_data)); }
+        constexpr Bol&& bol() && { return std::get<Bol>(std::move(m_data)); }
         [[nodiscard]]
-        constexpr const Bool& bol() const & { return std::get<Bool>(m_data); }
+        constexpr const Bol& bol() const & { return std::get<Bol>(m_data); }
         [[nodiscard]]
-        constexpr const Bool&& bol() const && { return std::get<Bool>(std::move(m_data)); }
+        constexpr const Bol&& bol() const && { return std::get<Bol>(std::move(m_data)); }
 
         /**
          * @brief Get a reference to the Number type.
@@ -782,7 +782,7 @@ export namespace mysvac::json {
         Json(T&& other) noexcept {
             if constexpr(std::is_same_v<T, Nul>) {
                 m_data = Nul{};
-            } else if constexpr(std::is_same_v<T, Bool>) {
+            } else if constexpr(std::is_same_v<T, Bol>) {
                 m_data = other;
             } else if constexpr(std::is_same_v<T, Number>) {
                 m_data = other;
@@ -802,8 +802,8 @@ export namespace mysvac::json {
                 m_data = static_cast<Array>(std::forward<T>(other));
             } else if constexpr(std::is_convertible_v<T,Number>) {
                 m_data = static_cast<Number>(std::forward<T>(other));
-            } else if constexpr(std::is_convertible_v<T,Bool>) {
-                m_data = static_cast<Bool>(std::forward<T>(other));
+            } else if constexpr(std::is_convertible_v<T,Bol>) {
+                m_data = static_cast<Bol>(std::forward<T>(other));
             } else {
                 m_data = Nul{};
             }
@@ -819,7 +819,7 @@ export namespace mysvac::json {
         Json& operator=(T&& other) noexcept {
             if constexpr(std::is_same_v<T, Nul>) {
                 m_data = Nul{};
-            } else if constexpr(std::is_same_v<T, Bool>) {
+            } else if constexpr(std::is_same_v<T, Bol>) {
                 m_data = other;
             } else if constexpr(std::is_same_v<T, Number>) {
                 m_data = other;
@@ -839,8 +839,8 @@ export namespace mysvac::json {
                 m_data = static_cast<Array>(std::forward<T>(other));
             } else if constexpr(std::is_convertible_v<T,Number>) {
                 m_data = static_cast<Number>(std::forward<T>(other));
-            } else if constexpr(std::is_convertible_v<T,Bool>) {
-                m_data = static_cast<Bool>(std::forward<T>(other));
+            } else if constexpr(std::is_convertible_v<T,Bol>) {
+                m_data = static_cast<Bol>(std::forward<T>(other));
             } else {
                 m_data = Nul{};
             }
@@ -884,8 +884,8 @@ export namespace mysvac::json {
         void reset() noexcept {
             if constexpr(std::is_same_v<T, Nul>) {
                 m_data = Nul{};
-            } else if constexpr(std::is_same_v<T, Bool>) {
-                m_data = Bool{};
+            } else if constexpr(std::is_same_v<T, Bol>) {
+                m_data = Bol{};
             } else if constexpr(std::is_same_v<T, Number>) {
                 m_data = Number{};
             } else if constexpr(std::is_same_v<T, String>) {
@@ -946,8 +946,8 @@ export namespace mysvac::json {
                     if (*out.rbegin() == ',') *out.rbegin() = ']';
                     else out.push_back(']');
                 } break;
-                case Type::eBool:
-                    out.append(std::get<Bool>(m_data) ? "true" : "false");
+                case Type::eBol:
+                    out.append(std::get<Bol>(m_data) ? "true" : "false");
                     break;
                 case Type::eNul:
                     out.append("null");
@@ -1003,8 +1003,8 @@ export namespace mysvac::json {
                     }
                     out.put(']');
                 } break;
-                case Type::eBool:
-                    out << (std::get<Bool>(m_data) ? "true" : "false");
+                case Type::eBol:
+                    out << (std::get<Bol>(m_data) ? "true" : "false");
                     break;
                 case Type::eNul:
                     out << "null";
@@ -1082,8 +1082,8 @@ export namespace mysvac::json {
                     }
                     out.push_back(']');
                 } break;
-                case Type::eBool:
-                    out.append(std::get<Bool>(m_data) ? "true" : "false");
+                case Type::eBol:
+                    out.append(std::get<Bol>(m_data) ? "true" : "false");
                     break;
                 case Type::eNul:
                     out.append("null");
@@ -1159,8 +1159,8 @@ export namespace mysvac::json {
                     }
                     out.put(']');
                 } break;
-                case Type::eBool:
-                    out << (std::get<Bool>(m_data) ? "true" : "false");
+                case Type::eBol:
+                    out << (std::get<Bol>(m_data) ? "true" : "false");
                     break;
                 case Type::eNul:
                     out << "null";
@@ -1252,7 +1252,7 @@ export namespace mysvac::json {
          * 2. Object -> Object
          * 3. Array -> Array
          * 4. String -> String
-         * 5. Bool -> Bool
+         * 5. Bol -> Bol
          * 6. Number -> enum types (us llround, round to nearest)
          * 7. Number -> integral types (us llround, round to nearest)
          * 8. Number -> floating_point types
@@ -1261,7 +1261,7 @@ export namespace mysvac::json {
          * 11. Array -> implicit convertible types
          * 12. String -> implicit convertible types
          * 13. Number -> implicit convertible types
-         * 14. Bool -> implicit convertible types
+         * 14. Bol -> implicit convertible types
          * 15. Nul -> implicit convertible types (Nul is not convertible to bool !!!!!)
          * 16. Object -> Try copy to `range && String->key_type && Value->mapped_type types && have default_range_value`
          * 17. Array -> Try copy to `range && Value->value_type types && have default_range_value`
@@ -1279,8 +1279,8 @@ export namespace mysvac::json {
                 if (type() == Type::eArray) return std::get<Array>(m_data);
             } else if constexpr (std::is_same_v<T, String>) {
                 if (type() == Type::eString) return std::get<String>(m_data);
-            } else if constexpr (std::is_same_v<T, Bool>) {
-                if (type() == Type::eBool) return std::get<Bool>(m_data);
+            } else if constexpr (std::is_same_v<T, Bol>) {
+                if (type() == Type::eBol) return std::get<Bol>(m_data);
             } else if constexpr (std::is_enum_v<T>) {
                 if (type() == Type::eNumber) return static_cast<T>(std::llround(std::get<Number>(m_data)));
             } else if constexpr (std::is_integral_v<T>) {
@@ -1303,8 +1303,8 @@ export namespace mysvac::json {
             if constexpr (std::is_convertible_v<Number, T>) {
                 if (type() == Type::eNumber) return static_cast<T>(std::get<Number>(m_data));
             }
-            if constexpr (std::is_convertible_v<Bool, T>) {
-                if (type() == Type::eBool) return static_cast<T>(std::get<Bool>(m_data));
+            if constexpr (std::is_convertible_v<Bol, T>) {
+                if (type() == Type::eBol) return static_cast<T>(std::get<Bol>(m_data));
             }
             if constexpr (std::is_convertible_v<Nul, T>) {
                 if (type() == Type::eNul) return static_cast<T>(Nul{});
@@ -1389,7 +1389,7 @@ export namespace mysvac::json {
          * @note
          * Number is double, so conversions to integral (and enum) types will round to nearest.
          * Complex types like Object, Array, String will be moved if possible.
-         * Simple types like Bool, Number, Nul will be copied.
+         * Simple types like Bol, Number, Nul will be copied.
          * @details
          * Attempt sequence of conversions:
          * inner value type -> target type
@@ -1397,7 +1397,7 @@ export namespace mysvac::json {
          * 2. Object -> Object (Move)
          * 3. Array -> Array (Move)
          * 4. String -> String (Move)
-         * 5. Bool -> Bool
+         * 5. Bol -> Bol
          * 6. Number -> enum types (us llround, round to nearest)
          * 7. Number -> integral types (us llround, round to nearest)
          * 8. Number -> floating_point types
@@ -1406,7 +1406,7 @@ export namespace mysvac::json {
          * 11. Array -> implicit convertible types (try Move)
          * 12. String -> implicit convertible types (try Move)
          * 13. Number -> implicit convertible types
-         * 14. Bool -> implicit convertible types
+         * 14. Bol -> implicit convertible types
          * 15. Nul -> implicit convertible types (Nul is not convertible to bool !!!!!)
          * 16. Object -> Try copy to `range && String->key_type && Value->mapped_type types && have default_range_value`  (try Move)
          * 17. Array -> Try copy to `range && Value->value_type types && have default_range_value`  (try Move)
@@ -1424,8 +1424,8 @@ export namespace mysvac::json {
                 if (type() == Type::eArray) return std::move(std::get<Array>(m_data));
             } else if constexpr (std::is_same_v<T, String>) {
                 if (type() == Type::eString) return std::move(std::get<String>(m_data));
-            } else if constexpr (std::is_same_v<T, Bool>) {
-                if (type() == Type::eBool) return std::get<Bool>(m_data);
+            } else if constexpr (std::is_same_v<T, Bol>) {
+                if (type() == Type::eBol) return std::get<Bol>(m_data);
             } else if constexpr (std::is_enum_v<T>) {
                 if (type() == Type::eNumber) return static_cast<T>(std::llround(std::get<Number>(m_data)));
             } else if constexpr (std::is_integral_v<T>) {
@@ -1448,8 +1448,8 @@ export namespace mysvac::json {
             if constexpr (std::is_convertible_v<Number, T>) {
                 if (type() == Type::eNumber) return static_cast<T>(std::get<Number>(m_data));
             }
-            if constexpr (std::is_convertible_v<Bool, T>) {
-                if (type() == Type::eBool) return static_cast<T>(std::get<Bool>(m_data));
+            if constexpr (std::is_convertible_v<Bol, T>) {
+                if (type() == Type::eBol) return static_cast<T>(std::get<Bol>(m_data));
             }
             if constexpr (std::is_convertible_v<Nul, T>) {
                 if (type() == Type::eNul) return static_cast<T>(Nul{});
@@ -1489,7 +1489,7 @@ export namespace mysvac::json {
          * @note
          * Number is double, so conversions to integral (and enum) types will round to nearest.
          * Complex types like Object, Array, String will be moved if possible.
-         * Simple types like Bool, Number, Nul will be copied.
+         * Simple types like Bol, Number, Nul will be copied.
          * @details
          * Attempt sequence of conversions:
          * inner value type -> target type
@@ -1515,7 +1515,7 @@ export namespace mysvac::json {
          * @note
          * Number is double, so conversions to integral (and enum) types will round to nearest.
          * Complex types like Object, Array, String will be moved if possible.
-         * Simple types like Bool, Number, Nul will be copied.
+         * Simple types like Bol, Number, Nul will be copied.
          * @details
          * Attempt sequence of conversions:
          * inner value type -> target type
@@ -1543,7 +1543,7 @@ export namespace mysvac::json {
             if (type() != other.type()) return false; // Different types cannot be equal
             switch (type()) {
                 case Type::eNul: return true; // Both are null
-                case Type::eBool: return std::get<Bool>(m_data) == std::get<Bool>(other.m_data);
+                case Type::eBol: return std::get<Bol>(m_data) == std::get<Bol>(other.m_data);
                 case Type::eNumber: return std::get<Number>(m_data) == std::get<Number>(other.m_data);
                 case Type::eString: return std::get<String>(m_data) == std::get<String>(other.m_data);
                 case Type::eObject: return std::get<Object>(m_data) == std::get<Object>(other.m_data);
@@ -1560,18 +1560,18 @@ export namespace mysvac::json {
          *
          * @details
          * rules:
-         * A. different json types are not equal( Bool, Number, String, Array, Object, Nul )
+         * A. different json types are not equal( Bol, Number, String, Array, Object, Nul )
          * B. IF T is Value, use Value::operator==(const Value& other) ,
          *    it's Accurate comparison !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
          * --------------------------------------------------------------------------------------------
          * 1.  IF T is Nul, return true if this Value is null, false otherwise
-         * 2.  Else if T is Bool, return true if Value is Bool and Equal to Tvalue
+         * 2.  Else if T is Bol, return true if Value is Bol and Equal to Tvalue
          * 3.  Else if T is Number, return true if Value is Number and Equal to Tvalue
          * 4.  Else if T is String, return true if Value is String and Equal to Tvalue
          * 5.  Else if T is Array, return true if Value is Array and Equal to Tvalue
          * 6.  Else if T is Object, return true if Value is Object and Equal to Tvalue
          * 7.  Else if T is enum, return true if Value is Number and Equal to Tvalue, Number will be rounded to nearest integer
-         * 8.  Else if T is integral, return true if Value is Number or Bool and Equal to Tvalue, Number will be rounded to nearest integer
+         * 8.  Else if T is integral, return true if Value is Number or Bol and Equal to Tvalue, Number will be rounded to nearest integer
          * 9.  Else if T is floating_point, return true if Value is Number and Equal to Tvalue, double to double comparison is very strict
          * 10. Else if T is convertible to std::string_view, return true if Value is String and Equal to std::string_view( Tvalue )
          * 11. Else if T is equality_comparable and constructible from Value, return true if Tvalue == T(*this);
@@ -1584,8 +1584,8 @@ export namespace mysvac::json {
         bool operator==(const T& other) const  noexcept {
             if constexpr ( std::is_same_v<T,Nul> ) {
                 return type() == Type::eNul;
-            } else if constexpr ( std::is_same_v<T,Bool> ) {
-                if ( type() == Type::eBool ) return std::get<Bool>(m_data) == other;
+            } else if constexpr ( std::is_same_v<T,Bol> ) {
+                if ( type() == Type::eBol ) return std::get<Bol>(m_data) == other;
             } else if constexpr ( std::is_same_v<T,Number> ) {
                 if ( type() == Type::eNumber ) return std::get<Number>(m_data) == other;
             } else if constexpr ( std::is_same_v<T,String> ) {
@@ -1612,13 +1612,13 @@ export namespace mysvac::json {
 
         /**
          * @brief Get inner container size.
-         * @return The size of the inner container(Array or Object), or 0 for Nul, Bool, Number, String.
+         * @return The size of the inner container(Array or Object), or 0 for Nul, Bol, Number, String.
          */
         [[nodiscard]]
         std::size_t size() const noexcept {
             if (type() == Type::eObject)  return std::get<Object>(m_data).size();
             if (type() == Type::eArray) return std::get<Array>(m_data).size();
-            return 0; // Nul, Bool, Number, String are considered to have size 0
+            return 0; // Nul, Bol, Number, String are considered to have size 0
         }
 
         /**
@@ -1629,7 +1629,7 @@ export namespace mysvac::json {
         bool empty() const noexcept {
             if (type() == Type::eObject)  return std::get<Object>(m_data).empty();
             if (type() == Type::eArray) return std::get<Array>(m_data).empty();
-            return true; // Nul, Bool, Number, String are considered empty
+            return true; // Nul, Bol, Number, String are considered empty
         }
 
         /**

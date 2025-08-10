@@ -10,7 +10,7 @@ using namespace mysvac;
 // Test the Type enum values
 M_TEST(Type, enum) {
     M_ASSERT_NO_THROW( M_EXPECT_EQ( static_cast<int>(json::Type::eNul),   0 ) );
-    M_ASSERT_NO_THROW( M_EXPECT_EQ( static_cast<int>(json::Type::eBool), 1 ) );
+    M_ASSERT_NO_THROW( M_EXPECT_EQ( static_cast<int>(json::Type::eBol), 1 ) );
     M_ASSERT_NO_THROW( M_EXPECT_EQ( static_cast<int>(json::Type::eNumber),  2 ) );
     M_ASSERT_NO_THROW( M_EXPECT_EQ( static_cast<int>(json::Type::eString), 3 ) );
     M_ASSERT_NO_THROW( M_EXPECT_EQ( static_cast<int>(json::Type::eArray), 4 ) );
@@ -47,11 +47,11 @@ M_TEST(Type, String) {
     M_ASSERT_EQ( "" , Json::String() );
 }
 
-// Test the Bool type
-M_TEST(Type, Bool) {
-    M_ASSERT_TRUE( (std::is_same_v<Json::Bool, bool>) );
-    M_ASSERT_EQ( false , Json::Bool{} );
-    M_ASSERT_EQ( false , Json::Bool() );
+// Test the Bol type
+M_TEST(Type, Bol) {
+    M_ASSERT_TRUE( (std::is_same_v<Json::Bol, bool>) );
+    M_ASSERT_EQ( false , Json::Bol{} );
+    M_ASSERT_EQ( false , Json::Bol() );
 }
 
 // Test the Nul type
@@ -67,7 +67,7 @@ M_TEST(Type, concept) {
     M_ASSERT_TRUE( (requires { requires json::json_type<Json, Json::Array>; }  ));
     M_ASSERT_TRUE( (requires { requires json::json_type<Json, Json::Number>; } ));
     M_ASSERT_TRUE( (requires { requires json::json_type<Json, Json::String>; } ));
-    M_ASSERT_TRUE( (requires { requires json::json_type<Json, Json::Bool>; }   ));
+    M_ASSERT_TRUE( (requires { requires json::json_type<Json, Json::Bol>; }   ));
     M_ASSERT_TRUE( (requires { requires json::json_type<Json, Json::Nul>; }   ));
 }
 

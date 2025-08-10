@@ -35,7 +35,7 @@ M_TEST(Value, Array) {
     M_ASSERT_EQ(mixed_arr.arr().size(), 4);
     M_ASSERT_EQ(mixed_arr[0].to<Json::Number>(), 42);
     M_ASSERT_EQ(mixed_arr[1].to<Json::String>(), "hello");
-    M_ASSERT_EQ(mixed_arr[2].to<Json::Bool>(), true);
+    M_ASSERT_EQ(mixed_arr[2].to<Json::Bol>(), true);
     M_ASSERT_EQ(mixed_arr[3].type(), json::Type::eNul);
 
     const Json const_arr{Json::Array{{1, 2, 3}}};
@@ -49,7 +49,7 @@ M_TEST(Value, Array) {
     modify_test[2] = false;
     M_ASSERT_EQ(modify_test[0].to<Json::Number>(), 100);
     M_ASSERT_EQ(modify_test[1].to<Json::String>(), "modified");
-    M_ASSERT_EQ(modify_test[2].to<Json::Bool>(), false);
+    M_ASSERT_EQ(modify_test[2].to<Json::Bol>(), false);
 
     Json assign_val{Json::Array{}};
     M_ASSERT_NO_THROW(assign_val = Json::Array{{1, 2, 3}});
@@ -127,7 +127,7 @@ M_TEST(Value, Array) {
         Json::Array{{1, 2, 3}},
         Json::String("nested string"),
         Json::Array{{
-            Json::Bool(true),
+            Json::Bol(true),
             Json::Array{{4, 5}},
             nullptr
         }}

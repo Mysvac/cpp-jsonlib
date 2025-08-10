@@ -19,11 +19,11 @@ M_TEST(Equal, Nul) {
     M_ASSERT_FALSE(null_val == std::string("null"));
 }
 
-// --- Boolean equality tests ---
+// --- boolean equality tests ---
 // Covers strict type comparison. No implicit conversion between bool and number.
-M_TEST(Equal, Bool) {
-    Json true_val{Json::Bool(true)};
-    Json false_val{Json::Bool(false)};
+M_TEST(Equal, Bol) {
+    Json true_val{Json::Bol(true)};
+    Json false_val{Json::Bol(false)};
     M_ASSERT_TRUE(true_val == true);      // True matches true
     M_ASSERT_FALSE(true_val == false);    // True does not match false
     M_ASSERT_TRUE(false_val == false);    // False matches false
@@ -178,7 +178,7 @@ M_TEST(Equal, MixedAndNested) {
     Json mixed1{Json::Array{
         Json::Number(42),
         Json::String("hello"),
-        Json::Bool(true),
+        Json::Bol(true),
         Json{nullptr},
         Json::Array{1, 2},
         Json::Object{{"key", "value"}}
@@ -186,7 +186,7 @@ M_TEST(Equal, MixedAndNested) {
     Json mixed2{Json::Array{
         Json::Number(42),
         Json::String("hello"),
-        Json::Bool(true),
+        Json::Bol(true),
         Json{nullptr},
         Json::Array{1, 2},
         Json::Object{{"key", "value"}}
@@ -194,7 +194,7 @@ M_TEST(Equal, MixedAndNested) {
     Json mixed3{Json::Array{
         Json::Number(42),
         Json::String("hello"),
-        Json::Bool(false),
+        Json::Bol(false),
         Json{nullptr},
         Json::Array{1, 2},
         Json::Object{{"key", "value"}}
@@ -232,11 +232,11 @@ M_TEST(Equal, MixedAndNested) {
 M_TEST(Equal, StrictTypeAndEdge) {
     // No implicit conversion between bool and number
     Json num_one{Json::Number(1)};
-    Json bool_true{Json::Bool(true)};
+    Json bool_true{Json::Bol(true)};
     M_ASSERT_FALSE(num_one == bool_true);
     M_ASSERT_FALSE(bool_true == num_one);
     Json num_zero{Json::Number(0)};
-    Json bool_false{Json::Bool(false)};
+    Json bool_false{Json::Bol(false)};
     M_ASSERT_FALSE(num_zero == bool_false);
     M_ASSERT_FALSE(bool_false == num_zero);
 
@@ -270,13 +270,13 @@ M_TEST(Equal, SymmetryAndReflexivity) {
     M_ASSERT_TRUE(str_val == "hello");
     M_ASSERT_TRUE("hello" == str_val);
 
-    Json bool_val{Json::Bool(true)};
+    Json bool_val{Json::Bol(true)};
     M_ASSERT_TRUE(bool_val == true);
     M_ASSERT_TRUE(true == bool_val);
     M_ASSERT_FALSE(bool_val == 1);
     M_ASSERT_FALSE(1 == bool_val);
 
-    Json false_val{Json::Bool(false)};
+    Json false_val{Json::Bol(false)};
     M_ASSERT_TRUE(false_val == false);
     M_ASSERT_TRUE(false == false_val);
     M_ASSERT_FALSE(false_val == 0);
@@ -289,8 +289,8 @@ M_TEST(Equal, SymmetryAndReflexivity) {
     M_ASSERT_TRUE(false_val == false_val);
 
     // No implicit conversion between bool and number
-    Json bool_true{Json::Bool(true)};
-    Json bool_false{Json::Bool(false)};
+    Json bool_true{Json::Bol(true)};
+    Json bool_false{Json::Bol(false)};
     M_ASSERT_FALSE(bool_true == 1);
     M_ASSERT_FALSE(1 == bool_true);
     M_ASSERT_FALSE(bool_false == 0);

@@ -36,7 +36,7 @@ M_TEST(ARR_MAP, ArrayTypes) {
     M_EXPECT_EQ(v_vec_str, (Json::Array{{"a", "b", "c"}}) );
 
     // std::vector<Json>
-    const std::vector<Json> vec_val = {Json::Number(1), Json::Bool(false), Json::String("x")};
+    const std::vector<Json> vec_val = {Json::Number(1), Json::Bol(false), Json::String("x")};
     Json v_vec_val{vec_val};
     M_EXPECT_EQ(v_vec_val, (Json::Array{{1, false, "x"}}) );
 }
@@ -61,7 +61,7 @@ M_TEST(ARR_MAP, MapTypes) {
     M_EXPECT_EQ(v_map_str["baz"], "qux");
 
     // std::map<std::string, Json>
-    const std::map<std::string, Json> map_val = {{"n", Json::Number(42)}, {"b", Json::Bool(true)}, {"s", Json::String("str")}};
+    const std::map<std::string, Json> map_val = {{"n", Json::Number(42)}, {"b", Json::Bol(true)}, {"s", Json::String("str")}};
     Json v_map_val{map_val};
     M_EXPECT_EQ(v_map_val["n"], 42);
     M_EXPECT_EQ(v_map_val["b"], true);
@@ -88,7 +88,7 @@ M_TEST(ARR_MAP, UnorderedMapTypes) {
     M_EXPECT_EQ(v_umap_str["key"], "value");
 
     // std::unordered_map<std::string, Json>
-    const std::unordered_map<std::string, Json> umap_val = {{"num", Json::Number(7)}, {"flag", Json::Bool(false)}, {"txt", Json::String("abc")}};
+    const std::unordered_map<std::string, Json> umap_val = {{"num", Json::Number(7)}, {"flag", Json::Bol(false)}, {"txt", Json::String("abc")}};
     Json v_umap_val{umap_val};
     M_EXPECT_EQ(v_umap_val["num"], 7);
     M_EXPECT_EQ(v_umap_val["flag"], false);

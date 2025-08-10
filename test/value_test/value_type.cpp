@@ -16,13 +16,13 @@ M_TEST(Value, type_constructors) {
     M_ASSERT_NO_THROW( std::ignore = Json (json::Type::eArray)  );
     M_ASSERT_NO_THROW( std::ignore = Json (json::Type::eString) );
     M_ASSERT_NO_THROW( std::ignore = Json (json::Type::eNumber) );
-    M_ASSERT_NO_THROW( std::ignore = Json (json::Type::eBool)   );
+    M_ASSERT_NO_THROW( std::ignore = Json (json::Type::eBol)   );
     M_ASSERT_NO_THROW( std::ignore = Json (json::Type::eNul)   );
     M_ASSERT_NO_THROW( std::ignore = Json (Json::Object()) );
     M_ASSERT_NO_THROW( std::ignore = Json (Json::Array())  );
     M_ASSERT_NO_THROW( std::ignore = Json (Json::String()) );
     M_ASSERT_NO_THROW( std::ignore = Json (Json::Number()) );
-    M_ASSERT_NO_THROW( std::ignore = Json (Json::Bool())   );
+    M_ASSERT_NO_THROW( std::ignore = Json (Json::Bol())   );
     M_ASSERT_NO_THROW( std::ignore = Json (Json::Nul())   );
 
     M_ASSERT_NO_THROW( std::ignore = Json().is_nul() );
@@ -37,14 +37,14 @@ M_TEST(Value, type_constructors) {
     M_ASSERT_EQ(Json(json::Type::eArray ).type(), json::Type::eNumber);
     M_ASSERT_EQ(Json(json::Type::eString).type(), json::Type::eNumber);
     M_ASSERT_EQ(Json(json::Type::eNumber).type(), json::Type::eNumber);
-    M_ASSERT_EQ(Json(json::Type::eBool  ).type(), json::Type::eNumber);
+    M_ASSERT_EQ(Json(json::Type::eBol  ).type(), json::Type::eNumber);
     M_ASSERT_EQ(Json(json::Type::eNul  ).type(), json::Type::eNumber);
 
     M_EXPECT_STREQ( json::type_name(Json{ Json::Object{} }.type()), "Object");
     M_EXPECT_STREQ( json::type_name(Json{ Json::Array{}  }.type()), "Array");
     M_EXPECT_STREQ( json::type_name(Json{ Json::String{} }.type()), "String");
     M_EXPECT_STREQ( json::type_name(Json{ Json::Number{} }.type()), "Number");
-    M_EXPECT_STREQ( json::type_name(Json{ Json::Bool{}   }.type()), "Bool");
+    M_EXPECT_STREQ( json::type_name(Json{ Json::Bol{}   }.type()), "Bol");
     M_EXPECT_STREQ( json::type_name(Json{ Json::Nul{}   }.type()), "Nul");
 
     M_ASSERT_TRUE(Json().is_nul());
@@ -83,10 +83,10 @@ M_TEST(Value, type_constructors) {
     M_ASSERT_TRUE( Json(Json::Number{}).is_num());
     M_ASSERT_FALSE(Json(Json::Number{}).is_bol());
 
-    M_ASSERT_FALSE(Json(Json::Bool{}).is_nul());
-    M_ASSERT_FALSE(Json(Json::Bool{}).is_obj());
-    M_ASSERT_FALSE(Json(Json::Bool{}).is_arr());
-    M_ASSERT_FALSE(Json(Json::Bool{}).is_str());
-    M_ASSERT_FALSE(Json(Json::Bool{}).is_num());
-    M_ASSERT_TRUE( Json(Json::Bool{}).is_bol());
+    M_ASSERT_FALSE(Json(Json::Bol{}).is_nul());
+    M_ASSERT_FALSE(Json(Json::Bol{}).is_obj());
+    M_ASSERT_FALSE(Json(Json::Bol{}).is_arr());
+    M_ASSERT_FALSE(Json(Json::Bol{}).is_str());
+    M_ASSERT_FALSE(Json(Json::Bol{}).is_num());
+    M_ASSERT_TRUE( Json(Json::Bol{}).is_bol());
 }

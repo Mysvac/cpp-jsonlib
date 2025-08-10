@@ -4,7 +4,7 @@
 constexpr bool is_bol() const noexcept;
 ```
 
-Checks if the internal data is of type `Bool`.
+Checks if the internal data is of type `Bol`.
 
 **Returns**:  
 `true` if the data is boolean, `false` otherwise

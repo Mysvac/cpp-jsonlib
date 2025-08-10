@@ -12,32 +12,32 @@ M_TEST(Value, To) {
     // Nul
     Json v_null{nullptr};
     M_ASSERT_EQ(v_null.to<Json::Nul>(), nullptr);
-    M_ASSERT_THROW(std::ignore = v_null.to<bool>(), std::runtime_error); // Nul->Bool抛异常
-    M_ASSERT_EQ(v_null.to_or<bool>(true), true); // Nul->Bool不可转换，返回默认值true
-    M_ASSERT_EQ(v_null.to_or<bool>(false), false); // Nul->Bool不可转换，返回默认值false
+    M_ASSERT_THROW(std::ignore = v_null.to<bool>(), std::runtime_error); // Nul->Bol抛异常
+    M_ASSERT_EQ(v_null.to_or<bool>(true), true); // Nul->Bol不可转换，返回默认值true
+    M_ASSERT_EQ(v_null.to_or<bool>(false), false); // Nul->Bol不可转换，返回默认值false
     M_ASSERT_FALSE(v_null.to_if<bool>().has_value());
     M_ASSERT_TRUE(v_null.to_if<Json::Nul>().has_value());
     M_ASSERT_EQ(v_null.to_if<Json::Nul>().value(), nullptr);
 
-    // Bool
+    // Bol
     Json v_true{true};
     Json v_false{false};
-    M_ASSERT_EQ(v_true.to<Json::Bool>(), true);
-    M_ASSERT_EQ(v_false.to<Json::Bool>(), false);
-    M_ASSERT_EQ(v_true.to_or<Json::Bool>(false), true);
-    M_ASSERT_EQ(v_false.to_or<Json::Bool>(true), false);
-    M_ASSERT_EQ(v_true.to_or<int>(-1), 1); // Bool->int可转换，true->1
-    M_ASSERT_EQ(v_false.to_or<int>(-1), 0); // Bool->int可转换，false->0
+    M_ASSERT_EQ(v_true.to<Json::Bol>(), true);
+    M_ASSERT_EQ(v_false.to<Json::Bol>(), false);
+    M_ASSERT_EQ(v_true.to_or<Json::Bol>(false), true);
+    M_ASSERT_EQ(v_false.to_or<Json::Bol>(true), false);
+    M_ASSERT_EQ(v_true.to_or<int>(-1), 1); // Bol->int可转换，true->1
+    M_ASSERT_EQ(v_false.to_or<int>(-1), 0); // Bol->int可转换，false->0
     M_ASSERT_TRUE(v_true.to_if<int>().has_value());
     M_ASSERT_EQ(v_true.to_if<int>().value(), 1);
     M_ASSERT_EQ(v_false.to_if<int>().value(), 0);
-    M_ASSERT_EQ(v_true.to_or<double>(-1.0), 1.0); // Bool->double可转换，返回1.0
+    M_ASSERT_EQ(v_true.to_or<double>(-1.0), 1.0); // Bol->double可转换，返回1.0
     M_ASSERT_EQ(v_false.to_or<double>(-1.0), 0.0);
-    M_ASSERT_EQ(v_true.to<Json::Number>(), 1.0); // Bool->Number可转换
+    M_ASSERT_EQ(v_true.to<Json::Number>(), 1.0); // Bol->Number可转换
     M_ASSERT_EQ(v_false.to<Json::Number>(), 0.0);
     M_ASSERT_EQ(v_true.to<double>(), 1.0);
     M_ASSERT_EQ(v_false.to<double>(), 0.0);
-    M_ASSERT_EQ(v_true.to_or<Json::String>("default"), "default"); // Bool->String不可转换
+    M_ASSERT_EQ(v_true.to_or<Json::String>("default"), "default"); // Bol->String不可转换
     M_ASSERT_FALSE(v_true.to_if<Json::String>().has_value());
 
     // Number
@@ -75,8 +75,8 @@ M_TEST(Value, To) {
     M_ASSERT_EQ(v_empty_str.to_or<Json::String>("default"), "");
     M_ASSERT_EQ(v_str.to_or<int>(-99), -99); // String->int不可转换
     M_ASSERT_FALSE(v_str.to_if<int>().has_value());
-    M_ASSERT_EQ(v_str.to_or<Json::Bool>(false), false); // String->Bool不可转换
-    M_ASSERT_FALSE(v_str.to_if<Json::Bool>().has_value());
+    M_ASSERT_EQ(v_str.to_or<Json::Bol>(false), false); // String->Bol不可转换
+    M_ASSERT_FALSE(v_str.to_if<Json::Bol>().has_value());
 
     // Array
     Json v_arr{Json::Array{{1, 2, 3}}};
@@ -159,7 +159,7 @@ M_TEST(Value, To) {
     M_ASSERT_EQ(v_null.to_or<Json::Array>(Json::Array{{1,2}}).size(), 2);
     M_ASSERT_FALSE(v_null.to_if<Json::Array>().has_value());
 
-    // Bool->其他类型
+    // Bol->其他类型
     M_ASSERT_THROW(std::ignore = v_true.to<Json::Array>(), std::runtime_error);
     M_ASSERT_EQ(v_true.to_or<Json::Array>(Json::Array{{1,2}}).size(), 2);
     M_ASSERT_FALSE(v_true.to_if<Json::Array>().has_value());

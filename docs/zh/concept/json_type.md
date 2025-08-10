@@ -4,7 +4,7 @@
 template<typename J, typename T>
 concept json_type = std::disjunction_v<
     std::is_same<T, typename J::Nul>,
-    std::is_same<T, typename J::Bool>,
+    std::is_same<T, typename J::Bol>,
     std::is_same<T, typename J::Number>,
     std::is_same<T, typename J::String>,
     std::is_same<T, typename J::Array>,

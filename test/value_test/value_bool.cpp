@@ -7,25 +7,25 @@ import mysvac.json;
 
 using namespace mysvac;
 
-M_TEST(Value, Bool) {
+M_TEST(Value, Bol) {
     // --- Construction tests ---
     // Default bool construction
-    M_ASSERT_NO_THROW(Json bool_default{json::Type::eBool});
-    M_EXPECT_EQ(Json{json::Type::eBool}.to<Json::Bool>(), true);
-    M_ASSERT_EQ(Json{json::Type::eBool}.type(), json::Type::eNumber);
-    M_ASSERT_EQ(Json{json::Type::eBool}.is_num(), true);
-    M_ASSERT_EQ(Json{json::Type::eBool}.is_bol(), false);
+    M_ASSERT_NO_THROW(Json bool_default{json::Type::eBol});
+    M_EXPECT_EQ(Json{json::Type::eBol}.to<Json::Bol>(), true);
+    M_ASSERT_EQ(Json{json::Type::eBol}.type(), json::Type::eNumber);
+    M_ASSERT_EQ(Json{json::Type::eBol}.is_num(), true);
+    M_ASSERT_EQ(Json{json::Type::eBol}.is_bol(), false);
 
     // Default bool construction
-    M_ASSERT_NO_THROW(Json bool_default{Json::Bool{}});
-    M_ASSERT_EQ(Json{Json::Bool{}}.to<Json::Bool>(), false);
-    M_ASSERT_EQ(Json{Json::Bool{}}.type(), json::Type::eBool);
-    M_ASSERT_EQ(Json{Json::Bool{}}.is_num(), false);
-    M_ASSERT_EQ(Json{Json::Bool{}}.is_bol(), true);
+    M_ASSERT_NO_THROW(Json bool_default{Json::Bol{}});
+    M_ASSERT_EQ(Json{Json::Bol{}}.to<Json::Bol>(), false);
+    M_ASSERT_EQ(Json{Json::Bol{}}.type(), json::Type::eBol);
+    M_ASSERT_EQ(Json{Json::Bol{}}.is_num(), false);
+    M_ASSERT_EQ(Json{Json::Bol{}}.is_bol(), true);
 
-    // Explicit construction with Json::Bool
-    M_ASSERT_NO_THROW(Json bool_true{Json::Bool(true)});
-    M_ASSERT_NO_THROW(Json bool_false{Json::Bool(false)});
+    // Explicit construction with Json::Bol
+    M_ASSERT_NO_THROW(Json bool_true{Json::Bol(true)});
+    M_ASSERT_NO_THROW(Json bool_false{Json::Bol(false)});
 
     // Direct bool construction
     M_ASSERT_NO_THROW(Json direct_true{true});
@@ -34,10 +34,10 @@ M_TEST(Value, Bool) {
     // Implicit construction
     Json implicit_true = true;
     Json implicit_false = false;
-    M_ASSERT_EQ(implicit_true.type(), json::Type::eBool);
-    M_ASSERT_EQ(implicit_false.type(), json::Type::eBool);
-    M_ASSERT_EQ(implicit_true.to<Json::Bool>(), true);
-    M_ASSERT_EQ(implicit_false.to<Json::Bool>(), false);
+    M_ASSERT_EQ(implicit_true.type(), json::Type::eBol);
+    M_ASSERT_EQ(implicit_false.type(), json::Type::eBol);
+    M_ASSERT_EQ(implicit_true.to<Json::Bol>(), true);
+    M_ASSERT_EQ(implicit_false.to<Json::Bol>(), false);
 
     // --- Type checking ---
     Json true_val{true};
@@ -46,8 +46,8 @@ M_TEST(Value, Bool) {
     M_ASSERT_TRUE(false_val.is_bol());
     M_ASSERT_FALSE(true_val.is_str());
     M_ASSERT_FALSE(false_val.is_num());
-    M_EXPECT_STREQ( json::type_name(true_val.type()), "Bool");
-    M_EXPECT_STREQ( json::type_name(false_val.type()), "Bool");
+    M_EXPECT_STREQ( json::type_name(true_val.type()), "Bol");
+    M_EXPECT_STREQ( json::type_name(false_val.type()), "Bol");
 
     // --- Reference access ---
     M_ASSERT_EQ(true_val.bol(), true);
@@ -57,27 +57,27 @@ M_TEST(Value, Bool) {
     M_ASSERT_THROW(std::ignore = Json{Json::String("not a bool")}.bol(), std::bad_variant_access);
 
     // --- Assignment tests ---
-    Json assign_val{Json::Bool{}};
-    assign_val = Json::Bool(true);
-    M_ASSERT_EQ(assign_val.to<Json::Bool>(), true);
+    Json assign_val{Json::Bol{}};
+    assign_val = Json::Bol(true);
+    M_ASSERT_EQ(assign_val.to<Json::Bol>(), true);
     assign_val = false;
-    M_ASSERT_EQ(assign_val.to<Json::Bool>(), false);
+    M_ASSERT_EQ(assign_val.to<Json::Bol>(), false);
 
     // Direct assignment
     Json direct_assign{};
     direct_assign = true;
-    M_ASSERT_EQ(direct_assign.type(), json::Type::eBool);
-    M_ASSERT_EQ(direct_assign.to<Json::Bool>(), true);
+    M_ASSERT_EQ(direct_assign.type(), json::Type::eBol);
+    M_ASSERT_EQ(direct_assign.to<Json::Bol>(), true);
     direct_assign = false;
-    M_ASSERT_EQ(direct_assign.to<Json::Bool>(), false);
+    M_ASSERT_EQ(direct_assign.to<Json::Bol>(), false);
 
     // Reference modification
     Json mod_val{true};
     auto& bool_ref = mod_val.bol();
     bool_ref = false;
-    M_ASSERT_EQ(mod_val.to<Json::Bool>(), false);
+    M_ASSERT_EQ(mod_val.to<Json::Bol>(), false);
     bool_ref = true;
-    M_ASSERT_EQ(mod_val.to<Json::Bool>(), true);
+    M_ASSERT_EQ(mod_val.to<Json::Bol>(), true);
 
     // --- Comparison tests ---
     Json val_true1{true}, val_true2{true};
@@ -108,12 +108,12 @@ M_TEST(Value, Bool) {
     // --- Parsing tests ---
     auto parsed_true = Json::parse("true");
     M_ASSERT_TRUE(parsed_true.has_value());
-    M_ASSERT_EQ(parsed_true->type(), json::Type::eBool);
+    M_ASSERT_EQ(parsed_true->type(), json::Type::eBol);
     M_ASSERT_EQ(parsed_true->bol(), true);
 
     auto parsed_false = Json::parse("false");
     M_ASSERT_TRUE(parsed_false.has_value());
-    M_ASSERT_EQ(parsed_false->type(), json::Type::eBool);
+    M_ASSERT_EQ(parsed_false->type(), json::Type::eBol);
     M_ASSERT_EQ(parsed_false->bol(), false);
 
     // --- Type safety for conversions ---
@@ -141,20 +141,20 @@ M_TEST(Value, Bool) {
     auto serialized_true = Json{true}.dump();
     auto parsed_back_true = Json::parse(serialized_true);
     M_ASSERT_TRUE(parsed_back_true.has_value());
-    M_ASSERT_EQ(parsed_back_true->type(), json::Type::eBool);
+    M_ASSERT_EQ(parsed_back_true->type(), json::Type::eBol);
     M_ASSERT_EQ(parsed_back_true->bol(), true);
 
     auto serialized_false = Json{false}.dump();
     auto parsed_back_false = Json::parse(serialized_false);
     M_ASSERT_TRUE(parsed_back_false.has_value());
-    M_ASSERT_EQ(parsed_back_false->type(), json::Type::eBool);
+    M_ASSERT_EQ(parsed_back_false->type(), json::Type::eBol);
     M_ASSERT_EQ(parsed_back_false->bol(), false);
 
-    // --- Boolean logic consistency ---
-    M_ASSERT_TRUE(Json{true}.to<Json::Bool>());
-    M_ASSERT_FALSE(Json{false}.to<Json::Bool>());
-    M_ASSERT_TRUE(Json{true}.to<Json::Bool>() == true);
-    M_ASSERT_TRUE(Json{false}.to<Json::Bool>() == false);
-    M_ASSERT_FALSE(Json{true}.to<Json::Bool>() == false);
-    M_ASSERT_FALSE(Json{false}.to<Json::Bool>() == true);
+    // --- boolean logic consistency ---
+    M_ASSERT_TRUE(Json{true}.to<Json::Bol>());
+    M_ASSERT_FALSE(Json{false}.to<Json::Bol>());
+    M_ASSERT_TRUE(Json{true}.to<Json::Bol>() == true);
+    M_ASSERT_TRUE(Json{false}.to<Json::Bol>() == false);
+    M_ASSERT_FALSE(Json{true}.to<Json::Bol>() == false);
+    M_ASSERT_FALSE(Json{false}.to<Json::Bol>() == true);
 }

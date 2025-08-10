@@ -17,8 +17,8 @@ Resets internal data to the specified type (defaults to Nul).
     void reset() noexcept {
         if constexpr(std::is_same_v<T, Nul>) {
             m_data = Nul{};
-        } else if constexpr(std::is_same_v<T, Bool>) {
-            m_data = Bool{};
+        } else if constexpr(std::is_same_v<T, Bol>) {
+            m_data = Bol{};
         } else if constexpr(std::is_same_v<T, Number>) {
             m_data = Number{};
         } else if constexpr(std::is_same_v<T, String>) {

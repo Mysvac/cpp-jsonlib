@@ -18,7 +18,7 @@ Performs move-conversion of internal data to type `T`, returning specified defau
 2. Object → Object (move)
 3. Array → Array (move)
 4. String → String (move)
-5. Bool → Bool (copy)
+5. Bol → Bol (copy)
 6. Number → Enum (rounded)
 7. Number → Integer (rounded)
 8. Number → Floating-point

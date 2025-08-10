@@ -15,12 +15,12 @@ M_TEST(Value, Move) {
     M_ASSERT_EQ(moved_null, nullptr);
     M_ASSERT_EQ(v_null.type(), json::Type::eNul);
 
-    // Bool
+    // Bol
     Json v_true{true};
-    auto moved_bool = v_true.move<Json::Bool>();
+    auto moved_bool = v_true.move<Json::Bol>();
     M_ASSERT_EQ(moved_bool, true);
-    M_ASSERT_EQ(v_true.type(), json::Type::eBool);
-    M_ASSERT_EQ(v_true.to<Json::Bool>(), true); // 简单类型移动后仍为原值
+    M_ASSERT_EQ(v_true.type(), json::Type::eBol);
+    M_ASSERT_EQ(v_true.to<Json::Bol>(), true); // 简单类型移动后仍为原值
 
     // Number
     Json v_num{42.5};

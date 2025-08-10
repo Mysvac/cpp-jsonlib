@@ -163,7 +163,7 @@ M_TEST(Value, Object) {
         M_ASSERT_EQ( parsed_mixed->obj().size(), 4 );
         M_ASSERT_EQ( (*parsed_mixed)["number"].to<Json::Number>(), 42 );
         M_ASSERT_EQ( (*parsed_mixed)["string"].to<Json::String>(), "test" );
-        M_ASSERT_EQ( (*parsed_mixed)["boolean"].to<Json::Bool>(), true );
+        M_ASSERT_EQ( (*parsed_mixed)["boolean"].to<Json::Bol>(), true );
         M_ASSERT_EQ( (*parsed_mixed)["null_val"].type(), json::Type::eNul );
         
         // Compare with code-created mixed object

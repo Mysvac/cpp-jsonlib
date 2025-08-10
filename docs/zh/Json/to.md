@@ -17,7 +17,7 @@ However, conversion may still fail at runtime due to JSON's dynamic typing natur
 2. Object → Object
 3. Array → Array
 4. String → String
-5. Bool → Bool
+5. Bol → Bol
 6. Number → Enum (rounded to nearest integer)
 7. Number → Integer types (rounded)
 8. Number → Floating-point types
@@ -26,7 +26,7 @@ However, conversion may still fail at runtime due to JSON's dynamic typing natur
 11. Array → Implicitly convertible types
 12. String → Implicitly convertible types
 13. Number → Implicitly convertible types
-14. Bool → Implicitly convertible types
+14. Bol → Implicitly convertible types
 15. Nul → Implicitly convertible types (except bool)
 16. Object → Convertible key-value types (element-wise)
 17. Array → Convertible container types (element-wise)

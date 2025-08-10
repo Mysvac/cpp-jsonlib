@@ -9,7 +9,7 @@ concept constructible = std::disjunction_v<
     std::is_convertible<T, typename J::Object>,
     std::is_convertible<T, typename J::String>,
     std::is_convertible<T, typename J::Number>,
-    std::is_convertible<T, typename J::Bool>,
+    std::is_convertible<T, typename J::Bol>,
     std::is_convertible<T, typename J::Nul>
 >;
 ```

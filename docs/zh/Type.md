@@ -3,7 +3,7 @@
 ```cpp
 enum class Type{
     eNul = 0,
-    eBool,    
+    eBol,    
     eNumber,  
     eString,  
     eArray,   

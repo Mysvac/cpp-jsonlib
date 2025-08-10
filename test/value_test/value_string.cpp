@@ -177,7 +177,7 @@ M_TEST(Value, String) {
 
     // --- Type safety ---
     M_ASSERT_THROW(std::ignore = str_val.to<Json::Number>(), std::runtime_error);
-    M_ASSERT_THROW(std::ignore = str_val.to<Json::Bool>(), std::runtime_error);
+    M_ASSERT_THROW(std::ignore = str_val.to<Json::Bol>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = str_val.to<Json::Array>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = str_val.to<Json::Object>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = str_val.to<std::nullptr_t>(), std::runtime_error);

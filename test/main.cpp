@@ -32,7 +32,7 @@ int main() {
     std::println("Nul size: {}", sizeof(Json::Nul));
     std::println("Number size: {}", sizeof(Json::Number));
     std::println("String size: {}", sizeof(Json::String));
-    std::println("Bool size: {}", sizeof(Json::Bool));
+    std::println("Bol size: {}", sizeof(Json::Bol));
     std::println("Object size: {}", sizeof(Json::Object));
     std::println("Array size: {}", sizeof(Json::Array));
 

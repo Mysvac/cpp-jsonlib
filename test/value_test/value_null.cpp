@@ -43,7 +43,7 @@ M_TEST(Value, Nul) {
     M_ASSERT_THROW(std::ignore = Json{42.0}.nul(), std::bad_variant_access);
 
     // --- Assignment tests ---
-    Json assign_val{ Json::Bool{} };
+    Json assign_val{ Json::Bol{} };
     assign_val = nullptr;
     M_ASSERT_EQ(assign_val.type(), json::Type::eNul);
 
@@ -101,7 +101,7 @@ M_TEST(Value, Nul) {
     // --- Type safety for conversions ---
     M_ASSERT_THROW(std::ignore = null_val.to<Json::String>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = null_val.to<Json::Number>(), std::runtime_error);
-    M_ASSERT_THROW(std::ignore = null_val.to<Json::Bool>(), std::runtime_error);
+    M_ASSERT_THROW(std::ignore = null_val.to<Json::Bol>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = null_val.to<Json::Array>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = null_val.to<Json::Object>(), std::runtime_error);
 

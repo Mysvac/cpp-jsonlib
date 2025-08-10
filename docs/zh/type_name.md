@@ -18,7 +18,7 @@ Located in the `mysvac::json` namespace, this utility converts [`Type`](./Type.m
             case Type::eArray:  return "Array";
             case Type::eString: return "String";
             case Type::eNumber: return "Number";
-            case Type::eBool:   return "Bool";
+            case Type::eBol:   return "Bol";
             case Type::eNul:   return "Nul";
             default: return "Unknown Enum Value"; // should never happen
         }

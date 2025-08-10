@@ -1,13 +1,13 @@
 # **Json.bol**
 
 ```cpp
-constexpr Bool& bol() & ;
-constexpr Bool&& bol() && ;
-constexpr const Bool& bol() const & ;
-constexpr const Bool&& bol() const && ;
+constexpr Bol& bol() & ;
+constexpr Bol&& bol() && ;
+constexpr const Bol& bol() const & ;
+constexpr const Bol&& bol() const && ;
 ```
 
-Returns a reference to the internal `Bool` value.
+Returns a reference to the internal `Bol` value.
 
 **Return Value**  
 Returns a `const`/non-`const`, lvalue/rvalue reference matching the object's qualification

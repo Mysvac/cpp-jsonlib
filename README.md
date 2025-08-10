@@ -34,7 +34,7 @@ JSON 存在六种基本类型，本库使用了一个枚举来表示它们：
 ```cpp
 enum class Type{
     eNul = 0,  ///< Nul type
-    eBool,      ///< Boolean type
+    eBol,      ///< boolean type
     eNumber,    ///< Number type
     eString,    ///< String type
     eArray,     ///< Array type
@@ -74,7 +74,7 @@ namespace mysvac {
 | 别名             | 默认类型                          | 实际类型                                                                        |
 |----------------|-------------------------------|-----------------------------------------------------------------------------|
 | `Json::Nul`   | `std::nullptr_t`              | `std::nullptr_t`                                                            |
-| `Json::Bool`   | `bool`                        | `bool`                                                                      |
+| `Json::Bol`   | `bool`                        | `bool`                                                                      |
 | `Json::Number` | `double`                      | `double`                                                                    |
 | `Json::String` | `std::string`                 | `std::basic_string<...,StrAllocator<char>>`                                 |
 | `Json::Array`  | `std::vector<Json>`           | `std::vector<Json, VecAllocator<Json>>`                                     |
