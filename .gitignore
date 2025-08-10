@@ -1,11 +1,10 @@
-
-.vscode/
+.cache/
 .idea/
 .vs/
+.vscode/
 
-docs/
-build/
-vcpkg_installed/
-
+/build/
+/html/
+/site/
 CMakeUserPresets.json
-vcpkg-configuration.json
+

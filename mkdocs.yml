@@ -1,0 +1,83 @@
+site_name: mysvac-jsonlib
+site_author: Mysvac
+site_url: https://Mysvac.github.io/cpp-jsonlib/
+repo_url: https://github.com/Mysvac/cpp-jsonlib
+repo_name: Mysvac/cpp-jsonlib
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-sunny
+        name: "to dark mode"
+    - scheme: slate
+      toggle:
+        icon: material/weather-night
+        name: "to light mode"
+  features:
+    - content.code.annotate
+    - content.code.copy
+
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+
+nav:
+  - Intro: index.md
+  - namespace: zh/namespace.md
+  - concept:
+    - json_type: zh/concept/json_type.md
+    - constructible: zh/concept/constructible.md
+    - constructible_array: zh/concept/constructible_array.md
+    - constructible_map: zh/concept/constructible_map.md
+    - convertible: zh/concept/convertible.md
+    - convertible_array: zh/concept/convertible_array.md
+    - convertible_map: zh/concept/convertible_map.md
+  - Type: zh/Type.md
+  - Json:
+    - Json: zh/Json/Json.md
+    - constructor: zh/Json/constructor.md
+    - destructor: zh/Json/destructor.md
+    - operator_assign: zh/Json/operator_assign.md
+    - type: zh/Json/type.md
+    - is_nul: zh/Json/is_nul.md
+    - is_bol: zh/Json/is_bol.md
+    - is_num: zh/Json/is_num.md
+    - is_str: zh/Json/is_str.md
+    - is_arr: zh/Json/is_arr.md
+    - is_obj: zh/Json/is_obj.md
+    - nul: zh/Json/get_nul.md
+    - bol: zh/Json/get_bol.md
+    - num: zh/Json/get_num.md
+    - str: zh/Json/get_str.md
+    - arr: zh/Json/get_arr.md
+    - obj: zh/Json/get_obj.md
+    - "operator[]": zh/Json/operator_bracket.md
+    - at: zh/Json/at.md
+    - to: zh/Json/to.md
+    - to_if: zh/Json/to_if.md
+    - to_or: zh/Json/to_or.md
+    - move: zh/Json/move.md
+    - move_if: zh/Json/move_if.md
+    - move_or: zh/Json/move_or.md
+    - operator==: zh/Json/operator_eq.md
+    - parse: zh/Json/parse.md
+    - dump: zh/Json/dump.md
+    - dumpf: zh/Json/dumpf.md
+    - write: zh/Json/write.md
+    - writef: zh/Json/writef.md
+    - reset: zh/Json/reset.md
+    - size: zh/Json/size.md
+    - empty: zh/Json/empty.md
+    - contains: zh/Json/contains.md
+    - erase: zh/Json/erase.md
+    - insert: zh/Json/insert.md
+    - push_back: zh/Json/push_back.md
+    - pop_back: zh/Json/pop_back.md
+  - type_name: zh/type_name.md
+

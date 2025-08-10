@@ -1,8 +1,13 @@
+/.github export-ignore
+/docs export-ignore
+/test export-ignore
+/examples export-ignore
+/CMakePresets.json export-ignore
 
-others export-ignore
-test export-ignore
-CMakePresets.json export-ignore
-README.md export-ignore
+/README.md export-ignore
+/Doxyfile export-ignore
+/mkdocs.yml export-ignore
+
 .gitignore export-ignore
 .gitattributes export-ignore
-.github export-ignore
+

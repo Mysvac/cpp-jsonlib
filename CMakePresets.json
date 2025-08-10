@@ -1,38 +1,348 @@
 {
-    "version": 5,
-    "cmakeMinimumRequired": {
-      "major": 3,
-      "minor": 24,
-      "patch": 0
-    },
-    "configurePresets": [
-      {
-        "name": "Ninja",
-        "description": "Global config preset - base",
-        "generator": "Ninja Multi-Config",
-        "binaryDir": "${sourceDir}/build/",
-        "installDir": "${sourceDir}/build/",
-        "cacheVariables": {
-            "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
-            "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
-            "MYSVAC_JSONLIB_ENABLE_TEST": "ON",
-            "VCPKG_MANIFEST_FEATURES": "test",
-            "VCPKG_MANIFEST_MODE": "ON",
-            "CMAKE_CXX_COMPILER": "cl.exe"
-          },
-        "architecture": {
-            "value": "x64",
-            "strategy": "external"
+  "version": 10,
+  "configurePresets": [
+    {
+      "name": "ninja-base",
+      "hidden": true,
+      "description": "config-base, use Ninja, set binaryDir and installDir",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/",
+      "installDir": "${sourceDir}/install/",
+      "condition": {
+        "type": "not",
+        "condition": {
+          "type": "equals",
+          "lhs": "${hostSystemName}",
+          "rhs": "Windows"
         }
       }
-    ],
-    "buildPresets": [
+    },
+    {
+      "name": "win-msvc",
+      "description": "Windows x64 config (MSVC + Ninja Multi-Config)",
+      "inherits": "ninja-base",
+      "generator": "Ninja Multi-Config",
+      "cacheVariables": {
+        "BUILD_TESTING": "ON",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
+        "CMAKE_CXX_COMPILER": "cl.exe",
+        "CMAKE_C_COMPILER": "cl.exe"
+      },
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      }            ,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "win-clang",
+      "description": "Windows x64 config (Clang + MinGW + Ninja Multi-Config), not support STD Module",
+      "inherits": "win-msvc",
+      "generator": "Ninja Multi-Config",
+      "cacheVariables": {
+        "BUILD_TESTING": "ON",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_C_COMPILER": "clang"
+      }
+    },
+    {
+      "name": "unix-gnu-debug",
+      "description": "Linux/macOS GNU Debug config presets(GNU + Ninja)",
+      "inherits": "ninja-base",
+      "cacheVariables": {
+        "BUILD_TESTING": "ON",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_C_COMPILER": "gcc"
+      }
+    },
+    {
+      "name": "unix-gnu-release",
+      "description": "Linux/macOS GNU Release config presets(GNU + Ninja)",
+      "inherits": "ninja-base",
+      "cacheVariables": {
+        "BUILD_TESTING": "ON",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_C_COMPILER": "gcc"
+      }
+    },
+    {
+      "name": "unix-clang-debug",
+      "description": "Linux/macOS Clang Debug config presets(Clang + Ninja)",
+      "inherits": "ninja-base",
+      "cacheVariables": {
+        "BUILD_TESTING": "ON",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_CXX_FLAGS": "-stdlib=libc++",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_C_COMPILER": "clang"
+      }
+    },
+    {
+      "name": "unix-clang-release",
+      "description": "Linux/macOS Clang Release config presets(Clang + Ninja)",
+      "inherits": "ninja-base",
+      "cacheVariables": {
+        "BUILD_TESTING": "ON",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_CXX_FLAGS": "-stdlib=libc++",
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_C_COMPILER": "clang"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "win-msvc-debug",
+      "configurePreset": "win-msvc",
+      "configuration": "Debug"
+    },
+    {
+      "name": "win-msvc-release",
+      "configurePreset": "win-msvc",
+      "configuration": "Release"
+    },
+    {
+      "name": "win-clang-debug",
+      "configurePreset": "win-clang",
+      "configuration": "Debug"
+    },
+    {
+      "name": "win-clang-release",
+      "configurePreset": "win-clang",
+      "configuration": "Release"
+    },
+    {
+      "name": "unix-gnu-debug",
+      "configurePreset": "unix-gnu-debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "unix-gnu-release",
+      "configurePreset": "unix-gnu-release",
+      "configuration": "Release"
+    },
+    {
+      "name": "unix-clang-debug",
+      "configurePreset": "unix-clang-debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "unix-clang-release",
+      "configurePreset": "unix-clang-release",
+      "configuration": "Release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "default-test",
+      "hidden": true,
+      "output": {
+        "verbosity": "verbose",
+        "outputOnFailure": true
+      },
+      "execution": {
+        "timeout": 60,
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "win-msvc-debug",
+      "inherits": "default-test",
+      "configurePreset": "win-msvc",
+      "configuration": "Debug"
+    },
+    {
+      "name": "win-msvc-release",
+      "inherits": "default-test",
+      "configurePreset": "win-msvc",
+      "configuration": "Release"
+    },
+    {
+      "name": "win-clang-debug",
+      "inherits": "default-test",
+      "configurePreset": "win-clang",
+      "configuration": "Debug"
+    },
+    {
+      "name": "win-clang-release",
+      "inherits": "default-test",
+      "configurePreset": "win-clang",
+      "configuration": "Release"
+    },
+    {
+      "name": "unix-gnu-debug",
+      "inherits": "default-test",
+      "configurePreset": "unix-gnu-debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "unix-gnu-release",
+      "inherits": "default-test",
+      "configurePreset": "unix-gnu-release",
+      "configuration": "Release"
+    },
+    {
+      "name": "unix-clang-debug",
+      "inherits": "default-test",
+      "configurePreset": "unix-clang-debug",
+      "configuration": "Debug"
+    },
+    {
+      "name": "unix-clang-release",
+      "inherits": "default-test",
+      "configurePreset": "unix-clang-release",
+      "configuration": "Release"
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "win-msvc-debug",
+      "steps": [
         {
-        "name": "build-debug",
-        "displayName": "Build Debug",
-        "configurePreset": "Ninja",
-        "configuration": "Debug"
+          "type": "configure",
+          "name": "win-msvc"
+        },
+        {
+          "type": "build",
+          "name": "win-msvc-debug"
+        },
+        {
+          "type": "test",
+          "name": "win-msvc-debug"
         }
-    ]
+      ]
+    },
+    {
+      "name": "win-msvc-release",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "win-msvc"
+        },
+        {
+          "type": "build",
+          "name": "win-msvc-release"
+        },
+        {
+          "type": "test",
+          "name": "win-msvc-release"
+        }
+      ]
+    },
+    {
+      "name": "win-clang-debug",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "win-clang"
+        },
+        {
+          "type": "build",
+          "name": "win-clang-debug"
+        },
+        {
+          "type": "test",
+          "name": "win-clang-debug"
+        }
+      ]
+    },
+    {
+      "name": "win-clang-release",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "win-clang"
+        },
+        {
+          "type": "build",
+          "name": "win-clang-release"
+        },
+        {
+          "type": "test",
+          "name": "win-clang-release"
+        }
+      ]
+    },
+    {
+      "name": "unix-gnu-debug",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "unix-gnu-debug"
+        },
+        {
+          "type": "build",
+          "name": "unix-gnu-debug"
+        },
+        {
+          "type": "test",
+          "name": "unix-gnu-debug"
+        }
+      ]
+    },
+    {
+      "name": "unix-gnu-release",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "unix-gnu-release"
+        },
+        {
+          "type": "build",
+          "name": "unix-gnu-release"
+        },
+        {
+          "type": "test",
+          "name": "unix-gnu-release"
+        }
+      ]
+    },
+    {
+      "name": "unix-clang-debug",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "unix-clang-debug"
+        },
+        {
+          "type": "build",
+          "name": "unix-clang-debug"
+        },
+        {
+          "type": "test",
+          "name": "unix-clang-debug"
+        }
+      ]
+    },
+    {
+      "name": "unix-clang-release",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "unix-clang-release"
+        },
+        {
+          "type": "build",
+          "name": "unix-clang-release"
+        },
+        {
+          "type": "test",
+          "name": "unix-clang-release"
+        }
+      ]
+    }
+  ]
 }
-  
