@@ -2,3 +2,22 @@
 
 include(${CMAKE_CURRENT_LIST_DIR}/mysvac-jsonlib-targets.cmake)
 check_required_components(mysvac-jsonlib)
+
+set(MYSVAC_INCLUDE_DIR "${PACKAGE_PREFIX_DIR}/include")
+set(MYSVAC_DIR         "${MYSVAC_INCLUDE_DIR}/mysvac")
+set(MYSVAC_JSON_DIR    "${MYSVAC_INCLUDE_DIR}/mysvac")
+set(MYSVAC_JSON_MODULES "${MYSVAC_JSON_DIR}/json.ixx")
+
+function(target_link_mysvac_jsonlib target visibility)
+    if(NOT TARGET ${target})
+        message(FATAL_ERROR "Target '${target}' does not exist!")
+    endif()
+    # add module target
+    target_link_libraries(${target} ${visibility} mysvac::jsonlib)
+    target_sources(${target} ${visibility}
+        FILE_SET mysvac_json_cxx_modules
+        TYPE CXX_MODULES
+        BASE_DIRS ${MYSVAC_JSON_DIR}
+        FILES ${MYSVAC_JSON_MODULES}
+    )
+endfunction()

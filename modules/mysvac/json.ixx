@@ -7,8 +7,9 @@
  */
 module;
 
-#ifndef M_MYSVAC_STD_MODULE
+#ifndef M_MYSVAC_JSON_ENABLE_STD_MODULE
 
+#include <cctype>
 #include <cmath>
 #include <cstdint>
 #include <charconv>
@@ -31,7 +32,7 @@ module;
 
 export module mysvac.json;
 
-#ifdef M_MYSVAC_STD_MODULE
+#ifdef M_MYSVAC_JSON_ENABLE_STD_MODULE
 
 import std;
 
@@ -65,6 +66,8 @@ namespace mysvac::json {
         for (int i = 0; i <= 5; ++i) table['a' + i] = 10 + i;
         return table;
     }();
+
+    constexpr char hex_digits[] = "0123456789abcdef";
 }
 
 /**
@@ -286,12 +289,14 @@ export namespace mysvac::json {
                     case '\"': out.append(R"(\")"); break;
                     case '\r': out.append(R"(\r)"); break;
                     case '\n': out.append(R"(\n)"); break;
-                    case '\f': out.append(R"(\f)"); break;
+                    // case '\f': out.append(R"(\f)"); break; // do not support `\f` for better performance
                     case '\t': out.append(R"(\t)"); break;
-                    case '\b': out.append(R"(\b)"); break;
+                    // case '\b': out.append(R"(\b)"); break; // do not support `\b` for better performance
                     default: {
                         if (static_cast<unsigned char>(c) < 0x20) {
-                            out.append(std::format("\\u{:04x}", static_cast<unsigned char>(c)));
+                            out.append(R"(\u00)");
+                            out.push_back(hex_digits[c >> 4]);
+                            out.push_back(hex_digits[c & 0x0F]);
                         } else out.push_back(c);
                     } break;
                 }
@@ -312,12 +317,14 @@ export namespace mysvac::json {
                     case '\"': out << R"(\")"; break;
                     case '\r': out << R"(\r)"; break;
                     case '\n': out << R"(\n)"; break;
-                    case '\f': out << R"(\f)"; break;
+                    // case '\f': out << R"(\f)"; break; // do not support `\f` for better performance
                     case '\t': out << R"(\t)"; break;
-                    case '\b': out << R"(\b)"; break;
+                    // case '\b': out << R"(\b)"; break; // do not support `\b` for better performance
                     default: {
                         if (static_cast<unsigned char>(c) < 0x20) {
-                            out << std::format("\\u{:04x}", static_cast<unsigned char>(c));
+                            out << R"(\u00)";
+                            out.put(hex_digits[c >> 4]);
+                            out.put(hex_digits[c & 0x0F]);
                         } else out.put(c);
                     } break;
                 }
@@ -467,11 +474,9 @@ export namespace mysvac::json {
                         case 'u': case 'U': if (!unescape_unicode_next(res, it, end_ptr)) return std::nullopt; break;
                         default: return std::nullopt;
                     }
-                } else if ( *it == '\b' || *it == '\n' || *it == '\f' || *it == '\r' /* || *it == '\t' */) {
-                    return std::nullopt;
-                } else {
-                    res.push_back( *it );
-                }
+                // } else if ( *it == '\b' || *it == '\n' || *it == '\f' || *it == '\r' /* || *it == '\t' */) {
+                //     return std::nullopt;
+                } else res.push_back( *it );
                 ++it;
             }
             if(it == end_ptr) return std::nullopt;
@@ -1676,7 +1681,7 @@ export namespace mysvac::json {
         requires std::convertible_to<K, Str> && std::convertible_to<V, Json>
         bool insert(K&& key, V&& value) noexcept {
             if (type() == Type::eObj) {
-                std::get<Obj>(m_data).insert(static_cast<Str>(std::forward<K>(key)), static_cast<Json>(std::forward<V>(value)));
+                std::get<Obj>(m_data).emplace(static_cast<Str>(std::forward<K>(key)), static_cast<Json>(std::forward<V>(value)));
                 return true;
             }
             return false;
@@ -1692,7 +1697,7 @@ export namespace mysvac::json {
         requires std::convertible_to<V, Json>
         bool insert(const std::size_t index, V&& value) noexcept {
             if (type() == Type::eArr && index <= std::get<Arr>(m_data).size()) {
-                std::get<Arr>(m_data).insert(std::get<Arr>(m_data).begin() + index, static_cast<Json>(std::forward<V>(value)));
+                std::get<Arr>(m_data).emplace(std::get<Arr>(m_data).begin() + index, static_cast<Json>(std::forward<V>(value)));
                 return true;
             }
             return false;
@@ -1707,7 +1712,7 @@ export namespace mysvac::json {
         requires std::convertible_to<V, Json>
         bool push_back(V&& value) noexcept {
             if (type() == Type::eArr) {
-                std::get<Arr>(m_data).push_back( static_cast<Json>(std::forward<V>(value)) );
+                std::get<Arr>(m_data).emplace_back( static_cast<Json>(std::forward<V>(value)) );
                 return true;
             }
             return false;
