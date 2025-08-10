@@ -63,11 +63,12 @@ target_include_directories(${lib_name} INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>   # Path during build
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>         # Path after installation
 )
+target_compile_features(${lib_name} PUBLIC cxx_std_20)
 
 # Dynamic library configuration (optional)
 # Configure additional properties when building as a shared library
 if(BUILD_SHARED_LIBS)
-    set_target_properties(${PROJECT_NAME} PROPERTIES
+    set_target_properties(${lib_name} PROPERTIES
         WINDOWS_EXPORT_ALL_SYMBOLS ON               # Export all symbols on Windows (no explicit __declspec needed)
         VERSION ${PROJECT_VERSION}                  # Set the library version (used for .so.x.y.z on Linux)
         SOVERSION ${PROJECT_VERSION_MAJOR}          # Set the ABI version (used for .so.x on Linux)
@@ -125,8 +126,6 @@ install(FILES
 # Testing configuration (optional)
 # Enable testing support
 if(MYSVAC_JSONLIB_ENABLE_TEST)
-    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-    set(CMAKE_CXX_STANDARD 23)
     if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/test/CMakeLists.txt)
         enable_testing()                                # Enable CTest integration
         add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)    # Add test subdirectory

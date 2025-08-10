@@ -1676,7 +1676,7 @@ export namespace mysvac::json {
         requires std::convertible_to<K, Str> && std::convertible_to<V, Json>
         bool insert(K&& key, V&& value) noexcept {
             if (type() == Type::eObj) {
-                std::get<Obj>(m_data).emplace(static_cast<Str>(std::forward<K>(key)), static_cast<Json>(std::forward<V>(value)));
+                std::get<Obj>(m_data).insert(static_cast<Str>(std::forward<K>(key)), static_cast<Json>(std::forward<V>(value)));
                 return true;
             }
             return false;
@@ -1692,7 +1692,7 @@ export namespace mysvac::json {
         requires std::convertible_to<V, Json>
         bool insert(const std::size_t index, V&& value) noexcept {
             if (type() == Type::eArr && index <= std::get<Arr>(m_data).size()) {
-                std::get<Arr>(m_data).emplace(std::get<Arr>(m_data).begin() + index, static_cast<Json>(std::forward<V>(value)));
+                std::get<Arr>(m_data).insert(std::get<Arr>(m_data).begin() + index, static_cast<Json>(std::forward<V>(value)));
                 return true;
             }
             return false;
@@ -1707,7 +1707,7 @@ export namespace mysvac::json {
         requires std::convertible_to<V, Json>
         bool push_back(V&& value) noexcept {
             if (type() == Type::eArr) {
-                std::get<Arr>(m_data).emplace_back( static_cast<Json>(std::forward<V>(value)) );
+                std::get<Arr>(m_data).push_back( static_cast<Json>(std::forward<V>(value)) );
                 return true;
             }
             return false;
