@@ -8,9 +8,9 @@ bool erase(const Str& key) noexcept;
 bool erase(const std::size_t index) noexcept;
 ```
 
-1. If the internal data type is `Object`, delete the key-value pair for the specified key. If the type does not match or the key does not exist, return `false` (no exception will be thrown). Return `true` if the deletion succeeds.
+1. If the internal data type is `Obj`, delete the key-value pair for the specified key. If the type does not match or the key does not exist, return `false` (no exception will be thrown). Return `true` if the deletion succeeds.
 
-2. If the internal data type is `Array`, delete the element at the specified index. If the type does not match or the index is out of bounds, return `false` (no exception will be thrown). Return `true` if the deletion succeeds.
+2. If the internal data type is `Arr`, delete the element at the specified index. If the type does not match or the index is out of bounds, return `false` (no exception will be thrown). Return `true` if the deletion succeeds.
 
 ## Exceptions
 

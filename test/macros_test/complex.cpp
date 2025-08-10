@@ -98,9 +98,9 @@ M_TEST(Macros, Complex) {
 
 
     // 2. 反序列化
-    Json v2{ Json::Object{} };
+    Json v2{ Json::Obj{} };
     v2["value"] = 2.718;
-    v2["inner"] = Json::Object{};
+    v2["inner"] = Json::Obj{};
     v2["inner"]["id"] = 42;
     v2["inner"]["name"] = "world";
     v2["inner"]["flag"] = true;
@@ -113,7 +113,7 @@ M_TEST(Macros, Complex) {
     M_ASSERT_EQ(o2.desc, "macro");
 
     // 3. 默认值测试
-    Json v3{ Json::Object{} };
+    Json v3{ Json::Obj{} };
     v3["value"] = 1.0;
     // inner未设置，desc未设置
     OuterType o3{ v3 };
@@ -149,14 +149,14 @@ M_TEST(Macros, Complex) {
     M_ASSERT_EQ(o5.desc, "outer");
 }
 
-M_TEST(Macros, ComplexArrayMap) {
+M_TEST(Macros, ComplexArrMap) {
     // InnerType数组
     std::vector<InnerType> inner_vec{
         InnerType{1, "A", true},
         InnerType{2, "B", false}
     };
     Json v_inner_vec{inner_vec};
-    M_ASSERT_EQ(v_inner_vec.type(), json::Type::eArray);
+    M_ASSERT_EQ(v_inner_vec.type(), json::Type::eArr);
     auto back_vec = v_inner_vec.to<std::vector<InnerType>>( InnerType{ });
     M_ASSERT_EQ(back_vec.size(), 2);
     M_ASSERT_EQ(back_vec[0].id, 1);
@@ -172,7 +172,7 @@ M_TEST(Macros, ComplexArrayMap) {
         {"y", InnerType{4, "Y", false}}
     };
     Json v_inner_map{inner_map};
-    M_ASSERT_EQ(v_inner_map.type(), json::Type::eObject);
+    M_ASSERT_EQ(v_inner_map.type(), json::Type::eObj);
     auto back_map = v_inner_map.to<std::map<std::string, InnerType>>( InnerType{} );
     M_ASSERT_EQ(back_map.size(), 2);
     M_ASSERT_EQ(back_map["x"].id, 3);
@@ -188,7 +188,7 @@ M_TEST(Macros, ComplexArrayMap) {
         OuterType{2.2, InnerType{6, "W", false}, "desc2"}
     };
     Json v_outer_vec{outer_vec};
-    M_ASSERT_EQ(v_outer_vec.type(), json::Type::eArray);
+    M_ASSERT_EQ(v_outer_vec.type(), json::Type::eArr);
     auto back_outer_vec = v_outer_vec.to<std::vector<OuterType>>( OuterType{} );
     M_ASSERT_EQ(back_outer_vec.size(), 2);
     M_ASSERT_EQ(back_outer_vec[0].value, 1.1);
@@ -204,7 +204,7 @@ M_TEST(Macros, ComplexArrayMap) {
         {"b", OuterType{4.4, InnerType{8, "B", false}, "descB"}}
     };
     Json v_outer_map{outer_map};
-    M_ASSERT_EQ(v_outer_map.type(), json::Type::eObject);
+    M_ASSERT_EQ(v_outer_map.type(), json::Type::eObj);
     auto back_outer_map = v_outer_map.to<std::map<std::string, OuterType>>( OuterType{} );
     M_ASSERT_EQ(back_outer_map.size(), 2);
     M_ASSERT_EQ(back_outer_map["a"].value, 3.3);
@@ -217,7 +217,7 @@ M_TEST(Macros, ComplexArrayMap) {
 
 M_TEST(Macros, ComplexDefaultBehavior) {
     // 默认构造，未设置 inner
-    Json v_obj{ Json::Object{} };
+    Json v_obj{ Json::Obj{} };
     v_obj["value"] = 1.23;
     // 不设置 inner
     OuterType o1{v_obj};

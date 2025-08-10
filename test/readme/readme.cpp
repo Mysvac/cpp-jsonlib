@@ -54,20 +54,20 @@ M_TEST(README, readme) {
     // {
     //     Json null_val;                  // 默认构造，类型为 Nul
     //     Json bool_val(3.3);             // 浮点初始化，类型为 Num
-    //     Json obj_val = Json::Object{};  // 直接使用 Object 初始化
+    //     Json obj_val = Json::Obj{};  // 直接使用 Obj 初始化
     //
-    //     Json enum_val{ json::Type::eObject }; // 危险
+    //     Json enum_val{ json::Type::eObj }; // 危险
     //
-    //     Json smp_val = Json::Object{
+    //     Json smp_val = Json::Obj{
     //     { "key1", 42 },
     //     {"key2", "value2"},
     //     {"key3", true },
-    //     {"arr", Json::Array{ { 2, 3.14, nullptr } } },
-    //     {"obj", Json::Object{ {"nested_k", "nested_v"} } }
+    //     {"arr", Json::Arr{ { 2, 3.14, nullptr } } },
+    //     {"obj", Json::Obj{ {"nested_k", "nested_v"} } }
     //     };
     //
-    //     std::ignore = smp_val.type();        // 返回 Type::eObject
-    //     std::ignore = json::type_name(smp_val.type());  // 返回 "Object"
+    //     std::ignore = smp_val.type();        // 返回 Type::eObj
+    //     std::ignore = json::type_name(smp_val.type());  // 返回 "Obj"
     //     std::ignore = smp_val.is_arr();     // 返回 false
     //
     //     Json& vi_42 = smp_val.obj()["key1"];
@@ -101,9 +101,9 @@ M_TEST(README, readme) {
     //     val1.writef( std::cout ); // 输出到 `ostream`
     //     // 还有 writef 写入字符串末尾，此处省略
     //
-    //     Json val_arr_1 = Json::Array{{ 1, 2, 3 }};
-    //     Json val_arr_2 = Json::Array{{ 1, 2, 3 }};
-    //     Json val_arr_3 = Json::Array{{ 1, true, 3 }};
+    //     Json val_arr_1 = Json::Arr{{ 1, 2, 3 }};
+    //     Json val_arr_2 = Json::Arr{{ 1, 2, 3 }};
+    //     Json val_arr_3 = Json::Arr{{ 1, true, 3 }};
     //     val_arr_1 == val_arr_2; // true
     //     val_arr_1 == val_arr_3; // false
     //
@@ -116,7 +116,7 @@ M_TEST(README, readme) {
     //     MyData d_null{ v_null }; // 什么都没有，因此全部字段都是 CS 中的默认值
     //     d_null.active; // true，因为 CS 函数指定了默认值为 true
     //
-    //     Json v_object{ Json::Object{} };
+    //     Json v_object{ Json::Obj{} };
     //     v_object["id"] = 42;
     //     v_object["name"] = "Test User";
     //     v_object["active"] = false;

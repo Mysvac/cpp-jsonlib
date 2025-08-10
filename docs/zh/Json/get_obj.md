@@ -1,13 +1,13 @@
 # **Json.obj**
 
 ```cpp
-constexpr Object& obj() & ;
-constexpr Object&& obj() && ;
-constexpr const Object& obj() const & ;
-constexpr const Object&& obj() const && ;
+constexpr Obj& obj() & ;
+constexpr Obj&& obj() && ;
+constexpr const Obj& obj() const & ;
+constexpr const Obj&& obj() const && ;
 ```
 
-Returns a reference to the internal `Object` value.
+Returns a reference to the internal `Obj` value.
 
 **Return Value**  
 Returns a reference with matching const-qualification and value category (lvalue/rvalue) to the stored object

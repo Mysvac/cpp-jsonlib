@@ -77,11 +77,11 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_EQ(result_null->type(), json::Type::eNul);
     }
 
-    // --- Array parsing ---
+    // --- Arr parsing ---
     {
         auto result_array = Json::parse("[1, 2, 3]");
         M_ASSERT_TRUE(result_array.has_value());
-        M_ASSERT_EQ(result_array->type(), json::Type::eArray);
+        M_ASSERT_EQ(result_array->type(), json::Type::eArr);
         M_ASSERT_EQ(result_array->arr().size(), 3);
         M_ASSERT_EQ((*result_array)[0].to<Json::Num>(), 1);
         M_ASSERT_EQ((*result_array)[1].to<Json::Num>(), 2);
@@ -90,14 +90,14 @@ M_TEST(Value, Deserialize) {
     {
         auto result_empty_array = Json::parse("[]");
         M_ASSERT_TRUE(result_empty_array.has_value());
-        M_ASSERT_EQ(result_empty_array->type(), json::Type::eArray);
+        M_ASSERT_EQ(result_empty_array->type(), json::Type::eArr);
         M_ASSERT_EQ(result_empty_array->arr().size(), 0);
     }
     // Mixed array
     {
         auto result_mixed_array = Json::parse("[1, \"hello\", true, null, false]");
         M_ASSERT_TRUE(result_mixed_array.has_value());
-        M_ASSERT_EQ(result_mixed_array->type(), json::Type::eArray);
+        M_ASSERT_EQ(result_mixed_array->type(), json::Type::eArr);
         M_ASSERT_EQ(result_mixed_array->arr().size(), 5);
         M_ASSERT_EQ((*result_mixed_array)[0].to<Json::Num>(), 1);
         M_ASSERT_EQ((*result_mixed_array)[1].to<Json::Str>(), "hello");
@@ -106,11 +106,11 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_EQ((*result_mixed_array)[4].to<Json::Bol>(), false);
     }
 
-    // --- Object parsing ---
+    // --- Obj parsing ---
     {
         auto result_object = Json::parse(R"({"name": "John", "age": 30})");
         M_ASSERT_TRUE(result_object.has_value());
-        M_ASSERT_EQ(result_object->type(), json::Type::eObject);
+        M_ASSERT_EQ(result_object->type(), json::Type::eObj);
         M_ASSERT_EQ(result_object->obj().size(), 2);
         M_ASSERT_TRUE(result_object->obj().contains("name"));
         M_ASSERT_TRUE(result_object->obj().contains("age"));
@@ -120,7 +120,7 @@ M_TEST(Value, Deserialize) {
     {
         auto result_empty_object = Json::parse("{}");
         M_ASSERT_TRUE(result_empty_object.has_value());
-        M_ASSERT_EQ(result_empty_object->type(), json::Type::eObject);
+        M_ASSERT_EQ(result_empty_object->type(), json::Type::eObj);
         M_ASSERT_EQ(result_empty_object->obj().size(), 0);
     }
 
@@ -143,7 +143,7 @@ M_TEST(Value, Deserialize) {
         })";
         auto result_nested_object = Json::parse(json_str);
         M_ASSERT_TRUE(result_nested_object.has_value());
-        M_ASSERT_EQ(result_nested_object->type(), json::Type::eObject);
+        M_ASSERT_EQ(result_nested_object->type(), json::Type::eObj);
         M_ASSERT_EQ(result_nested_object->obj().size(), 2);
         // Deep access
         M_ASSERT_EQ((*result_nested_object)["user"]["id"].to<Json::Num>(), 123);
@@ -168,7 +168,7 @@ M_TEST(Value, Deserialize) {
         ])";
         auto result_nested_array = Json::parse(json_str);
         M_ASSERT_TRUE(result_nested_array.has_value());
-        M_ASSERT_EQ(result_nested_array->type(), json::Type::eArray);
+        M_ASSERT_EQ(result_nested_array->type(), json::Type::eArr);
         M_ASSERT_EQ(result_nested_array->arr().size(), 4);
         // Nested array access
         M_ASSERT_EQ((*result_nested_array)[0].arr().size(), 3);
@@ -240,7 +240,7 @@ M_TEST(Value, Deserialize) {
         })";
         auto result_complex = Json::parse(json_str);
         M_ASSERT_TRUE(result_complex.has_value());
-        M_ASSERT_EQ(result_complex->type(), json::Type::eObject);
+        M_ASSERT_EQ(result_complex->type(), json::Type::eObj);
         M_ASSERT_EQ(result_complex->obj().size(), 3);
         // Complex access patterns
         M_ASSERT_EQ((*result_complex)["application"]["name"].to<Json::Str>(), "TestApp");
@@ -284,7 +284,7 @@ M_TEST(Value, Deserialize) {
         )";
         auto result_whitespace = Json::parse(json_str);
         M_ASSERT_TRUE(result_whitespace.has_value());
-        M_ASSERT_EQ(result_whitespace->type(), json::Type::eObject);
+        M_ASSERT_EQ(result_whitespace->type(), json::Type::eObj);
         M_ASSERT_EQ(result_whitespace->obj().size(), 4);
         M_ASSERT_EQ((*result_whitespace)["name"].to<Json::Str>(), "test");
         M_ASSERT_EQ((*result_whitespace)["value"].to<Json::Num>(), 123);
@@ -295,13 +295,13 @@ M_TEST(Value, Deserialize) {
 
     // --- Round-trip serialization/deserialization ---
     {
-        Json original = Json::Object{
+        Json original = Json::Obj{
             {"string", "hello"},
             {"number", 42.5},
             {"bool", true},
             {"null", nullptr},
-            {"array", Json::Array{1, 2, 3}},
-            {"object", Json::Object{{"nested", "value"}}}
+            {"array", Json::Arr{1, 2, 3}},
+            {"object", Json::Obj{{"nested", "value"}}}
         };
         auto serialized = original.dump();
         M_ASSERT_TRUE(!serialized.empty());

@@ -7,55 +7,55 @@ using namespace mysvac;
 
 M_TEST(Value, Complex) {
     // Test complex nested structures with all 6 JSON types
-    // Num, Str, Bol, Nul, Array, Object
+    // Num, Str, Bol, Nul, Arr, Obj
 
-    Json complex_data = Json::Object{
-        {"application", Json::Object{
+    Json complex_data = Json::Obj{
+        {"application", Json::Obj{
             {"name", "MyApp"},
             {"version", "2.1.0"},
             {"active", true},
-            {"config", Json::Object{
+            {"config", Json::Obj{
                 {"debug", false},
                 {"port", 8080},
                 {"host", "localhost"},
-                {"features", Json::Array{{
-                    Json::Object{{"name", "auth"}, {"enabled", true}, {"priority", 1}},
-                    Json::Object{{"name", "logging"}, {"enabled", false}, {"priority", 2}},
-                    Json::Object{{"name", "cache"}, {"enabled", true}, {"priority", 3}}
+                {"features", Json::Arr{{
+                    Json::Obj{{"name", "auth"}, {"enabled", true}, {"priority", 1}},
+                    Json::Obj{{"name", "logging"}, {"enabled", false}, {"priority", 2}},
+                    Json::Obj{{"name", "cache"}, {"enabled", true}, {"priority", 3}}
                 }}},
-                {"database", Json::Object{
+                {"database", Json::Obj{
                     {"type", "postgresql"},
-                    {"connection", Json::Object{
+                    {"connection", Json::Obj{
                         {"host", "db.example.com"},
                         {"port", 5432},
                         {"database", "myapp_db"},
                         {"ssl", true},
-                        {"pool", Json::Object{
+                        {"pool", Json::Obj{
                             {"min", 5},
                             {"max", 20},
                             {"idle_timeout", 30000},
                             {"connection_timeout", nullptr}
                         }}
                     }},
-                    {"migrations", Json::Array{{
-                        Json::Object{{"version", "001"}, {"applied", true}, {"timestamp", 1640995200}},
-                        Json::Object{{"version", "002"}, {"applied", true}, {"timestamp", 1641081600}},
-                        Json::Object{{"version", "003"}, {"applied", false}, {"timestamp", nullptr}}
+                    {"migrations", Json::Arr{{
+                        Json::Obj{{"version", "001"}, {"applied", true}, {"timestamp", 1640995200}},
+                        Json::Obj{{"version", "002"}, {"applied", true}, {"timestamp", 1641081600}},
+                        Json::Obj{{"version", "003"}, {"applied", false}, {"timestamp", nullptr}}
                     }}}
                 }}
             }}
         }},
-        { "users" , Json::Array{{
-                Json::Object{
+        { "users" , Json::Arr{{
+                Json::Obj{
                     {"id", 1},
                     {"name", "John Doe"},
                     {"email", "john@example.com"},
                     {"active", true},
-                    {"permissions", Json::Array{{"read", "write", "admin"}}},
-                    {"profile", Json::Object{
+                    {"permissions", Json::Arr{{"read", "write", "admin"}}},
+                    {"profile", Json::Obj{
                         {"age", 30},
                         {"country", "USA"},
-                        {"preferences", Json::Object{
+                        {"preferences", Json::Obj{
                             {"theme", "dark"},
                             {"notifications", true},
                             {"language", "en"},
@@ -65,16 +65,16 @@ M_TEST(Value, Complex) {
                     {"last_login", 1640995200},
                     {"metadata", nullptr}
             }},
-            Json::Object{
+            Json::Obj{
                 {"id", 2},
                 {"name", "Jane Smith"},
                 {"email", "jane@example.com"},
                 {"active", false},
-                {"permissions", Json::Array{{"read"}}},
-                {"profile", Json::Object{
+                {"permissions", Json::Arr{{"read"}}},
+                {"profile", Json::Obj{
                     {"age", 25},
                     {"country", "Canada"},
-                    {"preferences", Json::Object{
+                    {"preferences", Json::Obj{
                         {"theme", "light"},
                         {"notifications", false},
                         {"language", "fr"},
@@ -82,23 +82,23 @@ M_TEST(Value, Complex) {
                     }}
                 }},
                 {"last_login", nullptr},
-                {"metadata", Json::Object{{"notes", "Inactive user"}, {"created", 1640908800}}}
+                {"metadata", Json::Obj{{"notes", "Inactive user"}, {"created", 1640908800}}}
             }
         }},
-        {"statistics", Json::Object{
+        {"statistics", Json::Obj{
             {"total_users", 2},
             {"active_users", 1},
             {"avg_login_time", 1640995200},
-            {"performance", Json::Object{
-                {"response_times", Json::Array{{120, 85, 95, 110, 88}}},
-                {"error_rates", Json::Array{{0.01, 0.02, 0.015, 0.008, 0.012}}},
+            {"performance", Json::Obj{
+                {"response_times", Json::Arr{{120, 85, 95, 110, 88}}},
+                {"error_rates", Json::Arr{{0.01, 0.02, 0.015, 0.008, 0.012}}},
                 {"uptime", 99.95},
                 {"last_restart", nullptr}
             }},
-            {"features_usage", Json::Array{{
-                Json::Object{{"feature", "auth"}, {"usage_count", 1500}, {"success_rate", 0.98}},
-                Json::Object{{"feature", "logging"}, {"usage_count", 0}, {"success_rate", nullptr}},
-                Json::Object{{"feature", "cache"}, {"usage_count", 800}, {"success_rate", 0.95}}
+            {"features_usage", Json::Arr{{
+                Json::Obj{{"feature", "auth"}, {"usage_count", 1500}, {"success_rate", 0.98}},
+                Json::Obj{{"feature", "logging"}, {"usage_count", 0}, {"success_rate", nullptr}},
+                Json::Obj{{"feature", "cache"}, {"usage_count", 800}, {"success_rate", 0.95}}
             }}}
         }}
         // Additional nested structures can be added here
@@ -106,7 +106,7 @@ M_TEST(Value, Complex) {
     
     
     // Test basic structure validation
-    M_ASSERT_EQ( complex_data.type(), json::Type::eObject );
+    M_ASSERT_EQ( complex_data.type(), json::Type::eObj );
     M_ASSERT_TRUE( complex_data.is_obj() );
     M_ASSERT_FALSE( complex_data.is_nul() );
     M_ASSERT_FALSE( complex_data.is_num() );
@@ -125,7 +125,7 @@ M_TEST(Value, Complex) {
     M_ASSERT_EQ( complex_data["application"]["config"]["port"].to<Json::Num>(), 8080 );
     
     // Test array access within nested structure
-    M_ASSERT_EQ( complex_data["application"]["config"]["features"].type(), json::Type::eArray );
+    M_ASSERT_EQ( complex_data["application"]["config"]["features"].type(), json::Type::eArr );
     M_ASSERT_EQ( complex_data["application"]["config"]["features"].arr().size(), 3 );
     M_ASSERT_EQ( complex_data["application"]["config"]["features"][0]["name"].to<Json::Str>(), "auth" );
     M_ASSERT_EQ( complex_data["application"]["config"]["features"][0]["enabled"].to<Json::Bol>(), true );
@@ -143,7 +143,7 @@ M_TEST(Value, Complex) {
     M_ASSERT_EQ( complex_data["application"]["config"]["database"]["migrations"][2]["timestamp"].type(), json::Type::eNul );
     
     // Test users array access
-    M_ASSERT_EQ( complex_data["users"].type(), json::Type::eArray );
+    M_ASSERT_EQ( complex_data["users"].type(), json::Type::eArr );
     M_ASSERT_EQ( complex_data["users"].arr().size(), 2 );
     M_ASSERT_EQ( complex_data["users"][0]["name"].to<Json::Str>(), "John Doe" );
     M_ASSERT_EQ( complex_data["users"][0]["permissions"].arr().size(), 3 );
@@ -194,12 +194,12 @@ M_TEST(Value, Complex) {
     M_ASSERT_EQ( complex_data.at("users").at(1).at("active").to<Json::Bol>(), true );
     
     // Test adding new nested elements
-    complex_data["application"]["config"]["new_feature"] = Json::Object{
+    complex_data["application"]["config"]["new_feature"] = Json::Obj{
         {"name", "monitoring"},
         {"enabled", true},
-        {"settings", Json::Array{{
-            Json::Object{{"metric", "cpu"}, {"threshold", 0.8}},
-            Json::Object{{"metric", "memory"}, {"threshold", 0.9}}
+        {"settings", Json::Arr{{
+            Json::Obj{{"metric", "cpu"}, {"threshold", 0.8}},
+            Json::Obj{{"metric", "memory"}, {"threshold", 0.9}}
         }}}
     };
     
@@ -230,7 +230,7 @@ M_TEST(Value, Complex) {
         Json::Num(1),
         Json::Str("two"),
         Json::Bol(false),
-        Json::Object{{"nested", "value"}}
+        Json::Obj{{"nested", "value"}}
     };
     
     std::string test_string = "movable_string";
@@ -240,13 +240,13 @@ M_TEST(Value, Complex) {
     Json moved_array{std::move(test_vector)};
     Json moved_string{std::move(test_string)};
     
-    M_ASSERT_EQ( moved_object.type(), json::Type::eObject );
+    M_ASSERT_EQ( moved_object.type(), json::Type::eObj );
     M_ASSERT_EQ( moved_object.obj().size(), 3 );
     M_ASSERT_EQ( moved_object["key1"].to<Json::Num>(), 100 );
     M_ASSERT_EQ( moved_object["key2"].to<Json::Str>(), "value2" );
     M_ASSERT_EQ( moved_object["key3"].to<Json::Bol>(), true );
     
-    M_ASSERT_EQ( moved_array.type(), json::Type::eArray );
+    M_ASSERT_EQ( moved_array.type(), json::Type::eArr );
     M_ASSERT_EQ( moved_array.arr().size(), 4 );
     M_ASSERT_EQ( moved_array[0].to<Json::Num>(), 1 );
     M_ASSERT_EQ( moved_array[1].to<Json::Str>(), "two" );
@@ -262,25 +262,25 @@ M_TEST(Value, Complex) {
     std::map<std::string, Json> another_map{{"move_key", Json::Num(999)}};
     move_target = std::move(another_map);
     
-    M_ASSERT_EQ( move_target.type(), json::Type::eObject );
+    M_ASSERT_EQ( move_target.type(), json::Type::eObj );
     M_ASSERT_EQ( move_target.obj().size(), 1 );
     M_ASSERT_EQ( move_target["move_key"].to<Json::Num>(), 999 );
     
     // Test complex structure with move semantics
     std::vector<Json> complex_array{
-        Json::Object{
-            {"item1", Json::Array{{1, 2, 3}}},
-            {"item2", Json::Object{{"nested", true}}}
+        Json::Obj{
+            {"item1", Json::Arr{{1, 2, 3}}},
+            {"item2", Json::Obj{{"nested", true}}}
         },
-        Json::Array{{
+        Json::Arr{{
             Json::Str("first"),
             42,
-            Json::Object{{"deep", Json::Array{{"very", "deep", "nesting"}}}}
+            Json::Obj{{"deep", Json::Arr{{"very", "deep", "nesting"}}}}
         }}
     };
     
     Json moved_complex{std::move(complex_array)};
-    M_ASSERT_EQ( moved_complex.type(), json::Type::eArray );
+    M_ASSERT_EQ( moved_complex.type(), json::Type::eArr );
     M_ASSERT_EQ( moved_complex.arr().size(), 2 );
     M_ASSERT_EQ( moved_complex[0]["item1"].arr().size(), 3 );
     M_ASSERT_EQ( moved_complex[0]["item1"][0].to<Json::Num>(), 1 );
@@ -289,15 +289,15 @@ M_TEST(Value, Complex) {
     M_ASSERT_EQ( moved_complex[1][2]["deep"][0].to<Json::Str>(), "very" );
     
     // Test get<T>() with complex structures (returns copies)
-    auto complex_obj_copy = complex_data.to<Json::Object>();
+    auto complex_obj_copy = complex_data.to<Json::Obj>();
     M_ASSERT_EQ( complex_obj_copy.size(), 3 );
     M_ASSERT_TRUE( complex_obj_copy.contains("application") );
     
-    auto users_array_copy = complex_data["users"].to<Json::Array>();
+    auto users_array_copy = complex_data["users"].to<Json::Arr>();
     M_ASSERT_EQ( users_array_copy.size(), 2 );
     M_ASSERT_EQ( users_array_copy[0]["name"].to<Json::Str>(), "John Doe" );
     
-    auto features_array_copy = complex_data["application"]["config"]["features"].to<Json::Array>();
+    auto features_array_copy = complex_data["application"]["config"]["features"].to<Json::Arr>();
     M_ASSERT_EQ( features_array_copy.size(), 3 );
     M_ASSERT_EQ( features_array_copy[0]["name"].to<Json::Str>(), "auth" );
     
@@ -336,61 +336,61 @@ M_TEST(Value, Complex) {
     M_ASSERT_EQ( complex_data["statistics"]["performance"].obj().size(), 4 );
     
     // Test equality comparison with complex structures
-    Json complex_clone{Json::Object{
-        {"application", Json::Object{
+    Json complex_clone{Json::Obj{
+        {"application", Json::Obj{
             {"name", "MyApp"},
             {"version", "2.1.0"},
             {"active", true},
-            {"config", Json::Object{
+            {"config", Json::Obj{
                 {"debug", false},
                 {"port", 9090},  // Modified value
                 {"host", "localhost"},
-                {"features", Json::Array{{
-                    Json::Object{{"name", "auth"}, {"enabled", false}, {"priority", 1}},  // Modified
-                    Json::Object{{"name", "logging"}, {"enabled", false}, {"priority", 2}},
-                    Json::Object{{"name", "cache"}, {"enabled", true}, {"priority", 3}}
+                {"features", Json::Arr{{
+                    Json::Obj{{"name", "auth"}, {"enabled", false}, {"priority", 1}},  // Modified
+                    Json::Obj{{"name", "logging"}, {"enabled", false}, {"priority", 2}},
+                    Json::Obj{{"name", "cache"}, {"enabled", true}, {"priority", 3}}
                 }}},
-                {"database", Json::Object{
+                {"database", Json::Obj{
                     {"type", "postgresql"},
-                    {"connection", Json::Object{
+                    {"connection", Json::Obj{
                         {"host", "db.example.com"},
                         {"port", 5432},
                         {"database", "myapp_db"},
                         {"ssl", true},
-                        {"pool", Json::Object{
+                        {"pool", Json::Obj{
                             {"min", 5},
                             {"max", 20},
                             {"idle_timeout", 30000},
                             {"connection_timeout", nullptr}
                         }}
                     }},
-                    {"migrations", Json::Array{{
-                        Json::Object{{"version", "001"}, {"applied", true}, {"timestamp", 1640995200}},
-                        Json::Object{{"version", "002"}, {"applied", true}, {"timestamp", 1641081600}},
-                        Json::Object{{"version", "003"}, {"applied", false}, {"timestamp", nullptr}}
+                    {"migrations", Json::Arr{{
+                        Json::Obj{{"version", "001"}, {"applied", true}, {"timestamp", 1640995200}},
+                        Json::Obj{{"version", "002"}, {"applied", true}, {"timestamp", 1641081600}},
+                        Json::Obj{{"version", "003"}, {"applied", false}, {"timestamp", nullptr}}
                     }}}
                 }},
-                {"new_feature", Json::Object{  // Added feature
+                {"new_feature", Json::Obj{  // Added feature
                     {"name", "monitoring"},
                     {"enabled", true},
-                    {"settings", Json::Array{{
-                        Json::Object{{"metric", "cpu"}, {"threshold", 0.8}},
-                        Json::Object{{"metric", "memory"}, {"threshold", 0.9}}
+                    {"settings", Json::Arr{{
+                        Json::Obj{{"metric", "cpu"}, {"threshold", 0.8}},
+                        Json::Obj{{"metric", "memory"}, {"threshold", 0.9}}
                     }}}
                 }}
             }}
         }},
-        {"users", Json::Array{{
-            Json::Object{
+        {"users", Json::Arr{{
+            Json::Obj{
                 {"id", 1},
                 {"name", "John Doe"},
                 {"email", "john@example.com"},
                 {"active", true},
-                {"permissions", Json::Array{{"read", "write", "admin"}}},
-                {"profile", Json::Object{
+                {"permissions", Json::Arr{{"read", "write", "admin"}}},
+                {"profile", Json::Obj{
                     {"age", 30},
                     {"country", "USA"},
-                    {"preferences", Json::Object{
+                    {"preferences", Json::Obj{
                         {"theme", "auto"},  // Modified
                         {"notifications", true},
                         {"language", "en"},
@@ -400,16 +400,16 @@ M_TEST(Value, Complex) {
                 {"last_login", 1640995200},
                 {"metadata", nullptr}
             }},
-            Json::Object{
+            Json::Obj{
                 {"id", 2},
                 {"name", "Jane Smith"},
                 {"email", "jane@example.com"},
                 {"active", true},  // Modified
-                {"permissions", Json::Array{{"read"}}},
-                {"profile", Json::Object{
+                {"permissions", Json::Arr{{"read"}}},
+                {"profile", Json::Obj{
                     {"age", 25},
                     {"country", "Canada"},
-                    {"preferences", Json::Object{
+                    {"preferences", Json::Obj{
                         {"theme", "light"},
                         {"notifications", false},
                         {"language", "fr"},
@@ -417,23 +417,23 @@ M_TEST(Value, Complex) {
                     }}
                 }},
                 {"last_login", nullptr},
-                {"metadata", Json::Object{{"notes", "Inactive user"}, {"created", 1640908800}}}
+                {"metadata", Json::Obj{{"notes", "Inactive user"}, {"created", 1640908800}}}
             }
         }},
-        {"statistics", Json::Object{
+        {"statistics", Json::Obj{
             {"total_users", 3},  // Modified
             {"active_users", 1},
             {"avg_login_time", 1640995200},
-            {"performance", Json::Object{
-                {"response_times", Json::Array{{120, 85, 95, 110, 88, 75}}},  // Added element
-                {"error_rates", Json::Array{{0.01, 0.02, 0.015, 0.008, 0.012}}},
+            {"performance", Json::Obj{
+                {"response_times", Json::Arr{{120, 85, 95, 110, 88, 75}}},  // Added element
+                {"error_rates", Json::Arr{{0.01, 0.02, 0.015, 0.008, 0.012}}},
                 {"uptime", 99.95},
                 {"last_restart", nullptr}
             }},
-            {"features_usage", Json::Array{{
-                Json::Object{{"feature", "auth"}, {"usage_count", 1500}, {"success_rate", 0.98}},
-                Json::Object{{"feature", "logging"}, {"usage_count", 0}, {"success_rate", nullptr}},
-                Json::Object{{"feature", "cache"}, {"usage_count", 800}, {"success_rate", 0.95}}
+            {"features_usage", Json::Arr{{
+                Json::Obj{{"feature", "auth"}, {"usage_count", 1500}, {"success_rate", 0.98}},
+                Json::Obj{{"feature", "logging"}, {"usage_count", 0}, {"success_rate", nullptr}},
+                Json::Obj{{"feature", "cache"}, {"usage_count", 800}, {"success_rate", 0.95}}
             }}},
             {"new_metric", 123.45}  // Added metric
         }}
@@ -469,16 +469,16 @@ M_TEST(Value, Complex) {
     }
     
     // Test type validation throughout complex structure
-    M_ASSERT_EQ( complex_data.type(), json::Type::eObject );
-    M_ASSERT_EQ( complex_data["application"].type(), json::Type::eObject );
+    M_ASSERT_EQ( complex_data.type(), json::Type::eObj );
+    M_ASSERT_EQ( complex_data["application"].type(), json::Type::eObj );
     M_ASSERT_EQ( complex_data["application"]["name"].type(), json::Type::eStr );
     M_ASSERT_EQ( complex_data["application"]["active"].type(), json::Type::eBol );
     M_ASSERT_EQ( complex_data["application"]["config"]["port"].type(), json::Type::eNum );
-    M_ASSERT_EQ( complex_data["application"]["config"]["features"].type(), json::Type::eArray );
+    M_ASSERT_EQ( complex_data["application"]["config"]["features"].type(), json::Type::eArr );
     M_ASSERT_EQ( complex_data["application"]["config"]["database"]["connection"]["pool"]["connection_timeout"].type(), json::Type::eNul );
-    M_ASSERT_EQ( complex_data["users"].type(), json::Type::eArray );
-    M_ASSERT_EQ( complex_data["users"][0].type(), json::Type::eObject );
-    M_ASSERT_EQ( complex_data["users"][0]["permissions"].type(), json::Type::eArray );
+    M_ASSERT_EQ( complex_data["users"].type(), json::Type::eArr );
+    M_ASSERT_EQ( complex_data["users"][0].type(), json::Type::eObj );
+    M_ASSERT_EQ( complex_data["users"][0]["permissions"].type(), json::Type::eArr );
     M_ASSERT_EQ( complex_data["users"][0]["permissions"][0].type(), json::Type::eStr );
     M_ASSERT_EQ( complex_data["users"][1]["last_login"].type(), json::Type::eNul );
     M_ASSERT_EQ( complex_data["statistics"]["performance"]["uptime"].type(), json::Type::eNum );
@@ -499,23 +499,23 @@ M_TEST(Value, Complex) {
     M_ASSERT_FALSE( complex_data["users"][0]["profile"].obj().contains("nonexistent") );
     
     // Test performance with large nested structures
-    Json large_nested{Json::Object{}};
+    Json large_nested{Json::Obj{}};
     for (int i = 0; i < 10; ++i) {
         std::string section_name = "section_" + std::to_string(i);
-        large_nested[section_name] = Json::Object{};
+        large_nested[section_name] = Json::Obj{};
         
         for (int j = 0; j < 10; ++j) {
             std::string subsection_name = "subsection_" + std::to_string(j);
-            large_nested[section_name][subsection_name] = Json::Array{};
+            large_nested[section_name][subsection_name] = Json::Arr{};
 
             for (int k = 0; k < 10; ++k) {
                 large_nested[section_name][subsection_name].arr().push_back(
-                    Json::Object{
+                    Json::Obj{
                         {"id", k},
                         {"name", "item_" + std::to_string(k)},
                         {"active", k % 2 == 0},
                         {"value", k * 10.5},
-                        {"metadata", (k % 3 == 0) ? Json{nullptr} : Json{Json::Object{{"info", "data"}}}}
+                        {"metadata", (k % 3 == 0) ? Json{nullptr} : Json{Json::Obj{{"info", "data"}}}}
                     }
                 );
             }

@@ -120,14 +120,14 @@ M_TEST(Equal, Str) {
     M_ASSERT_FALSE(special_str == "Hello World !");
 }
 
-// --- Array type tests ---
-M_TEST(Equal, Array) {
-    Json arr1{Json::Array{1, 2, 3}};
-    Json arr2{Json::Array{1, 2, 3}};
-    Json arr3{Json::Array{1, 2, 4}};
-    Json arr4{Json::Array{1, 2}};
-    Json empty_arr1{Json::Array{}};
-    Json empty_arr2{Json::Array{}};
+// --- Arr type tests ---
+M_TEST(Equal, Arr) {
+    Json arr1{Json::Arr{1, 2, 3}};
+    Json arr2{Json::Arr{1, 2, 3}};
+    Json arr3{Json::Arr{1, 2, 4}};
+    Json arr4{Json::Arr{1, 2}};
+    Json empty_arr1{Json::Arr{}};
+    Json empty_arr2{Json::Arr{}};
 
     M_ASSERT_TRUE(arr1 == arr2);
     M_ASSERT_FALSE(arr1 == arr3);
@@ -145,15 +145,15 @@ M_TEST(Equal, Array) {
     M_ASSERT_FALSE(empty_arr1 == false);
 }
 
-// --- Object type tests ---
-M_TEST(Equal, Object) {
-    Json obj1{Json::Object{{"name", "John"}, {"age", 30}}};
-    Json obj2{Json::Object{{"name", "John"}, {"age", 30}}};
-    Json obj3{Json::Object{{"name", "Jane"}, {"age", 30}}};
-    Json obj4{Json::Object{{"name", "John"}, {"age", 31}}};
-    Json obj5{Json::Object{{"name", "John"}}};
-    Json empty_obj1{Json::Object{}};
-    Json empty_obj2{Json::Object{}};
+// --- Obj type tests ---
+M_TEST(Equal, Obj) {
+    Json obj1{Json::Obj{{"name", "John"}, {"age", 30}}};
+    Json obj2{Json::Obj{{"name", "John"}, {"age", 30}}};
+    Json obj3{Json::Obj{{"name", "Jane"}, {"age", 30}}};
+    Json obj4{Json::Obj{{"name", "John"}, {"age", 31}}};
+    Json obj5{Json::Obj{{"name", "John"}}};
+    Json empty_obj1{Json::Obj{}};
+    Json empty_obj2{Json::Obj{}};
 
     M_ASSERT_TRUE(obj1 == obj2);
     M_ASSERT_FALSE(obj1 == obj3);
@@ -175,54 +175,54 @@ M_TEST(Equal, Object) {
 // --- Mixed type and nested structure tests ---
 M_TEST(Equal, MixedAndNested) {
     // 混合数组
-    Json mixed1{Json::Array{
+    Json mixed1{Json::Arr{
         Json::Num(42),
         Json::Str("hello"),
         Json::Bol(true),
         Json{nullptr},
-        Json::Array{1, 2},
-        Json::Object{{"key", "value"}}
+        Json::Arr{1, 2},
+        Json::Obj{{"key", "value"}}
     }};
-    Json mixed2{Json::Array{
+    Json mixed2{Json::Arr{
         Json::Num(42),
         Json::Str("hello"),
         Json::Bol(true),
         Json{nullptr},
-        Json::Array{1, 2},
-        Json::Object{{"key", "value"}}
+        Json::Arr{1, 2},
+        Json::Obj{{"key", "value"}}
     }};
-    Json mixed3{Json::Array{
+    Json mixed3{Json::Arr{
         Json::Num(42),
         Json::Str("hello"),
         Json::Bol(false),
         Json{nullptr},
-        Json::Array{1, 2},
-        Json::Object{{"key", "value"}}
+        Json::Arr{1, 2},
+        Json::Obj{{"key", "value"}}
     }};
     M_ASSERT_TRUE(mixed1 == mixed2);
     M_ASSERT_FALSE(mixed1 == mixed3);
 
     // 嵌套对象
-    Json nested1{Json::Object{
-        {"user", Json::Object{
+    Json nested1{Json::Obj{
+        {"user", Json::Obj{
             {"name", "Alice"},
-            {"profile", Json::Object{
+            {"profile", Json::Obj{
                 {"age", 25},
                 {"active", true}
             }}
         }},
-        {"data", Json::Array{1, 2, 3}}
+        {"data", Json::Arr{1, 2, 3}}
     }};
     Json nested2 = nested1;
-    Json nested3{Json::Object{
-        {"user", Json::Object{
+    Json nested3{Json::Obj{
+        {"user", Json::Obj{
             {"name", "Alice"},
-            {"profile", Json::Object{
+            {"profile", Json::Obj{
                 {"age", 26},
                 {"active", true}
             }}
         }},
-        {"data", Json::Array{1, 2, 3}}
+        {"data", Json::Arr{1, 2, 3}}
     }};
     M_ASSERT_TRUE(nested1 == nested2);
     M_ASSERT_FALSE(nested1 == nested3);
@@ -242,13 +242,13 @@ M_TEST(Equal, StrictTypeAndEdge) {
 
     // Strict type comparison between different types
     Json str_val{Json::Str("test")};
-    Json arr_val{Json::Array{1, 2, 3}};
-    Json obj_val{Json::Object{{"key", "value"}}};
+    Json arr_val{Json::Arr{1, 2, 3}};
+    Json obj_val{Json::Obj{{"key", "value"}}};
     Json null_val{nullptr};
 
-    M_ASSERT_FALSE(str_val == arr_val);      // Str vs Array
-    M_ASSERT_FALSE(arr_val == obj_val);      // Array vs Object
-    M_ASSERT_FALSE(obj_val == null_val);     // Object vs Nul
+    M_ASSERT_FALSE(str_val == arr_val);      // Str vs Arr
+    M_ASSERT_FALSE(arr_val == obj_val);      // Arr vs Obj
+    M_ASSERT_FALSE(obj_val == null_val);     // Obj vs Nul
 
     // Reverse comparison
     M_ASSERT_TRUE(42 == Json{42});

@@ -7,7 +7,7 @@ std::size_t size() const noexcept;
 Returns the number of elements for container types, zero otherwise.
 
 **Return Value**
-- `Object`/`Array`: Current element count
+- `Obj`/`Arr`: Current element count
 - All other types (including `Str`): `0`
 
 **Exception Safety**  

@@ -43,19 +43,19 @@
  */
 #define M_MYSVAC_JSON_CONVERSION_FUNCTION( class_name, ... )   \
     explicit operator ::mysvac::Json() const & noexcept { \
-        ::mysvac::Json json_value{ ::mysvac::Json::Object{} }; \
+        ::mysvac::Json json_value{ ::mysvac::Json::Obj{} }; \
         auto _move_if_rvalue = [](const auto& val) -> const auto& { return val; }; \
         __VA_ARGS__ \
         return json_value; \
     } \
     explicit operator ::mysvac::Json() && noexcept { \
-    ::mysvac::Json json_value{ ::mysvac::Json::Object{} }; \
+    ::mysvac::Json json_value{ ::mysvac::Json::Obj{} }; \
     auto _move_if_rvalue = [](auto& val) -> auto&& { return std::move(val); }; \
     __VA_ARGS__ \
     return json_value; \
     } \
     explicit operator ::mysvac::Json() & noexcept { \
-        ::mysvac::Json json_value{ ::mysvac::Json::Object{} }; \
+        ::mysvac::Json json_value{ ::mysvac::Json::Obj{} }; \
         auto _move_if_rvalue = [](auto& val) -> auto& { return val; }; \
         __VA_ARGS__ \
         return json_value; \

@@ -14,8 +14,8 @@ Located in the `mysvac::json` namespace, this utility converts [`Type`](./Type.m
     ```cpp
     constexpr const char* type_name(const Type type) noexcept{
         switch ( type ) {
-            case Type::eObject: return "Object";
-            case Type::eArray:  return "Array";
+            case Type::eObj: return "Obj";
+            case Type::eArr:  return "Arr";
             case Type::eStr: return "Str";
             case Type::eNum: return "Num";
             case Type::eBol:   return "Bol";

@@ -9,36 +9,36 @@ using namespace mysvac;
 M_TEST(ARR_MAP, Simple) {
     const std::vector arr_int = { 1, 2, 3, 4, 5 };
     const Json v_arr_int{ arr_int };
-    const Json v_arr_int_res = Json::Array{ {1, 2, 3, 4, 5} };
+    const Json v_arr_int_res = Json::Arr{ {1, 2, 3, 4, 5} };
     M_EXPECT_EQ( v_arr_int, v_arr_int_res );
 
 }
 
-M_TEST(ARR_MAP, ArrayTypes) {
+M_TEST(ARR_MAP, ArrTypes) {
     // std::array<int, N>
     const std::array<int, 4> arr = {10, 20, 30, 40};
     Json v_arr{ arr };
-    M_EXPECT_EQ( v_arr, (Json::Array{{10, 20, 30, 40}}) );
+    M_EXPECT_EQ( v_arr, (Json::Arr{{10, 20, 30, 40}}) );
 
     // std::list<double>
     const std::list<double> lst = {1.1, 2.2, 3.3};
     Json v_lst{lst};
-    M_EXPECT_EQ(v_lst, (Json::Array{{1.1, 2.2, 3.3}}) );
+    M_EXPECT_EQ(v_lst, (Json::Arr{{1.1, 2.2, 3.3}}) );
 
     // std::deque<bool>
     const std::deque<bool> deq = {true, false, true};
     Json v_deq{deq};
-    M_EXPECT_EQ(v_deq, (Json::Array{{true, false, true}}));
+    M_EXPECT_EQ(v_deq, (Json::Arr{{true, false, true}}));
 
     // std::vector<std::string>
     const std::vector<std::string> vec_str = {"a", "b", "c"};
     Json v_vec_str{vec_str};
-    M_EXPECT_EQ(v_vec_str, (Json::Array{{"a", "b", "c"}}) );
+    M_EXPECT_EQ(v_vec_str, (Json::Arr{{"a", "b", "c"}}) );
 
     // std::vector<Json>
     const std::vector<Json> vec_val = {Json::Num(1), Json::Bol(false), Json::Str("x")};
     Json v_vec_val{vec_val};
-    M_EXPECT_EQ(v_vec_val, (Json::Array{{1, false, "x"}}) );
+    M_EXPECT_EQ(v_vec_val, (Json::Arr{{1, false, "x"}}) );
 }
 
 M_TEST(ARR_MAP, MapTypes) {
@@ -99,15 +99,15 @@ M_TEST(ARR_MAP, NestedContainers) {
     // Nested array
     const std::vector<std::vector<int>> nested_vec = {{1,2}, {3,4}};
     Json v_nested_vec{nested_vec};
-    M_EXPECT_EQ(v_nested_vec[0], (Json::Array{{1,2}}));
-    M_EXPECT_EQ(v_nested_vec[1], (Json::Array{{3,4}}));
+    M_EXPECT_EQ(v_nested_vec[0], (Json::Arr{{1,2}}));
+    M_EXPECT_EQ(v_nested_vec[1], (Json::Arr{{3,4}}));
 
     // Nested map
     const std::map<std::string, std::map<std::string, int>> nested_map = {{"outer", {{"inner", 99}}}};
     Json v_nested_map{nested_map};
     M_EXPECT_EQ(v_nested_map["outer"]["inner"], 99);
 
-    // Array of maps
+    // Arr of maps
     const std::vector<std::map<std::string, bool>> arr_of_map = { {{"a", true}}, {{"b", false}} };
     Json v_arr_of_map{arr_of_map};
     M_EXPECT_EQ(v_arr_of_map[0]["a"], true);
@@ -116,6 +116,6 @@ M_TEST(ARR_MAP, NestedContainers) {
     // Map of arrays
     const std::map<std::string, std::vector<std::string>> map_of_arr = {{"letters", {"a", "b"}}, {"digits", {"1", "2"}}};
     Json v_map_of_arr{map_of_arr};
-    M_EXPECT_EQ(v_map_of_arr["letters"], (Json::Array{{"a", "b"}}));
-    M_EXPECT_EQ(v_map_of_arr["digits"], (Json::Array{{"1", "2"}}));
+    M_EXPECT_EQ(v_map_of_arr["letters"], (Json::Arr{{"a", "b"}}));
+    M_EXPECT_EQ(v_map_of_arr["digits"], (Json::Arr{{"1", "2"}}));
 }

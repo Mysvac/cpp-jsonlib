@@ -36,21 +36,21 @@ M_TEST(Value, Move) {
     M_ASSERT_EQ(v_str.type(), json::Type::eStr);
     M_ASSERT_EQ(v_str.to<Json::Str>(), ""); // 移动后原字符串为空
 
-    // Array
-    Json v_arr{Json::Array{{1, 2, 3}}};
-    auto moved_arr = v_arr.move<Json::Array>();
+    // Arr
+    Json v_arr{Json::Arr{{1, 2, 3}}};
+    auto moved_arr = v_arr.move<Json::Arr>();
     M_ASSERT_EQ(moved_arr.size(), 3);
     M_ASSERT_EQ(moved_arr[0].to<int>(), 1);
-    M_ASSERT_EQ(v_arr.type(), json::Type::eArray);
-    M_ASSERT_EQ(v_arr.to<Json::Array>().size(), 0); // 移动后原数组为空
+    M_ASSERT_EQ(v_arr.type(), json::Type::eArr);
+    M_ASSERT_EQ(v_arr.to<Json::Arr>().size(), 0); // 移动后原数组为空
 
-    // Object
-    Json v_obj{Json::Object{{"k", 1}, {"b", 2}}};
-    auto moved_obj = v_obj.move<Json::Object>();
+    // Obj
+    Json v_obj{Json::Obj{{"k", 1}, {"b", 2}}};
+    auto moved_obj = v_obj.move<Json::Obj>();
     M_ASSERT_EQ(moved_obj.size(), 2);
     M_ASSERT_EQ(moved_obj.at("k").to<int>(), 1);
-    M_ASSERT_EQ(v_obj.type(), json::Type::eObject);
-    M_ASSERT_EQ(v_obj.to<Json::Object>().size(), 0); // 移动后原对象为空
+    M_ASSERT_EQ(v_obj.type(), json::Type::eObj);
+    M_ASSERT_EQ(v_obj.to<Json::Obj>().size(), 0); // 移动后原对象为空
 
     // Enum
     Json v_enum{5};
@@ -80,37 +80,37 @@ M_TEST(Value, Move) {
     M_ASSERT_EQ(v_sv2.to<Json::Str>(), ""); // string 移动
 
     // move_if: 成功
-    Json v_arr2{Json::Array{{4, 5}}};
-    auto opt_arr = v_arr2.move_if<Json::Array>();
+    Json v_arr2{Json::Arr{{4, 5}}};
+    auto opt_arr = v_arr2.move_if<Json::Arr>();
     M_ASSERT_TRUE(opt_arr.has_value());
     M_ASSERT_EQ(opt_arr->size(), 2);
-    M_ASSERT_EQ(v_arr2.to<Json::Array>().size(), 0);
+    M_ASSERT_EQ(v_arr2.to<Json::Arr>().size(), 0);
 
     // move_if: 失败
     Json v_fail{true};
-    auto opt_fail = v_fail.move_if<Json::Array>();
+    auto opt_fail = v_fail.move_if<Json::Arr>();
     M_ASSERT_FALSE(opt_fail.has_value());
 
     // move_or: 成功
-    Json v_obj2{Json::Object{{"x", 7}}};
-    auto moved_obj2 = v_obj2.move_or<Json::Object>(Json::Object{{"default", 0}});
+    Json v_obj2{Json::Obj{{"x", 7}}};
+    auto moved_obj2 = v_obj2.move_or<Json::Obj>(Json::Obj{{"default", 0}});
     M_ASSERT_EQ(moved_obj2.size(), 1);
     M_ASSERT_EQ(moved_obj2.at("x").to<int>(), 7);
-    M_ASSERT_EQ(v_obj2.to<Json::Object>().size(), 0);
+    M_ASSERT_EQ(v_obj2.to<Json::Obj>().size(), 0);
 
     // move_or: 失败返回默认
     Json v_fail2{false};
-    auto moved_default = v_fail2.move_or<Json::Array>(Json::Array{{9}});
+    auto moved_default = v_fail2.move_or<Json::Arr>(Json::Arr{{9}});
     M_ASSERT_EQ(moved_default.size(), 1);
     M_ASSERT_EQ(moved_default[0].to<int>(), 9);
 
     // 边界值
-    Json v_empty_arr{Json::Array{}};
-    auto moved_empty_arr = v_empty_arr.move<Json::Array>();
+    Json v_empty_arr{Json::Arr{}};
+    auto moved_empty_arr = v_empty_arr.move<Json::Arr>();
     M_ASSERT_EQ(moved_empty_arr.size(), 0);
 
-    Json v_empty_obj{Json::Object{}};
-    auto moved_empty_obj = v_empty_obj.move<Json::Object>();
+    Json v_empty_obj{Json::Obj{}};
+    auto moved_empty_obj = v_empty_obj.move<Json::Obj>();
     M_ASSERT_EQ(moved_empty_obj.size(), 0);
 
     Json v_empty_str{""};
@@ -119,28 +119,28 @@ M_TEST(Value, Move) {
     M_ASSERT_EQ(v_empty_str.to<Json::Str>(), "");
 
     // 复杂嵌套结构
-    Json v_nested{Json::Array{
-        Json::Object{{"a", 1}},
-        Json::Array{{2, 3}},
+    Json v_nested{Json::Arr{
+        Json::Obj{{"a", 1}},
+        Json::Arr{{2, 3}},
         Json::Str("deep")
     }};
-    auto moved_nested = v_nested.move<Json::Array>();
+    auto moved_nested = v_nested.move<Json::Arr>();
     M_ASSERT_EQ(moved_nested.size(), 3);
     M_ASSERT_EQ(moved_nested[0]["a"].to<int>(), 1);
     M_ASSERT_EQ(moved_nested[1][0].to<int>(), 2);
     M_ASSERT_EQ(moved_nested[2].to<Json::Str>(), "deep");
-    M_ASSERT_EQ(v_nested.to<Json::Array>().size(), 0);
+    M_ASSERT_EQ(v_nested.to<Json::Arr>().size(), 0);
 
     // move: 不兼容类型抛异常
     Json v_wrong{true};
-    M_ASSERT_THROW(std::ignore = v_wrong.move<Json::Array>(), std::runtime_error);
+    M_ASSERT_THROW(std::ignore = v_wrong.move<Json::Arr>(), std::runtime_error);
 
     // move_or: 不兼容类型返回默认
-    auto moved_or_default = v_wrong.move_or<Json::Array>(Json::Array{{99}});
+    auto moved_or_default = v_wrong.move_or<Json::Arr>(Json::Arr{{99}});
     M_ASSERT_EQ(moved_or_default.size(), 1);
     M_ASSERT_EQ(moved_or_default[0].to<int>(), 99);
 
     // move_if: 不兼容类型返回nullopt
-    auto opt_wrong = v_wrong.move_if<Json::Array>();
+    auto opt_wrong = v_wrong.move_if<Json::Arr>();
     M_ASSERT_FALSE(opt_wrong.has_value());
 }

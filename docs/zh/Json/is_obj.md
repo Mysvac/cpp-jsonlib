@@ -4,7 +4,7 @@
 constexpr bool is_obj() const noexcept;
 ```
 
-Determines if the internal data is of type `Object`.
+Determines if the internal data is of type `Obj`.
 
 **Returns**  
 `true` for object type, `false` otherwise

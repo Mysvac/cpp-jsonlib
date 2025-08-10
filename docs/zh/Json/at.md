@@ -20,12 +20,12 @@ const Json& at(const std::size_t index) const;
 4. Accesses array element by index - returns const reference, throws on out-of-bounds
 
 **Exception Safety**
-- Throws `std::bad_variant_access` if underlying data isn't Object/Array
+- Throws `std::bad_variant_access` if underlying data isn't Obj/Arr
 - Throws `std::out_of_range` for invalid keys/indices
 
 **Complexity**
-- Array access: O(1)
-- Object access: O(logN) (ordered map) / amortized O(1) (hash map)
+- Arr access: O(1)
+- Obj access: O(logN) (ordered map) / amortized O(1) (hash map)
 
 ## Version
 

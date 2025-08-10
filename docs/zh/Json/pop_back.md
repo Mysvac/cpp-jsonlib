@@ -4,7 +4,7 @@
 bool pop_back() noexcept;
 ```
 
-If the internal data type is `Array` and it contains elements, remove the last element and return `true`. If the type does not match or the array is empty, return `false` (no exception will be thrown).
+If the internal data type is `Arr` and it contains elements, remove the last element and return `true`. If the type does not match or the array is empty, return `false` (no exception will be thrown).
 
 ## Exceptions
 

@@ -6,8 +6,8 @@ enum class Type{
     eBol,    
     eNum,  
     eStr,  
-    eArray,   
-    eObject   
+    eArr,   
+    eObj   
 };
 ```
 

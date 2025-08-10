@@ -4,10 +4,10 @@
 constexpr bool is_arr() const noexcept;
 ```
 
-Determines whether the internal data is of type `Array`.
+Determines whether the internal data is of type `Arr`.
 
 ## Return Value
-`true` if the internal data is an `Array`, `false` otherwise.
+`true` if the internal data is an `Arr`, `false` otherwise.
 
 ## Exception Safety
 No-throw guarantee.

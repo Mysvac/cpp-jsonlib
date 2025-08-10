@@ -17,22 +17,22 @@ Recommended practice: Reset source object after moving.
 ## Move Conversion Rules
 
 1. Nul → Nul
-2. Object → Object (moved)
-3. Array → Array (moved)
+2. Obj → Obj (moved)
+3. Arr → Arr (moved)
 4. Str → Str (moved)
 5. Bol → Bol (copied)
 6. Num → Enum (rounded to nearest integer)
 7. Num → Integer types (rounded)
 8. Num → Floating-point
 9. Any → Json-constructible types (move preferred)
-10. Object → Implicitly convertible (move preferred)
-11. Array → Implicitly convertible (move preferred)
+10. Obj → Implicitly convertible (move preferred)
+11. Arr → Implicitly convertible (move preferred)
 12. Str → Implicitly convertible (move preferred)
 13. Num → Implicitly convertible
 14. Bol → Implicitly convertible
 15. Nul → Implicitly convertible (except bool)
-16. Object → Convertible key-value types (element-wise, move preferred)
-17. Array → Convertible container types (element-wise, move preferred)
+16. Obj → Convertible key-value types (element-wise, move preferred)
+17. Arr → Convertible container types (element-wise, move preferred)
 18. Returns `std::nullopt`
 
 ## Parameters

@@ -42,7 +42,7 @@ M_TEST(Macros, Simple) {
     }
 
     {
-        Json v_object{ Json::Object{} };
+        Json v_object{ Json::Obj{} };
         v_object["id"] = 42;
         v_object["name"] = "Test User";
         v_object["active"] = false;
@@ -68,7 +68,7 @@ M_TEST(Macros, Simple) {
     }
 
     {
-        Json v_mover{ Json::Object{} };
+        Json v_mover{ Json::Obj{} };
         v_mover["name"] = "Test move xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
         MyData d_recipient{ std::move(v_mover) };
         M_ASSERT_EQ(d_recipient.m_name, "Test move xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");

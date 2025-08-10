@@ -85,8 +85,8 @@ export namespace mysvac::json {
         std::is_same<T, typename J::Bol>,
         std::is_same<T, typename J::Num>,
         std::is_same<T, typename J::Str>,
-        std::is_same<T, typename J::Array>,
-        std::is_same<T, typename J::Object>
+        std::is_same<T, typename J::Arr>,
+        std::is_same<T, typename J::Obj>
     >;
 
     /**
@@ -98,8 +98,8 @@ export namespace mysvac::json {
     concept constructible = std::disjunction_v<
         std::is_arithmetic<T>,
         std::is_enum<T>,
-        std::is_convertible<T, typename J::Array>,
-        std::is_convertible<T, typename J::Object>,
+        std::is_convertible<T, typename J::Arr>,
+        std::is_convertible<T, typename J::Obj>,
         std::is_convertible<T, typename J::Str>,
         std::is_convertible<T, typename J::Num>,
         std::is_convertible<T, typename J::Bol>,
@@ -134,8 +134,8 @@ export namespace mysvac::json {
     concept convertible = std::disjunction_v<
         std::is_arithmetic<T>,
         std::is_enum<T>,
-        std::is_convertible<typename J::Array, T>,
-        std::is_convertible<typename J::Object, T>,
+        std::is_convertible<typename J::Arr, T>,
+        std::is_convertible<typename J::Obj, T>,
         std::is_convertible<typename J::Str, T>,
         std::is_convertible<typename J::Num, T>,
         std::is_convertible<typename J::Bol, T>,
@@ -186,8 +186,8 @@ export namespace mysvac::json {
         eBol,      ///< boolean type
         eNum,    ///< Num type
         eStr,    ///< Str type
-        eArray,     ///< Array type
-        eObject     ///< Object type
+        eArr,     ///< Arr type
+        eObj     ///< Obj type
     };
 
 
@@ -198,8 +198,8 @@ export namespace mysvac::json {
     [[nodiscard]]
     constexpr const char* type_name(const Type type) noexcept {
         switch ( type ) {
-            case Type::eObject: return "Object";
-            case Type::eArray:  return "Array";
+            case Type::eObj: return "Obj";
+            case Type::eArr:  return "Arr";
             case Type::eStr: return "Str";
             case Type::eNum: return "Num";
             case Type::eBol:   return "Bol";
@@ -249,15 +249,15 @@ export namespace mysvac::json {
          */
         using Str = std::basic_string<char, std::char_traits<char>, StrAllocator<char>>;
         /**
-         * @brief Json's Array Type, `vector<Json, VecAllocator<Json>>`.
+         * @brief Json's Arr Type, `vector<Json, VecAllocator<Json>>`.
          * @note default is `std::vector<Json>`.
          */
-        using Array = std::vector<Json, VecAllocator<Json>>;
+        using Arr = std::vector<Json, VecAllocator<Json>>;
         /**
-         * @brief Json's Object Type, `std::map` or `std::unordered_map`.
+         * @brief Json's Obj Type, `std::map` or `std::unordered_map`.
          * @note default is `std::map<std::string, Json>`.
          */
-        using Object = std::conditional_t<UseOrderedMap,
+        using Obj = std::conditional_t<UseOrderedMap,
             std::map<Str, Json, std::less<Str>, MapAllocator<std::pair<const Str, Json>>>,
             std::unordered_map<Str, Json, std::hash<Str>, std::equal_to<Str>, MapAllocator<std::pair<const Str, Json>>>
         >;
@@ -268,8 +268,8 @@ export namespace mysvac::json {
             Bol,
             Num,
             Str,
-            Array,
-            Object
+            Arr,
+            Obj
         > m_data { Nul{} };
 
     private:
@@ -481,7 +481,7 @@ export namespace mysvac::json {
         }
 
         /**
-         * @brief Read a JSON value from the input iterator and create Json Object.
+         * @brief Read a JSON value from the input iterator and create Json Obj.
          * @param it The iterator pointing to the current position in the input.
          * @param end_ptr The end iterator of the input.
          * @param max_depth The maximum depth of nested JSON objects/arrays allowed.
@@ -499,9 +499,9 @@ export namespace mysvac::json {
             // Check the first character to determine the type
             switch (*it) {
                 case '{': {
-                    // Object type
+                    // Obj type
                     ++it;
-                    json = Object{};
+                    json = Obj{};
                     auto& object = json.obj();
                     // Parse the object
                     while(it != end_ptr){
@@ -533,9 +533,9 @@ export namespace mysvac::json {
                     ++it;
                 } break;
                 case '[': {
-                    // Array type
+                    // Arr type
                     ++it;
-                    json = Array{};
+                    json = Arr{};
                     auto& array = json.arr();
                     if (it != end_ptr && *it != ']') array.reserve(8);
                     while(it != end_ptr){
@@ -646,16 +646,16 @@ export namespace mysvac::json {
         constexpr bool is_str() const noexcept { return type() == Type::eStr; }
 
         /**
-         * @brief Check if the JSON data is of type Array.
+         * @brief Check if the JSON data is of type Arr.
          */
         [[nodiscard]]
-        constexpr bool is_arr() const noexcept { return type() == Type::eArray; }
+        constexpr bool is_arr() const noexcept { return type() == Type::eArr; }
 
         /**
-         * @brief Check if the JSON data is of type Object.
+         * @brief Check if the JSON data is of type Obj.
          */
         [[nodiscard]]
-        constexpr bool is_obj() const noexcept { return type() == Type::eObject; }
+        constexpr bool is_obj() const noexcept { return type() == Type::eObj; }
 
 
         /**
@@ -711,30 +711,30 @@ export namespace mysvac::json {
         constexpr const Str&& str() const && { return std::get<Str>(std::move(m_data)); }
 
         /**
-         * @brief Get a reference to the Array type.
-         * @throw std::bad_variant_access if the JSON data is not of type Array.
+         * @brief Get a reference to the Arr type.
+         * @throw std::bad_variant_access if the JSON data is not of type Arr.
          */
         [[nodiscard]]
-        constexpr Array& arr() & { return std::get<Array>(m_data); }
+        constexpr Arr& arr() & { return std::get<Arr>(m_data); }
         [[nodiscard]]
-        constexpr Array&& arr() && { return std::get<Array>(std::move(m_data)); }
+        constexpr Arr&& arr() && { return std::get<Arr>(std::move(m_data)); }
         [[nodiscard]]
-        constexpr const Array& arr() const & { return std::get<Array>(m_data); }
+        constexpr const Arr& arr() const & { return std::get<Arr>(m_data); }
         [[nodiscard]]
-        constexpr const Array&& arr() const && { return std::get<Array>(std::move(m_data)); }
+        constexpr const Arr&& arr() const && { return std::get<Arr>(std::move(m_data)); }
 
         /**
-         * @brief Get a reference to the Object type.
-         * @throw std::bad_variant_access if the JSON data is not of type Object.
+         * @brief Get a reference to the Obj type.
+         * @throw std::bad_variant_access if the JSON data is not of type Obj.
          */
         [[nodiscard]]
-        constexpr Object& obj() & { return std::get<Object>(m_data); }
+        constexpr Obj& obj() & { return std::get<Obj>(m_data); }
         [[nodiscard]]
-        constexpr Object&& obj() && { return std::get<Object>(std::move(m_data)); }
+        constexpr Obj&& obj() && { return std::get<Obj>(std::move(m_data)); }
         [[nodiscard]]
-        constexpr const Object& obj() const & { return std::get<Object>(m_data); }
+        constexpr const Obj& obj() const & { return std::get<Obj>(m_data); }
         [[nodiscard]]
-        constexpr const Object&& obj() const && { return std::get<Object>(std::move(m_data)); }
+        constexpr const Obj&& obj() const && { return std::get<Obj>(std::move(m_data)); }
 
         /**
          * @brief Default constructor for Json, data is Nul type.
@@ -788,18 +788,18 @@ export namespace mysvac::json {
                 m_data = other;
             } else if constexpr(std::is_same_v<T, Str>) {
                 m_data = std::forward<T>(other);
-            } else if constexpr(std::is_same_v<T, Array>) {
+            } else if constexpr(std::is_same_v<T, Arr>) {
                 m_data = std::forward<T>(other);
-            } else if constexpr(std::is_same_v<T, Object>) {
+            } else if constexpr(std::is_same_v<T, Obj>) {
                 m_data = std::forward<T>(other);
             } else if constexpr(std::is_arithmetic_v<T> || std::is_enum_v<T>) {
                 m_data = static_cast<Num>(other);
             } else if constexpr(std::is_convertible_v<T, Str>) {
                 m_data = static_cast<Str>(std::forward<T>(other));
-            } else if constexpr(std::is_convertible_v<T, Object>) {
-                m_data = static_cast<Object>(std::forward<T>(other));
-            } else if constexpr(std::is_convertible_v<T,Array>) {
-                m_data = static_cast<Array>(std::forward<T>(other));
+            } else if constexpr(std::is_convertible_v<T, Obj>) {
+                m_data = static_cast<Obj>(std::forward<T>(other));
+            } else if constexpr(std::is_convertible_v<T,Arr>) {
+                m_data = static_cast<Arr>(std::forward<T>(other));
             } else if constexpr(std::is_convertible_v<T,Num>) {
                 m_data = static_cast<Num>(std::forward<T>(other));
             } else if constexpr(std::is_convertible_v<T,Bol>) {
@@ -825,18 +825,18 @@ export namespace mysvac::json {
                 m_data = other;
             } else if constexpr(std::is_same_v<T, Str>) {
                 m_data = std::forward<T>(other);
-            } else if constexpr(std::is_same_v<T, Array>) {
+            } else if constexpr(std::is_same_v<T, Arr>) {
                 m_data = std::forward<T>(other);
-            } else if constexpr(std::is_same_v<T, Object>) {
+            } else if constexpr(std::is_same_v<T, Obj>) {
                 m_data = std::forward<T>(other);
             } else if constexpr(std::is_arithmetic_v<T> || std::is_enum_v<T>) {
                 m_data = static_cast<Num>(other);
             } else if constexpr(std::is_convertible_v<T, Str>) {
                 m_data = static_cast<Str>(std::forward<T>(other));
-            } else if constexpr(std::is_convertible_v<T, Object>) {
-                m_data = static_cast<Object>(std::forward<T>(other));
-            } else if constexpr(std::is_convertible_v<T,Array>) {
-                m_data = static_cast<Array>(std::forward<T>(other));
+            } else if constexpr(std::is_convertible_v<T, Obj>) {
+                m_data = static_cast<Obj>(std::forward<T>(other));
+            } else if constexpr(std::is_convertible_v<T,Arr>) {
+                m_data = static_cast<Arr>(std::forward<T>(other));
             } else if constexpr(std::is_convertible_v<T,Num>) {
                 m_data = static_cast<Num>(std::forward<T>(other));
             } else if constexpr(std::is_convertible_v<T,Bol>) {
@@ -854,8 +854,8 @@ export namespace mysvac::json {
          */
         template<typename T>
         requires !constructible<Json, std::remove_cvref_t<T>> && !constructible_map<Json, std::remove_cvref_t<T>> && constructible_array<Json, std::remove_cvref_t<T>>
-        explicit Json(T&& other) noexcept : m_data( Array{} ) {
-            auto& arr = std::get<Array>(m_data);
+        explicit Json(T&& other) noexcept : m_data( Arr{} ) {
+            auto& arr = std::get<Arr>(m_data);
             for (auto&& item : std::forward<T>(other)) {
                 arr.emplace_back( static_cast<Json>(static_cast<typename std::remove_cvref_t<T>::value_type>( std::forward<decltype(item)>(item))));
             }
@@ -868,8 +868,8 @@ export namespace mysvac::json {
          */
         template<typename T>
         requires !constructible<Json, std::remove_cvref_t<T>> && constructible_map<Json, std::remove_cvref_t<T>>
-        explicit Json(T&& other) noexcept : m_data( Object{} ) {
-            auto& obj = std::get<Object>(m_data);
+        explicit Json(T&& other) noexcept : m_data( Obj{} ) {
+            auto& obj = std::get<Obj>(m_data);
             for (auto&& [key, val] : std::forward<T>(other)) {
                 obj.emplace( static_cast<Str>(key), static_cast<Json>(static_cast<typename std::remove_cvref_t<T>::mapped_type>(std::forward<decltype(val)>(val))) );
             }
@@ -890,10 +890,10 @@ export namespace mysvac::json {
                 m_data = Num{};
             } else if constexpr(std::is_same_v<T, Str>) {
                 m_data = Str{};
-            } else if constexpr(std::is_same_v<T, Array>) {
-                m_data = Array{};
-            } else if constexpr(std::is_same_v<T, Object>) {
-                m_data = Object{};
+            } else if constexpr(std::is_same_v<T, Arr>) {
+                m_data = Arr{};
+            } else if constexpr(std::is_same_v<T, Obj>) {
+                m_data = Obj{};
             }
         }
 
@@ -901,34 +901,34 @@ export namespace mysvac::json {
          * @brief Accessor for JSON data using the subscript operator.
          */
         [[nodiscard]]
-        Json& operator[](const Str& key) { return std::get<Object>(m_data)[key]; }
+        Json& operator[](const Str& key) { return std::get<Obj>(m_data)[key]; }
         [[nodiscard]]
-        const Json& operator[](const Str& key) const { return std::get<Object>(m_data).at(key); }
+        const Json& operator[](const Str& key) const { return std::get<Obj>(m_data).at(key); }
         [[nodiscard]]
-        Json& operator[](const std::size_t index) { return std::get<Array>(m_data)[index]; }
+        Json& operator[](const std::size_t index) { return std::get<Arr>(m_data)[index]; }
         [[nodiscard]]
-        const Json& operator[](const std::size_t index) const { return std::get<Array>(m_data).at(index); }
+        const Json& operator[](const std::size_t index) const { return std::get<Arr>(m_data).at(index); }
 
         /**
          * @brief Accessor for JSON data using the at() method.
          */
         [[nodiscard]]
-        Json& at(const Str& key) { return std::get<Object>(m_data).at(key); }
+        Json& at(const Str& key) { return std::get<Obj>(m_data).at(key); }
         [[nodiscard]]
-        const Json& at(const Str& key) const { return std::get<Object>(m_data).at(key); }
+        const Json& at(const Str& key) const { return std::get<Obj>(m_data).at(key); }
         [[nodiscard]]
-        Json& at(const std::size_t index) { return std::get<Array>(m_data).at(index); }
+        Json& at(const std::size_t index) { return std::get<Arr>(m_data).at(index); }
         [[nodiscard]]
-        const Json& at(const std::size_t index) const { return std::get<Array>(m_data).at(index); }
+        const Json& at(const std::size_t index) const { return std::get<Arr>(m_data).at(index); }
 
         /**
          * @brief Write the JSON data to a string back.
          */
         void write(Str& out) const noexcept {
             switch (type()) {
-                case Type::eObject: {
+                case Type::eObj: {
                     out.push_back('{');
-                    for (const auto& [key, val] : std::get<Object>(m_data)) {
+                    for (const auto& [key, val] : std::get<Obj>(m_data)) {
                         escape_to(out, key);
                         out.push_back(':');
                         val.write(out);
@@ -937,9 +937,9 @@ export namespace mysvac::json {
                     if (*out.rbegin() == ',') *out.rbegin() = '}';
                     else out.push_back('}');
                 } break;
-                case Type::eArray: {
+                case Type::eArr: {
                     out.push_back('[');
-                    for (const auto& val : std::get<Array>(m_data)) {
+                    for (const auto& val : std::get<Arr>(m_data)) {
                         val.write(out);
                         out.push_back(',');
                     }
@@ -977,10 +977,10 @@ export namespace mysvac::json {
         void write(std::ostream& out) const {
             if(out.fail()) return;
             switch (type()) {
-                case Type::eObject: {
+                case Type::eObj: {
                     out.put('{');
                     for(bool first = true;
-                        const auto& [key, val] : std::get<Object>(m_data)
+                        const auto& [key, val] : std::get<Obj>(m_data)
                     ) {
                         if(!first) out.put(',');
                         else first = false;
@@ -991,10 +991,10 @@ export namespace mysvac::json {
                     }
                     out.put('}');
                 } break;
-                case Type::eArray: {
+                case Type::eArr: {
                     out.put('[');
                     for(bool first = true;
-                        const auto& val : std::get<Array>(m_data)
+                        const auto& val : std::get<Arr>(m_data)
                     ) {
                         if(!first) out.put(',');
                         else first = false;
@@ -1052,9 +1052,9 @@ export namespace mysvac::json {
             const std::uint32_t tabs  = depth * space_num + space_num;
 
             switch (type()) {
-                case Type::eObject: {
+                case Type::eObj: {
                     out.push_back('{');
-                    for (const auto& [key, val] : std::get<Object>(m_data)) {
+                    for (const auto& [key, val] : std::get<Obj>(m_data)) {
                         out.push_back('\n');
                         out.append(tabs, ' ');
                         escape_to(out, key);
@@ -1063,21 +1063,21 @@ export namespace mysvac::json {
                         out.push_back(',');
                     }
                     if (*out.rbegin() == ',') *out.rbegin() = '\n';
-                    if(!std::get<Object>(m_data).empty()){
+                    if(!std::get<Obj>(m_data).empty()){
                         out.append(tabs - space_num, ' ');
                     }
                     out.push_back('}');
                 } break;
-                case Type::eArray: {
+                case Type::eArr: {
                     out.push_back('[');
-                    for (const auto& val : std::get<Array>(m_data)) {
+                    for (const auto& val : std::get<Arr>(m_data)) {
                         out.push_back('\n');
                         out.append(tabs, ' ');
                         val.writef(out, space_num, depth + 1);
                         out.push_back(',');
                     }
                     if (*out.rbegin() == ',') *out.rbegin() = '\n';
-                    if(!std::get<Array>(m_data).empty()){
+                    if(!std::get<Arr>(m_data).empty()){
                         out.append(tabs - space_num, ' ');
                     }
                     out.push_back(']');
@@ -1122,10 +1122,10 @@ export namespace mysvac::json {
             const std::uint32_t tabs  = depth * space_num + space_num;
 
             switch (type()) {
-                case Type::eObject: {
+                case Type::eObj: {
                     out.put('{');
                     bool first = true;
-                    for(const auto& [key, val] : std::get<Object>(m_data)) {
+                    for(const auto& [key, val] : std::get<Obj>(m_data)) {
                         if(!first) out.put(',');
                         else first = false;
                         out.put('\n');
@@ -1137,15 +1137,15 @@ export namespace mysvac::json {
                         if(out.fail()) return;
                     }
                     if(!first) out.put('\n');
-                    if(!std::get<Object>(m_data).empty()){
+                    if(!std::get<Obj>(m_data).empty()){
                         out << std::setfill(' ') << std::setw(tabs - space_num) << "";
                     }
                     out.put('}');
                 } break;
-                case Type::eArray: {
+                case Type::eArr: {
                     out.put('[');
                     bool first = true;
-                    for (const auto& val : std::get<Array>(m_data)) {
+                    for (const auto& val : std::get<Arr>(m_data)) {
                         if(!first) out.put(',');
                         else first = false;
                         out.put('\n');
@@ -1154,7 +1154,7 @@ export namespace mysvac::json {
                         if(out.fail()) return;
                     }
                     if(!first) out.put('\n');
-                    if(!std::get<Array>(m_data).empty()){
+                    if(!std::get<Arr>(m_data).empty()){
                         out << std::setfill(' ') << std::setw(tabs - space_num) << "";
                     }
                     out.put(']');
@@ -1242,29 +1242,29 @@ export namespace mysvac::json {
          * @brief type conversion, copy inner value to specified type
          * @tparam T The target type to convert to
          * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Nul for other types(useless).
-         * @param default_range_elem if T is a range type and is not json::Array or json::Object, must be specified for safe conversion. Else, please use default value.
+         * @param default_range_elem if T is a range type and is not json::Arr or json::Obj, must be specified for safe conversion. Else, please use default value.
          * @return The converted value
          * @note Num is double, so conversions to integral (and enum) types will round to nearest.
          * @details
          * Attempt sequence of conversions:
          * inner value type -> target type
          * 1. Nul -> Nul
-         * 2. Object -> Object
-         * 3. Array -> Array
+         * 2. Obj -> Obj
+         * 3. Arr -> Arr
          * 4. Str -> Str
          * 5. Bol -> Bol
          * 6. Num -> enum types (us llround, round to nearest)
          * 7. Num -> integral types (us llround, round to nearest)
          * 8. Num -> floating_point types
          * 9. Any -> T is constructible from json::Value
-         * 10. Object -> implicit convertible types
-         * 11. Array -> implicit convertible types
+         * 10. Obj -> implicit convertible types
+         * 11. Arr -> implicit convertible types
          * 12. Str -> implicit convertible types
          * 13. Num -> implicit convertible types
          * 14. Bol -> implicit convertible types
          * 15. Nul -> implicit convertible types (Nul is not convertible to bool !!!!!)
-         * 16. Object -> Try copy to `range && Str->key_type && Value->mapped_type types && have default_range_value`
-         * 17. Array -> Try copy to `range && Value->value_type types && have default_range_value`
+         * 16. Obj -> Try copy to `range && Str->key_type && Value->mapped_type types && have default_range_value`
+         * 17. Arr -> Try copy to `range && Value->value_type types && have default_range_value`
          * 18. return std::nullopt;
          */
         template<typename T, typename D = Nul>
@@ -1273,10 +1273,10 @@ export namespace mysvac::json {
         std::optional<T>  to_if( D default_range_elem = D{} ) const noexcept {
             if constexpr (std::is_same_v<T, Nul>) {
                 if (type() == Type::eNul) return Nul{};
-            } else if constexpr (std::is_same_v<T, Object>) {
-                if (type() == Type::eObject) return std::get<Object>(m_data);
-            } else if constexpr (std::is_same_v<T, Array>) {
-                if (type() == Type::eArray) return std::get<Array>(m_data);
+            } else if constexpr (std::is_same_v<T, Obj>) {
+                if (type() == Type::eObj) return std::get<Obj>(m_data);
+            } else if constexpr (std::is_same_v<T, Arr>) {
+                if (type() == Type::eArr) return std::get<Arr>(m_data);
             } else if constexpr (std::is_same_v<T, Str>) {
                 if (type() == Type::eStr) return std::get<Str>(m_data);
             } else if constexpr (std::is_same_v<T, Bol>) {
@@ -1291,11 +1291,11 @@ export namespace mysvac::json {
             if constexpr (std::is_constructible_v<T, Json>) {
                 return static_cast<T>(*this);
             }
-            if constexpr (std::is_convertible_v<Object, T>) {
-                if (type() == Type::eObject) return static_cast<T>(std::get<Object>(m_data));
+            if constexpr (std::is_convertible_v<Obj, T>) {
+                if (type() == Type::eObj) return static_cast<T>(std::get<Obj>(m_data));
             }
-            if constexpr (std::is_convertible_v<Array, T>) {
-                if (type() == Type::eArray) return static_cast<T>(std::get<Array>(m_data));
+            if constexpr (std::is_convertible_v<Arr, T>) {
+                if (type() == Type::eArr) return static_cast<T>(std::get<Arr>(m_data));
             }
             if constexpr (std::is_convertible_v<Str, T>) {
                 if (type() == Type::eStr) return static_cast<T>(std::get<Str>(m_data));
@@ -1310,9 +1310,9 @@ export namespace mysvac::json {
                 if (type() == Type::eNul) return static_cast<T>(Nul{});
             }
             if constexpr ( convertible_map<Json, T, D> ) {
-                if (type() == Type::eObject) {
+                if (type() == Type::eObj) {
                     T result{};
-                    for (auto& [key, value] : std::get<Object>(m_data)) {
+                    for (auto& [key, value] : std::get<Obj>(m_data)) {
                         auto val = value.template to_if<typename T::mapped_type>();
                         if (!val) result.emplace(static_cast<typename T::key_type>(key), static_cast<typename T::mapped_type>(default_range_elem));
                         else result.emplace(static_cast<typename T::key_type>(key), std::move(*val));
@@ -1321,9 +1321,9 @@ export namespace mysvac::json {
                 }
             }
             if constexpr ( convertible_array<Json, T, D> ) {
-                if (type() == Type::eArray) {
+                if (type() == Type::eArr) {
                     T result{};
-                    for (auto& value : std::get<Array>(m_data)) {
+                    for (auto& value : std::get<Arr>(m_data)) {
                         auto val = value.template to_if<typename T::value_type>();
                         if (!val) result.emplace_back(default_range_elem);
                         else result.emplace_back(std::move(*val));
@@ -1338,7 +1338,7 @@ export namespace mysvac::json {
          * @brief type conversion, copy inner value to specified type
          * @tparam T The target type to convert to
          * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Nul for other types(useless).
-         * @param default_range_elem if T is a range type and is not json::Array or json::Object, must be specified for safe conversion. Else, please use default value.
+         * @param default_range_elem if T is a range type and is not json::Arr or json::Obj, must be specified for safe conversion. Else, please use default value.
          * @return The converted value
          * @throws std::runtime_error if conversion fails
          * @note Num is double, so conversions to integral (and enum) types will round to nearest.
@@ -1362,7 +1362,7 @@ export namespace mysvac::json {
          * @tparam T The target type to convert to
          * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Nul for other types(useless).
          * @param default_result The default value to return if conversion fails
-         * @param default_range_elem if T is a range type and is not json::Array or json::Object, must be specified for safe conversion. Else, please use default value.
+         * @param default_range_elem if T is a range type and is not json::Arr or json::Obj, must be specified for safe conversion. Else, please use default value.
          * @return The converted value or default_value if conversion fails
          * @note Num is double, so conversions to integral (and enum) types will round to nearest.
          * @details
@@ -1384,32 +1384,32 @@ export namespace mysvac::json {
          * @brief type conversion, Move or Copy inner value to specified type
          * @tparam T The target type to convert to
          * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Nul for other types(useless).
-         * @param default_range_elem if T is a range type and is not json::Array or json::Object, must be specified for safe conversion. Else, please use default value.
+         * @param default_range_elem if T is a range type and is not json::Arr or json::Obj, must be specified for safe conversion. Else, please use default value.
          * @return The converted value
          * @note
          * Num is double, so conversions to integral (and enum) types will round to nearest.
-         * Complex types like Object, Array, Str will be moved if possible.
+         * Complex types like Obj, Arr, Str will be moved if possible.
          * Simple types like Bol, Num, Nul will be copied.
          * @details
          * Attempt sequence of conversions:
          * inner value type -> target type
          * 1. Nul -> Nul
-         * 2. Object -> Object (Move)
-         * 3. Array -> Array (Move)
+         * 2. Obj -> Obj (Move)
+         * 3. Arr -> Arr (Move)
          * 4. Str -> Str (Move)
          * 5. Bol -> Bol
          * 6. Num -> enum types (us llround, round to nearest)
          * 7. Num -> integral types (us llround, round to nearest)
          * 8. Num -> floating_point types
          * 9. Any -> T is constructible from json::Value (try Move)
-         * 10. Object -> implicit convertible types (try Move)
-         * 11. Array -> implicit convertible types (try Move)
+         * 10. Obj -> implicit convertible types (try Move)
+         * 11. Arr -> implicit convertible types (try Move)
          * 12. Str -> implicit convertible types (try Move)
          * 13. Num -> implicit convertible types
          * 14. Bol -> implicit convertible types
          * 15. Nul -> implicit convertible types (Nul is not convertible to bool !!!!!)
-         * 16. Object -> Try copy to `range && Str->key_type && Value->mapped_type types && have default_range_value`  (try Move)
-         * 17. Array -> Try copy to `range && Value->value_type types && have default_range_value`  (try Move)
+         * 16. Obj -> Try copy to `range && Str->key_type && Value->mapped_type types && have default_range_value`  (try Move)
+         * 17. Arr -> Try copy to `range && Value->value_type types && have default_range_value`  (try Move)
          * 18. return std::nullopt;
          */
         template<typename T, typename D = Nul>
@@ -1418,10 +1418,10 @@ export namespace mysvac::json {
         std::optional<T>  move_if( D default_range_elem = D{} ) noexcept  {
             if constexpr (std::is_same_v<T, Nul>) {
                 if (type() == Type::eNul) return Nul{};
-            } else if constexpr (std::is_same_v<T, Object>) {
-                if (type() == Type::eObject) return std::move(std::get<Object>(m_data));
-            } else if constexpr (std::is_same_v<T, Array>) {
-                if (type() == Type::eArray) return std::move(std::get<Array>(m_data));
+            } else if constexpr (std::is_same_v<T, Obj>) {
+                if (type() == Type::eObj) return std::move(std::get<Obj>(m_data));
+            } else if constexpr (std::is_same_v<T, Arr>) {
+                if (type() == Type::eArr) return std::move(std::get<Arr>(m_data));
             } else if constexpr (std::is_same_v<T, Str>) {
                 if (type() == Type::eStr) return std::move(std::get<Str>(m_data));
             } else if constexpr (std::is_same_v<T, Bol>) {
@@ -1436,11 +1436,11 @@ export namespace mysvac::json {
             if constexpr (std::is_constructible_v<T, Json>) {
                 return static_cast<T>(std::move(*this));
             }
-            if constexpr (std::is_convertible_v<Object, T>) {
-                if (type() == Type::eObject) return static_cast<T>(std::move(std::get<Object>(m_data)));
+            if constexpr (std::is_convertible_v<Obj, T>) {
+                if (type() == Type::eObj) return static_cast<T>(std::move(std::get<Obj>(m_data)));
             }
-            if constexpr (std::is_convertible_v<Array, T>) {
-                if (type() == Type::eArray) return static_cast<T>(std::move(std::get<Array>(m_data)));
+            if constexpr (std::is_convertible_v<Arr, T>) {
+                if (type() == Type::eArr) return static_cast<T>(std::move(std::get<Arr>(m_data)));
             }
             if constexpr (std::is_convertible_v<Str, T>) {
                 if (type() == Type::eStr) return static_cast<T>(std::move(std::get<Str>(m_data)));
@@ -1455,9 +1455,9 @@ export namespace mysvac::json {
                 if (type() == Type::eNul) return static_cast<T>(Nul{});
             }
             if constexpr ( convertible_map<Json, T, D> ) {
-                if (type() == Type::eObject) {
+                if (type() == Type::eObj) {
                     T result{};
-                    for (auto& [key, value] : std::get<Object>(m_data)) {
+                    for (auto& [key, value] : std::get<Obj>(m_data)) {
                         auto val = value.template move_if<typename T::mapped_type>();
                         if (!val) result.emplace(static_cast<typename T::key_type>(key), static_cast<typename T::mapped_type>(default_range_elem));
                         else result.emplace(static_cast<typename T::key_type>(key), std::move(*val));
@@ -1466,9 +1466,9 @@ export namespace mysvac::json {
                 }
             }
             if constexpr ( convertible_array<Json, T, D> ) {
-                if (type() == Type::eArray) {
+                if (type() == Type::eArr) {
                     T result{};
-                    for (auto& value : std::get<Array>(m_data)) {
+                    for (auto& value : std::get<Arr>(m_data)) {
                         auto val = value.template move_if<typename T::value_type>();
                         if (!val) result.emplace_back( static_cast<typename T::value_type>(default_range_elem) );
                         else result.emplace_back(std::move(*val));
@@ -1483,12 +1483,12 @@ export namespace mysvac::json {
          * @brief type conversion, Move or Copy inner value to specified type
          * @tparam T The target type to convert to
          * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Nul for other types(useless).
-         * @param default_range_elem if T is a range type and is not json::Array or json::Object, must be specified for safe conversion. Else, please use default value.
+         * @param default_range_elem if T is a range type and is not json::Arr or json::Obj, must be specified for safe conversion. Else, please use default value.
          * @return The converted value
          * @throws std::runtime_error if conversion fails
          * @note
          * Num is double, so conversions to integral (and enum) types will round to nearest.
-         * Complex types like Object, Array, Str will be moved if possible.
+         * Complex types like Obj, Arr, Str will be moved if possible.
          * Simple types like Bol, Num, Nul will be copied.
          * @details
          * Attempt sequence of conversions:
@@ -1510,11 +1510,11 @@ export namespace mysvac::json {
          * @tparam T The target type to convert to
          * @tparam D The mapped_type or value_type of the target type, used for range conversion, default is Nul for other types(useless).
          * @param default_result The default value to return if conversion fails
-         * @param default_range_elem if T is a range type and is not json::Array or json::Object, must be specified for safe conversion. Else, please use default value.
+         * @param default_range_elem if T is a range type and is not json::Arr or json::Obj, must be specified for safe conversion. Else, please use default value.
          * @return The converted value
          * @note
          * Num is double, so conversions to integral (and enum) types will round to nearest.
-         * Complex types like Object, Array, Str will be moved if possible.
+         * Complex types like Obj, Arr, Str will be moved if possible.
          * Simple types like Bol, Num, Nul will be copied.
          * @details
          * Attempt sequence of conversions:
@@ -1546,8 +1546,8 @@ export namespace mysvac::json {
                 case Type::eBol: return std::get<Bol>(m_data) == std::get<Bol>(other.m_data);
                 case Type::eNum: return std::get<Num>(m_data) == std::get<Num>(other.m_data);
                 case Type::eStr: return std::get<Str>(m_data) == std::get<Str>(other.m_data);
-                case Type::eObject: return std::get<Object>(m_data) == std::get<Object>(other.m_data);
-                case Type::eArray: return std::get<Array>(m_data) == std::get<Array>(other.m_data);
+                case Type::eObj: return std::get<Obj>(m_data) == std::get<Obj>(other.m_data);
+                case Type::eArr: return std::get<Arr>(m_data) == std::get<Arr>(other.m_data);
             }
             return false; // Should never reach here, but added for safety
         }
@@ -1560,7 +1560,7 @@ export namespace mysvac::json {
          *
          * @details
          * rules:
-         * A. different json types are not equal( Bol, Num, Str, Array, Object, Nul )
+         * A. different json types are not equal( Bol, Num, Str, Arr, Obj, Nul )
          * B. IF T is Value, use Value::operator==(const Value& other) ,
          *    it's Accurate comparison !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
          * --------------------------------------------------------------------------------------------
@@ -1568,8 +1568,8 @@ export namespace mysvac::json {
          * 2.  Else if T is Bol, return true if Value is Bol and Equal to Tvalue
          * 3.  Else if T is Num, return true if Value is Num and Equal to Tvalue
          * 4.  Else if T is Str, return true if Value is Str and Equal to Tvalue
-         * 5.  Else if T is Array, return true if Value is Array and Equal to Tvalue
-         * 6.  Else if T is Object, return true if Value is Object and Equal to Tvalue
+         * 5.  Else if T is Arr, return true if Value is Arr and Equal to Tvalue
+         * 6.  Else if T is Obj, return true if Value is Obj and Equal to Tvalue
          * 7.  Else if T is enum, return true if Value is Num and Equal to Tvalue, Num will be rounded to nearest integer
          * 8.  Else if T is integral, return true if Value is Num or Bol and Equal to Tvalue, Num will be rounded to nearest integer
          * 9.  Else if T is floating_point, return true if Value is Num and Equal to Tvalue, double to double comparison is very strict
@@ -1590,10 +1590,10 @@ export namespace mysvac::json {
                 if ( type() == Type::eNum ) return std::get<Num>(m_data) == other;
             } else if constexpr ( std::is_same_v<T,Str> ) {
                 if ( type() == Type::eStr ) return std::get<Str>(m_data) == other;
-            } else if constexpr ( std::is_same_v<T,Array> ) {
-                if ( type() == Type::eArray ) return std::get<Array>(m_data) == other;
-            } else if constexpr ( std::is_same_v<T,Object> ) {
-                if ( type() == Type::eObject ) return std::get<Object>(m_data) == other;
+            } else if constexpr ( std::is_same_v<T,Arr> ) {
+                if ( type() == Type::eArr ) return std::get<Arr>(m_data) == other;
+            } else if constexpr ( std::is_same_v<T,Obj> ) {
+                if ( type() == Type::eObj ) return std::get<Obj>(m_data) == other;
             } else if constexpr (std::is_enum_v<T>) {
                 if ( type() == Type::eNum) return static_cast<T>(std::llround(std::get<Num>(m_data))) == other;
             } else if constexpr (std::is_integral_v<T>) {
@@ -1612,23 +1612,23 @@ export namespace mysvac::json {
 
         /**
          * @brief Get inner container size.
-         * @return The size of the inner container(Array or Object), or 0 for Nul, Bol, Num, Str.
+         * @return The size of the inner container(Arr or Obj), or 0 for Nul, Bol, Num, Str.
          */
         [[nodiscard]]
         std::size_t size() const noexcept {
-            if (type() == Type::eObject)  return std::get<Object>(m_data).size();
-            if (type() == Type::eArray) return std::get<Array>(m_data).size();
+            if (type() == Type::eObj)  return std::get<Obj>(m_data).size();
+            if (type() == Type::eArr) return std::get<Arr>(m_data).size();
             return 0; // Nul, Bol, Num, Str are considered to have size 0
         }
 
         /**
          * @brief Check if the JSON object is empty.
-         * @return False if it contains any elements (Object or Array), true otherwise.
+         * @return False if it contains any elements (Obj or Arr), true otherwise.
          */
         [[nodiscard]]
         bool empty() const noexcept {
-            if (type() == Type::eObject)  return std::get<Object>(m_data).empty();
-            if (type() == Type::eArray) return std::get<Array>(m_data).empty();
+            if (type() == Type::eObj)  return std::get<Obj>(m_data).empty();
+            if (type() == Type::eArr) return std::get<Arr>(m_data).empty();
             return true; // Nul, Bol, Num, Str are considered empty
         }
 
@@ -1639,7 +1639,7 @@ export namespace mysvac::json {
          */
         [[nodiscard]]
         bool contains(const Str& key) const noexcept {
-            if (type() == Type::eObject) return std::get<Object>(m_data).contains(key);
+            if (type() == Type::eObj) return std::get<Obj>(m_data).contains(key);
             return false; // Not an object
         }
 
@@ -1649,7 +1649,7 @@ export namespace mysvac::json {
          * @return True if the key was erased, false if the JSON is not an object or the key does not exist.
          */
         bool erase(const Str& key) noexcept{
-            if (type() == Type::eObject) return std::get<Object>(m_data).erase(key);
+            if (type() == Type::eObj) return std::get<Obj>(m_data).erase(key);
             return false;
         }
 
@@ -1659,8 +1659,8 @@ export namespace mysvac::json {
          * @return True if the element was erased, false if the JSON is not an array or the index is out of bounds.
          */
         bool erase(const std::size_t index) noexcept {
-            if (type() == Type::eArray && index < std::get<Array>(m_data).size()) {
-                std::get<Array>(m_data).erase(std::get<Array>(m_data).begin() + index);
+            if (type() == Type::eArr && index < std::get<Arr>(m_data).size()) {
+                std::get<Arr>(m_data).erase(std::get<Arr>(m_data).begin() + index);
                 return true;
             }
             return false;
@@ -1675,8 +1675,8 @@ export namespace mysvac::json {
         template<typename  K, typename V>
         requires std::convertible_to<K, Str> && std::convertible_to<V, Json>
         bool insert(K&& key, V&& value) noexcept {
-            if (type() == Type::eObject) {
-                std::get<Object>(m_data).emplace(static_cast<Str>(std::forward<K>(key)), static_cast<Json>(std::forward<V>(value)));
+            if (type() == Type::eObj) {
+                std::get<Obj>(m_data).emplace(static_cast<Str>(std::forward<K>(key)), static_cast<Json>(std::forward<V>(value)));
                 return true;
             }
             return false;
@@ -1691,8 +1691,8 @@ export namespace mysvac::json {
         template<typename V>
         requires std::convertible_to<V, Json>
         bool insert(const std::size_t index, V&& value) noexcept {
-            if (type() == Type::eArray && index <= std::get<Array>(m_data).size()) {
-                std::get<Array>(m_data).emplace(std::get<Array>(m_data).begin() + index, static_cast<Json>(std::forward<V>(value)));
+            if (type() == Type::eArr && index <= std::get<Arr>(m_data).size()) {
+                std::get<Arr>(m_data).emplace(std::get<Arr>(m_data).begin() + index, static_cast<Json>(std::forward<V>(value)));
                 return true;
             }
             return false;
@@ -1706,8 +1706,8 @@ export namespace mysvac::json {
         template<typename V>
         requires std::convertible_to<V, Json>
         bool push_back(V&& value) noexcept {
-            if (type() == Type::eArray) {
-                std::get<Array>(m_data).emplace_back( static_cast<Json>(std::forward<V>(value)) );
+            if (type() == Type::eArr) {
+                std::get<Arr>(m_data).emplace_back( static_cast<Json>(std::forward<V>(value)) );
                 return true;
             }
             return false;
@@ -1718,8 +1718,8 @@ export namespace mysvac::json {
          * @return True if the value was popped, false if the JSON is not an array or is empty.
          */
         bool pop_back() noexcept {
-            if (type() == Type::eArray && !std::get<Array>(m_data).empty()) {
-                std::get<Array>(m_data).pop_back();
+            if (type() == Type::eArr && !std::get<Arr>(m_data).empty()) {
+                std::get<Arr>(m_data).pop_back();
                 return true;
             }
             return false;
@@ -1734,7 +1734,7 @@ export namespace mysvac {
      * @brief Alias for the Json class with default template parameters.
      *
      * Use `std::allocator` for memory allocation,
-     * Use `std::map` for Object, `std::vector` for Array, `std::string` for Str.
+     * Use `std::map` for Obj, `std::vector` for Arr, `std::string` for Str.
      */
     using Json = ::mysvac::json::Json<>;
 }

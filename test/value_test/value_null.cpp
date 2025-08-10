@@ -61,8 +61,8 @@ M_TEST(Value, Nul) {
 
     // Mixed type comparison
     M_ASSERT_FALSE(null_cmp1 == Json{"hello"});
-    M_ASSERT_FALSE(null_cmp1 == Json{Json::Array{}});
-    M_ASSERT_FALSE(null_cmp1 == Json{Json::Object{}});
+    M_ASSERT_FALSE(null_cmp1 == Json{Json::Arr{}});
+    M_ASSERT_FALSE(null_cmp1 == Json{Json::Obj{}});
 
     // --- Serialization tests ---
     M_ASSERT_EQ(Json{nullptr}.dump(), "null");
@@ -102,8 +102,8 @@ M_TEST(Value, Nul) {
     M_ASSERT_THROW(std::ignore = null_val.to<Json::Str>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = null_val.to<Json::Num>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = null_val.to<Json::Bol>(), std::runtime_error);
-    M_ASSERT_THROW(std::ignore = null_val.to<Json::Array>(), std::runtime_error);
-    M_ASSERT_THROW(std::ignore = null_val.to<Json::Object>(), std::runtime_error);
+    M_ASSERT_THROW(std::ignore = null_val.to<Json::Arr>(), std::runtime_error);
+    M_ASSERT_THROW(std::ignore = null_val.to<Json::Obj>(), std::runtime_error);
 
     // Nul to non-pointer types should throw
     M_ASSERT_THROW(std::ignore = null_val.to<int>(), std::runtime_error);

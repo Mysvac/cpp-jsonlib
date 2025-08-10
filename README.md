@@ -37,8 +37,8 @@ enum class Type{
     eBol,      ///< boolean type
     eNum,    ///< number type
     eStr,    ///< string type
-    eArray,     ///< array type
-    eObject     ///< object type
+    eArr,     ///< array type
+    eObj     ///< object type
 };
 ```
 
@@ -77,8 +77,8 @@ namespace mysvac {
 | `Json::Bol`   | `bool`                        | `bool`                                                                      |
 | `Json::Num` | `double`                      | `double`                                                                    |
 | `Json::Str` | `std::string`                 | `std::basic_string<...,StrAllocator<char>>`                                 |
-| `Json::Array`  | `std::vector<Json>`           | `std::vector<Json, VecAllocator<Json>>`                                     |
-| `Json::Object` | `std::map<std::string, Json>` | `std::map<..,MapAllocator<..>>` 或 `std::unordered_map<..,MapAllocator<..>>` |
+| `Json::Arr`  | `std::vector<Json>`           | `std::vector<Json, VecAllocator<Json>>`                                     |
+| `Json::Obj` | `std::map<std::string, Json>` | `std::map<..,MapAllocator<..>>` 或 `std::unordered_map<..,MapAllocator<..>>` |
 
 这些类型的具体定义与类模板形参有关，因此别名只能放在类内，而非命名空间中。
 
@@ -91,45 +91,45 @@ namespace mysvac {
 ```cpp
 Json null_val;                  // 默认构造，类型为 Nul
 Json bool_val(3.3);             // 浮点初始化，类型为 Num
-Json obj_val = Json::Object{};  // 直接使用 Object 初始化
+Json obj_val = Json::Obj{};  // 直接使用 Obj 初始化
 ```
 
 除了上述六种 JSON 类型，我们还支持使用基本算术类型、枚举类型和 `const char*` 进行隐式构造。
 **枚举会被视为整数**，不要试图使用 `json::Type` 枚举值进行指定初始化，这只会生成 `Num` 类型的值：
 
 ```cpp
-Json enum_val{ json::Type::eObject }; // 危险
+Json enum_val{ json::Type::eObj }; // 危险
 // 这会生成一个 Num 类型的值，具体值取决于枚举值的整数表示。
 ```
 
-虽然 `Json` 不支持初始化列表，但由于隐式构造的存在，可以通过 `Array` 和 `Object` 的初始化列表快速创建对象：
+虽然 `Json` 不支持初始化列表，但由于隐式构造的存在，可以通过 `Arr` 和 `Obj` 的初始化列表快速创建对象：
 
 ```cpp
-Json smp_val = Json::Object{
+Json smp_val = Json::Obj{
     { "key1", 42 },
     {"key2", "value2"},
     {"key3", true },
-    {"arr", Json::Array{ { 2, 3.14, nullptr } } },
-    {"obj", Json::Object{ {"nested_k", "nested_v"} } }
+    {"arr", Json::Arr{ { 2, 3.14, nullptr } } },
+    {"obj", Json::Obj{ {"nested_k", "nested_v"} } }
 };
 ```
 
-空数组初始化请使用 `Array{}` ，非空初始化必须使用 `Array{ { ... } }` 双重**大括号**，否则在特定情况下会被认为是拷贝构造或扩容构造而非初始化列表。
+空数组初始化请使用 `Arr{}` ，非空初始化必须使用 `Arr{ { ... } }` 双重**大括号**，否则在特定情况下会被认为是拷贝构造或扩容构造而非初始化列表。
 
 > 请不要使用 `( {} )` ，小括号依然可能识别错误。
 
 你可以用 `type()` 或 `is_xxx()` 函数检查类型，或者使用 `type_name()` 获取字符串形式的类型名：
 
 ```cpp
-smp_val.type();        // 返回 json::Type::eObject
-json::type_name(smp_val.type());  // 返回 "Object"
+smp_val.type();        // 返回 json::Type::eObj
+json::type_name(smp_val.type());  // 返回 "Obj"
 smp_val.is_arr();     // 返回 false
 ```
 
 `is` 共有六个，分别是 `arr`、`obj`、`str`、`num`、`bol` 和 `nul` ，对应六种 JSON 类型。
 
 你可以通过赋值语句重置内容，也可以使用 `reset()` 成员函数。
-这是个模板函数，默认重置回 `Nul` 类型，但你可以显示指定重置类型，比如使用 `reset<Json::Object>()` 将内容重置为一个空的 `Object` 。
+这是个模板函数，默认重置回 `Nul` 类型，但你可以显示指定重置类型，比如使用 `reset<Json::Obj>()` 将内容重置为一个空的 `Obj` 。
 
 `reset` 的模板形参只能是六种 JSON 类型之一，否则无法通过编译。
 
@@ -138,7 +138,7 @@ smp_val.is_arr();     // 返回 false
 本库提供了 `xxx()` 成员函数以获取内部数据的**引用**，`xxx` 和上面的 `is_xxx` 相同。
 
 ```cpp
- // 注意 Object 的 mapped 依然是 Value 类型
+ // 注意 Obj 的 mapped 依然是 Value 类型
 Json& vi_42 = smp_val.obj()["key1"];
 
 // 虽然返回引用，但也可以用于赋值
@@ -147,7 +147,7 @@ double i_42 = vi_42.num();
  // vi_42.str(); // 类型不匹配，抛出 std::bad_varient_access 异常
 ```
 
-`Json` 还提供了 `[]` 和 `at` 运算符，区别在于 `at` 禁止索引越界（抛出异常），而 `[]` 不检查越界（所以`Object`可以用`[]`创建新键值对，但`Array`越界是未定义行为，可能直接断言崩溃）。
+`Json` 还提供了 `[]` 和 `at` 运算符，区别在于 `at` 禁止索引越界（抛出异常），而 `[]` 不检查越界（所以`Obj`可以用`[]`创建新键值对，但`Arr`越界是未定义行为，可能直接断言崩溃）。
 
 > `const` 的 `[]` 较为特殊，等价于 `const` 的 `at` ，越界抛出异常而不会创建新键值对或崩溃。
 
@@ -266,9 +266,9 @@ val1.writef( std::cout ); // 输出到 `ostream`
 `Json` 类型提供了和 `Json` 进行比较的 `==` 运算符，它首先判断类型是否相同，然后调用内部的 `==` 进行比较（ `std::map` 和 `std::vector` 的比较基于子元素内容，从而实现递归比较）。
 
 ```cpp
-Json val_arr_1 = Json::Array{{ 1, 2, 3 }};
-Json val_arr_2 = Json::Array{{ 1, 2, 3 }};
-Json val_arr_3 = Json::Array{{ 1, true, 3 }};
+Json val_arr_1 = Json::Arr{{ 1, 2, 3 }};
+Json val_arr_2 = Json::Arr{{ 1, 2, 3 }};
+Json val_arr_3 = Json::Arr{{ 1, true, 3 }};
 val_arr_1 == val_arr_2; // true
 val_arr_1 == val_arr_3; // false
 ```
@@ -342,7 +342,7 @@ struct MyData{
 > 你可以选择自行定义一些简化宏，比如 `JCSM` `JCSP` 等等，高度简化书写。
 
 转换函数是必然成功的，因为需要的数据都是成员变量。
-但是构造函数中的成员赋值可能会失败，因为 `Json` 中可能不存在对应的键（甚至 `Json` 根本不是 `Object` 类型），因此需要指定成员默认值。
+但是构造函数中的成员赋值可能会失败，因为 `Json` 中可能不存在对应的键（甚至 `Json` 根本不是 `Obj` 类型），因此需要指定成员默认值。
 
 你会看到构造函数（`CS`）的宏，部分带有 `OR` 后者，它们多了两个参数，第一个参数就是默认值。
 而没有 `OR` 的宏并非没有默认值，而是将对应类型的默认构造作为默认值，即 `decltype(name){}` 。
@@ -357,7 +357,7 @@ Json v_null;
 MyData d_null{ v_null }; // 什么都没有，因此全部字段都是 CS 中的默认值
 d_null.active; // true，因为 CS 函数指定了默认值为 true
 
-Json v_object{ Json::Object{} };
+Json v_object{ Json::Obj{} };
 v_object["id"] = 42;
 v_object["name"] = "Test User";
 v_object["active"] = false;
@@ -401,7 +401,7 @@ struct MyData2 {
 ```
 
 可以看到我们用到了 `OR` 宏的第四个参数。第三个参数是字段本身的默认值，第四个参数是子元素的默认值。
-第四个参数仅在目标是数组或者映射类型（且非 `Json::Array/Object` ）时才有用，其他时候可以随意填写，通常用 `nullptr` 。
+第四个参数仅在目标是数组或者映射类型（且非 `Json::Arr/Obj` ）时才有用，其他时候可以随意填写，通常用 `nullptr` 。
 
 比如你需要数组，但是 `Json` 内部不是数组，就会返回第三个字段的默认值。
 `Json` 也是数组，但是内部只有部分元素能够转成你需要的类型，那么其他元素会用第四个参数的默认值填充，保证数组长度一致。
@@ -448,7 +448,7 @@ M_EXPECT_TRUE( d_data2.name == "name_name" ); // true
 `数组/映射->Json`是不会遗漏任何元素的，因为所有元素都能被 `Json` 接受。
 但是反之则不然，`Json->数组/映射` 可能会丢失一些元素，因为 `Json` 可能有各种奇怪的数据和格式。
 
-因此，如果你的数组和映射不是基本类型里的 `Json::Array` 和 `Json::Object` ，那么在转换时必须提供两个默认值：
+因此，如果你的数组和映射不是基本类型里的 `Json::Arr` 和 `Json::Obj` ，那么在转换时必须提供两个默认值：
 
 1. 完全不匹配时返回的默认结果。比如需要转换成数组，但是 `Json` 内部不是数组，则直接返回此默认值。
 

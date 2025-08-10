@@ -78,27 +78,27 @@ M_TEST(Value, To) {
     M_ASSERT_EQ(v_str.to_or<Json::Bol>(false), false); // Str->Bol不可转换
     M_ASSERT_FALSE(v_str.to_if<Json::Bol>().has_value());
 
-    // Array
-    Json v_arr{Json::Array{{1, 2, 3}}};
-    Json v_empty_arr{Json::Array{}};
-    M_ASSERT_EQ(v_arr.to<Json::Array>().size(), 3);
-    M_ASSERT_EQ(v_empty_arr.to<Json::Array>().size(), 0);
-    M_ASSERT_EQ(v_arr.to_or<Json::Array>(Json::Array{{4,5}}).size(), 3);
-    M_ASSERT_EQ(v_empty_arr.to_or<Json::Array>(Json::Array{{4,5}}).size(), 0);
-    M_ASSERT_EQ(v_arr.to_or<Json::Object>(Json::Object{{"k",1}}).size(), 1); // Array->Object不可转换，返回默认
-    M_ASSERT_FALSE(v_arr.to_if<Json::Object>().has_value());
+    // Arr
+    Json v_arr{Json::Arr{{1, 2, 3}}};
+    Json v_empty_arr{Json::Arr{}};
+    M_ASSERT_EQ(v_arr.to<Json::Arr>().size(), 3);
+    M_ASSERT_EQ(v_empty_arr.to<Json::Arr>().size(), 0);
+    M_ASSERT_EQ(v_arr.to_or<Json::Arr>(Json::Arr{{4,5}}).size(), 3);
+    M_ASSERT_EQ(v_empty_arr.to_or<Json::Arr>(Json::Arr{{4,5}}).size(), 0);
+    M_ASSERT_EQ(v_arr.to_or<Json::Obj>(Json::Obj{{"k",1}}).size(), 1); // Arr->Obj不可转换，返回默认
+    M_ASSERT_FALSE(v_arr.to_if<Json::Obj>().has_value());
     M_ASSERT_EQ(v_arr.to_or<Json::Str>("default"), "default");
     M_ASSERT_FALSE(v_arr.to_if<Json::Str>().has_value());
 
-    // Object
-    Json v_obj{Json::Object{{"k", 1}}};
-    Json v_empty_obj{Json::Object{}};
-    M_ASSERT_EQ(v_obj.to<Json::Object>().size(), 1);
-    M_ASSERT_EQ(v_empty_obj.to<Json::Object>().size(), 0);
-    M_ASSERT_EQ(v_obj.to_or<Json::Object>(Json::Object{{"x",2}}).size(), 1);
-    M_ASSERT_EQ(v_empty_obj.to_or<Json::Object>(Json::Object{{"x",2}}).size(), 0);
-    M_ASSERT_EQ(v_obj.to_or<Json::Array>(Json::Array{{7,8}}).size(), 2); // Object->Array不可转换，返回默认
-    M_ASSERT_FALSE(v_obj.to_if<Json::Array>().has_value());
+    // Obj
+    Json v_obj{Json::Obj{{"k", 1}}};
+    Json v_empty_obj{Json::Obj{}};
+    M_ASSERT_EQ(v_obj.to<Json::Obj>().size(), 1);
+    M_ASSERT_EQ(v_empty_obj.to<Json::Obj>().size(), 0);
+    M_ASSERT_EQ(v_obj.to_or<Json::Obj>(Json::Obj{{"x",2}}).size(), 1);
+    M_ASSERT_EQ(v_empty_obj.to_or<Json::Obj>(Json::Obj{{"x",2}}).size(), 0);
+    M_ASSERT_EQ(v_obj.to_or<Json::Arr>(Json::Arr{{7,8}}).size(), 2); // Obj->Arr不可转换，返回默认
+    M_ASSERT_FALSE(v_obj.to_if<Json::Arr>().has_value());
     M_ASSERT_EQ(v_obj.to_or<Json::Str>("default"), "default");
     M_ASSERT_FALSE(v_obj.to_if<Json::Str>().has_value());
 
@@ -121,13 +121,13 @@ M_TEST(Value, To) {
     M_ASSERT_EQ(v_str.to_or<int>(-99), -99);
     M_ASSERT_FALSE(v_str.to_if<int>().has_value());
 
-    M_ASSERT_THROW(std::ignore = v_arr.to<Json::Object>(), std::runtime_error);
-    M_ASSERT_EQ(v_arr.to_or<Json::Object>(Json::Object{{"k",1}}).size(), 1);
-    M_ASSERT_FALSE(v_arr.to_if<Json::Object>().has_value());
+    M_ASSERT_THROW(std::ignore = v_arr.to<Json::Obj>(), std::runtime_error);
+    M_ASSERT_EQ(v_arr.to_or<Json::Obj>(Json::Obj{{"k",1}}).size(), 1);
+    M_ASSERT_FALSE(v_arr.to_if<Json::Obj>().has_value());
 
-    M_ASSERT_THROW(std::ignore = v_obj.to<Json::Array>(), std::runtime_error);
-    M_ASSERT_EQ(v_obj.to_or<Json::Array>(Json::Array{{1,2}}).size(), 2);
-    M_ASSERT_FALSE(v_obj.to_if<Json::Array>().has_value());
+    M_ASSERT_THROW(std::ignore = v_obj.to<Json::Arr>(), std::runtime_error);
+    M_ASSERT_EQ(v_obj.to_or<Json::Arr>(Json::Arr{{1,2}}).size(), 2);
+    M_ASSERT_FALSE(v_obj.to_if<Json::Arr>().has_value());
 
     // 边界值测试
     Json v_min{-1e308};
@@ -140,46 +140,46 @@ M_TEST(Value, To) {
     // 容器类型转换（std::vector, std::map, std::string）
     std::vector<Json> vec{Json::Num(1), Json::Str("two")};
     Json v_vec{vec};
-    M_ASSERT_EQ(v_vec.to<Json::Array>().size(), 2);
+    M_ASSERT_EQ(v_vec.to<Json::Arr>().size(), 2);
     std::map<std::string, Json> mp{{"a", Json::Num(1)}};
     Json v_mp{mp};
-    M_ASSERT_EQ(v_mp.to<Json::Object>().size(), 1);
+    M_ASSERT_EQ(v_mp.to<Json::Obj>().size(), 1);
     std::string s = "abc";
     Json v_s{s};
     M_ASSERT_EQ(v_s.to<Json::Str>(), "abc");
 
     // 复杂嵌套类型
-    Json v_nested{Json::Array{{Json::Object{{"x", 1}}, Json::Array{{2,3}}}}};
-    M_ASSERT_EQ(v_nested.to<Json::Array>().size(), 2);
+    Json v_nested{Json::Arr{{Json::Obj{{"x", 1}}, Json::Arr{{2,3}}}}};
+    M_ASSERT_EQ(v_nested.to<Json::Arr>().size(), 2);
     M_ASSERT_EQ(v_nested[0]["x"].to<int>(), 1);
     M_ASSERT_EQ(v_nested[1][0].to<int>(), 2);
 
     // Nul->其他类型
-    M_ASSERT_THROW(std::ignore = v_null.to<Json::Array>(), std::runtime_error);
-    M_ASSERT_EQ(v_null.to_or<Json::Array>(Json::Array{{1,2}}).size(), 2);
-    M_ASSERT_FALSE(v_null.to_if<Json::Array>().has_value());
+    M_ASSERT_THROW(std::ignore = v_null.to<Json::Arr>(), std::runtime_error);
+    M_ASSERT_EQ(v_null.to_or<Json::Arr>(Json::Arr{{1,2}}).size(), 2);
+    M_ASSERT_FALSE(v_null.to_if<Json::Arr>().has_value());
 
     // Bol->其他类型
-    M_ASSERT_THROW(std::ignore = v_true.to<Json::Array>(), std::runtime_error);
-    M_ASSERT_EQ(v_true.to_or<Json::Array>(Json::Array{{1,2}}).size(), 2);
-    M_ASSERT_FALSE(v_true.to_if<Json::Array>().has_value());
+    M_ASSERT_THROW(std::ignore = v_true.to<Json::Arr>(), std::runtime_error);
+    M_ASSERT_EQ(v_true.to_or<Json::Arr>(Json::Arr{{1,2}}).size(), 2);
+    M_ASSERT_FALSE(v_true.to_if<Json::Arr>().has_value());
 
     // Num->其他类型
-    M_ASSERT_THROW(std::ignore = v_num.to<Json::Array>(), std::runtime_error);
-    M_ASSERT_EQ(v_num.to_or<Json::Array>(Json::Array{{1,2}}).size(), 2);
-    M_ASSERT_FALSE(v_num.to_if<Json::Array>().has_value());
+    M_ASSERT_THROW(std::ignore = v_num.to<Json::Arr>(), std::runtime_error);
+    M_ASSERT_EQ(v_num.to_or<Json::Arr>(Json::Arr{{1,2}}).size(), 2);
+    M_ASSERT_FALSE(v_num.to_if<Json::Arr>().has_value());
 
     // Str->其他类型
-    M_ASSERT_THROW(std::ignore = v_str.to<Json::Array>(), std::runtime_error);
-    M_ASSERT_EQ(v_str.to_or<Json::Array>(Json::Array{{1,2}}).size(), 2);
-    M_ASSERT_FALSE(v_str.to_if<Json::Array>().has_value());
+    M_ASSERT_THROW(std::ignore = v_str.to<Json::Arr>(), std::runtime_error);
+    M_ASSERT_EQ(v_str.to_or<Json::Arr>(Json::Arr{{1,2}}).size(), 2);
+    M_ASSERT_FALSE(v_str.to_if<Json::Arr>().has_value());
 
-    // Array->其他类型
+    // Arr->其他类型
     M_ASSERT_THROW(std::ignore = v_arr.to<Json::Str>(), std::runtime_error);
     M_ASSERT_EQ(v_arr.to_or<Json::Str>("default"), "default");
     M_ASSERT_FALSE(v_arr.to_if<Json::Str>().has_value());
 
-    // Object->其他类型
+    // Obj->其他类型
     M_ASSERT_THROW(std::ignore = v_obj.to<Json::Str>(), std::runtime_error);
     M_ASSERT_EQ(v_obj.to_or<Json::Str>("default"), "default");
     M_ASSERT_FALSE(v_obj.to_if<Json::Str>().has_value());

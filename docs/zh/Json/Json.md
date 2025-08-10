@@ -43,20 +43,20 @@ using Nul = std::nullptr_t;
 using Bol = bool;
 using Num = double;
 using Str = std::basic_string<char, std::char_traits<char>, StrAllocator<char>>;
-using Array = std::vector<Json, VecAllocator<Json>>;
-using Object = std::conditional_t<UseOrderedMap,
+using Arr = std::vector<Json, VecAllocator<Json>>;
+using Obj = std::conditional_t<UseOrderedMap,
     std::map<Str, Json, std::less<Str>, MapAllocator<std::pair<const Str, Json>>>,
     std::unordered_map<Str, Json, std::hash<Str>, std::equal_to<Str>, MapAllocator<std::pair<const Str, Json>>>
 >;
 ```
 
-The types for `Nul`, `Bol` and `Num` are completely fixed. For `Str`, `Array` and `Object`, the memory allocator can be customized through template parameter `AllocatorType`.
-While `Object` can choose between ordered or hash-based implementations, the class templates themselves remain fixed.
+The types for `Nul`, `Bol` and `Num` are completely fixed. For `Str`, `Arr` and `Obj`, the memory allocator can be customized through template parameter `AllocatorType`.
+While `Obj` can choose between ordered or hash-based implementations, the class templates themselves remain fixed.
 
 By default:
 - `Str` equals `std::string`
-- `Array` equals `std::vector<Json>`
-- `Object` equals `std::map<Str, Json>`
+- `Arr` equals `std::vector<Json>`
+- `Obj` equals `std::map<Str, Json>`
 
 ## Member Variables
 
@@ -69,8 +69,8 @@ std::variant<
     Bol,
     Num,
     Str,
-    Array,
-    Object
+    Arr,
+    Obj
 > m_data { Nul{} };
 ```
 
@@ -89,14 +89,14 @@ std::variant<
 - [is_bol](is_bol.md): Check if current JSON is `Bol`
 - [is_num](is_num.md): Check if current JSON is `Num`
 - [is_str](is_str.md): Check if current JSON is `Str`
-- [is_arr](is_arr.md): Check if current JSON is `Array`
-- [is_obj](is_obj.md): Check if current JSON is `Object`
+- [is_arr](is_arr.md): Check if current JSON is `Arr`
+- [is_obj](is_obj.md): Check if current JSON is `Obj`
 - [nul](get_nul.md): Get reference to internal `Nul` data
 - [bol](get_bol.md): Get reference to internal `Bol` data
 - [num](get_num.md): Get reference to internal `Num` data
 - [str](get_str.md): Get reference to internal `Str` data
-- [arr](get_arr.md): Get reference to internal `Array` data
-- [obj](get_obj.md): Get reference to internal `Object` data
+- [arr](get_arr.md): Get reference to internal `Arr` data
+- [obj](get_obj.md): Get reference to internal `Obj` data
 
 ### 3. Data Operations
 

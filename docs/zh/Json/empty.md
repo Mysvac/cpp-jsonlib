@@ -4,10 +4,10 @@
 bool empty() const noexcept;
 ```
 
-Checks if the container is empty for `Object`/`Array`, returns `true` for other types.
+Checks if the container is empty for `Obj`/`Arr`, returns `true` for other types.
 
 **Return Value**
-- `Object`/`Array`: `true` if empty (equivalent to `size() == 0`)
+- `Obj`/`Arr`: `true` if empty (equivalent to `size() == 0`)
 - All other types: `true` (including `Str`)
 
 **Exception Safety**  

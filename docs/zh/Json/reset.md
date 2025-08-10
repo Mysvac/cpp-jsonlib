@@ -23,10 +23,10 @@ Resets internal data to the specified type (defaults to Nul).
             m_data = Num{};
         } else if constexpr(std::is_same_v<T, Str>) {
             m_data = Str{};
-        } else if constexpr(std::is_same_v<T, Array>) {
-            m_data = Array{};
-        } else if constexpr(std::is_same_v<T, Object>) {
-            m_data = Object{};
+        } else if constexpr(std::is_same_v<T, Arr>) {
+            m_data = Arr{};
+        } else if constexpr(std::is_same_v<T, Obj>) {
+            m_data = Obj{};
         }
     }
     ```

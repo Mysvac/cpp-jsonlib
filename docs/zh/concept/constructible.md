@@ -5,8 +5,8 @@ template<typename J, typename T>
 concept constructible = std::disjunction_v<
     std::is_arithmetic<T>,
     std::is_enum<T>,
-    std::is_convertible<T, typename J::Array>,
-    std::is_convertible<T, typename J::Object>,
+    std::is_convertible<T, typename J::Arr>,
+    std::is_convertible<T, typename J::Obj>,
     std::is_convertible<T, typename J::Str>,
     std::is_convertible<T, typename J::Num>,
     std::is_convertible<T, typename J::Bol>,

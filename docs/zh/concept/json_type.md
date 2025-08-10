@@ -7,8 +7,8 @@ concept json_type = std::disjunction_v<
     std::is_same<T, typename J::Bol>,
     std::is_same<T, typename J::Num>,
     std::is_same<T, typename J::Str>,
-    std::is_same<T, typename J::Array>,
-    std::is_same<T, typename J::Object>
+    std::is_same<T, typename J::Arr>,
+    std::is_same<T, typename J::Obj>
 >;
 ```
 

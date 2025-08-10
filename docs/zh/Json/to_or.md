@@ -16,22 +16,22 @@ Important: This function doesn't handle allocation failures or constructor excep
 ## Conversion Rules
 
 1. Nul → Nul
-2. Object → Object
-3. Array → Array
+2. Obj → Obj
+3. Arr → Arr
 4. Str → Str
 5. Bol → Bol
 6. Num → Enum (rounded to nearest integer)
 7. Num → Integer types (rounded)
 8. Num → Floating-point types
 9. Any → Types with Json constructors
-10. Object → Implicitly convertible types
-11. Array → Implicitly convertible types
+10. Obj → Implicitly convertible types
+11. Arr → Implicitly convertible types
 12. Str → Implicitly convertible types
 13. Num → Implicitly convertible types
 14. Bol → Implicitly convertible types
 15. Nul → Implicitly convertible types (except bool)
-16. Object → Convertible key-value types (element-wise)
-17. Array → Convertible container types (element-wise)
+16. Obj → Convertible key-value types (element-wise)
+17. Arr → Convertible container types (element-wise)
 18. Returns provided default value
 
 ## Parameters

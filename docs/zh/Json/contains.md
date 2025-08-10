@@ -4,11 +4,11 @@
 bool contains(const Str& key) const noexcept;
 ```
 
-Checks if an `Object` contains the specified key, returns `false` for non-object types.
+Checks if an `Obj` contains the specified key, returns `false` for non-object types.
 
 
 **Return Value**
-- `Object`: Result of underlying `contains()` call
+- `Obj`: Result of underlying `contains()` call
 - Other types: `false`
 
 **Exception Safety**  

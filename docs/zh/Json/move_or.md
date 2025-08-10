@@ -15,20 +15,20 @@ Performs move-conversion of internal data to type `T`, returning specified defau
 
 **Conversion Rules**:
 1. Nul → Nul
-2. Object → Object (move)
-3. Array → Array (move)
+2. Obj → Obj (move)
+3. Arr → Arr (move)
 4. Str → Str (move)
 5. Bol → Bol (copy)
 6. Num → Enum (rounded)
 7. Num → Integer (rounded)
 8. Num → Floating-point
 9. Any → Json-constructible (move preferred)
-10. Object → Implicitly convertible (move preferred)
-11. Array → Implicitly convertible (move preferred)
+10. Obj → Implicitly convertible (move preferred)
+11. Arr → Implicitly convertible (move preferred)
 12. Str → Implicitly convertible (move preferred)
     13-15. Primitive → Implicitly convertible (Nul excludes bool)
-16. Object → Key-value container (element-wise, move preferred)
-17. Array → Sequence container (element-wise, move preferred)
+16. Obj → Key-value container (element-wise, move preferred)
+17. Arr → Sequence container (element-wise, move preferred)
 18. Returns default_result
 
 **Parameters**:
