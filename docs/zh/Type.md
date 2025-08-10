@@ -4,7 +4,7 @@
 enum class Type{
     eNul = 0,
     eBol,    
-    eNumber,  
+    eNum,  
     eString,  
     eArray,   
     eObject   

@@ -35,7 +35,7 @@ JSON 存在六种基本类型，本库使用了一个枚举来表示它们：
 enum class Type{
     eNul = 0,  ///< Nul type
     eBol,      ///< boolean type
-    eNumber,    ///< Number type
+    eNum,    ///< Num type
     eString,    ///< String type
     eArray,     ///< Array type
     eObject     ///< Object type
@@ -75,7 +75,7 @@ namespace mysvac {
 |----------------|-------------------------------|-----------------------------------------------------------------------------|
 | `Json::Nul`   | `std::nullptr_t`              | `std::nullptr_t`                                                            |
 | `Json::Bol`   | `bool`                        | `bool`                                                                      |
-| `Json::Number` | `double`                      | `double`                                                                    |
+| `Json::Num` | `double`                      | `double`                                                                    |
 | `Json::String` | `std::string`                 | `std::basic_string<...,StrAllocator<char>>`                                 |
 | `Json::Array`  | `std::vector<Json>`           | `std::vector<Json, VecAllocator<Json>>`                                     |
 | `Json::Object` | `std::map<std::string, Json>` | `std::map<..,MapAllocator<..>>` 或 `std::unordered_map<..,MapAllocator<..>>` |
@@ -90,16 +90,16 @@ namespace mysvac {
 
 ```cpp
 Json null_val;                  // 默认构造，类型为 Nul
-Json bool_val(3.3);             // 浮点初始化，类型为 Number
+Json bool_val(3.3);             // 浮点初始化，类型为 Num
 Json obj_val = Json::Object{};  // 直接使用 Object 初始化
 ```
 
 除了上述六种 JSON 类型，我们还支持使用基本算术类型、枚举类型和 `const char*` 进行隐式构造。
-**枚举会被视为整数**，不要试图使用 `json::Type` 枚举值进行指定初始化，这只会生成 `Number` 类型的值：
+**枚举会被视为整数**，不要试图使用 `json::Type` 枚举值进行指定初始化，这只会生成 `Num` 类型的值：
 
 ```cpp
 Json enum_val{ json::Type::eObject }; // 危险
-// 这会生成一个 Number 类型的值，具体值取决于枚举值的整数表示。
+// 这会生成一个 Num 类型的值，具体值取决于枚举值的整数表示。
 ```
 
 虽然 `Json` 不支持初始化列表，但由于隐式构造的存在，可以通过 `Array` 和 `Object` 的初始化列表快速创建对象：
@@ -182,7 +182,7 @@ auto str = smp_val["key2"].move<std::string>(); // 将内部字符串移动了�
 int int_42 = smp_val["key1"].to<int>(); // 返回内部整数的拷贝
 ```
 
-特别注意，`Number` 数据使用 `double` 存储，因此在转换成整数时（枚举类型，或符合整数模板要求的类型），会**四舍五入**，避免精度问题。
+特别注意，`Num` 数据使用 `double` 存储，因此在转换成整数时（枚举类型，或符合整数模板要求的类型），会**四舍五入**，避免精度问题。
 
 注意，`to` 和 `move` 支持很多类型，转换失败会抛出 `std::runtime_error` 异常。
 为此，我们还提供了 `xx_if` 和 `xx_or` 版本，前者返回 `optional<T>` ，后者则是在失败时返回指定的默认值。

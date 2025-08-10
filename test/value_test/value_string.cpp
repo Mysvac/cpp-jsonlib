@@ -16,7 +16,7 @@ M_TEST(Value, String) {
     M_ASSERT_EQ(Json{json::Type::eString}.is_obj(), false);
     M_ASSERT_EQ(Json{json::Type::eString}.is_bol(), false);
     M_ASSERT_EQ(Json{json::Type::eString}.is_str(), false);
-    M_ASSERT_EQ(Json{json::Type::eString}.type(), json::Type::eNumber);
+    M_ASSERT_EQ(Json{json::Type::eString}.type(), json::Type::eNum);
 
     M_ASSERT_NO_THROW(Json str_default{Json::String{}});
     M_ASSERT_EQ(Json{Json::String{}}.to<Json::String>(), "");
@@ -176,7 +176,7 @@ M_TEST(Value, String) {
     M_ASSERT_TRUE(control_serialized.find("\\u") != std::string::npos);
 
     // --- Type safety ---
-    M_ASSERT_THROW(std::ignore = str_val.to<Json::Number>(), std::runtime_error);
+    M_ASSERT_THROW(std::ignore = str_val.to<Json::Num>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = str_val.to<Json::Bol>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = str_val.to<Json::Array>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = str_val.to<Json::Object>(), std::runtime_error);

@@ -1,10 +1,10 @@
 # **Json.num**
 
 ```cpp
-constexpr Number& num() & ;
-constexpr Number&& num() && ;
-constexpr const Number& num() const & ;
-constexpr const Number&& num() const && ;
+constexpr Num& num() & ;
+constexpr Num&& num() && ;
+constexpr const Num& num() const & ;
+constexpr const Num&& num() const && ;
 ```
 
 Returns a reference to the internal numeric value.

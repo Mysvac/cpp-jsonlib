@@ -24,7 +24,7 @@ Serializes JSON data with indentation to either:
 
 ### Parameters
 
-- **`space_num`**: Number of spaces per indentation level (unsigned integer)
+- **`space_num`**: Num of spaces per indentation level (unsigned integer)
 - **`depth`**: Initial indentation depth (unsigned integer, default=0)
 
 ### Exception Safety

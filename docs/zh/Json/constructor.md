@@ -32,7 +32,7 @@ explicit Json(T&& other) noexcept;
 
 3. Move constructor - transfers value to new `Json` object (source becomes `Nul`), noexcept
 
-4. Implicit constructor - accepts any type convertible to JSON (arithmetic/enum→Number, JSON types, custom convertible types)
+4. Implicit constructor - accepts any type convertible to JSON (arithmetic/enum→Num, JSON types, custom convertible types)
     - Noexcept guaranteed only for simple types or rvalue complex types
 
 5. Explicit constructor - accepts array-like types (`std::vector`, `std::list` etc.) with constructible elements

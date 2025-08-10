@@ -22,14 +22,14 @@ Recommended to reset source object after moving.
 3. Array → Array (moved)
 4. String → String (moved)
 5. Bol → Bol (copied)
-6. Number → Enum (rounded)
-7. Number → Integer (rounded)
-8. Number → Floating-point
+6. Num → Enum (rounded)
+7. Num → Integer (rounded)
+8. Num → Floating-point
 9. Any → Json-constructible types (move preferred)
 10. Object → Implicitly convertible (move preferred)
 11. Array → Implicitly convertible (move preferred)
 12. String → Implicitly convertible (move preferred)
-13. Number → Implicitly convertible
+13. Num → Implicitly convertible
 14. Bol → Implicitly convertible
 15. Nul → Implicitly convertible (except bool)
 16. Object → Convertible key-value types (element-wise, move preferred)

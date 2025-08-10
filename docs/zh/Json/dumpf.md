@@ -10,7 +10,7 @@ String dumpf(
 Serializes JSON data to a formatted string and returns the result.
 
 ### Parameters
-- **`space_num`**: Number of spaces per indentation level (unsigned integer)
+- **`space_num`**: Num of spaces per indentation level (unsigned integer)
 - **`depth`**: Initial indentation depth (unsigned integer, default=0)
 
 ### Return Value

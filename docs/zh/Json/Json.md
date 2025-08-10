@@ -41,7 +41,7 @@ Each `Json` class internally contains six types corresponding to the six JSON da
 // public
 using Nul = std::nullptr_t;
 using Bol = bool;
-using Number = double;
+using Num = double;
 using String = std::basic_string<char, std::char_traits<char>, StrAllocator<char>>;
 using Array = std::vector<Json, VecAllocator<Json>>;
 using Object = std::conditional_t<UseOrderedMap,
@@ -50,7 +50,7 @@ using Object = std::conditional_t<UseOrderedMap,
 >;
 ```
 
-The types for `Nul`, `Bol` and `Number` are completely fixed. For `String`, `Array` and `Object`, the memory allocator can be customized through template parameter `AllocatorType`.
+The types for `Nul`, `Bol` and `Num` are completely fixed. For `String`, `Array` and `Object`, the memory allocator can be customized through template parameter `AllocatorType`.
 While `Object` can choose between ordered or hash-based implementations, the class templates themselves remain fixed.
 
 By default:
@@ -67,7 +67,7 @@ The class contains only one member - a `std::variant` type that stores any of th
 std::variant<
     Nul,
     Bol,
-    Number,
+    Num,
     String,
     Array,
     Object
@@ -87,13 +87,13 @@ std::variant<
 - [type](type.md): Get current JSON data type
 - [is_nul](is_nul.md): Check if current JSON is `Nul`
 - [is_bol](is_bol.md): Check if current JSON is `Bol`
-- [is_num](is_num.md): Check if current JSON is `Number`
+- [is_num](is_num.md): Check if current JSON is `Num`
 - [is_str](is_str.md): Check if current JSON is `String`
 - [is_arr](is_arr.md): Check if current JSON is `Array`
 - [is_obj](is_obj.md): Check if current JSON is `Object`
 - [nul](get_nul.md): Get reference to internal `Nul` data
 - [bol](get_bol.md): Get reference to internal `Bol` data
-- [num](get_num.md): Get reference to internal `Number` data
+- [num](get_num.md): Get reference to internal `Num` data
 - [str](get_str.md): Get reference to internal `String` data
 - [arr](get_arr.md): Get reference to internal `Array` data
 - [obj](get_obj.md): Get reference to internal `Object` data

@@ -9,7 +9,7 @@ using namespace mysvac;
 // Array1: 基础构造与访问
 M_TEST(Value, Array) {
     M_ASSERT_NO_THROW(Json arr_default{ Json::Array{} });
-    M_ASSERT_EQ(Json{json::Type::eArray}.type(), json::Type::eNumber);
+    M_ASSERT_EQ(Json{json::Type::eArray}.type(), json::Type::eNum);
     M_ASSERT_FALSE(Json{json::Type::eArray}.is_arr());
     M_ASSERT_TRUE(Json{json::Type::eArray}.is_num());
     M_ASSERT_EQ(Json{Json::Array{}}.arr().size(), 0);
@@ -27,19 +27,19 @@ M_TEST(Value, Array) {
     Json simple_arr{Json::Array{{10, 20, 30}}};
     M_ASSERT_EQ(simple_arr.type(), json::Type::eArray);
     M_ASSERT_EQ(simple_arr.arr().size(), 3);
-    M_ASSERT_EQ(simple_arr[0].to<Json::Number>(), 10);
-    M_ASSERT_EQ(simple_arr[1].to<Json::Number>(), 20);
-    M_ASSERT_EQ(simple_arr[2].to<Json::Number>(), 30);
+    M_ASSERT_EQ(simple_arr[0].to<Json::Num>(), 10);
+    M_ASSERT_EQ(simple_arr[1].to<Json::Num>(), 20);
+    M_ASSERT_EQ(simple_arr[2].to<Json::Num>(), 30);
 
     Json mixed_arr{Json::Array{{42, "hello", true, nullptr}}};
     M_ASSERT_EQ(mixed_arr.arr().size(), 4);
-    M_ASSERT_EQ(mixed_arr[0].to<Json::Number>(), 42);
+    M_ASSERT_EQ(mixed_arr[0].to<Json::Num>(), 42);
     M_ASSERT_EQ(mixed_arr[1].to<Json::String>(), "hello");
     M_ASSERT_EQ(mixed_arr[2].to<Json::Bol>(), true);
     M_ASSERT_EQ(mixed_arr[3].type(), json::Type::eNul);
 
     const Json const_arr{Json::Array{{1, 2, 3}}};
-    M_ASSERT_EQ(const_arr[2].to<Json::Number>(), 3);
+    M_ASSERT_EQ(const_arr[2].to<Json::Num>(), 3);
 
 
     // Array3: 元素修改与赋值
@@ -47,18 +47,18 @@ M_TEST(Value, Array) {
     modify_test[0] = 100;
     modify_test[1] = "modified";
     modify_test[2] = false;
-    M_ASSERT_EQ(modify_test[0].to<Json::Number>(), 100);
+    M_ASSERT_EQ(modify_test[0].to<Json::Num>(), 100);
     M_ASSERT_EQ(modify_test[1].to<Json::String>(), "modified");
     M_ASSERT_EQ(modify_test[2].to<Json::Bol>(), false);
 
     Json assign_val{Json::Array{}};
     M_ASSERT_NO_THROW(assign_val = Json::Array{{1, 2, 3}});
     M_ASSERT_EQ(assign_val.arr().size(), 3);
-    M_ASSERT_EQ(assign_val[0].to<Json::Number>(), 1);
+    M_ASSERT_EQ(assign_val[0].to<Json::Num>(), 1);
     M_ASSERT_NO_THROW(assign_val = Json::Array{{10, 20}});
     M_ASSERT_EQ(assign_val.arr().size(), 2);
-    M_ASSERT_EQ(assign_val[0].to<Json::Number>(), 10);
-    M_ASSERT_EQ(assign_val[1].to<Json::Number>(), 20);
+    M_ASSERT_EQ(assign_val[0].to<Json::Num>(), 10);
+    M_ASSERT_EQ(assign_val[1].to<Json::Num>(), 20);
 
 
     // Array4: 安全访问与异常
@@ -66,11 +66,11 @@ M_TEST(Value, Array) {
     M_ASSERT_NO_THROW(std::ignore = at_test.at(0));
     M_ASSERT_NO_THROW(std::ignore = at_test.at(1));
     M_ASSERT_NO_THROW(std::ignore = at_test.at(2));
-    M_ASSERT_EQ(at_test.at(1).to<Json::Number>(), 200);
+    M_ASSERT_EQ(at_test.at(1).to<Json::Num>(), 200);
     M_ASSERT_THROW(std::ignore = at_test.at(3), std::out_of_range);
 
     const Json const_at_test{Json::Array{{1, 2, 3}}};
-    M_ASSERT_EQ(const_at_test.at(1).to<Json::Number>(), 2);
+    M_ASSERT_EQ(const_at_test.at(1).to<Json::Num>(), 2);
 
     Json wrong_type_val{42};
     M_ASSERT_THROW(std::ignore = wrong_type_val.arr(), std::bad_variant_access);
@@ -86,14 +86,14 @@ M_TEST(Value, Array) {
     arr_ref[0] = 100;
     arr_ref.push_back(40);
     M_ASSERT_EQ(get_test.arr().size(), 4);
-    M_ASSERT_EQ(get_test[0].to<Json::Number>(), 100);
-    M_ASSERT_EQ(get_test[3].to<Json::Number>(), 40);
+    M_ASSERT_EQ(get_test[0].to<Json::Num>(), 100);
+    M_ASSERT_EQ(get_test[3].to<Json::Num>(), 40);
 
     const Json const_ref_test{Json::Array{{1, 2, 3}}};
     M_ASSERT_NO_THROW(std::ignore = const_ref_test.arr());
     const auto& const_arr_ref = const_ref_test.arr();
     M_ASSERT_EQ(const_arr_ref.size(), 3);
-    M_ASSERT_EQ(const_arr_ref[0].to<Json::Number>(), 1);
+    M_ASSERT_EQ(const_arr_ref[0].to<Json::Num>(), 1);
 
 
     // Array6: 多维嵌套结构
@@ -104,7 +104,7 @@ M_TEST(Value, Array) {
     }}};
     M_ASSERT_EQ(nested_2d.type(), json::Type::eArray);
     M_ASSERT_EQ(nested_2d.arr().size(), 3);
-    M_ASSERT_EQ(nested_2d[1][0].to<Json::Number>(), 4);
+    M_ASSERT_EQ(nested_2d[1][0].to<Json::Num>(), 4);
 
     Json nested_3d{Json::Array{{
         Json::Array{{
@@ -119,7 +119,7 @@ M_TEST(Value, Array) {
     M_ASSERT_EQ(nested_3d.arr().size(), 2);
     M_ASSERT_EQ(nested_3d[0].arr().size(), 2);
     M_ASSERT_EQ(nested_3d[0][0].arr().size(), 2);
-    M_ASSERT_EQ(nested_3d[0][1][1].to<Json::Number>(), 4);
+    M_ASSERT_EQ(nested_3d[0][1][1].to<Json::Num>(), 4);
 
 
 // Array7: 混合嵌套与不规则结构
@@ -136,7 +136,7 @@ M_TEST(Value, Array) {
     M_ASSERT_EQ(mixed_nested[0].arr().size(), 3);
     M_ASSERT_EQ(mixed_nested[1].type(), json::Type::eString);
     M_ASSERT_EQ(mixed_nested[2].arr().size(), 3);
-    M_ASSERT_EQ(mixed_nested[2][1][1].to<Json::Number>(), 5);
+    M_ASSERT_EQ(mixed_nested[2][1][1].to<Json::Num>(), 5);
 
     Json irregular{Json::Array{{
         Json::Array{{1}},
@@ -149,7 +149,7 @@ M_TEST(Value, Array) {
     M_ASSERT_EQ(irregular[1].arr().size(), 2);
     M_ASSERT_EQ(irregular[2].arr().size(), 3);
     M_ASSERT_EQ(irregular[3].arr().size(), 4);
-    M_ASSERT_EQ(irregular[1][1].to<Json::Number>(), 3);
+    M_ASSERT_EQ(irregular[1][1].to<Json::Num>(), 3);
 
 
 // Array8: 比较与序列化
@@ -207,8 +207,8 @@ M_TEST(Value, Array) {
     if (parsed_simple.has_value()) {
         M_ASSERT_EQ(parsed_simple->type(), json::Type::eArray);
         M_ASSERT_EQ(parsed_simple->arr().size(), 3);
-        M_ASSERT_EQ((*parsed_simple)[0].to<Json::Number>(), 1);
-        M_ASSERT_EQ((*parsed_simple)[2].to<Json::Number>(), 3);
+        M_ASSERT_EQ((*parsed_simple)[0].to<Json::Num>(), 1);
+        M_ASSERT_EQ((*parsed_simple)[2].to<Json::Num>(), 3);
     } else {
         M_ASSERT_FAIL("Failed to parse simple array");
     }
@@ -244,12 +244,12 @@ M_TEST(Value, Array) {
     M_ASSERT_EQ(simplified_multi_dim[0].arr().size(), 3);
     M_ASSERT_EQ(simplified_multi_dim[1].arr().size(), 3);
     M_ASSERT_EQ(simplified_multi_dim[2].arr().size(), 2);
-    M_ASSERT_EQ(simplified_multi_dim[0][0][0].to<Json::Number>(), 1);
+    M_ASSERT_EQ(simplified_multi_dim[0][0][0].to<Json::Num>(), 1);
     M_ASSERT_EQ(simplified_multi_dim[1][1][1].to<Json::String>(), "e");
     M_ASSERT_EQ(simplified_multi_dim[2][0][2].type(), json::Type::eNul);
     M_ASSERT_EQ(simplified_multi_dim[2][0][2].is_nul(), true);
     M_ASSERT_EQ(simplified_multi_dim[2][1][1].to<Json::String>(), "mixed");
-    M_ASSERT_EQ(simplified_multi_dim[2][1][2].to<Json::Number>(), 3.14);
+    M_ASSERT_EQ(simplified_multi_dim[2][1][2].to<Json::Num>(), 3.14);
     M_ASSERT_THROW(std::ignore = simplified_multi_dim.at(3), std::out_of_range);
     M_ASSERT_THROW(std::ignore = simplified_multi_dim.at(0).at(3), std::out_of_range);
     M_ASSERT_THROW(std::ignore = simplified_multi_dim.at(1).at(0).at(3), std::out_of_range);

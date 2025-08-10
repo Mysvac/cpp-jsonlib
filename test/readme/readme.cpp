@@ -53,7 +53,7 @@ struct MyData2 {
 M_TEST(README, readme) {
     // {
     //     Json null_val;                  // 默认构造，类型为 Nul
-    //     Json bool_val(3.3);             // 浮点初始化，类型为 Number
+    //     Json bool_val(3.3);             // 浮点初始化，类型为 Num
     //     Json obj_val = Json::Object{};  // 直接使用 Object 初始化
     //
     //     Json enum_val{ json::Type::eObject }; // 危险

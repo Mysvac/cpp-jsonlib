@@ -24,7 +24,7 @@ M_TEST(File, Serial_Unicode) {
     M_ASSERT_NE( json.type(), json::Type::eNul );
 }
 
-M_TEST(File, Serial_Number) {
+M_TEST(File, Serial_Num) {
     std::ifstream file( CURRENT_PATH "/files/many_number.json" );
     const auto json = Json::parse(file).value_or( nullptr );
     M_EXPECT_FALSE( json.is_nul() );
@@ -35,7 +35,7 @@ M_TEST(File, Serial_Number) {
 
     const auto end = std::chrono::system_clock::now();
     const auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - bein).count();
-    std::println("-----------------------------------------------Serial_Number: {} us", time);
+    std::println("-----------------------------------------------Serial_Num: {} us", time);
 
     M_ASSERT_NE( json.type(), json::Type::eNul );
 }

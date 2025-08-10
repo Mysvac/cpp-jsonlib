@@ -23,7 +23,7 @@ M_TEST(Value, Object) {
     M_ASSERT_EQ(obj_direct.obj().size(), 3);
 
     Json mixed_obj{Json::Object{
-        {"number", Json::Number(42)},
+        {"number", Json::Num(42)},
         {"string", "hello"},
         {"boolean", true},
         {"null_value", nullptr}
@@ -46,7 +46,7 @@ M_TEST(Value, Object) {
 
     // --- Key Access and Modification ---
     Json subscript_test{Json::Object{{"first", 10}, {"second", 20}, {"third", 30}}};
-    M_ASSERT_EQ(subscript_test["first"].to<Json::Number>(), 10);
+    M_ASSERT_EQ(subscript_test["first"].to<Json::Num>(), 10);
 
     Json mixed_subscript{Json::Object{
         {"number", 42},
@@ -70,12 +70,12 @@ M_TEST(Value, Object) {
 
     // --- Const Key Access ---
     const Json const_obj{Json::Object{{"x", 1}, {"y", 2}, {"z", 3}}};
-    M_ASSERT_EQ(const_obj["y"].to<Json::Number>(), 2);
+    M_ASSERT_EQ(const_obj["y"].to<Json::Num>(), 2);
 
     // --- Safe Access with at() ---
     Json at_test{Json::Object{{"alpha", 100}, {"beta", 200}, {"gamma", 300}}};
     M_ASSERT_NO_THROW(std::ignore = at_test.at("alpha"));
-    M_ASSERT_EQ(at_test.at("gamma").to<Json::Number>(), 300);
+    M_ASSERT_EQ(at_test.at("gamma").to<Json::Num>(), 300);
     M_ASSERT_THROW(std::ignore = at_test.at("nonexistent"), std::out_of_range);
 
     // --- Reference Access and Modification ---
@@ -96,7 +96,7 @@ M_TEST(Value, Object) {
         {"company", Json::Object{{"name", "TechCorp"}, {"employees", 100}, {"public", false}}}
     }};
     M_ASSERT_EQ(nested_obj["person"]["name"].to<Json::String>(), "John");
-    M_ASSERT_EQ(nested_obj["company"]["employees"].to<Json::Number>(), 100);
+    M_ASSERT_EQ(nested_obj["company"]["employees"].to<Json::Num>(), 100);
 
     // --- Deeply Nested Object Access ---
     Json deep_nested{Json::Object{
@@ -144,8 +144,8 @@ M_TEST(Value, Object) {
         M_ASSERT_EQ( parsed_nested->type(), json::Type::eObject );
         M_ASSERT_EQ( parsed_nested->obj().size(), 1 );
         M_ASSERT_EQ( (*parsed_nested)["outer"].obj().size(), 2 );
-        M_ASSERT_EQ( (*parsed_nested)["outer"]["inner1"].to<Json::Number>(), 1 );
-        M_ASSERT_EQ( (*parsed_nested)["outer"]["inner2"].to<Json::Number>(), 2 );
+        M_ASSERT_EQ( (*parsed_nested)["outer"]["inner1"].to<Json::Num>(), 1 );
+        M_ASSERT_EQ( (*parsed_nested)["outer"]["inner2"].to<Json::Num>(), 2 );
         
         // Compare with code-created nested object
         Json nested_code{Json::Object{
@@ -161,7 +161,7 @@ M_TEST(Value, Object) {
     if (parsed_mixed.has_value()) {
         M_ASSERT_EQ( parsed_mixed->type(), json::Type::eObject );
         M_ASSERT_EQ( parsed_mixed->obj().size(), 4 );
-        M_ASSERT_EQ( (*parsed_mixed)["number"].to<Json::Number>(), 42 );
+        M_ASSERT_EQ( (*parsed_mixed)["number"].to<Json::Num>(), 42 );
         M_ASSERT_EQ( (*parsed_mixed)["string"].to<Json::String>(), "test" );
         M_ASSERT_EQ( (*parsed_mixed)["boolean"].to<Json::Bol>(), true );
         M_ASSERT_EQ( (*parsed_mixed)["null_val"].type(), json::Type::eNul );
@@ -202,12 +202,12 @@ M_TEST(Value, Object) {
     M_ASSERT_FALSE(contains_test.obj().contains("nonexistent"));
 
     // --- Type Safety ---
-    M_ASSERT_THROW(std::ignore = obj_val.to<Json::Number>(), std::runtime_error);
+    M_ASSERT_THROW(std::ignore = obj_val.to<Json::Num>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = obj_val.arr(), std::bad_variant_access);
 
     // --- Modification via Reference ---
     Json ref_modify_test{Json::Object{{"a", 1}, {"b", 2}}};
     auto& ref_a = ref_modify_test["a"];
     ref_a = 100;
-    M_ASSERT_EQ(ref_modify_test["a"].to<Json::Number>(), 100);
+    M_ASSERT_EQ(ref_modify_test["a"].to<Json::Num>(), 100);
 }

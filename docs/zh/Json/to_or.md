@@ -20,14 +20,14 @@ Important: This function doesn't handle allocation failures or constructor excep
 3. Array → Array
 4. String → String
 5. Bol → Bol
-6. Number → Enum (rounded to nearest integer)
-7. Number → Integer types (rounded)
-8. Number → Floating-point types
+6. Num → Enum (rounded to nearest integer)
+7. Num → Integer types (rounded)
+8. Num → Floating-point types
 9. Any → Types with Json constructors
 10. Object → Implicitly convertible types
 11. Array → Implicitly convertible types
 12. String → Implicitly convertible types
-13. Number → Implicitly convertible types
+13. Num → Implicitly convertible types
 14. Bol → Implicitly convertible types
 15. Nul → Implicitly convertible types (except bool)
 16. Object → Convertible key-value types (element-wise)

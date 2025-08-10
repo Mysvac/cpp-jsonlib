@@ -28,10 +28,10 @@ bool operator==(const T& other) const noexcept;
 - Rules applied in order:
     1. **JSON-native types**: Directly compares internal data (returns `false` if types differ).
     2. **Integer/enum types**:
-        - Returns `false` if not a `Number`.
+        - Returns `false` if not a `Num`.
         - Otherwise, rounds to nearest integer and compares.
     3. **Floating-point types**:
-        - Returns `false` if not a `Number`.
+        - Returns `false` if not a `Num`.
         - Otherwise, performs exact comparison.
     4. **String-compatible types**:
         - Returns `false` if not a `String`.

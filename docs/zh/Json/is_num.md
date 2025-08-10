@@ -4,7 +4,7 @@
 constexpr bool is_num() const noexcept;
 ```
 
-Checks if the internal data is of type `Number`.
+Checks if the internal data is of type `Num`.
 
 **Return value**:  
 `true` if the data is numeric, `false` otherwise

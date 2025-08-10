@@ -12,7 +12,7 @@ M_TEST(Value, Bol) {
     // Default bool construction
     M_ASSERT_NO_THROW(Json bool_default{json::Type::eBol});
     M_EXPECT_EQ(Json{json::Type::eBol}.to<Json::Bol>(), true);
-    M_ASSERT_EQ(Json{json::Type::eBol}.type(), json::Type::eNumber);
+    M_ASSERT_EQ(Json{json::Type::eBol}.type(), json::Type::eNum);
     M_ASSERT_EQ(Json{json::Type::eBol}.is_num(), true);
     M_ASSERT_EQ(Json{json::Type::eBol}.is_bol(), false);
 
@@ -123,8 +123,8 @@ M_TEST(Value, Bol) {
     M_ASSERT_THROW(std::ignore = false_val.to<std::nullptr_t>(), std::runtime_error);
 
     // --- Arithmetic conversions ---
-    M_ASSERT_EQ(true_val.to<Json::Number>(), 1.0);
-    M_ASSERT_EQ(false_val.to<Json::Number>(), 0.0);
+    M_ASSERT_EQ(true_val.to<Json::Num>(), 1.0);
+    M_ASSERT_EQ(false_val.to<Json::Num>(), 0.0);
     M_ASSERT_EQ(true_val.to<int>(), 1);
     M_ASSERT_EQ(false_val.to<int>(), 0);
     M_ASSERT_EQ(true_val.to<float>(), 1.0f);

@@ -7,7 +7,7 @@ using namespace mysvac;
 
 M_TEST(Value, Complex) {
     // Test complex nested structures with all 6 JSON types
-    // Number, String, Bol, Nul, Array, Object
+    // Num, String, Bol, Nul, Array, Object
 
     Json complex_data = Json::Object{
         {"application", Json::Object{
@@ -122,18 +122,18 @@ M_TEST(Value, Complex) {
     M_ASSERT_EQ( complex_data["application"]["name"].to<Json::String>(), "MyApp" );
     M_ASSERT_EQ( complex_data["application"]["version"].to<Json::String>(), "2.1.0" );
     M_ASSERT_EQ( complex_data["application"]["active"].to<Json::Bol>(), true );
-    M_ASSERT_EQ( complex_data["application"]["config"]["port"].to<Json::Number>(), 8080 );
+    M_ASSERT_EQ( complex_data["application"]["config"]["port"].to<Json::Num>(), 8080 );
     
     // Test array access within nested structure
     M_ASSERT_EQ( complex_data["application"]["config"]["features"].type(), json::Type::eArray );
     M_ASSERT_EQ( complex_data["application"]["config"]["features"].arr().size(), 3 );
     M_ASSERT_EQ( complex_data["application"]["config"]["features"][0]["name"].to<Json::String>(), "auth" );
     M_ASSERT_EQ( complex_data["application"]["config"]["features"][0]["enabled"].to<Json::Bol>(), true );
-    M_ASSERT_EQ( complex_data["application"]["config"]["features"][0]["priority"].to<Json::Number>(), 1 );
+    M_ASSERT_EQ( complex_data["application"]["config"]["features"][0]["priority"].to<Json::Num>(), 1 );
     
     // Test very deep nesting access
-    M_ASSERT_EQ( complex_data["application"]["config"]["database"]["connection"]["pool"]["min"].to<Json::Number>(), 5 );
-    M_ASSERT_EQ( complex_data["application"]["config"]["database"]["connection"]["pool"]["max"].to<Json::Number>(), 20 );
+    M_ASSERT_EQ( complex_data["application"]["config"]["database"]["connection"]["pool"]["min"].to<Json::Num>(), 5 );
+    M_ASSERT_EQ( complex_data["application"]["config"]["database"]["connection"]["pool"]["max"].to<Json::Num>(), 20 );
     M_ASSERT_EQ( complex_data["application"]["config"]["database"]["connection"]["pool"]["connection_timeout"].type(), json::Type::eNul );
     
     // Test migrations array access
@@ -158,14 +158,14 @@ M_TEST(Value, Complex) {
     M_ASSERT_EQ( complex_data["users"][1]["last_login"].type(), json::Type::eNul );
     
     // Test statistics access
-    M_ASSERT_EQ( complex_data["statistics"]["total_users"].to<Json::Number>(), 2 );
+    M_ASSERT_EQ( complex_data["statistics"]["total_users"].to<Json::Num>(), 2 );
     M_ASSERT_EQ( complex_data["statistics"]["performance"]["response_times"].arr().size(), 5 );
-    M_ASSERT_EQ( complex_data["statistics"]["performance"]["response_times"][0].to<Json::Number>(), 120 );
-    M_ASSERT_EQ( complex_data["statistics"]["performance"]["uptime"].to<Json::Number>(), 99.95 );
+    M_ASSERT_EQ( complex_data["statistics"]["performance"]["response_times"][0].to<Json::Num>(), 120 );
+    M_ASSERT_EQ( complex_data["statistics"]["performance"]["uptime"].to<Json::Num>(), 99.95 );
     
     // Test deep access through at() method
     M_ASSERT_NO_THROW( std::ignore = complex_data.at("application").at("config").at("database").at("connection").at("pool").at("min") );
-    M_ASSERT_EQ( complex_data.at("application").at("config").at("database").at("connection").at("pool").at("min").to<Json::Number>(), 5 );
+    M_ASSERT_EQ( complex_data.at("application").at("config").at("database").at("connection").at("pool").at("min").to<Json::Num>(), 5 );
     
     // Test array at() access
     M_ASSERT_NO_THROW( std::ignore = complex_data.at("users").at(0).at("permissions").at(1) );
@@ -178,7 +178,7 @@ M_TEST(Value, Complex) {
     
     // Test deep modification through [] operator
     complex_data["application"]["config"]["port"] = 9090;
-    M_ASSERT_EQ( complex_data["application"]["config"]["port"].to<Json::Number>(), 9090 );
+    M_ASSERT_EQ( complex_data["application"]["config"]["port"].to<Json::Num>(), 9090 );
     
     complex_data["application"]["config"]["features"][0]["enabled"] = false;
     M_ASSERT_EQ( complex_data["application"]["config"]["features"][0]["enabled"].to<Json::Bol>(), false );
@@ -188,7 +188,7 @@ M_TEST(Value, Complex) {
     
     // Test deep modification through at() method
     complex_data.at("statistics").at("total_users") = 3;
-    M_ASSERT_EQ( complex_data.at("statistics").at("total_users").to<Json::Number>(), 3 );
+    M_ASSERT_EQ( complex_data.at("statistics").at("total_users").to<Json::Num>(), 3 );
     
     complex_data.at("users").at(1).at("active") = true;
     M_ASSERT_EQ( complex_data.at("users").at(1).at("active").to<Json::Bol>(), true );
@@ -221,13 +221,13 @@ M_TEST(Value, Complex) {
     
     // Test move semantics for std::map, std::vector, std::string
     std::map<std::string, Json> test_map{
-        {"key1", Json::Number(100)},
+        {"key1", Json::Num(100)},
         {"key2", Json::String("value2")},
         {"key3", Json::Bol(true)}
     };
     
     std::vector<Json> test_vector{
-        Json::Number(1),
+        Json::Num(1),
         Json::String("two"),
         Json::Bol(false),
         Json::Object{{"nested", "value"}}
@@ -242,13 +242,13 @@ M_TEST(Value, Complex) {
     
     M_ASSERT_EQ( moved_object.type(), json::Type::eObject );
     M_ASSERT_EQ( moved_object.obj().size(), 3 );
-    M_ASSERT_EQ( moved_object["key1"].to<Json::Number>(), 100 );
+    M_ASSERT_EQ( moved_object["key1"].to<Json::Num>(), 100 );
     M_ASSERT_EQ( moved_object["key2"].to<Json::String>(), "value2" );
     M_ASSERT_EQ( moved_object["key3"].to<Json::Bol>(), true );
     
     M_ASSERT_EQ( moved_array.type(), json::Type::eArray );
     M_ASSERT_EQ( moved_array.arr().size(), 4 );
-    M_ASSERT_EQ( moved_array[0].to<Json::Number>(), 1 );
+    M_ASSERT_EQ( moved_array[0].to<Json::Num>(), 1 );
     M_ASSERT_EQ( moved_array[1].to<Json::String>(), "two" );
     M_ASSERT_EQ( moved_array[2].to<Json::Bol>(), false );
     M_ASSERT_EQ( moved_array[3]["nested"].to<Json::String>(), "value" );
@@ -259,12 +259,12 @@ M_TEST(Value, Complex) {
     // Test move assignment
     Json move_target{};
     
-    std::map<std::string, Json> another_map{{"move_key", Json::Number(999)}};
+    std::map<std::string, Json> another_map{{"move_key", Json::Num(999)}};
     move_target = std::move(another_map);
     
     M_ASSERT_EQ( move_target.type(), json::Type::eObject );
     M_ASSERT_EQ( move_target.obj().size(), 1 );
-    M_ASSERT_EQ( move_target["move_key"].to<Json::Number>(), 999 );
+    M_ASSERT_EQ( move_target["move_key"].to<Json::Num>(), 999 );
     
     // Test complex structure with move semantics
     std::vector<Json> complex_array{
@@ -283,7 +283,7 @@ M_TEST(Value, Complex) {
     M_ASSERT_EQ( moved_complex.type(), json::Type::eArray );
     M_ASSERT_EQ( moved_complex.arr().size(), 2 );
     M_ASSERT_EQ( moved_complex[0]["item1"].arr().size(), 3 );
-    M_ASSERT_EQ( moved_complex[0]["item1"][0].to<Json::Number>(), 1 );
+    M_ASSERT_EQ( moved_complex[0]["item1"][0].to<Json::Num>(), 1 );
     M_ASSERT_EQ( moved_complex[0]["item2"]["nested"].to<Json::Bol>(), true );
     M_ASSERT_EQ( moved_complex[1][0].to<Json::String>(), "first" );
     M_ASSERT_EQ( moved_complex[1][2]["deep"][0].to<Json::String>(), "very" );
@@ -316,14 +316,14 @@ M_TEST(Value, Complex) {
     
     // Test get_ref<T>() with modifications
     auto& stats_ref = complex_data["statistics"].obj();
-    stats_ref["new_metric"] = Json::Number(123.45);
+    stats_ref["new_metric"] = Json::Num(123.45);
     M_ASSERT_TRUE( complex_data["statistics"].obj().contains("new_metric") );
-    M_ASSERT_EQ( complex_data["statistics"]["new_metric"].to<Json::Number>(), 123.45 );
+    M_ASSERT_EQ( complex_data["statistics"]["new_metric"].to<Json::Num>(), 123.45 );
     
     auto& response_times_ref = complex_data["statistics"]["performance"]["response_times"].arr();
-    response_times_ref.push_back(Json::Number(75));
+    response_times_ref.push_back(Json::Num(75));
     M_ASSERT_EQ( complex_data["statistics"]["performance"]["response_times"].arr().size(), 6 );
-    M_ASSERT_EQ( complex_data["statistics"]["performance"]["response_times"][5].to<Json::Number>(), 75 );
+    M_ASSERT_EQ( complex_data["statistics"]["performance"]["response_times"][5].to<Json::Num>(), 75 );
     
     // Test size() method on nested structures
     M_ASSERT_EQ( complex_data.obj().size(), 3 );
@@ -461,9 +461,9 @@ M_TEST(Value, Complex) {
         M_ASSERT_TRUE( *parsed_complex == complex_data );
         
         // Test deep access on parsed data
-        M_ASSERT_EQ( (*parsed_complex)["application"]["config"]["port"].to<Json::Number>(), 9090 );
+        M_ASSERT_EQ( (*parsed_complex)["application"]["config"]["port"].to<Json::Num>(), 9090 );
         M_ASSERT_EQ( (*parsed_complex)["users"][0]["profile"]["preferences"]["theme"].to<Json::String>(), "auto" );
-        M_ASSERT_EQ( (*parsed_complex)["statistics"]["new_metric"].to<Json::Number>(), 123.45 );
+        M_ASSERT_EQ( (*parsed_complex)["statistics"]["new_metric"].to<Json::Num>(), 123.45 );
     } else {
         M_ASSERT_FAIL("Failed to parse complex structure");
     }
@@ -473,7 +473,7 @@ M_TEST(Value, Complex) {
     M_ASSERT_EQ( complex_data["application"].type(), json::Type::eObject );
     M_ASSERT_EQ( complex_data["application"]["name"].type(), json::Type::eString );
     M_ASSERT_EQ( complex_data["application"]["active"].type(), json::Type::eBol );
-    M_ASSERT_EQ( complex_data["application"]["config"]["port"].type(), json::Type::eNumber );
+    M_ASSERT_EQ( complex_data["application"]["config"]["port"].type(), json::Type::eNum );
     M_ASSERT_EQ( complex_data["application"]["config"]["features"].type(), json::Type::eArray );
     M_ASSERT_EQ( complex_data["application"]["config"]["database"]["connection"]["pool"]["connection_timeout"].type(), json::Type::eNul );
     M_ASSERT_EQ( complex_data["users"].type(), json::Type::eArray );
@@ -481,7 +481,7 @@ M_TEST(Value, Complex) {
     M_ASSERT_EQ( complex_data["users"][0]["permissions"].type(), json::Type::eArray );
     M_ASSERT_EQ( complex_data["users"][0]["permissions"][0].type(), json::Type::eString );
     M_ASSERT_EQ( complex_data["users"][1]["last_login"].type(), json::Type::eNul );
-    M_ASSERT_EQ( complex_data["statistics"]["performance"]["uptime"].type(), json::Type::eNumber );
+    M_ASSERT_EQ( complex_data["statistics"]["performance"]["uptime"].type(), json::Type::eNum );
     
     // Test contains() method on various levels
     M_ASSERT_TRUE( complex_data.obj().contains("application") );
@@ -525,10 +525,10 @@ M_TEST(Value, Complex) {
     // Test access to large nested structure
     M_ASSERT_EQ( large_nested.obj().size(), 10 );
     M_ASSERT_EQ( large_nested["section_5"]["subsection_7"].arr().size(), 10 );
-    M_ASSERT_EQ( large_nested["section_5"]["subsection_7"][8]["id"].to<Json::Number>(), 8 );
+    M_ASSERT_EQ( large_nested["section_5"]["subsection_7"][8]["id"].to<Json::Num>(), 8 );
     M_ASSERT_EQ( large_nested["section_5"]["subsection_7"][8]["name"].to<Json::String>(), "item_8" );
     M_ASSERT_EQ( large_nested["section_5"]["subsection_7"][8]["active"].to<Json::Bol>(), true );
-    M_ASSERT_EQ( large_nested["section_5"]["subsection_7"][8]["value"].to<Json::Number>(), 84.0 );
+    M_ASSERT_EQ( large_nested["section_5"]["subsection_7"][8]["value"].to<Json::Num>(), 84.0 );
     M_ASSERT_EQ( large_nested["section_5"]["subsection_7"][9]["metadata"].type(), json::Type::eNul );
     M_ASSERT_EQ( large_nested["section_5"]["subsection_7"][7]["metadata"]["info"].to<Json::String>(), "data" );
     
@@ -538,11 +538,11 @@ M_TEST(Value, Complex) {
     M_ASSERT_TRUE( large_serialized.size() > 10000 );
     
     // Test final validation of all modifications
-    M_ASSERT_EQ( complex_data["application"]["config"]["port"].to<Json::Number>(), 9090 );
+    M_ASSERT_EQ( complex_data["application"]["config"]["port"].to<Json::Num>(), 9090 );
     M_ASSERT_EQ( complex_data["application"]["config"]["features"][0]["enabled"].to<Json::Bol>(), false );
     M_ASSERT_EQ( complex_data["users"][0]["profile"]["preferences"]["theme"].to<Json::String>(), "auto" );
-    M_ASSERT_EQ( complex_data["statistics"]["total_users"].to<Json::Number>(), 3 );
+    M_ASSERT_EQ( complex_data["statistics"]["total_users"].to<Json::Num>(), 3 );
     M_ASSERT_EQ( complex_data["users"][1]["active"].to<Json::Bol>(), true );
     M_ASSERT_TRUE( complex_data["statistics"].obj().contains("new_metric") );
-    M_ASSERT_EQ( complex_data["statistics"]["new_metric"].to<Json::Number>(), 123.45 );
+    M_ASSERT_EQ( complex_data["statistics"]["new_metric"].to<Json::Num>(), 123.45 );
 }

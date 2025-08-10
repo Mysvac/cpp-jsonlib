@@ -22,12 +22,12 @@ M_TEST(Value, Move) {
     M_ASSERT_EQ(v_true.type(), json::Type::eBol);
     M_ASSERT_EQ(v_true.to<Json::Bol>(), true); // 简单类型移动后仍为原值
 
-    // Number
+    // Num
     Json v_num{42.5};
-    auto moved_num = v_num.move<Json::Number>();
+    auto moved_num = v_num.move<Json::Num>();
     M_ASSERT_EQ(moved_num, 42.5);
-    M_ASSERT_EQ(v_num.type(), json::Type::eNumber);
-    M_ASSERT_EQ(v_num.to<Json::Number>(), 42.5);
+    M_ASSERT_EQ(v_num.type(), json::Type::eNum);
+    M_ASSERT_EQ(v_num.to<Json::Num>(), 42.5);
 
     // String
     Json v_str{"hello"};

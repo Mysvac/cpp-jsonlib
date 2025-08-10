@@ -19,9 +19,9 @@ Performs move-conversion of internal data to type `T`, returning specified defau
 3. Array → Array (move)
 4. String → String (move)
 5. Bol → Bol (copy)
-6. Number → Enum (rounded)
-7. Number → Integer (rounded)
-8. Number → Floating-point
+6. Num → Enum (rounded)
+7. Num → Integer (rounded)
+8. Num → Floating-point
 9. Any → Json-constructible (move preferred)
 10. Object → Implicitly convertible (move preferred)
 11. Array → Implicitly convertible (move preferred)

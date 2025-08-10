@@ -33,29 +33,29 @@ M_TEST(Value, To) {
     M_ASSERT_EQ(v_false.to_if<int>().value(), 0);
     M_ASSERT_EQ(v_true.to_or<double>(-1.0), 1.0); // Bol->double可转换，返回1.0
     M_ASSERT_EQ(v_false.to_or<double>(-1.0), 0.0);
-    M_ASSERT_EQ(v_true.to<Json::Number>(), 1.0); // Bol->Number可转换
-    M_ASSERT_EQ(v_false.to<Json::Number>(), 0.0);
+    M_ASSERT_EQ(v_true.to<Json::Num>(), 1.0); // Bol->Num可转换
+    M_ASSERT_EQ(v_false.to<Json::Num>(), 0.0);
     M_ASSERT_EQ(v_true.to<double>(), 1.0);
     M_ASSERT_EQ(v_false.to<double>(), 0.0);
     M_ASSERT_EQ(v_true.to_or<Json::String>("default"), "default"); // Bol->String不可转换
     M_ASSERT_FALSE(v_true.to_if<Json::String>().has_value());
 
-    // Number
+    // Num
     Json v_num{42.5};
     Json v_int{123};
     Json v_zero{0};
     Json v_neg{-7.8};
     Json v_big{1e100};
-    M_ASSERT_EQ(v_num.to<Json::Number>(), 42.5);
-    M_ASSERT_EQ(v_int.to<Json::Number>(), 123.0);
-    M_ASSERT_EQ(v_zero.to<Json::Number>(), 0.0);
-    M_ASSERT_EQ(v_neg.to<Json::Number>(), -7.8);
-    M_ASSERT_EQ(v_big.to<Json::Number>(), 1e100);
+    M_ASSERT_EQ(v_num.to<Json::Num>(), 42.5);
+    M_ASSERT_EQ(v_int.to<Json::Num>(), 123.0);
+    M_ASSERT_EQ(v_zero.to<Json::Num>(), 0.0);
+    M_ASSERT_EQ(v_neg.to<Json::Num>(), -7.8);
+    M_ASSERT_EQ(v_big.to<Json::Num>(), 1e100);
     M_ASSERT_EQ(v_num.to<int>(), 43); // 四舍五入
     M_ASSERT_EQ(v_neg.to<int>(), -8);
     M_ASSERT_EQ(v_num.to_or<int>(-1), 43);
     M_ASSERT_EQ(v_num.to_or<double>(-1.0), 42.5);
-    M_ASSERT_EQ(v_num.to_or<MyEnum>(MyEnum::C), static_cast<MyEnum>(43)); // Number->enum转换，返回43对应的枚举值
+    M_ASSERT_EQ(v_num.to_or<MyEnum>(MyEnum::C), static_cast<MyEnum>(43)); // Num->enum转换，返回43对应的枚举值
     M_ASSERT_TRUE(v_num.to_if<MyEnum>().has_value()); // 42.5可转换为MyEnum，值为static_cast<MyEnum>(43)
     M_ASSERT_EQ(v_num.to_if<MyEnum>().value(), static_cast<MyEnum>(43));
     Json v_enum{5};
@@ -63,7 +63,7 @@ M_TEST(Value, To) {
     M_ASSERT_EQ(v_enum.to_or<MyEnum>(MyEnum::C), MyEnum::A);
     M_ASSERT_TRUE(v_enum.to_if<MyEnum>().has_value());
     M_ASSERT_EQ(v_enum.to_if<MyEnum>().value(), MyEnum::A);
-    M_ASSERT_EQ(v_num.to_or<Json::String>("default"), "default"); // Number->String不可转换
+    M_ASSERT_EQ(v_num.to_or<Json::String>("default"), "default"); // Num->String不可转换
     M_ASSERT_FALSE(v_num.to_if<Json::String>().has_value());
 
     // String
@@ -138,10 +138,10 @@ M_TEST(Value, To) {
     M_ASSERT_EQ(v_max.to_or<int>(-1), static_cast<int>(std::llround(1e308)));
 
     // 容器类型转换（std::vector, std::map, std::string）
-    std::vector<Json> vec{Json::Number(1), Json::String("two")};
+    std::vector<Json> vec{Json::Num(1), Json::String("two")};
     Json v_vec{vec};
     M_ASSERT_EQ(v_vec.to<Json::Array>().size(), 2);
-    std::map<std::string, Json> mp{{"a", Json::Number(1)}};
+    std::map<std::string, Json> mp{{"a", Json::Num(1)}};
     Json v_mp{mp};
     M_ASSERT_EQ(v_mp.to<Json::Object>().size(), 1);
     std::string s = "abc";
@@ -164,7 +164,7 @@ M_TEST(Value, To) {
     M_ASSERT_EQ(v_true.to_or<Json::Array>(Json::Array{{1,2}}).size(), 2);
     M_ASSERT_FALSE(v_true.to_if<Json::Array>().has_value());
 
-    // Number->其他类型
+    // Num->其他类型
     M_ASSERT_THROW(std::ignore = v_num.to<Json::Array>(), std::runtime_error);
     M_ASSERT_EQ(v_num.to_or<Json::Array>(Json::Array{{1,2}}).size(), 2);
     M_ASSERT_FALSE(v_num.to_if<Json::Array>().has_value());
