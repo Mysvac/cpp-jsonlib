@@ -18,7 +18,7 @@ Important: This function doesn't handle allocation failures or constructor excep
 1. Nul → Nul
 2. Object → Object
 3. Array → Array
-4. String → String
+4. Str → Str
 5. Bol → Bol
 6. Num → Enum (rounded to nearest integer)
 7. Num → Integer types (rounded)
@@ -26,7 +26,7 @@ Important: This function doesn't handle allocation failures or constructor excep
 9. Any → Types with Json constructors
 10. Object → Implicitly convertible types
 11. Array → Implicitly convertible types
-12. String → Implicitly convertible types
+12. Str → Implicitly convertible types
 13. Num → Implicitly convertible types
 14. Bol → Implicitly convertible types
 15. Nul → Implicitly convertible types (except bool)

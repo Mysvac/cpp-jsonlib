@@ -1,7 +1,7 @@
 # **Json.dump**
 
 ```cpp
-String dump() const noexcept;
+Str dump() const noexcept;
 ```
 
 Serializes JSON data to a string and returns the result.

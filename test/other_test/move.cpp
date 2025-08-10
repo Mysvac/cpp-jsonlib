@@ -29,12 +29,12 @@ M_TEST(Value, Move) {
     M_ASSERT_EQ(v_num.type(), json::Type::eNum);
     M_ASSERT_EQ(v_num.to<Json::Num>(), 42.5);
 
-    // String
+    // Str
     Json v_str{"hello"};
-    auto moved_str = v_str.move<Json::String>();
+    auto moved_str = v_str.move<Json::Str>();
     M_ASSERT_EQ(moved_str, "hello");
-    M_ASSERT_EQ(v_str.type(), json::Type::eString);
-    M_ASSERT_EQ(v_str.to<Json::String>(), ""); // 移动后原字符串为空
+    M_ASSERT_EQ(v_str.type(), json::Type::eStr);
+    M_ASSERT_EQ(v_str.to<Json::Str>(), ""); // 移动后原字符串为空
 
     // Array
     Json v_arr{Json::Array{{1, 2, 3}}};
@@ -71,13 +71,13 @@ M_TEST(Value, Move) {
     Json v_sv{"abc"};
     auto moved_sv = v_sv.move<std::string_view>();
     M_ASSERT_EQ(moved_sv, std::string_view("abc"));
-    M_ASSERT_EQ(v_sv.to<Json::String>(), "abc"); // string_view 不修改自身
+    M_ASSERT_EQ(v_sv.to<Json::Str>(), "abc"); // string_view 不修改自身
 
     // std::string_view
     Json v_sv2{"abc"};
     auto moved_sv2 = v_sv2.move<std::string>();
     M_ASSERT_EQ(moved_sv2, std::string_view("abc"));
-    M_ASSERT_EQ(v_sv2.to<Json::String>(), ""); // string 移动
+    M_ASSERT_EQ(v_sv2.to<Json::Str>(), ""); // string 移动
 
     // move_if: 成功
     Json v_arr2{Json::Array{{4, 5}}};
@@ -114,21 +114,21 @@ M_TEST(Value, Move) {
     M_ASSERT_EQ(moved_empty_obj.size(), 0);
 
     Json v_empty_str{""};
-    auto moved_empty_str = v_empty_str.move<Json::String>();
+    auto moved_empty_str = v_empty_str.move<Json::Str>();
     M_ASSERT_EQ(moved_empty_str, "");
-    M_ASSERT_EQ(v_empty_str.to<Json::String>(), "");
+    M_ASSERT_EQ(v_empty_str.to<Json::Str>(), "");
 
     // 复杂嵌套结构
     Json v_nested{Json::Array{
         Json::Object{{"a", 1}},
         Json::Array{{2, 3}},
-        Json::String("deep")
+        Json::Str("deep")
     }};
     auto moved_nested = v_nested.move<Json::Array>();
     M_ASSERT_EQ(moved_nested.size(), 3);
     M_ASSERT_EQ(moved_nested[0]["a"].to<int>(), 1);
     M_ASSERT_EQ(moved_nested[1][0].to<int>(), 2);
-    M_ASSERT_EQ(moved_nested[2].to<Json::String>(), "deep");
+    M_ASSERT_EQ(moved_nested[2].to<Json::Str>(), "deep");
     M_ASSERT_EQ(v_nested.to<Json::Array>().size(), 0);
 
     // move: 不兼容类型抛异常

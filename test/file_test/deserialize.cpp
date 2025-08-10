@@ -71,7 +71,7 @@ M_TEST(File, Deser_All) {
     M_ASSERT_NE( json.type(), json::Type::eNul );
 }
 
-M_TEST(File, Deser_String) {
+M_TEST(File, Deser_Str) {
     const std::string pretty_str = read_file("files/many_string.json");
 
     const auto bein = std::chrono::system_clock::now();
@@ -81,7 +81,7 @@ M_TEST(File, Deser_String) {
 
     const auto end = std::chrono::system_clock::now();
     const auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - bein).count();
-    std::println("-----------------------------------------------Deser_String: {} us", time);
+    std::println("-----------------------------------------------Deser_Str: {} us", time);
 
     M_ASSERT_NE( json.type(), json::Type::eNul );
 }

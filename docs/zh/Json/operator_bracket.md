@@ -2,10 +2,10 @@
 
 ```cpp
 // 1
-Json& operator[](const String& key) { return std::get<Object>(m_data)[key]; }
+Json& operator[](const Str& key) { return std::get<Object>(m_data)[key]; }
 
 // 2
-const Json& operator[](const String& key) const { return std::get<Object>(m_data).at(key); }
+const Json& operator[](const Str& key) const { return std::get<Object>(m_data).at(key); }
 
 // 3
 Json& operator[](const std::size_t index) { return std::get<Array>(m_data)[index]; }

@@ -17,7 +17,7 @@ Performs move-conversion of internal data to type `T`, returning specified defau
 1. Nul → Nul
 2. Object → Object (move)
 3. Array → Array (move)
-4. String → String (move)
+4. Str → Str (move)
 5. Bol → Bol (copy)
 6. Num → Enum (rounded)
 7. Num → Integer (rounded)
@@ -25,7 +25,7 @@ Performs move-conversion of internal data to type `T`, returning specified defau
 9. Any → Json-constructible (move preferred)
 10. Object → Implicitly convertible (move preferred)
 11. Array → Implicitly convertible (move preferred)
-12. String → Implicitly convertible (move preferred)
+12. Str → Implicitly convertible (move preferred)
     13-15. Primitive → Implicitly convertible (Nul excludes bool)
 16. Object → Key-value container (element-wise, move preferred)
 17. Array → Sequence container (element-wise, move preferred)

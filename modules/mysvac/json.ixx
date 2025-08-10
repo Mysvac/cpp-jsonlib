@@ -84,7 +84,7 @@ export namespace mysvac::json {
         std::is_same<T, typename J::Nul>,
         std::is_same<T, typename J::Bol>,
         std::is_same<T, typename J::Num>,
-        std::is_same<T, typename J::String>,
+        std::is_same<T, typename J::Str>,
         std::is_same<T, typename J::Array>,
         std::is_same<T, typename J::Object>
     >;
@@ -100,7 +100,7 @@ export namespace mysvac::json {
         std::is_enum<T>,
         std::is_convertible<T, typename J::Array>,
         std::is_convertible<T, typename J::Object>,
-        std::is_convertible<T, typename J::String>,
+        std::is_convertible<T, typename J::Str>,
         std::is_convertible<T, typename J::Num>,
         std::is_convertible<T, typename J::Bol>,
         std::is_convertible<T, typename J::Nul>
@@ -122,7 +122,7 @@ export namespace mysvac::json {
      */
     template<typename J, typename T>
     concept constructible_map = std::ranges::range<T> &&
-        std::is_convertible_v<typename T::key_type, typename J::String> &&
+        std::is_convertible_v<typename T::key_type, typename J::Str> &&
         std::is_constructible_v<J, typename T::mapped_type>;
 
     /**
@@ -136,7 +136,7 @@ export namespace mysvac::json {
         std::is_enum<T>,
         std::is_convertible<typename J::Array, T>,
         std::is_convertible<typename J::Object, T>,
-        std::is_convertible<typename J::String, T>,
+        std::is_convertible<typename J::Str, T>,
         std::is_convertible<typename J::Num, T>,
         std::is_convertible<typename J::Bol, T>,
         std::is_convertible<typename J::Nul, T>,
@@ -152,12 +152,12 @@ export namespace mysvac::json {
     template<typename J, typename T, typename D>
     concept convertible_map = std::ranges::range<T> && requires {
         requires std::is_constructible_v<typename T::mapped_type, D>;
-        requires std::is_convertible_v<typename J::String, typename T::key_type>;
+        requires std::is_convertible_v<typename J::Str, typename T::key_type>;
         requires convertible<J, typename T::mapped_type>;
         requires std::is_default_constructible_v<T>;
         requires std::is_default_constructible_v<typename T::mapped_type>;
         requires std::is_copy_constructible_v<typename T::mapped_type>;
-    } && requires (T t, typename J::String s, typename T::mapped_type m) {
+    } && requires (T t, typename J::Str s, typename T::mapped_type m) {
         t.emplace(static_cast<typename T::key_type>(s), std::move(m));
     };
 
@@ -185,7 +185,7 @@ export namespace mysvac::json {
         eNul = 0,  ///< Nul type
         eBol,      ///< boolean type
         eNum,    ///< Num type
-        eString,    ///< String type
+        eStr,    ///< Str type
         eArray,     ///< Array type
         eObject     ///< Object type
     };
@@ -200,7 +200,7 @@ export namespace mysvac::json {
         switch ( type ) {
             case Type::eObject: return "Object";
             case Type::eArray:  return "Array";
-            case Type::eString: return "String";
+            case Type::eStr: return "Str";
             case Type::eNum: return "Num";
             case Type::eBol:   return "Bol";
             case Type::eNul:   return "Nul";
@@ -214,7 +214,7 @@ export namespace mysvac::json {
      * @tparam VecAllocator A allocator template for the vector containers, default is `std::allocator`.
      * @tparam MapAllocator A allocator template for the map/unordered_map containers, default is `std::allocator`.
      * @tparam StrAllocator A allocator template for the string containers, default is `std::allocator`.
-     * @note String is always `std::basic_string< ... >`。
+     * @note Str is always `std::basic_string< ... >`。
      */
     template<
         bool UseOrderedMap = true,
@@ -244,10 +244,10 @@ export namespace mysvac::json {
          */
         using Num = double;
         /**
-         * @brief Json's String Type, `std::basic_string<char, std::char_traits<char>, StrAllocator<char>>`.
+         * @brief Json's Str Type, `std::basic_string<char, std::char_traits<char>, StrAllocator<char>>`.
          * @note default is `std::string`.
          */
-        using String = std::basic_string<char, std::char_traits<char>, StrAllocator<char>>;
+        using Str = std::basic_string<char, std::char_traits<char>, StrAllocator<char>>;
         /**
          * @brief Json's Array Type, `vector<Json, VecAllocator<Json>>`.
          * @note default is `std::vector<Json>`.
@@ -258,8 +258,8 @@ export namespace mysvac::json {
          * @note default is `std::map<std::string, Json>`.
          */
         using Object = std::conditional_t<UseOrderedMap,
-            std::map<String, Json, std::less<String>, MapAllocator<std::pair<const String, Json>>>,
-            std::unordered_map<String, Json, std::hash<String>, std::equal_to<String>, MapAllocator<std::pair<const String, Json>>>
+            std::map<Str, Json, std::less<Str>, MapAllocator<std::pair<const Str, Json>>>,
+            std::unordered_map<Str, Json, std::hash<Str>, std::equal_to<Str>, MapAllocator<std::pair<const Str, Json>>>
         >;
 
     protected:
@@ -267,7 +267,7 @@ export namespace mysvac::json {
             Nul,
             Bol,
             Num,
-            String,
+            Str,
             Array,
             Object
         > m_data { Nul{} };
@@ -278,7 +278,7 @@ export namespace mysvac::json {
          * @param out The output string to append the escaped string to.
          * @param str The string to escape.
          */
-        static void escape_to(String& out, const std::string_view str) noexcept {
+        static void escape_to(Str& out, const std::string_view str) noexcept {
             out.push_back('\"');
             for (const char c : str) {
                 switch (c) {
@@ -333,7 +333,7 @@ export namespace mysvac::json {
          * @return `true` if the unescape was successful, `false` if it failed.
          */
         static bool unescape_unicode_next(
-            String& out,
+            Str& out,
             char_iterator auto& it,
             const char_iterator auto end_ptr
         ) noexcept {
@@ -442,13 +442,13 @@ export namespace mysvac::json {
          * @brief Unescape the string in a JSON string, and move ptr.
          * @param it The iterator pointing to the current position in the string.
          * @param end_ptr The end iterator of the string.
-         * @return An expected String containing the unescaped string, or a ParseError if an error occurred.
+         * @return An expected Str containing the unescaped string, or a ParseError if an error occurred.
          */
-        static std::optional<String> unescape_next(
+        static std::optional<Str> unescape_next(
             char_iterator auto& it,
             const char_iterator auto end_ptr
         ) noexcept {
-            String res;
+            Str res;
             ++it;
             if (it != end_ptr && *it != '\"')  res.reserve( 128 );
 
@@ -558,7 +558,7 @@ export namespace mysvac::json {
                     array.shrink_to_fit();
                 } break;
                 case '\"': {
-                    // String type
+                    // Str type
                     auto str = unescape_next(it, end_ptr);
                     if(!str) return std::nullopt;
                     json = std::move(*str);
@@ -640,10 +640,10 @@ export namespace mysvac::json {
         constexpr bool is_num() const noexcept { return type() == Type::eNum; }
 
         /**
-         * @brief Check if the JSON data is of type String.
+         * @brief Check if the JSON data is of type Str.
          */
         [[nodiscard]]
-        constexpr bool is_str() const noexcept { return type() == Type::eString; }
+        constexpr bool is_str() const noexcept { return type() == Type::eStr; }
 
         /**
          * @brief Check if the JSON data is of type Array.
@@ -698,17 +698,17 @@ export namespace mysvac::json {
         constexpr const Num&& num() const && { return std::get<Num>(std::move(m_data)); }
 
         /**
-         * @brief Get a reference to the String type.
-         * @throw std::bad_variant_access if the JSON data is not of type String.
+         * @brief Get a reference to the Str type.
+         * @throw std::bad_variant_access if the JSON data is not of type Str.
          */
         [[nodiscard]]
-        constexpr String& str() & { return std::get<String>(m_data); }
+        constexpr Str& str() & { return std::get<Str>(m_data); }
         [[nodiscard]]
-        constexpr String&& str() && { return std::get<String>(std::move(m_data)); }
+        constexpr Str&& str() && { return std::get<Str>(std::move(m_data)); }
         [[nodiscard]]
-        constexpr const String& str() const & { return std::get<String>(m_data); }
+        constexpr const Str& str() const & { return std::get<Str>(m_data); }
         [[nodiscard]]
-        constexpr const String&& str() const && { return std::get<String>(std::move(m_data)); }
+        constexpr const Str&& str() const && { return std::get<Str>(std::move(m_data)); }
 
         /**
          * @brief Get a reference to the Array type.
@@ -786,7 +786,7 @@ export namespace mysvac::json {
                 m_data = other;
             } else if constexpr(std::is_same_v<T, Num>) {
                 m_data = other;
-            } else if constexpr(std::is_same_v<T, String>) {
+            } else if constexpr(std::is_same_v<T, Str>) {
                 m_data = std::forward<T>(other);
             } else if constexpr(std::is_same_v<T, Array>) {
                 m_data = std::forward<T>(other);
@@ -794,8 +794,8 @@ export namespace mysvac::json {
                 m_data = std::forward<T>(other);
             } else if constexpr(std::is_arithmetic_v<T> || std::is_enum_v<T>) {
                 m_data = static_cast<Num>(other);
-            } else if constexpr(std::is_convertible_v<T, String>) {
-                m_data = static_cast<String>(std::forward<T>(other));
+            } else if constexpr(std::is_convertible_v<T, Str>) {
+                m_data = static_cast<Str>(std::forward<T>(other));
             } else if constexpr(std::is_convertible_v<T, Object>) {
                 m_data = static_cast<Object>(std::forward<T>(other));
             } else if constexpr(std::is_convertible_v<T,Array>) {
@@ -823,7 +823,7 @@ export namespace mysvac::json {
                 m_data = other;
             } else if constexpr(std::is_same_v<T, Num>) {
                 m_data = other;
-            } else if constexpr(std::is_same_v<T, String>) {
+            } else if constexpr(std::is_same_v<T, Str>) {
                 m_data = std::forward<T>(other);
             } else if constexpr(std::is_same_v<T, Array>) {
                 m_data = std::forward<T>(other);
@@ -831,8 +831,8 @@ export namespace mysvac::json {
                 m_data = std::forward<T>(other);
             } else if constexpr(std::is_arithmetic_v<T> || std::is_enum_v<T>) {
                 m_data = static_cast<Num>(other);
-            } else if constexpr(std::is_convertible_v<T, String>) {
-                m_data = static_cast<String>(std::forward<T>(other));
+            } else if constexpr(std::is_convertible_v<T, Str>) {
+                m_data = static_cast<Str>(std::forward<T>(other));
             } else if constexpr(std::is_convertible_v<T, Object>) {
                 m_data = static_cast<Object>(std::forward<T>(other));
             } else if constexpr(std::is_convertible_v<T,Array>) {
@@ -871,7 +871,7 @@ export namespace mysvac::json {
         explicit Json(T&& other) noexcept : m_data( Object{} ) {
             auto& obj = std::get<Object>(m_data);
             for (auto&& [key, val] : std::forward<T>(other)) {
-                obj.emplace( static_cast<String>(key), static_cast<Json>(static_cast<typename std::remove_cvref_t<T>::mapped_type>(std::forward<decltype(val)>(val))) );
+                obj.emplace( static_cast<Str>(key), static_cast<Json>(static_cast<typename std::remove_cvref_t<T>::mapped_type>(std::forward<decltype(val)>(val))) );
             }
         }
 
@@ -888,8 +888,8 @@ export namespace mysvac::json {
                 m_data = Bol{};
             } else if constexpr(std::is_same_v<T, Num>) {
                 m_data = Num{};
-            } else if constexpr(std::is_same_v<T, String>) {
-                m_data = String{};
+            } else if constexpr(std::is_same_v<T, Str>) {
+                m_data = Str{};
             } else if constexpr(std::is_same_v<T, Array>) {
                 m_data = Array{};
             } else if constexpr(std::is_same_v<T, Object>) {
@@ -901,9 +901,9 @@ export namespace mysvac::json {
          * @brief Accessor for JSON data using the subscript operator.
          */
         [[nodiscard]]
-        Json& operator[](const String& key) { return std::get<Object>(m_data)[key]; }
+        Json& operator[](const Str& key) { return std::get<Object>(m_data)[key]; }
         [[nodiscard]]
-        const Json& operator[](const String& key) const { return std::get<Object>(m_data).at(key); }
+        const Json& operator[](const Str& key) const { return std::get<Object>(m_data).at(key); }
         [[nodiscard]]
         Json& operator[](const std::size_t index) { return std::get<Array>(m_data)[index]; }
         [[nodiscard]]
@@ -913,9 +913,9 @@ export namespace mysvac::json {
          * @brief Accessor for JSON data using the at() method.
          */
         [[nodiscard]]
-        Json& at(const String& key) { return std::get<Object>(m_data).at(key); }
+        Json& at(const Str& key) { return std::get<Object>(m_data).at(key); }
         [[nodiscard]]
-        const Json& at(const String& key) const { return std::get<Object>(m_data).at(key); }
+        const Json& at(const Str& key) const { return std::get<Object>(m_data).at(key); }
         [[nodiscard]]
         Json& at(const std::size_t index) { return std::get<Array>(m_data).at(index); }
         [[nodiscard]]
@@ -924,7 +924,7 @@ export namespace mysvac::json {
         /**
          * @brief Write the JSON data to a string back.
          */
-        void write(String& out) const noexcept {
+        void write(Str& out) const noexcept {
             switch (type()) {
                 case Type::eObject: {
                     out.push_back('{');
@@ -952,8 +952,8 @@ export namespace mysvac::json {
                 case Type::eNul:
                     out.append("null");
                     break;
-                case Type::eString:
-                    escape_to(out, std::get<String>(m_data));
+                case Type::eStr:
+                    escape_to(out, std::get<Str>(m_data));
                     break;
                 case Type::eNum: {
                     char buffer[25]; // Reserve enough space for typical numbers
@@ -1009,8 +1009,8 @@ export namespace mysvac::json {
                 case Type::eNul:
                     out << "null";
                     break;
-                case Type::eString:
-                    escape_to(out, std::get<String>(m_data));
+                case Type::eStr:
+                    escape_to(out, std::get<Str>(m_data));
                     break;
                 case Type::eNum: {
                     char buffer[25]; // Reserve enough space for typical numbers
@@ -1032,8 +1032,8 @@ export namespace mysvac::json {
          * @brief Dump the JSON data to a string.
          */
         [[nodiscard]]
-        String dump() const noexcept {
-            String res;
+        Str dump() const noexcept {
+            Str res;
             this->write(res);
             return res;
         }
@@ -1045,7 +1045,7 @@ export namespace mysvac::json {
          * @param depth The current depth of indentation (default is 0).
          */
         void writef(
-            String& out,
+            Str& out,
             const std::uint16_t space_num = 2,
             const std::uint16_t depth = 0
         ) const noexcept {
@@ -1088,8 +1088,8 @@ export namespace mysvac::json {
                 case Type::eNul:
                     out.append("null");
                     break;
-                case Type::eString:
-                    escape_to(out, std::get<String>(m_data));
+                case Type::eStr:
+                    escape_to(out, std::get<Str>(m_data));
                     break;
                 case Type::eNum: {
                     char buffer[25]; // Reserve enough space for typical numbers
@@ -1165,8 +1165,8 @@ export namespace mysvac::json {
                 case Type::eNul:
                     out << "null";
                     break;
-                case Type::eString:
-                    escape_to(out, std::get<String>(m_data));
+                case Type::eStr:
+                    escape_to(out, std::get<Str>(m_data));
                     break;
                 case Type::eNum: {
                     char buffer[25]; // Reserve enough space for typical numbers
@@ -1192,11 +1192,11 @@ export namespace mysvac::json {
          * @return A string containing the formatted JSON data.
          */
         [[nodiscard]]
-        String dumpf(
+        Str dumpf(
             const std::uint16_t space_num = 2,
             const std::uint16_t depth = 0
         ) const noexcept {
-            String res;
+            Str res;
             this->writef(res, space_num, depth);
             return res;
         }
@@ -1251,7 +1251,7 @@ export namespace mysvac::json {
          * 1. Nul -> Nul
          * 2. Object -> Object
          * 3. Array -> Array
-         * 4. String -> String
+         * 4. Str -> Str
          * 5. Bol -> Bol
          * 6. Num -> enum types (us llround, round to nearest)
          * 7. Num -> integral types (us llround, round to nearest)
@@ -1259,11 +1259,11 @@ export namespace mysvac::json {
          * 9. Any -> T is constructible from json::Value
          * 10. Object -> implicit convertible types
          * 11. Array -> implicit convertible types
-         * 12. String -> implicit convertible types
+         * 12. Str -> implicit convertible types
          * 13. Num -> implicit convertible types
          * 14. Bol -> implicit convertible types
          * 15. Nul -> implicit convertible types (Nul is not convertible to bool !!!!!)
-         * 16. Object -> Try copy to `range && String->key_type && Value->mapped_type types && have default_range_value`
+         * 16. Object -> Try copy to `range && Str->key_type && Value->mapped_type types && have default_range_value`
          * 17. Array -> Try copy to `range && Value->value_type types && have default_range_value`
          * 18. return std::nullopt;
          */
@@ -1277,8 +1277,8 @@ export namespace mysvac::json {
                 if (type() == Type::eObject) return std::get<Object>(m_data);
             } else if constexpr (std::is_same_v<T, Array>) {
                 if (type() == Type::eArray) return std::get<Array>(m_data);
-            } else if constexpr (std::is_same_v<T, String>) {
-                if (type() == Type::eString) return std::get<String>(m_data);
+            } else if constexpr (std::is_same_v<T, Str>) {
+                if (type() == Type::eStr) return std::get<Str>(m_data);
             } else if constexpr (std::is_same_v<T, Bol>) {
                 if (type() == Type::eBol) return std::get<Bol>(m_data);
             } else if constexpr (std::is_enum_v<T>) {
@@ -1297,8 +1297,8 @@ export namespace mysvac::json {
             if constexpr (std::is_convertible_v<Array, T>) {
                 if (type() == Type::eArray) return static_cast<T>(std::get<Array>(m_data));
             }
-            if constexpr (std::is_convertible_v<String, T>) {
-                if (type() == Type::eString) return static_cast<T>(std::get<String>(m_data));
+            if constexpr (std::is_convertible_v<Str, T>) {
+                if (type() == Type::eStr) return static_cast<T>(std::get<Str>(m_data));
             }
             if constexpr (std::is_convertible_v<Num, T>) {
                 if (type() == Type::eNum) return static_cast<T>(std::get<Num>(m_data));
@@ -1388,7 +1388,7 @@ export namespace mysvac::json {
          * @return The converted value
          * @note
          * Num is double, so conversions to integral (and enum) types will round to nearest.
-         * Complex types like Object, Array, String will be moved if possible.
+         * Complex types like Object, Array, Str will be moved if possible.
          * Simple types like Bol, Num, Nul will be copied.
          * @details
          * Attempt sequence of conversions:
@@ -1396,7 +1396,7 @@ export namespace mysvac::json {
          * 1. Nul -> Nul
          * 2. Object -> Object (Move)
          * 3. Array -> Array (Move)
-         * 4. String -> String (Move)
+         * 4. Str -> Str (Move)
          * 5. Bol -> Bol
          * 6. Num -> enum types (us llround, round to nearest)
          * 7. Num -> integral types (us llround, round to nearest)
@@ -1404,11 +1404,11 @@ export namespace mysvac::json {
          * 9. Any -> T is constructible from json::Value (try Move)
          * 10. Object -> implicit convertible types (try Move)
          * 11. Array -> implicit convertible types (try Move)
-         * 12. String -> implicit convertible types (try Move)
+         * 12. Str -> implicit convertible types (try Move)
          * 13. Num -> implicit convertible types
          * 14. Bol -> implicit convertible types
          * 15. Nul -> implicit convertible types (Nul is not convertible to bool !!!!!)
-         * 16. Object -> Try copy to `range && String->key_type && Value->mapped_type types && have default_range_value`  (try Move)
+         * 16. Object -> Try copy to `range && Str->key_type && Value->mapped_type types && have default_range_value`  (try Move)
          * 17. Array -> Try copy to `range && Value->value_type types && have default_range_value`  (try Move)
          * 18. return std::nullopt;
          */
@@ -1422,8 +1422,8 @@ export namespace mysvac::json {
                 if (type() == Type::eObject) return std::move(std::get<Object>(m_data));
             } else if constexpr (std::is_same_v<T, Array>) {
                 if (type() == Type::eArray) return std::move(std::get<Array>(m_data));
-            } else if constexpr (std::is_same_v<T, String>) {
-                if (type() == Type::eString) return std::move(std::get<String>(m_data));
+            } else if constexpr (std::is_same_v<T, Str>) {
+                if (type() == Type::eStr) return std::move(std::get<Str>(m_data));
             } else if constexpr (std::is_same_v<T, Bol>) {
                 if (type() == Type::eBol) return std::get<Bol>(m_data);
             } else if constexpr (std::is_enum_v<T>) {
@@ -1442,8 +1442,8 @@ export namespace mysvac::json {
             if constexpr (std::is_convertible_v<Array, T>) {
                 if (type() == Type::eArray) return static_cast<T>(std::move(std::get<Array>(m_data)));
             }
-            if constexpr (std::is_convertible_v<String, T>) {
-                if (type() == Type::eString) return static_cast<T>(std::move(std::get<String>(m_data)));
+            if constexpr (std::is_convertible_v<Str, T>) {
+                if (type() == Type::eStr) return static_cast<T>(std::move(std::get<Str>(m_data)));
             }
             if constexpr (std::is_convertible_v<Num, T>) {
                 if (type() == Type::eNum) return static_cast<T>(std::get<Num>(m_data));
@@ -1488,7 +1488,7 @@ export namespace mysvac::json {
          * @throws std::runtime_error if conversion fails
          * @note
          * Num is double, so conversions to integral (and enum) types will round to nearest.
-         * Complex types like Object, Array, String will be moved if possible.
+         * Complex types like Object, Array, Str will be moved if possible.
          * Simple types like Bol, Num, Nul will be copied.
          * @details
          * Attempt sequence of conversions:
@@ -1514,7 +1514,7 @@ export namespace mysvac::json {
          * @return The converted value
          * @note
          * Num is double, so conversions to integral (and enum) types will round to nearest.
-         * Complex types like Object, Array, String will be moved if possible.
+         * Complex types like Object, Array, Str will be moved if possible.
          * Simple types like Bol, Num, Nul will be copied.
          * @details
          * Attempt sequence of conversions:
@@ -1545,7 +1545,7 @@ export namespace mysvac::json {
                 case Type::eNul: return true; // Both are null
                 case Type::eBol: return std::get<Bol>(m_data) == std::get<Bol>(other.m_data);
                 case Type::eNum: return std::get<Num>(m_data) == std::get<Num>(other.m_data);
-                case Type::eString: return std::get<String>(m_data) == std::get<String>(other.m_data);
+                case Type::eStr: return std::get<Str>(m_data) == std::get<Str>(other.m_data);
                 case Type::eObject: return std::get<Object>(m_data) == std::get<Object>(other.m_data);
                 case Type::eArray: return std::get<Array>(m_data) == std::get<Array>(other.m_data);
             }
@@ -1560,20 +1560,20 @@ export namespace mysvac::json {
          *
          * @details
          * rules:
-         * A. different json types are not equal( Bol, Num, String, Array, Object, Nul )
+         * A. different json types are not equal( Bol, Num, Str, Array, Object, Nul )
          * B. IF T is Value, use Value::operator==(const Value& other) ,
          *    it's Accurate comparison !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
          * --------------------------------------------------------------------------------------------
          * 1.  IF T is Nul, return true if this Value is null, false otherwise
          * 2.  Else if T is Bol, return true if Value is Bol and Equal to Tvalue
          * 3.  Else if T is Num, return true if Value is Num and Equal to Tvalue
-         * 4.  Else if T is String, return true if Value is String and Equal to Tvalue
+         * 4.  Else if T is Str, return true if Value is Str and Equal to Tvalue
          * 5.  Else if T is Array, return true if Value is Array and Equal to Tvalue
          * 6.  Else if T is Object, return true if Value is Object and Equal to Tvalue
          * 7.  Else if T is enum, return true if Value is Num and Equal to Tvalue, Num will be rounded to nearest integer
          * 8.  Else if T is integral, return true if Value is Num or Bol and Equal to Tvalue, Num will be rounded to nearest integer
          * 9.  Else if T is floating_point, return true if Value is Num and Equal to Tvalue, double to double comparison is very strict
-         * 10. Else if T is convertible to std::string_view, return true if Value is String and Equal to std::string_view( Tvalue )
+         * 10. Else if T is convertible to std::string_view, return true if Value is Str and Equal to std::string_view( Tvalue )
          * 11. Else if T is equality_comparable and constructible from Value, return true if Tvalue == T(*this);
          * 12. Else if Value is constructible from T, return true if *this == json::Value(Tvalue);
          * 13. Else return false
@@ -1588,8 +1588,8 @@ export namespace mysvac::json {
                 if ( type() == Type::eBol ) return std::get<Bol>(m_data) == other;
             } else if constexpr ( std::is_same_v<T,Num> ) {
                 if ( type() == Type::eNum ) return std::get<Num>(m_data) == other;
-            } else if constexpr ( std::is_same_v<T,String> ) {
-                if ( type() == Type::eString ) return std::get<String>(m_data) == other;
+            } else if constexpr ( std::is_same_v<T,Str> ) {
+                if ( type() == Type::eStr ) return std::get<Str>(m_data) == other;
             } else if constexpr ( std::is_same_v<T,Array> ) {
                 if ( type() == Type::eArray ) return std::get<Array>(m_data) == other;
             } else if constexpr ( std::is_same_v<T,Object> ) {
@@ -1601,7 +1601,7 @@ export namespace mysvac::json {
             } else if constexpr (std::is_floating_point_v<T>) {
                 if ( type() == Type::eNum) return static_cast<T>(std::get<Num>(m_data)) == other;
             } else if constexpr (std::is_convertible_v<T, std::string_view>) {
-                if( type() == Type::eString) return std::get<String>(m_data) == std::string_view( other );
+                if( type() == Type::eStr) return std::get<Str>(m_data) == std::string_view( other );
             } else if constexpr (std::equality_comparable<T> && std::is_constructible_v<T, Json>) {
                 return other == static_cast<T>(*this);     // Use T's operator==
             } else if constexpr (std::is_constructible_v<Json, T>) {
@@ -1612,13 +1612,13 @@ export namespace mysvac::json {
 
         /**
          * @brief Get inner container size.
-         * @return The size of the inner container(Array or Object), or 0 for Nul, Bol, Num, String.
+         * @return The size of the inner container(Array or Object), or 0 for Nul, Bol, Num, Str.
          */
         [[nodiscard]]
         std::size_t size() const noexcept {
             if (type() == Type::eObject)  return std::get<Object>(m_data).size();
             if (type() == Type::eArray) return std::get<Array>(m_data).size();
-            return 0; // Nul, Bol, Num, String are considered to have size 0
+            return 0; // Nul, Bol, Num, Str are considered to have size 0
         }
 
         /**
@@ -1629,7 +1629,7 @@ export namespace mysvac::json {
         bool empty() const noexcept {
             if (type() == Type::eObject)  return std::get<Object>(m_data).empty();
             if (type() == Type::eArray) return std::get<Array>(m_data).empty();
-            return true; // Nul, Bol, Num, String are considered empty
+            return true; // Nul, Bol, Num, Str are considered empty
         }
 
         /**
@@ -1638,7 +1638,7 @@ export namespace mysvac::json {
          * @return True if the key exists in the JSON object, false if the JSON is not an object or the key does not exist.
          */
         [[nodiscard]]
-        bool contains(const String& key) const noexcept {
+        bool contains(const Str& key) const noexcept {
             if (type() == Type::eObject) return std::get<Object>(m_data).contains(key);
             return false; // Not an object
         }
@@ -1648,7 +1648,7 @@ export namespace mysvac::json {
          * @param key The key to erase from the JSON object.
          * @return True if the key was erased, false if the JSON is not an object or the key does not exist.
          */
-        bool erase(const String& key) noexcept{
+        bool erase(const Str& key) noexcept{
             if (type() == Type::eObject) return std::get<Object>(m_data).erase(key);
             return false;
         }
@@ -1673,10 +1673,10 @@ export namespace mysvac::json {
          * @return True if the key-value pair was inserted, false if the JSON is not an object.
          */
         template<typename  K, typename V>
-        requires std::convertible_to<K, String> && std::convertible_to<V, Json>
+        requires std::convertible_to<K, Str> && std::convertible_to<V, Json>
         bool insert(K&& key, V&& value) noexcept {
             if (type() == Type::eObject) {
-                std::get<Object>(m_data).emplace(static_cast<String>(std::forward<K>(key)), static_cast<Json>(std::forward<V>(value)));
+                std::get<Object>(m_data).emplace(static_cast<Str>(std::forward<K>(key)), static_cast<Json>(std::forward<V>(value)));
                 return true;
             }
             return false;
@@ -1734,7 +1734,7 @@ export namespace mysvac {
      * @brief Alias for the Json class with default template parameters.
      *
      * Use `std::allocator` for memory allocation,
-     * Use `std::map` for Object, `std::vector` for Array, `std::string` for String.
+     * Use `std::map` for Object, `std::vector` for Array, `std::string` for Str.
      */
     using Json = ::mysvac::json::Json<>;
 }

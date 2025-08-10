@@ -7,32 +7,32 @@ import mysvac.json;
 using namespace mysvac;
 
 // --- Construction tests ---
-M_TEST(Value, String) {
+M_TEST(Value, Str) {
     // Default construction
-    M_ASSERT_NO_THROW(Json str_default{ json::Type::eString });
-    M_ASSERT_EQ(Json{json::Type::eString}.is_num(), true);
-    M_ASSERT_EQ(Json{json::Type::eString}.is_nul(), false);
-    M_ASSERT_EQ(Json{json::Type::eString}.is_arr(), false);
-    M_ASSERT_EQ(Json{json::Type::eString}.is_obj(), false);
-    M_ASSERT_EQ(Json{json::Type::eString}.is_bol(), false);
-    M_ASSERT_EQ(Json{json::Type::eString}.is_str(), false);
-    M_ASSERT_EQ(Json{json::Type::eString}.type(), json::Type::eNum);
+    M_ASSERT_NO_THROW(Json str_default{ json::Type::eStr });
+    M_ASSERT_EQ(Json{json::Type::eStr}.is_num(), true);
+    M_ASSERT_EQ(Json{json::Type::eStr}.is_nul(), false);
+    M_ASSERT_EQ(Json{json::Type::eStr}.is_arr(), false);
+    M_ASSERT_EQ(Json{json::Type::eStr}.is_obj(), false);
+    M_ASSERT_EQ(Json{json::Type::eStr}.is_bol(), false);
+    M_ASSERT_EQ(Json{json::Type::eStr}.is_str(), false);
+    M_ASSERT_EQ(Json{json::Type::eStr}.type(), json::Type::eNum);
 
-    M_ASSERT_NO_THROW(Json str_default{Json::String{}});
-    M_ASSERT_EQ(Json{Json::String{}}.to<Json::String>(), "");
-    M_ASSERT_EQ(Json{Json::String{}}.type(), json::Type::eString);
+    M_ASSERT_NO_THROW(Json str_default{Json::Str{}});
+    M_ASSERT_EQ(Json{Json::Str{}}.to<Json::Str>(), "");
+    M_ASSERT_EQ(Json{Json::Str{}}.type(), json::Type::eStr);
 
-    M_ASSERT_EQ(Json{Json::String{}}.is_num(), false);
-    M_ASSERT_EQ(Json{Json::String{}}.is_nul(), false);
-    M_ASSERT_EQ(Json{Json::String{}}.is_arr(), false);
-    M_ASSERT_EQ(Json{Json::String{}}.is_obj(), false);
-    M_ASSERT_EQ(Json{Json::String{}}.is_bol(), false);
-    M_ASSERT_EQ(Json{Json::String{}}.is_str(), true);
+    M_ASSERT_EQ(Json{Json::Str{}}.is_num(), false);
+    M_ASSERT_EQ(Json{Json::Str{}}.is_nul(), false);
+    M_ASSERT_EQ(Json{Json::Str{}}.is_arr(), false);
+    M_ASSERT_EQ(Json{Json::Str{}}.is_obj(), false);
+    M_ASSERT_EQ(Json{Json::Str{}}.is_bol(), false);
+    M_ASSERT_EQ(Json{Json::Str{}}.is_str(), true);
 
-    // Construction with jsonlicit String wrapper
-    M_ASSERT_NO_THROW(Json str_hello{Json::String("hello")});
-    M_ASSERT_NO_THROW(Json str_empty{Json::String("")});
-    M_ASSERT_NO_THROW(Json str_special{Json::String("Hello, 世界!")});
+    // Construction with jsonlicit Str wrapper
+    M_ASSERT_NO_THROW(Json str_hello{Json::Str("hello")});
+    M_ASSERT_NO_THROW(Json str_empty{Json::Str("")});
+    M_ASSERT_NO_THROW(Json str_special{Json::Str("Hello, 世界!")});
 
     // Direct string construction
     M_ASSERT_NO_THROW(Json direct_str{"direct string"});
@@ -41,23 +41,23 @@ M_TEST(Value, String) {
     // Implicit construction
     Json implicit_str = "implicit string";
     Json implicit_empty = "";
-    M_ASSERT_EQ(implicit_str.type(), json::Type::eString);
-    M_ASSERT_EQ(implicit_empty.type(), json::Type::eString);
-    M_ASSERT_EQ(implicit_str.to<Json::String>(), "implicit string");
-    M_ASSERT_EQ(implicit_empty.to<Json::String>(), "");
+    M_ASSERT_EQ(implicit_str.type(), json::Type::eStr);
+    M_ASSERT_EQ(implicit_empty.type(), json::Type::eStr);
+    M_ASSERT_EQ(implicit_str.to<Json::Str>(), "implicit string");
+    M_ASSERT_EQ(implicit_empty.to<Json::Str>(), "");
 
     // Construction from std::string
     std::string std_str = "std::string test";
     Json copy_init_std = std_str;
-    M_ASSERT_EQ(copy_init_std.type(), json::Type::eString);
-    M_ASSERT_EQ(copy_init_std.to<Json::String>(), "std::string test");
+    M_ASSERT_EQ(copy_init_std.type(), json::Type::eStr);
+    M_ASSERT_EQ(copy_init_std.to<Json::Str>(), "std::string test");
 
     // --- Type checking ---
     Json str_val{"test string"};
     Json empty_val{""};
     M_ASSERT_TRUE(str_val.is_str());
     M_ASSERT_FALSE(str_val.is_num());
-    M_EXPECT_STREQ(json::type_name(str_val.type()), "String");
+    M_EXPECT_STREQ(json::type_name(str_val.type()), "Str");
 
     // --- Reference access ---
     M_ASSERT_EQ(str_val.str(), "test string");
@@ -67,19 +67,19 @@ M_TEST(Value, String) {
     M_ASSERT_THROW(std::ignore = Json{42}.str(), std::bad_variant_access);
 
     // --- Assignment tests ---
-    Json assign_val{Json::String{}};
-    assign_val = Json::String("assigned");
-    M_ASSERT_EQ(assign_val.to<Json::String>(), "assigned");
+    Json assign_val{Json::Str{}};
+    assign_val = Json::Str("assigned");
+    M_ASSERT_EQ(assign_val.to<Json::Str>(), "assigned");
     assign_val = "reassigned";
-    M_ASSERT_EQ(assign_val.to<Json::String>(), "reassigned");
+    M_ASSERT_EQ(assign_val.to<Json::Str>(), "reassigned");
 
     // Reference modification
     Json mod_val{"original"};
     auto& str_ref = mod_val.str();
     str_ref = "modified";
-    M_ASSERT_EQ(mod_val.to<Json::String>(), "modified");
+    M_ASSERT_EQ(mod_val.to<Json::Str>(), "modified");
     str_ref += " appended";
-    M_ASSERT_EQ(mod_val.to<Json::String>(), "modified appended");
+    M_ASSERT_EQ(mod_val.to<Json::Str>(), "modified appended");
 
     // --- Comparison tests ---
     Json val_str1{"same string"};
@@ -116,13 +116,13 @@ M_TEST(Value, String) {
     // --- Parsing tests ---
     auto parsed_hello = Json::parse("\"hello world\"");
     if (parsed_hello.has_value()) {
-        M_ASSERT_EQ(parsed_hello->type(), json::Type::eString);
+        M_ASSERT_EQ(parsed_hello->type(), json::Type::eStr);
         M_ASSERT_EQ(parsed_hello->str(), "hello world");
     }
 
     auto parsed_empty = Json::parse("\"\"");
     if (parsed_empty.has_value()) {
-        M_ASSERT_EQ(parsed_empty->type(), json::Type::eString);
+        M_ASSERT_EQ(parsed_empty->type(), json::Type::eStr);
         M_ASSERT_EQ(parsed_empty->str(), "");
     }
 
@@ -182,21 +182,21 @@ M_TEST(Value, String) {
     M_ASSERT_THROW(std::ignore = str_val.to<Json::Object>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = str_val.to<std::nullptr_t>(), std::runtime_error);
 
-    // --- String conversion ---
+    // --- Str conversion ---
     Json str_conv_test{"conversion test"};
     M_ASSERT_EQ(str_conv_test.to<std::string>(), "conversion test");
     Json str_view_test{"string_view test"};
     auto view = str_view_test.to<std::string_view>();
     M_ASSERT_EQ(view, "string_view test");
 
-    // --- String properties ---
+    // --- Str properties ---
     Json length_test{"12345"};
-    M_ASSERT_EQ(length_test.to<Json::String>().length(), 5);
-    M_ASSERT_FALSE(length_test.to<Json::String>().empty());
+    M_ASSERT_EQ(length_test.to<Json::Str>().length(), 5);
+    M_ASSERT_FALSE(length_test.to<Json::Str>().empty());
 
     Json empty_length_test{""};
-    M_ASSERT_EQ(empty_length_test.to<Json::String>().length(), 0);
-    M_ASSERT_TRUE(empty_length_test.to<Json::String>().empty());
+    M_ASSERT_EQ(empty_length_test.to<Json::Str>().length(), 0);
+    M_ASSERT_TRUE(empty_length_test.to<Json::Str>().empty());
 
     // --- Consistency checks ---
     Json consistency_str1{"same content"};

@@ -99,7 +99,7 @@ M_TEST(Value, Nul) {
     M_ASSERT_THROW(std::ignore = Json{42}.to<int*>(), std::runtime_error);
 
     // --- Type safety for conversions ---
-    M_ASSERT_THROW(std::ignore = null_val.to<Json::String>(), std::runtime_error);
+    M_ASSERT_THROW(std::ignore = null_val.to<Json::Str>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = null_val.to<Json::Num>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = null_val.to<Json::Bol>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = null_val.to<Json::Array>(), std::runtime_error);

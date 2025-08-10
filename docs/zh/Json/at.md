@@ -2,10 +2,10 @@
 
 ```cpp
 // 1
-Json& at(const String& key);
+Json& at(const Str& key);
 
 // 2
-const Json& at(const String& key) const;
+const Json& at(const Str& key) const;
 
 // 3
 Json& at(const std::size_t index);

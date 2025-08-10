@@ -1,10 +1,10 @@
 # **Json.str**
 
 ```cpp
-constexpr String& str() & ;
-constexpr String&& str() && ;
-constexpr const String& str() const & ;
-constexpr const String&& str() const && ;
+constexpr Str& str() & ;
+constexpr Str&& str() && ;
+constexpr const Str& str() const & ;
+constexpr const Str&& str() const && ;
 ```
 
 Returns a reference to the internal string value.

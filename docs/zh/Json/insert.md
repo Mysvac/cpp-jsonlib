@@ -3,7 +3,7 @@
 ```cpp
 // 1
 template<typename  K, typename V>
-requires std::convertible_to<K, String> && std::convertible_to<V, Json>
+requires std::convertible_to<K, Str> && std::convertible_to<V, Json>
 bool insert(K&& key, V&& value) noexcept;
 
 // 2

@@ -1,7 +1,7 @@
 # **Json.contains**
 
 ```cpp
-bool contains(const String& key) const noexcept;
+bool contains(const Str& key) const noexcept;
 ```
 
 Checks if an `Object` contains the specified key, returns `false` for non-object types.

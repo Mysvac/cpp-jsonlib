@@ -33,12 +33,12 @@ JSON 存在六种基本类型，本库使用了一个枚举来表示它们：
 
 ```cpp
 enum class Type{
-    eNul = 0,  ///< Nul type
+    eNul = 0,  ///< null type
     eBol,      ///< boolean type
-    eNum,    ///< Num type
-    eString,    ///< String type
-    eArray,     ///< Array type
-    eObject     ///< Object type
+    eNum,    ///< number type
+    eStr,    ///< string type
+    eArray,     ///< array type
+    eObject     ///< object type
 };
 ```
 
@@ -76,7 +76,7 @@ namespace mysvac {
 | `Json::Nul`   | `std::nullptr_t`              | `std::nullptr_t`                                                            |
 | `Json::Bol`   | `bool`                        | `bool`                                                                      |
 | `Json::Num` | `double`                      | `double`                                                                    |
-| `Json::String` | `std::string`                 | `std::basic_string<...,StrAllocator<char>>`                                 |
+| `Json::Str` | `std::string`                 | `std::basic_string<...,StrAllocator<char>>`                                 |
 | `Json::Array`  | `std::vector<Json>`           | `std::vector<Json, VecAllocator<Json>>`                                     |
 | `Json::Object` | `std::map<std::string, Json>` | `std::map<..,MapAllocator<..>>` 或 `std::unordered_map<..,MapAllocator<..>>` |
 
@@ -383,7 +383,7 @@ v_data["id"] == 42; // true
 
 ```cpp
 struct MyData2 {
-    std::string name;   // std::string 等于 json::String，因此可以直接使用
+    std::string name;   // std::string 等于 json::Str，因此可以直接使用
     MyData my_data;     // MyData 已经有转换函数和构造函数，因此可以直接使用
     std::vector<MyData> data_list;  // 能够直接使用的类型构成的列表也能直接使用（但再套一层列表就不行了）
     MyData2() = default;

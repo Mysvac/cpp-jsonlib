@@ -29,30 +29,30 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_EQ(result_negative->num(), -123.45);
     }
 
-    // --- String parsing ---
+    // --- Str parsing ---
     {
         auto result_string = Json::parse("\"hello world\"");
         M_ASSERT_TRUE(result_string.has_value());
-        M_ASSERT_EQ(result_string->type(), json::Type::eString);
+        M_ASSERT_EQ(result_string->type(), json::Type::eStr);
         M_ASSERT_EQ(result_string->str(), "hello world");
     }
     {
         auto result_empty_string = Json::parse("\"\"");
         M_ASSERT_TRUE(result_empty_string.has_value());
-        M_ASSERT_EQ(result_empty_string->type(), json::Type::eString);
+        M_ASSERT_EQ(result_empty_string->type(), json::Type::eStr);
         M_ASSERT_EQ(result_empty_string->str(), "");
     }
-    // String with escape sequences
+    // Str with escape sequences
     {
         auto result_escape = Json::parse(R"("Hello\nWorld\t!")");
         M_ASSERT_TRUE(result_escape.has_value());
-        M_ASSERT_EQ(result_escape->type(), json::Type::eString);
+        M_ASSERT_EQ(result_escape->type(), json::Type::eStr);
         M_ASSERT_EQ(result_escape->str(), "Hello\nWorld\t!");
     }
     {
         auto result_quote_escape = Json::parse(R"("Quote: \"test\" and backslash: \\")");
         M_ASSERT_TRUE(result_quote_escape.has_value());
-        M_ASSERT_EQ(result_quote_escape->type(), json::Type::eString);
+        M_ASSERT_EQ(result_quote_escape->type(), json::Type::eStr);
         M_ASSERT_EQ(result_quote_escape->str(), "Quote: \"test\" and backslash: \\");
     }
 
@@ -100,7 +100,7 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_EQ(result_mixed_array->type(), json::Type::eArray);
         M_ASSERT_EQ(result_mixed_array->arr().size(), 5);
         M_ASSERT_EQ((*result_mixed_array)[0].to<Json::Num>(), 1);
-        M_ASSERT_EQ((*result_mixed_array)[1].to<Json::String>(), "hello");
+        M_ASSERT_EQ((*result_mixed_array)[1].to<Json::Str>(), "hello");
         M_ASSERT_EQ((*result_mixed_array)[2].to<Json::Bol>(), true);
         M_ASSERT_EQ((*result_mixed_array)[3].type(), json::Type::eNul);
         M_ASSERT_EQ((*result_mixed_array)[4].to<Json::Bol>(), false);
@@ -114,7 +114,7 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_EQ(result_object->obj().size(), 2);
         M_ASSERT_TRUE(result_object->obj().contains("name"));
         M_ASSERT_TRUE(result_object->obj().contains("age"));
-        M_ASSERT_EQ((*result_object)["name"].to<Json::String>(), "John");
+        M_ASSERT_EQ((*result_object)["name"].to<Json::Str>(), "John");
         M_ASSERT_EQ((*result_object)["age"].to<Json::Num>(), 30);
     }
     {
@@ -147,10 +147,10 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_EQ(result_nested_object->obj().size(), 2);
         // Deep access
         M_ASSERT_EQ((*result_nested_object)["user"]["id"].to<Json::Num>(), 123);
-        M_ASSERT_EQ((*result_nested_object)["user"]["name"].to<Json::String>(), "Alice");
+        M_ASSERT_EQ((*result_nested_object)["user"]["name"].to<Json::Str>(), "Alice");
         M_ASSERT_EQ((*result_nested_object)["user"]["active"].to<Json::Bol>(), true);
-        M_ASSERT_EQ((*result_nested_object)["user"]["profile"]["email"].to<Json::String>(), "alice@example.com");
-        M_ASSERT_EQ((*result_nested_object)["user"]["profile"]["preferences"]["theme"].to<Json::String>(), "dark");
+        M_ASSERT_EQ((*result_nested_object)["user"]["profile"]["email"].to<Json::Str>(), "alice@example.com");
+        M_ASSERT_EQ((*result_nested_object)["user"]["profile"]["preferences"]["theme"].to<Json::Str>(), "dark");
         M_ASSERT_EQ((*result_nested_object)["user"]["profile"]["preferences"]["notifications"].to<Json::Bol>(), false);
         M_ASSERT_EQ((*result_nested_object)["metadata"].type(), json::Type::eNul);
     }
@@ -175,9 +175,9 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_EQ((*result_nested_array)[0][0].to<Json::Num>(), 1);
         M_ASSERT_EQ((*result_nested_array)[0][1].to<Json::Num>(), 2);
         M_ASSERT_EQ((*result_nested_array)[0][2].to<Json::Num>(), 3);
-        M_ASSERT_EQ((*result_nested_array)[1][0].to<Json::String>(), "a");
-        M_ASSERT_EQ((*result_nested_array)[1][1].to<Json::String>(), "b");
-        M_ASSERT_EQ((*result_nested_array)[1][2].to<Json::String>(), "c");
+        M_ASSERT_EQ((*result_nested_array)[1][0].to<Json::Str>(), "a");
+        M_ASSERT_EQ((*result_nested_array)[1][1].to<Json::Str>(), "b");
+        M_ASSERT_EQ((*result_nested_array)[1][2].to<Json::Str>(), "c");
         M_ASSERT_EQ((*result_nested_array)[2][0].to<Json::Bol>(), true);
         M_ASSERT_EQ((*result_nested_array)[2][1].to<Json::Bol>(), false);
         M_ASSERT_EQ((*result_nested_array)[2][2].type(), json::Type::eNul);
@@ -243,29 +243,29 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_EQ(result_complex->type(), json::Type::eObject);
         M_ASSERT_EQ(result_complex->obj().size(), 3);
         // Complex access patterns
-        M_ASSERT_EQ((*result_complex)["application"]["name"].to<Json::String>(), "TestApp");
+        M_ASSERT_EQ((*result_complex)["application"]["name"].to<Json::Str>(), "TestApp");
         M_ASSERT_EQ((*result_complex)["application"]["config"]["database"]["port"].to<Json::Num>(), 5432);
-        M_ASSERT_EQ((*result_complex)["application"]["config"]["database"]["credentials"]["username"].to<Json::String>(), "admin");
+        M_ASSERT_EQ((*result_complex)["application"]["config"]["database"]["credentials"]["username"].to<Json::Str>(), "admin");
         M_ASSERT_EQ((*result_complex)["application"]["config"]["database"]["options"]["ssl"].to<Json::Bol>(), true);
         M_ASSERT_EQ((*result_complex)["application"]["config"]["database"]["options"]["retries"].type(), json::Type::eNul);
         M_ASSERT_EQ((*result_complex)["application"]["config"]["features"].arr().size(), 3);
-        M_ASSERT_EQ((*result_complex)["application"]["config"]["features"][0].to<Json::String>(), "auth");
-        M_ASSERT_EQ((*result_complex)["application"]["config"]["features"][1].to<Json::String>(), "logging");
-        M_ASSERT_EQ((*result_complex)["application"]["config"]["features"][2].to<Json::String>(), "monitoring");
+        M_ASSERT_EQ((*result_complex)["application"]["config"]["features"][0].to<Json::Str>(), "auth");
+        M_ASSERT_EQ((*result_complex)["application"]["config"]["features"][1].to<Json::Str>(), "logging");
+        M_ASSERT_EQ((*result_complex)["application"]["config"]["features"][2].to<Json::Str>(), "monitoring");
         M_ASSERT_EQ((*result_complex)["users"].arr().size(), 2);
         M_ASSERT_EQ((*result_complex)["users"][0]["id"].to<Json::Num>(), 1);
-        M_ASSERT_EQ((*result_complex)["users"][0]["name"].to<Json::String>(), "John Doe");
+        M_ASSERT_EQ((*result_complex)["users"][0]["name"].to<Json::Str>(), "John Doe");
         M_ASSERT_EQ((*result_complex)["users"][0]["roles"].arr().size(), 2);
-        M_ASSERT_EQ((*result_complex)["users"][0]["roles"][0].to<Json::String>(), "admin");
-        M_ASSERT_EQ((*result_complex)["users"][0]["roles"][1].to<Json::String>(), "user");
+        M_ASSERT_EQ((*result_complex)["users"][0]["roles"][0].to<Json::Str>(), "admin");
+        M_ASSERT_EQ((*result_complex)["users"][0]["roles"][1].to<Json::Str>(), "user");
         M_ASSERT_EQ((*result_complex)["users"][0]["settings"]["notifications"].to<Json::Bol>(), true);
-        M_ASSERT_EQ((*result_complex)["users"][0]["settings"]["theme"].to<Json::String>(), "dark");
+        M_ASSERT_EQ((*result_complex)["users"][0]["settings"]["theme"].to<Json::Str>(), "dark");
         M_ASSERT_EQ((*result_complex)["users"][1]["id"].to<Json::Num>(), 2);
-        M_ASSERT_EQ((*result_complex)["users"][1]["name"].to<Json::String>(), "Jane Smith");
+        M_ASSERT_EQ((*result_complex)["users"][1]["name"].to<Json::Str>(), "Jane Smith");
         M_ASSERT_EQ((*result_complex)["users"][1]["roles"].arr().size(), 1);
-        M_ASSERT_EQ((*result_complex)["users"][1]["roles"][0].to<Json::String>(), "user");
+        M_ASSERT_EQ((*result_complex)["users"][1]["roles"][0].to<Json::Str>(), "user");
         M_ASSERT_EQ((*result_complex)["users"][1]["settings"]["notifications"].to<Json::Bol>(), false);
-        M_ASSERT_EQ((*result_complex)["users"][1]["settings"]["theme"].to<Json::String>(), "light");
+        M_ASSERT_EQ((*result_complex)["users"][1]["settings"]["theme"].to<Json::Str>(), "light");
         M_ASSERT_EQ((*result_complex)["statistics"]["total_requests"].to<Json::Num>(), 15420);
         M_ASSERT_EQ((*result_complex)["statistics"]["success_rate"].to<Json::Num>(), 0.987);
         M_ASSERT_EQ((*result_complex)["statistics"]["average_response_time"].to<Json::Num>(), 125.6);
@@ -286,11 +286,11 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_TRUE(result_whitespace.has_value());
         M_ASSERT_EQ(result_whitespace->type(), json::Type::eObject);
         M_ASSERT_EQ(result_whitespace->obj().size(), 4);
-        M_ASSERT_EQ((*result_whitespace)["name"].to<Json::String>(), "test");
+        M_ASSERT_EQ((*result_whitespace)["name"].to<Json::Str>(), "test");
         M_ASSERT_EQ((*result_whitespace)["value"].to<Json::Num>(), 123);
         M_ASSERT_EQ((*result_whitespace)["array"].arr().size(), 3);
         M_ASSERT_EQ((*result_whitespace)["array"][0].to<Json::Num>(), 1);
-        M_ASSERT_EQ((*result_whitespace)["object"]["key"].to<Json::String>(), "value");
+        M_ASSERT_EQ((*result_whitespace)["object"]["key"].to<Json::Str>(), "value");
     }
 
     // --- Round-trip serialization/deserialization ---
@@ -309,13 +309,13 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_TRUE(result_roundtrip.has_value());
         M_ASSERT_TRUE(*result_roundtrip == original);
         // Access after round-trip
-        M_ASSERT_EQ((*result_roundtrip)["string"].to<Json::String>(), "hello");
+        M_ASSERT_EQ((*result_roundtrip)["string"].to<Json::Str>(), "hello");
         M_ASSERT_EQ((*result_roundtrip)["number"].to<Json::Num>(), 42.5);
         M_ASSERT_EQ((*result_roundtrip)["bool"].to<Json::Bol>(), true);
         M_ASSERT_EQ((*result_roundtrip)["null"].type(), json::Type::eNul);
         M_ASSERT_EQ((*result_roundtrip)["array"].arr().size(), 3);
         M_ASSERT_EQ((*result_roundtrip)["array"][0].to<Json::Num>(), 1);
-        M_ASSERT_EQ((*result_roundtrip)["object"]["nested"].to<Json::String>(), "value");
+        M_ASSERT_EQ((*result_roundtrip)["object"]["nested"].to<Json::Str>(), "value");
     }
 
     // --- Parsing failures: invalid JSON formats ---
@@ -352,9 +352,9 @@ M_TEST(Value, Deserialize) {
         M_ASSERT_TRUE(result_at_test.has_value());
         // at() method access
         M_ASSERT_NO_THROW(std::ignore = result_at_test->at("users").at(0).at("name"));
-        M_ASSERT_EQ(result_at_test->at("users").at(0).at("name").to<Json::String>(), "John");
+        M_ASSERT_EQ(result_at_test->at("users").at(0).at("name").to<Json::Str>(), "John");
         M_ASSERT_EQ(result_at_test->at("users").at(0).at("age").to<Json::Num>(), 30);
-        M_ASSERT_EQ(result_at_test->at("users").at(1).at("name").to<Json::String>(), "Jane");
+        M_ASSERT_EQ(result_at_test->at("users").at(1).at("name").to<Json::Str>(), "Jane");
         M_ASSERT_EQ(result_at_test->at("users").at(1).at("age").to<Json::Num>(), 25);
         // Out-of-bounds access
         M_ASSERT_THROW(std::ignore = result_at_test->at("nonexistent"), std::out_of_range);
@@ -373,7 +373,7 @@ M_TEST(Value, Deserialize) {
         // Verify modifications
         M_ASSERT_EQ((*result_modify)["config"]["debug"].to<Json::Bol>(), true);
         M_ASSERT_EQ((*result_modify)["config"]["port"].to<Json::Num>(), 9090);
-        M_ASSERT_EQ((*result_modify)["config"]["new_setting"].to<Json::String>(), "added");
+        M_ASSERT_EQ((*result_modify)["config"]["new_setting"].to<Json::Str>(), "added");
         M_ASSERT_EQ((*result_modify)["config"].obj().size(), 3);
     }
 

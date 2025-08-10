@@ -2,7 +2,7 @@
 
 ```cpp
 void writef(
-    String& out,
+    Str& out,
     std::uint16_t space_num = 2,
     std::uint16_t depth = 0,
     std::uint32_t max_space = 512
@@ -29,7 +29,7 @@ Serializes JSON data with indentation to either:
 
 ### Exception Safety
 
-- **String output**: No-throw guarantee
+- **Str output**: No-throw guarantee
 -
 - **Stream output**: Depends on stream implementation
     - Standard library streams: Never throws (sets `failbit` on errors)

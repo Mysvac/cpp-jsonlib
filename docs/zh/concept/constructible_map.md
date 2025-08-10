@@ -3,7 +3,7 @@
 ```cpp
 template<typename J, typename T>
 concept constructible_map = std::ranges::range<T> &&
-    std::is_convertible_v<typename T::key_type, typename J::String> &&
+    std::is_convertible_v<typename T::key_type, typename J::Str> &&
     std::is_constructible_v<J, typename T::mapped_type>;
 ```
 

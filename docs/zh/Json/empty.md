@@ -8,7 +8,7 @@ Checks if the container is empty for `Object`/`Array`, returns `true` for other 
 
 **Return Value**
 - `Object`/`Array`: `true` if empty (equivalent to `size() == 0`)
-- All other types: `true` (including `String`)
+- All other types: `true` (including `Str`)
 
 **Exception Safety**  
 No-throw guarantee

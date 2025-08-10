@@ -33,8 +33,8 @@ bool operator==(const T& other) const noexcept;
     3. **Floating-point types**:
         - Returns `false` if not a `Num`.
         - Otherwise, performs exact comparison.
-    4. **String-compatible types**:
-        - Returns `false` if not a `String`.
+    4. **Str-compatible types**:
+        - Returns `false` if not a `Str`.
         - Converts to `string_view` for comparison.
     5. **Convertible to `Json`-constructible types**:
         - Attempts conversion to `T` (if `T` supports comparison).

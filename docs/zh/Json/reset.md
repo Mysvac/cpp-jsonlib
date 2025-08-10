@@ -21,8 +21,8 @@ Resets internal data to the specified type (defaults to Nul).
             m_data = Bol{};
         } else if constexpr(std::is_same_v<T, Num>) {
             m_data = Num{};
-        } else if constexpr(std::is_same_v<T, String>) {
-            m_data = String{};
+        } else if constexpr(std::is_same_v<T, Str>) {
+            m_data = Str{};
         } else if constexpr(std::is_same_v<T, Array>) {
             m_data = Array{};
         } else if constexpr(std::is_same_v<T, Object>) {

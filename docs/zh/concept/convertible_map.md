@@ -4,12 +4,12 @@
 template<typename J, typename T, typename D>
 concept convertible_map = std::ranges::range<T> && requires {
     requires std::is_constructible_v<typename T::mapped_type, D>;
-    requires std::is_convertible_v<typename J::String, typename T::key_type>;
+    requires std::is_convertible_v<typename J::Str, typename T::key_type>;
     requires convertible<J, typename T::mapped_type>;
     requires std::is_default_constructible_v<T>;
     requires std::is_default_constructible_v<typename T::mapped_type>;
     requires std::is_copy_constructible_v<typename T::mapped_type>;
-} && requires (T t, typename J::String s, typename T::mapped_type m) {
+} && requires (T t, typename J::Str s, typename T::mapped_type m) {
     t.emplace(static_cast<typename T::key_type>(s), std::move(m));
 };
 ```

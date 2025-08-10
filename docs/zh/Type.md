@@ -5,7 +5,7 @@ enum class Type{
     eNul = 0,
     eBol,    
     eNum,  
-    eString,  
+    eStr,  
     eArray,   
     eObject   
 };

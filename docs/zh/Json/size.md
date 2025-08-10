@@ -8,7 +8,7 @@ Returns the number of elements for container types, zero otherwise.
 
 **Return Value**
 - `Object`/`Array`: Current element count
-- All other types (including `String`): `0`
+- All other types (including `Str`): `0`
 
 **Exception Safety**  
 No-throw guarantee

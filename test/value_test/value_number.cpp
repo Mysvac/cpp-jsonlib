@@ -95,7 +95,7 @@ M_TEST(Value, Num) {
     M_ASSERT_TRUE(parsed_json_neg.has_value() && parsed_json_neg->num() == 0.0025);
 
     // --- Type safety for conversions ---
-    M_ASSERT_THROW(std::ignore = v_int.to<Json::String>(), std::runtime_error);
+    M_ASSERT_THROW(std::ignore = v_int.to<Json::Str>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = v_neg.to<Json::Array>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = v_zero.to<Json::Object>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = v_float.to<std::nullptr_t>(), std::runtime_error);
@@ -121,7 +121,7 @@ M_TEST(Value, Num) {
     M_ASSERT_EQ(implicit_int.to<Json::Num>(), 42.0);
 
     // --- Value-to-Value and Value-to-numeric comparison ---
-    Json val1{42.0}, val2{42.0}, val3{43.0}, val4{Json::String("42")};
+    Json val1{42.0}, val2{42.0}, val3{43.0}, val4{Json::Str("42")};
     M_ASSERT_TRUE(val1 == val2);
     M_ASSERT_FALSE(val1 == val3);
     M_ASSERT_FALSE(val1 == val4);
@@ -132,7 +132,7 @@ M_TEST(Value, Num) {
     M_ASSERT_FALSE(num_val == 43.0);
 
     // --- Mixed type comparison ---
-    Json str_val{Json::String("hello")};
+    Json str_val{Json::Str("hello")};
     Json bool_val{true};
     Json null_val{nullptr};
     M_ASSERT_FALSE(num_val == str_val);

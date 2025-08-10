@@ -73,7 +73,7 @@ M_TEST(File, Serial_All) {
     M_ASSERT_NE( json.type(), json::Type::eNul );
 }
 
-// M_TEST(File, Serial_String) {
+// M_TEST(File, Serial_Str) {
 //     std::ifstream file( CURRENT_PATH "/files/many_string.json" );
 //     const auto json = Json::parse(file, 1024).value_or( nullptr );
 //     M_EXPECT_FALSE( json.is_nul() );
@@ -84,7 +84,7 @@ M_TEST(File, Serial_All) {
 //
 //     const auto end = std::chrono::system_clock::now();
 //     const auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - bein).count();
-//     std::println("-----------------------------------------------Serial_String: {} us", time);
+//     std::println("-----------------------------------------------Serial_Str: {} us", time);
 //
 //     M_ASSERT_NE( json.type(), json::Type::eNul );
 // }

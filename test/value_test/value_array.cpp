@@ -34,7 +34,7 @@ M_TEST(Value, Array) {
     Json mixed_arr{Json::Array{{42, "hello", true, nullptr}}};
     M_ASSERT_EQ(mixed_arr.arr().size(), 4);
     M_ASSERT_EQ(mixed_arr[0].to<Json::Num>(), 42);
-    M_ASSERT_EQ(mixed_arr[1].to<Json::String>(), "hello");
+    M_ASSERT_EQ(mixed_arr[1].to<Json::Str>(), "hello");
     M_ASSERT_EQ(mixed_arr[2].to<Json::Bol>(), true);
     M_ASSERT_EQ(mixed_arr[3].type(), json::Type::eNul);
 
@@ -48,7 +48,7 @@ M_TEST(Value, Array) {
     modify_test[1] = "modified";
     modify_test[2] = false;
     M_ASSERT_EQ(modify_test[0].to<Json::Num>(), 100);
-    M_ASSERT_EQ(modify_test[1].to<Json::String>(), "modified");
+    M_ASSERT_EQ(modify_test[1].to<Json::Str>(), "modified");
     M_ASSERT_EQ(modify_test[2].to<Json::Bol>(), false);
 
     Json assign_val{Json::Array{}};
@@ -125,7 +125,7 @@ M_TEST(Value, Array) {
 // Array7: 混合嵌套与不规则结构
     Json mixed_nested{Json::Array{{
         Json::Array{{1, 2, 3}},
-        Json::String("nested string"),
+        Json::Str("nested string"),
         Json::Array{{
             Json::Bol(true),
             Json::Array{{4, 5}},
@@ -134,7 +134,7 @@ M_TEST(Value, Array) {
     }}};
     M_ASSERT_EQ(mixed_nested.arr().size(), 3);
     M_ASSERT_EQ(mixed_nested[0].arr().size(), 3);
-    M_ASSERT_EQ(mixed_nested[1].type(), json::Type::eString);
+    M_ASSERT_EQ(mixed_nested[1].type(), json::Type::eStr);
     M_ASSERT_EQ(mixed_nested[2].arr().size(), 3);
     M_ASSERT_EQ(mixed_nested[2][1][1].to<Json::Num>(), 5);
 
@@ -245,10 +245,10 @@ M_TEST(Value, Array) {
     M_ASSERT_EQ(simplified_multi_dim[1].arr().size(), 3);
     M_ASSERT_EQ(simplified_multi_dim[2].arr().size(), 2);
     M_ASSERT_EQ(simplified_multi_dim[0][0][0].to<Json::Num>(), 1);
-    M_ASSERT_EQ(simplified_multi_dim[1][1][1].to<Json::String>(), "e");
+    M_ASSERT_EQ(simplified_multi_dim[1][1][1].to<Json::Str>(), "e");
     M_ASSERT_EQ(simplified_multi_dim[2][0][2].type(), json::Type::eNul);
     M_ASSERT_EQ(simplified_multi_dim[2][0][2].is_nul(), true);
-    M_ASSERT_EQ(simplified_multi_dim[2][1][1].to<Json::String>(), "mixed");
+    M_ASSERT_EQ(simplified_multi_dim[2][1][1].to<Json::Str>(), "mixed");
     M_ASSERT_EQ(simplified_multi_dim[2][1][2].to<Json::Num>(), 3.14);
     M_ASSERT_THROW(std::ignore = simplified_multi_dim.at(3), std::out_of_range);
     M_ASSERT_THROW(std::ignore = simplified_multi_dim.at(0).at(3), std::out_of_range);

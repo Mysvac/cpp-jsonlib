@@ -1,7 +1,7 @@
 # **Json.dumpf**
 
 ```cpp
-String dumpf(
+Str dumpf(
     const std::uint16_t space_num = 2, 
     const std::uint16_t depth = 0
 ) const noexcept;
@@ -14,7 +14,7 @@ Serializes JSON data to a formatted string and returns the result.
 - **`depth`**: Initial indentation depth (unsigned integer, default=0)
 
 ### Return Value
-Returns a `String` object containing the formatted JSON:
+Returns a `Str` object containing the formatted JSON:
 - Properly indented with `space_num` spaces per level
 - Starting from specified `depth` level
 

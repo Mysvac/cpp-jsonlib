@@ -42,21 +42,21 @@ Each `Json` class internally contains six types corresponding to the six JSON da
 using Nul = std::nullptr_t;
 using Bol = bool;
 using Num = double;
-using String = std::basic_string<char, std::char_traits<char>, StrAllocator<char>>;
+using Str = std::basic_string<char, std::char_traits<char>, StrAllocator<char>>;
 using Array = std::vector<Json, VecAllocator<Json>>;
 using Object = std::conditional_t<UseOrderedMap,
-    std::map<String, Json, std::less<String>, MapAllocator<std::pair<const String, Json>>>,
-    std::unordered_map<String, Json, std::hash<String>, std::equal_to<String>, MapAllocator<std::pair<const String, Json>>>
+    std::map<Str, Json, std::less<Str>, MapAllocator<std::pair<const Str, Json>>>,
+    std::unordered_map<Str, Json, std::hash<Str>, std::equal_to<Str>, MapAllocator<std::pair<const Str, Json>>>
 >;
 ```
 
-The types for `Nul`, `Bol` and `Num` are completely fixed. For `String`, `Array` and `Object`, the memory allocator can be customized through template parameter `AllocatorType`.
+The types for `Nul`, `Bol` and `Num` are completely fixed. For `Str`, `Array` and `Object`, the memory allocator can be customized through template parameter `AllocatorType`.
 While `Object` can choose between ordered or hash-based implementations, the class templates themselves remain fixed.
 
 By default:
-- `String` equals `std::string`
+- `Str` equals `std::string`
 - `Array` equals `std::vector<Json>`
-- `Object` equals `std::map<String, Json>`
+- `Object` equals `std::map<Str, Json>`
 
 ## Member Variables
 
@@ -68,7 +68,7 @@ std::variant<
     Nul,
     Bol,
     Num,
-    String,
+    Str,
     Array,
     Object
 > m_data { Nul{} };
@@ -88,13 +88,13 @@ std::variant<
 - [is_nul](is_nul.md): Check if current JSON is `Nul`
 - [is_bol](is_bol.md): Check if current JSON is `Bol`
 - [is_num](is_num.md): Check if current JSON is `Num`
-- [is_str](is_str.md): Check if current JSON is `String`
+- [is_str](is_str.md): Check if current JSON is `Str`
 - [is_arr](is_arr.md): Check if current JSON is `Array`
 - [is_obj](is_obj.md): Check if current JSON is `Object`
 - [nul](get_nul.md): Get reference to internal `Nul` data
 - [bol](get_bol.md): Get reference to internal `Bol` data
 - [num](get_num.md): Get reference to internal `Num` data
-- [str](get_str.md): Get reference to internal `String` data
+- [str](get_str.md): Get reference to internal `Str` data
 - [arr](get_arr.md): Get reference to internal `Array` data
 - [obj](get_obj.md): Get reference to internal `Object` data
 

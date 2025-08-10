@@ -54,7 +54,7 @@ M_TEST(Value, Bol) {
     M_ASSERT_EQ(false_val.bol(), false);
     const Json const_bool{true};
     M_ASSERT_EQ(const_bool.bol(), true);
-    M_ASSERT_THROW(std::ignore = Json{Json::String("not a bool")}.bol(), std::bad_variant_access);
+    M_ASSERT_THROW(std::ignore = Json{Json::Str("not a bool")}.bol(), std::bad_variant_access);
 
     // --- Assignment tests ---
     Json assign_val{Json::Bol{}};
@@ -82,7 +82,7 @@ M_TEST(Value, Bol) {
     // --- Comparison tests ---
     Json val_true1{true}, val_true2{true};
     Json val_false1{false}, val_false2{false};
-    Json val_string{Json::String("true")};
+    Json val_string{Json::Str("true")};
     M_ASSERT_TRUE(val_true1 == val_true2);
     M_ASSERT_TRUE(val_false1 == val_false2);
     M_ASSERT_FALSE(val_true1 == val_false1);
@@ -94,7 +94,7 @@ M_TEST(Value, Bol) {
     M_ASSERT_FALSE(Json{true} == false);
 
     // Mixed type comparison
-    M_ASSERT_FALSE(true_val == Json{Json::String("hello")});
+    M_ASSERT_FALSE(true_val == Json{Json::Str("hello")});
     M_ASSERT_FALSE(true_val == Json{42.0});
     M_ASSERT_FALSE(true_val == Json{nullptr});
     M_ASSERT_TRUE(Json{nullptr} == nullptr);
@@ -117,7 +117,7 @@ M_TEST(Value, Bol) {
     M_ASSERT_EQ(parsed_false->bol(), false);
 
     // --- Type safety for conversions ---
-    M_ASSERT_THROW(std::ignore = true_val.to<Json::String>(), std::runtime_error);
+    M_ASSERT_THROW(std::ignore = true_val.to<Json::Str>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = true_val.to<Json::Array>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = false_val.to<Json::Object>(), std::runtime_error);
     M_ASSERT_THROW(std::ignore = false_val.to<std::nullptr_t>(), std::runtime_error);

@@ -1,7 +1,7 @@
 # **Json.write**
 
 ```cpp
-void write(String& out) const noexcept;
+void write(Str& out) const noexcept;
 
 void write(std::ostream& out) const;
 ```
@@ -13,7 +13,7 @@ Serializes JSON data to either:
 
 ### Exception Safety
 
-- **String output**: No-throw guarantee
+- **Str output**: No-throw guarantee
 - 
 - **Stream output**: Depends on stream implementation
     - Standard library streams: Never throws (sets `failbit` on errors)

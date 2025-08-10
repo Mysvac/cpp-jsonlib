@@ -7,7 +7,7 @@ concept convertible = std::disjunction_v<
     std::is_enum<T>,
     std::is_convertible<typename J::Array, T>,
     std::is_convertible<typename J::Object, T>,
-    std::is_convertible<typename J::String, T>,
+    std::is_convertible<typename J::Str, T>,
     std::is_convertible<typename J::Num, T>,
     std::is_convertible<typename J::Bol, T>,
     std::is_convertible<typename J::Nul, T>,

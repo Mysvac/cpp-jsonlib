@@ -2,7 +2,7 @@
 
 ```cpp
 // 1
-bool erase(const String& key) noexcept;
+bool erase(const Str& key) noexcept;
 
 // 2
 bool erase(const std::size_t index) noexcept;

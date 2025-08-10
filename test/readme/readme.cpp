@@ -34,7 +34,7 @@ struct MyData{
 
 
 struct MyData2 {
-    std::string name;   // std::string 等于 json::String，因此可以直接使用
+    std::string name;   // std::string 等于 json::Str，因此可以直接使用
     MyData my_data;     // MyData 已经有转换函数和构造函数，因此可以直接使用
     std::vector<MyData> data_list;  // 能够直接使用的类型构成的列表也能直接使用（但再套一层列表就不行了）
     MyData2() = default;

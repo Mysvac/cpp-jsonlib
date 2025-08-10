@@ -54,14 +54,14 @@ M_TEST(Value, Object) {
         {"flag", true},
         {"empty", nullptr}
     }};
-    M_ASSERT_EQ(mixed_subscript["text"].to<Json::String>(), "test");
+    M_ASSERT_EQ(mixed_subscript["text"].to<Json::Str>(), "test");
 
     // Modification via subscript
     Json modify_test{Json::Object{{"a", 1}, {"b", 2}, {"c", 3}}};
     modify_test["a"] = 100;
     modify_test["b"] = "modified";
     modify_test["c"] = false;
-    M_ASSERT_EQ(modify_test["b"].to<Json::String>(), "modified");
+    M_ASSERT_EQ(modify_test["b"].to<Json::Str>(), "modified");
 
     // Add new key
     Json new_key_test{Json::Object{{"existing", 1}}};
@@ -95,7 +95,7 @@ M_TEST(Value, Object) {
         {"person", Json::Object{{"name", "John"}, {"age", 30}, {"active", true}}},
         {"company", Json::Object{{"name", "TechCorp"}, {"employees", 100}, {"public", false}}}
     }};
-    M_ASSERT_EQ(nested_obj["person"]["name"].to<Json::String>(), "John");
+    M_ASSERT_EQ(nested_obj["person"]["name"].to<Json::Str>(), "John");
     M_ASSERT_EQ(nested_obj["company"]["employees"].to<Json::Num>(), 100);
 
     // --- Deeply Nested Object Access ---
@@ -109,7 +109,7 @@ M_TEST(Value, Object) {
             }}
         }}
     }};
-    M_ASSERT_EQ(deep_nested["level1"]["level2"]["level3"]["data2"].to<Json::String>(), "deep_value2");
+    M_ASSERT_EQ(deep_nested["level1"]["level2"]["level3"]["data2"].to<Json::Str>(), "deep_value2");
 
     // --- Value-to-Value Comparison ---
     Json obj_cmp1{Json::Object{{"a", 1}, {"b", 2}}};
@@ -162,7 +162,7 @@ M_TEST(Value, Object) {
         M_ASSERT_EQ( parsed_mixed->type(), json::Type::eObject );
         M_ASSERT_EQ( parsed_mixed->obj().size(), 4 );
         M_ASSERT_EQ( (*parsed_mixed)["number"].to<Json::Num>(), 42 );
-        M_ASSERT_EQ( (*parsed_mixed)["string"].to<Json::String>(), "test" );
+        M_ASSERT_EQ( (*parsed_mixed)["string"].to<Json::Str>(), "test" );
         M_ASSERT_EQ( (*parsed_mixed)["boolean"].to<Json::Bol>(), true );
         M_ASSERT_EQ( (*parsed_mixed)["null_val"].type(), json::Type::eNul );
         
