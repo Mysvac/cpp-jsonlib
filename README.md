@@ -6,6 +6,8 @@
    <a href="#ENGLISH"><img src="https://img.shields.io/badge/English-blue?style=for-the-badge" alt="English" /></a>
    &nbsp;&nbsp;
    <a href="#中文"><img src="https://img.shields.io/badge/中文-red?style=for-the-badge" alt="中文" /></a>
+   &nbsp;&nbsp;
+   <a href="#lib_compare"><img src="https://img.shields.io/badge/lib_compare-yellow?style=for-the-badge" alt="lib_compare" /></a>
 </p>
 </div>
 
@@ -21,8 +23,24 @@ You can find detailed documentation on this repository’s [GitHub Pages](https:
 
 ## **Importing the Library**
 
+Install by vcpkg: ( Update vcpkg port first )
+
+```
+vcpkg install mysvac-jsonlib
+```
+
+CMake:
+
+```
+find_package(mysvac-jsonlib CONFIG REQUIRED)
+...
+target_link_mysvac_jsonlib(main PRIVATE)
+```
+
+Use in your project:
+
 ```cpp
-import std; // Use standard library headers or standard library modules
+import std; // use std headers or module
 import mysvac.json; // Import the mysvac-jsonlib library
 using namespace mysvac; // Use the namespace to simplify code
 ```
@@ -535,6 +553,22 @@ mysvac-jsonlib 是一个 C++20 的 JSON 库，它提供简洁、高效的 JSON �
 
 ## **导入库**
 
+使用 vcpkg 安装库（需要最新版本）：
+
+```
+vcpkg install mysvac-jsonlib
+```
+
+CMake配置:
+
+```
+find_package(mysvac-jsonlib CONFIG REQUIRED)
+...
+target_link_mysvac_jsonlib(main PRIVATE)
+```
+
+在项目中使用：
+
 ```cpp
 import std; // 使用标准库头文件或标准库模块
 import mysvac.json; // 导入 mysvac-jsonlib 库
@@ -1007,3 +1041,19 @@ xxx = val.to_or<std::vector<MyData>>( std::vector<MyData>{} , MyData{} );
 
 </div>
 
+---
+
+<div id="lib_compare">
+
+![memory](docs/images/Memory_usage_Test.png)
+![des_mix](docs/images/Deserialize_mixed_speed_Test.png)
+![des_num](docs/images/Deserialize_number_speed_Test.png)
+![des_str](docs/images/Deserialize_string_speed_Test.png)
+![ser_mix](docs/images/Serialize_mixed_speed_Test.png)
+![ser_num](docs/images/Serialize_number_speed_Test.png)
+![ser_str](docs/images/Serialize_string_speed_Test.png)
+![get_copy](docs/images/Get_value_and_copy_speed_Test.png)
+![add_copy](docs/images/Add_child_and_copy_speed_Test.png)
+![delete](docs/images/Delete_child_speed_Test.png)
+
+</div>
