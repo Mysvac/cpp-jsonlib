@@ -33,7 +33,7 @@ namespace mysvac {
 3. `MapAllocator` : Allocator template for object type (mapping)
 4. `StrAllocator` : Allocator template for string type (`std::basic_string`)
 
-## 内部类型
+## InnerType
 
 Each `Json` class internally contains six types corresponding to the six JSON data formats, defined as follows:
 
