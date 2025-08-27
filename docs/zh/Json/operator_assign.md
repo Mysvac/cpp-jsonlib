@@ -13,7 +13,6 @@ requires constructible<Json, std::remove_cvref_t<T>>
 Json& operator=(T&& other) noexcept;
 ```
 
-赋值运算符重载。
 
 ## Complexity
 

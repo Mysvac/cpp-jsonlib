@@ -4,9 +4,9 @@
 ~Json() noexcept = default;
 ```
 
-## 异常
+#### Exceptions
 
-无异常。
+None
 
 ## Version
 

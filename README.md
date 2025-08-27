@@ -221,7 +221,7 @@ std::string or_str = smp_val["key1"].to_or<std::string>("default"); // returns "
 ```
 
 Conversion follows precise rules and a fixed testing order.
-For details, refer to the [GitHub Pages documentation](https://v-craft.github.io/vct-tools-json/) or source code comments.
+For details, refer to the [GitHub Pages documentation](https://mysvac.github.io/cpp-jsonlib/) or source code comments.
 
 The library defines three concepts to determine whether a type can be converted
 (types that meet none of them cannot use `to`/`move` and will fail to compile):
@@ -460,7 +460,7 @@ std::println("");
 v_data2["data"]["id"] = 8848;
 v_data2["data"]["name"] = "Mount Everest";
 v_data2["data"]["active"] = true;
-v_data2["data_list"].arr().push_back(v_data2["data"]);
+v_data2["data_list"].push_back(v_data2["data"]);
 v_data2["name"] = "name_name";
 MyData2 d_data2{v_data2};
 
@@ -708,7 +708,7 @@ smp_val["obj"].at("nested_k").is_nul(); // [] 和 at 可以混合使用
 数组和映射类型可能需要频繁操作，因此我们提供了一系列辅助函数。这些函数返回一个布尔值表示操作是否成功，不会抛出异常。
 
 | 函数名 | 返回值 | 说明 |
---------------------------------------------------------------
+|--------|-------|------|
 | `size()` | `size_t` | 数组或映射则返回元素数，否则返回 `0` |
 | `empty()` | `bool` | 返回数组或映射是否为空，其他类型返回 `true` |
 | `contains(key)` | `bool` | 判断是否含某个键，非映射返回 `false` |
@@ -741,7 +741,7 @@ if(opt_str) std::cout << *opt_str << std::endl; // 如果转换成功，输出�
 std::string or_str = smp_val["key1"].to_or<std::string>("default"); // 如果转换失败，返回 "default"
 ```
 
-转换具有非常准确的规则与测试顺序，详细内容请参考 [github-pages](https://v-craft.github.io/vct-tools-json/) 文档，或源码注释。
+转换具有非常准确的规则与测试顺序，详细内容请参考 [github-pages](https://mysvac.github.io/cpp-jsonlib/) 文档，或源码注释。
 
 本库提供了三个概念用于查询类型是否可能被转换：（都不满足的无法使用`to/move`模板，无法通过编译）
 
@@ -964,7 +964,7 @@ std::println("");
 v_data2["data"]["id"] = 8848;
 v_data2["data"]["name"] = "Mount Everest";
 v_data2["data"]["active"] = true;
-v_data2["data_list"].arr().push_back( v_data2["data"] );
+v_data2["data_list"].push_back( v_data2["data"] );
 v_data2["name"] = "name_name";
 MyData2 d_data2{ v_data2 };
 M_EXPECT_TRUE( d_data2.my_data.id == 8848 ); // true
